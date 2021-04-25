@@ -1,0 +1,39 @@
+README for zzzFM v1.07
+
+(forked from the unmaintained SpaceFM v1.06 codebase)
+
+NOTE: the zzzFM installation provides an extensive UserManual here:
+       /usr/share/doc/zzzfm/zzzfm-manual-en.html
+
+
+
+
+LICENSE
+
+    zzzFM - Copyright (C) 2021 skidoo   GPL3+
+       derived from
+    SpaceFM - Copyright (C) 2018 IgnorantGuru   GPL3+
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 3 of the License, or (at your
+    option) any later version.
+
+    USE AT YOUR OWN RISK.  This program is distributed in the hope that it
+    will be useful, but WITHOUT ANY WARRANTY; without even the implied
+    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+    the GNU General Public License for more details.
+
+    The 'exo' libraries and source code used by this software are licensed
+    under the GNU General Public License and the GNU Lesser General Public
+    License version 3 (LGPL3).
+
+    You should have received a copy of the GNU General Public License and
+    the GNU Lesser General Public License along with this program; if not,
+    write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+    Floor, Boston, MA  02110-1301, USA.
+
+    Refer to the COPYING and COPYING-LGPL files
+    (These files are provided during zzzfm installation)
+    /usr/share/zzzfm/COPYING
+    /usr/share/zzzfm/COPYING-LGPL

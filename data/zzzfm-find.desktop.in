@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+_Name=zzzFM File Search
+Categories=Utility;GTK;
+Exec=zzzfm --find-files %F
+Icon=/usr/share/pixmaps/zzzfm-find.png
+StartupNotify=true
+Type=Application
+Terminal=false
+MimeType=inode/directory;
+_Comment=Search for files and folders

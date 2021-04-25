@@ -1,0 +1,7497 @@
+# zzzFM PO Template    http://gitlab.com/skidoo/zzzfm/
+# This file is distributed under the same copyright and license as the zzzFM
+# package.
+#
+# Translators:
+# Inko Illarramendi Arancibia <inkoia@gmail.com>, 2008
+msgid ""
+msgstr ""
+"Project-Id-Version: zzzfm\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-25 10:33-0400\n"
+"PO-Revision-Date: 2015-05-14 14:28+0000\n"
+"Last-Translator: IgnorantGuru <ignorantguru@gmx.com>\n"
+"Language-Team: Basque (http://www.transifex.com/projects/p/zzzfm/language/"
+"eu/)\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/zzzfm-folder-handler.desktop.in.h:1
+msgid "zzzFM Open Folder"
+msgstr ""
+
+#: ../data/zzzfm-folder-handler.desktop.in.h:2
+msgid "Open folder"
+msgstr ""
+
+#: ../data/zzzfm-find.desktop.in.h:1
+msgid "zzzFM File Search"
+msgstr ""
+
+#: ../data/zzzfm-find.desktop.in.h:2
+msgid "Search for files and folders"
+msgstr ""
+
+#: ../data/zzzfm.desktop.in.h:1
+msgid "zzzFM"
+msgstr ""
+
+#: ../data/zzzfm.desktop.in.h:2
+msgid "File Manager"
+msgstr ""
+
+#: ../data/zzzfm.desktop.in.h:3
+msgid "Browse the file system"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:1
+msgid "Choose Application"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:2
+msgid "Please choose an application or enter a command:"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:3
+msgid "File Type:"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:4
+msgid "_Associated Apps"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:5
+msgid "A_ll Apps"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:6
+msgid "_Command:"
+msgstr ""
+
+#: ../data/ui/appchooserdlg.ui.h:7 ../src/ptk/ptk-file-misc.c:2028
+#: ../src/item-prop.c:1510
+msgid "_Browse"
+msgstr "_Arakatu"
+
+#: ../data/ui/appchooserdlg.ui.h:8
+msgid "Opened in Terminal"
+msgstr "Terminalean Irekia"
+
+#: ../data/ui/appchooserdlg.ui.h:9
+msgid "_Set as default application for this file type"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:1
+msgid "File Properties"
+msgstr "Fitxategiaren Propietateak"
+
+#: ../data/ui/file_properties.ui.h:2
+msgid "<b>File _Name:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:3
+msgid "<b>_Location:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:4
+msgid "<b>Link _Target:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:5 ../src/ptk/ptk-file-misc.c:2074
+msgid "<b>Type:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:6
+msgid "<b>Opens _With:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:7
+msgid "<b>Total Size:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:8
+msgid "<b>Size On Disk:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:9
+msgid "<b>Count:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:10
+msgid "<b>_Modified:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:11
+msgid "<b>_Accessed:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:12 ../src/settings.c:11041
+msgid "_Info"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:13
+msgid "<b>_Owner:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:14
+msgid "<b>_Group:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:15
+msgid "<b>Owner:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:16
+msgid "<b>Group:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:17
+msgid "<b>Other:</b>"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:18
+msgid "Read"
+msgstr "Irakurri"
+
+#: ../data/ui/file_properties.ui.h:19
+msgid "Write"
+msgstr "Idatzi"
+
+#: ../data/ui/file_properties.ui.h:20
+msgid "Execute"
+msgstr "Exekutatu"
+
+#: ../data/ui/file_properties.ui.h:21
+msgid "Set UID"
+msgstr "UID ezarri"
+
+#: ../data/ui/file_properties.ui.h:22
+msgid "Set GID"
+msgstr "GID ezarri"
+
+#: ../data/ui/file_properties.ui.h:23
+msgid "Sticky"
+msgstr "Sticky"
+
+#: ../data/ui/file_properties.ui.h:24
+msgid "Recursive (apply changes to folders and their contents)"
+msgstr ""
+
+#: ../data/ui/file_properties.ui.h:25 ../src/settings.c:11044
+msgid "_Permissions"
+msgstr "_Baimenak"
+
+#: ../data/ui/find-files.ui.h:1 ../data/ui/find-files2.ui.h:1
+msgid "Bytes"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:2 ../data/ui/find-files2.ui.h:2
+#: ../data/ui/prefdlg.ui.h:23 ../data/ui/prefdlg2.ui.h:23
+msgid "KB"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:3 ../data/ui/find-files2.ui.h:3
+msgid "MB"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:4 ../data/ui/find-files2.ui.h:4
+msgid "GB"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:5 ../data/ui/find-files2.ui.h:5
+msgid "Any"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:6 ../data/ui/find-files2.ui.h:6
+msgid "Within One Day"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:7 ../data/ui/find-files2.ui.h:7
+msgid "Within One Week"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:8 ../data/ui/find-files2.ui.h:8
+msgid "Within One Month"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:9 ../data/ui/find-files2.ui.h:9
+msgid "Within One Year"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:10 ../data/ui/find-files2.ui.h:10
+msgid "Within Selected Date Range"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:11 ../data/ui/find-files2.ui.h:11
+msgid "Find Files"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:12 ../data/ui/find-files2.ui.h:12
+#: ../src/ptk/ptk-file-task.c:2177
+msgid "<b>Filename:</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:13 ../data/ui/find-files2.ui.h:13
+msgid "Case Sensitive"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:14 ../data/ui/find-files2.ui.h:14
+msgid "Video Files (avi, mpg,...)"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:15 ../data/ui/find-files2.ui.h:15
+msgid "Audio Files (mp3, ogg,...)"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:16 ../data/ui/find-files2.ui.h:16
+msgid "Image Files (jpg, png,...)"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:17 ../data/ui/find-files2.ui.h:17
+msgid "Plain Text Files"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:18 ../data/ui/find-files2.ui.h:18
+msgid "All Files and Folders"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:19 ../data/ui/find-files2.ui.h:19
+msgid "<b>File Types to Search</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:20 ../data/ui/find-files2.ui.h:20
+msgid "Search in subfolders"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:21 ../data/ui/find-files2.ui.h:21
+msgid "Search hidden files"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:22 ../data/ui/find-files2.ui.h:22
+msgid "<b>Places to Search</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:23 ../data/ui/find-files2.ui.h:23
+msgid "General"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:24 ../data/ui/find-files2.ui.h:24
+msgid "File Contains:"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:25 ../data/ui/find-files2.ui.h:25
+msgid "Use Regular Expression"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:26 ../data/ui/find-files2.ui.h:26
+msgid "<b>File Content</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:27 ../data/ui/find-files2.ui.h:27
+msgid "Content"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:28 ../data/ui/find-files2.ui.h:28
+msgid "Greater Than:"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:29 ../data/ui/find-files2.ui.h:29
+msgid "Smaller Than:"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:30 ../data/ui/find-files2.ui.h:30
+msgid "<b>File Size</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:31 ../data/ui/find-files2.ui.h:31
+msgid "<b>Last Modified</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:32 ../data/ui/find-files2.ui.h:32
+msgid "Size & Date"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:33 ../data/ui/find-files2.ui.h:33
+msgid "<b>Search Result:</b>"
+msgstr ""
+
+#: ../data/ui/find-files.ui.h:34 ../data/ui/find-files2.ui.h:34
+msgid "Search Again"
+msgstr ""
+
+#: ../data/ui/godlg.ui.h:1
+msgid "Go to folder"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:1 ../data/ui/prefdlg2.ui.h:1
+msgid "Open In Current Tab"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:2 ../data/ui/prefdlg2.ui.h:2
+msgid "Open In New Tab"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:3 ../data/ui/prefdlg2.ui.h:3
+msgid "Stretch"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:4 ../data/ui/prefdlg2.ui.h:4
+msgid "Fit"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:5 ../data/ui/prefdlg2.ui.h:5
+msgid "Center"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:6 ../data/ui/prefdlg2.ui.h:6
+msgid "Tile"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:7 ../data/ui/prefdlg2.ui.h:7
+msgid "Zoom"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:8 ../data/ui/prefdlg2.ui.h:8
+msgid "Transparent"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:9 ../data/ui/prefdlg2.ui.h:9
+msgid "Automatic"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:10 ../data/ui/prefdlg2.ui.h:10
+msgid "Copy (Ctrl+Drag)"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:11 ../data/ui/prefdlg2.ui.h:11
+msgid "Move (Shift+Drag)"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:12 ../data/ui/prefdlg2.ui.h:12
+msgid "Link (Ctrl+Shift+Drag)"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:13 ../data/ui/prefdlg2.ui.h:13
+msgid "Preferences"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:14 ../data/ui/prefdlg2.ui.h:14
+msgid "Small Icons:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:15 ../data/ui/prefdlg2.ui.h:15
+msgid "Large Icons:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:16 ../data/ui/prefdlg2.ui.h:16
+msgid "Toolbar Icons:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:17 ../data/ui/prefdlg2.ui.h:17
+msgid "<b>Icons</b>"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:18 ../data/ui/prefdlg2.ui.h:18
+msgid "Single click opens files"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:19 ../data/ui/prefdlg2.ui.h:19
+msgid "Hover selects"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:20 ../data/ui/prefdlg2.ui.h:20
+msgid "Bookmarks:"
+msgstr "Laster-markak:"
+
+#: ../data/ui/prefdlg.ui.h:21 ../data/ui/prefdlg2.ui.h:21 ../src/settings.c:193
+msgid "Show Thumbnails"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:22 ../data/ui/prefdlg2.ui.h:22
+msgid "Max Pic Size To Thumbnail:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:24 ../data/ui/prefdlg2.ui.h:24
+msgid "<b>File List</b>"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:25 ../data/ui/prefdlg2.ui.h:25
+msgid "_General"
+msgstr "_Orokorra"
+
+#: ../data/ui/prefdlg.ui.h:26 ../data/ui/prefdlg2.ui.h:26
+msgid "Always show the tab bar"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:27 ../data/ui/prefdlg2.ui.h:27
+msgid "Hide 'Close Tab' buttons"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:28 ../data/ui/prefdlg2.ui.h:28
+msgid "Confirm delete/remove"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:29 ../data/ui/prefdlg2.ui.h:29
+msgid "Click runs executables  ( caution! )"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:30 ../data/ui/prefdlg2.ui.h:30
+msgid "SI File Sizes (1K = 1000) (requires restart)"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:31 ../data/ui/prefdlg2.ui.h:31
+msgid "Show root user indicator color"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:32 ../data/ui/prefdlg2.ui.h:32
+msgid "Default Drag Action:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:33 ../data/ui/prefdlg2.ui.h:33
+msgid "I_nterface"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:34 ../data/ui/prefdlg2.ui.h:34
+msgid "Wallpaper:"
+msgstr "Atzeko Irudia:"
+
+#: ../data/ui/prefdlg.ui.h:35 ../data/ui/prefdlg2.ui.h:35
+msgid "Please select an image file"
+msgstr "Mesedez, aukeratu irudi baten izena"
+
+#: ../data/ui/prefdlg.ui.h:36 ../data/ui/prefdlg2.ui.h:36
+msgid "Mode:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:37 ../data/ui/prefdlg2.ui.h:37
+msgid "Background:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:38 ../data/ui/prefdlg2.ui.h:38
+msgid "Text:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:39 ../data/ui/prefdlg2.ui.h:39
+msgid "Shadow:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:40 ../data/ui/prefdlg2.ui.h:40
+msgid "Font:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:41 ../data/ui/prefdlg2.ui.h:41
+msgid "Top:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:42 ../data/ui/prefdlg2.ui.h:42
+msgid "Left:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:43 ../data/ui/prefdlg2.ui.h:43
+msgid "Right:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:44 ../data/ui/prefdlg2.ui.h:44
+msgid "Bottom:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:45 ../data/ui/prefdlg2.ui.h:45
+msgid "Pad:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:46 ../data/ui/prefdlg2.ui.h:46
+msgid "<b>Margins</b>"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:47 ../data/ui/prefdlg2.ui.h:47
+msgid "Right click shows WM menu"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:48 ../data/ui/prefdlg2.ui.h:48
+msgid "Open folders using associated MIME application"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:49 ../data/ui/prefdlg2.ui.h:49
+msgid "_Desktop"
+msgstr "_Mahaigaina"
+
+#: ../data/ui/prefdlg.ui.h:50 ../data/ui/prefdlg2.ui.h:50
+msgid "_Volume Management"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:51 ../data/ui/prefdlg2.ui.h:51
+msgid "Terminal:"
+msgstr "Terminala:"
+
+#: ../data/ui/prefdlg.ui.h:52 ../data/ui/prefdlg2.ui.h:52
+msgid "Terminal SU:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:53 ../data/ui/prefdlg2.ui.h:53
+msgid "Graphical SU:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:54 ../data/ui/prefdlg2.ui.h:54
+msgid "Filename Encoding:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:55 ../data/ui/prefdlg2.ui.h:55
+msgid "Editor:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:56 ../data/ui/prefdlg2.ui.h:56
+msgid "Run editor in terminal"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:57 ../data/ui/prefdlg2.ui.h:57
+msgid "Root's Editor:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:58 ../data/ui/prefdlg2.ui.h:58
+msgid "Run root's editor in terminal"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:59 ../data/ui/prefdlg2.ui.h:59
+msgid "Date Format:"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:60 ../data/ui/prefdlg2.ui.h:60
+msgid "(requires reload)"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:61 ../data/ui/prefdlg2.ui.h:61
+msgid "Date Display"
+msgstr ""
+
+#: ../data/ui/prefdlg.ui.h:62 ../data/ui/prefdlg2.ui.h:62
+msgid "_Advanced"
+msgstr ""
+
+#: ../src/cust-dialog.c:359
+#, c-format
+msgid "Too many columns (>%d) in %s"
+msgstr ""
+
+#: ../src/cust-dialog.c:581 ../src/cust-dialog.c:1500 ../src/cust-dialog.c:1511
+#: ../src/cust-dialog.c:1708 ../src/item-prop.c:747
+#, c-format
+msgid "error reading file %s: %s"
+msgstr ""
+
+#. modified = TRUE;
+#: ../src/cust-dialog.c:588 ../src/cust-dialog.c:1530 ../src/cust-dialog.c:1721
+#: ../src/ptk/ptk-handler.c:695 ../src/item-prop.c:758
+#, c-format
+msgid "file '%s' contents are not valid UTF-8"
+msgstr ""
+
+#: ../src/cust-dialog.c:639
+#, c-format
+msgid "Cannot set missing element '%s'"
+msgstr ""
+
+#: ../src/cust-dialog.c:756 ../src/cust-dialog.c:835
+#, c-format
+msgid "file '%s' is not a regular file"
+msgstr ""
+
+#: ../src/cust-dialog.c:906 ../src/cust-dialog.c:1204 ../src/cust-dialog.c:3120
+msgid "Dynamic resize requires width and height > 0"
+msgstr ""
+
+#: ../src/cust-dialog.c:1179
+#, c-format
+msgid "internal command %s requires an argument"
+msgstr ""
+
+#: ../src/cust-dialog.c:1223
+#, c-format
+msgid "element '%s' does not exist"
+msgstr ""
+
+#: ../src/cust-dialog.c:1267
+#, c-format
+msgid "internal command press is invalid for non-button %s"
+msgstr ""
+
+#: ../src/cust-dialog.c:1295
+#, c-format
+msgid "internal command un/select is invalid for %s"
+msgstr ""
+
+#: ../src/cust-dialog.c:1328 ../src/cust-dialog.c:1465
+#: ../src/cust-dialog.c:1471
+#, c-format
+msgid "error writing file %s: %s"
+msgstr ""
+
+#: ../src/cust-dialog.c:1448
+#, c-format
+msgid "'%s' is not an internal command"
+msgstr ""
+
+#: ../src/cust-dialog.c:1488
+#, c-format
+msgid "error creating file %s: %s"
+msgstr ""
+
+#: ../src/cust-dialog.c:1597
+#, c-format
+msgid "pipe '%s' data is not valid UTF-8"
+msgstr ""
+
+#: ../src/cust-dialog.c:1625 ../src/ptk/ptk-file-task.c:1606
+msgid "[ SNIP - additional output above has been trimmed from this log ]\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:1718
+msgid "( file contents are not valid UTF-8 )"
+msgstr ""
+
+#: ../src/cust-dialog.c:1829
+#, c-format
+msgid "prefix '%s' is not a valid variable name"
+msgstr ""
+
+#. pack timeout button first
+#: ../src/cust-dialog.c:2062 ../src/cust-dialog.c:3269
+#: ../src/cust-dialog.c:3322
+msgid "Pause"
+msgstr ""
+
+#: ../src/cust-dialog.c:2719
+#, c-format
+msgid "file '%s' is not a regular file or a pipe"
+msgstr ""
+
+#: ../src/cust-dialog.c:3376
+#, c-format
+msgid ""
+"zzzFM Dialog creates a custom GTK dialog based on the GUI elements you\n"
+"specify on the command line, features run-time internal/external commands "
+"which\n"
+"can modify elements, and outputs evaluatable/parsable results.\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3377
+#, c-format
+msgid "Usage:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3378
+#, c-format
+msgid "    zzzfm --dialog|-g {ELEMENT [OPTIONS] [ARGUMENTS...]} ...\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3379
+#, c-format
+msgid "Example:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3380
+#, c-format
+msgid "    zzzfm -g --label \"A message\" --button ok\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3381
+#, c-format
+msgid ""
+"\n"
+"ELEMENT:       OPTIONS & ARGUMENTS:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3382
+#, c-format
+msgid "--------       --------------------\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3393
+#, c-format
+msgid ""
+"\n"
+"The following arguments may be used as shown above:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3394
+#, c-format
+msgid "    STOCK    %s\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3395
+#, c-format
+msgid "    ICON     An icon name, eg:  gtk-open\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3396
+#, c-format
+msgid ""
+"    @FILE    A text file from which to read a value.  In some cases this "
+"file\n"
+"             is monitored, so writing a new value to the file will update "
+"the\n"
+"             element.  In other cases, the file specifies an initial value.\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3397
+#, c-format
+msgid "    SAVEFILE A viewer's or editor's contents are saved to this file.\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3398
+#, c-format
+msgid ""
+"    COMMAND  An internal command or executable followed by arguments. "
+"Separate\n"
+"             multiple commands with a -- argument.\n"
+"             The following substitutions may be used in COMMANDs:\n"
+"                 %%n           Name of the current element\n"
+"                 %%v           Value of the current element\n"
+"                 %%NAME        Value of element named NAME (eg: %%input1)\n"
+"                 %%(command)   stdout from a bash command line\n"
+"                 %%%%           %%\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3399
+#, c-format
+msgid ""
+"    LABEL    The following escape sequences in LABEL are unescaped:\n"
+"                 \\n   newline\n"
+"                 \\t   tab\n"
+"                 \\\"   \"\n"
+"                 \\\\   \\\n"
+"             In --label elements only, if the first character in LABEL is a\n"
+"             tilde (~), pango markup may be used.  For example:\n"
+"                 --label '~This is plain. <b>This is bold.</b>'\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3401
+#, c-format
+msgid ""
+"\n"
+"In addition to the OPTIONS listed above, --compact or --expand options may "
+"be\n"
+"added to any element.  Also, a --font option may be used with most element\n"
+"types to change the element's font and font size.  For example:\n"
+"    --input --font \"Times New Roman 16\" \"Default Text\"\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3403
+#, c-format
+msgid ""
+"\n"
+"INTERNAL COMMANDS:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3414
+#, c-format
+msgid ""
+"\n"
+"EXAMPLE WITH COMMANDS:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3415
+#, c-format
+msgid ""
+"    zzzfm -g --label \"Enter some text and press Enter:\" \\\n"
+"               --input \"\" set label2 %%v -- echo '# %%n = %%v' \\\n"
+"               --label \\\n"
+"               --button ok\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3417
+#, c-format
+msgid ""
+"\n"
+"EXAMPLE SCRIPT:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3418
+#, c-format
+msgid ""
+"    #!%s\n"
+"    # This script shows a Yes/No dialog\n"
+"    # Use QUOTED eval to read variables output by zzzFM Dialog:\n"
+"    eval \"`zzzfm -g --label \"Are you sure?\" --button yes --button no`\"\n"
+"    if [[ \"$dialog_pressed\" == \"button1\" ]]; then\n"
+"        echo \"User pressed Yes - take some action\"\n"
+"    else\n"
+"        echo \"User did NOT press Yes - abort\"\n"
+"    fi\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3419
+#, c-format
+msgid ""
+"\n"
+"For full documentation and examples see the zzzFM User's Manual:\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3444
+#, c-format
+msgid "zzzfm: argument is not valid UTF-8\n"
+msgstr ""
+
+#: ../src/cust-dialog.c:3490
+msgid "invalid dialog option"
+msgstr ""
+
+#: ../src/cust-dialog.h:12
+msgid "Set window title"
+msgstr ""
+
+#: ../src/cust-dialog.h:14
+msgid "Set window icon"
+msgstr ""
+
+#: ../src/cust-dialog.h:16
+msgid "Add a text label"
+msgstr ""
+
+#: ../src/cust-dialog.h:18
+msgid "Add STOCK dialog button, or LABEL button with ICON"
+msgstr ""
+
+#: ../src/cust-dialog.h:20
+msgid "Add STOCK button, or LABEL button with ICON anywhere"
+msgstr ""
+
+#: ../src/cust-dialog.h:22
+msgid "Add a text entry"
+msgstr ""
+
+#: ../src/cust-dialog.h:24
+msgid "Add a large text entry"
+msgstr ""
+
+#: ../src/cust-dialog.h:26
+msgid "Add a password entry"
+msgstr ""
+
+#: ../src/cust-dialog.h:28
+msgid "Add a file or pipe viewer"
+msgstr ""
+
+#: ../src/cust-dialog.h:30
+msgid "Add multi-line text editor"
+msgstr ""
+
+#: ../src/cust-dialog.h:32
+msgid "Add a checkbox option"
+msgstr ""
+
+#: ../src/cust-dialog.h:34
+msgid "Add a radio option"
+msgstr ""
+
+#: ../src/cust-dialog.h:36
+msgid "Add an icon"
+msgstr ""
+
+#: ../src/cust-dialog.h:38
+msgid "Add an image"
+msgstr ""
+
+#: ../src/cust-dialog.h:44
+msgid "Add a progress bar"
+msgstr ""
+
+#: ../src/cust-dialog.h:46
+msgid "Add a horizontal line separator"
+msgstr ""
+
+#: ../src/cust-dialog.h:48
+msgid "Add a vertical line separator"
+msgstr ""
+
+#: ../src/cust-dialog.h:50
+msgid "Automatically close window after DELAY seconds"
+msgstr ""
+
+#: ../src/cust-dialog.h:52
+msgid "Add a drop-down list.  COMMAND run when clicked."
+msgstr ""
+
+#: ../src/cust-dialog.h:54
+msgid "Add a combo list.  COMMAND run when Enter pressed."
+msgstr ""
+
+#. ^HIDE   hidden column (must be first) for data return  (int or double or string no progress)
+#. use --colwidth=W inside column list
+#: ../src/cust-dialog.h:58
+msgid "Add a list box.  COMMAND run when double-clicked."
+msgstr ""
+
+#: ../src/cust-dialog.h:60
+msgid "Add a list box with multiple selections"
+msgstr ""
+
+#: ../src/cust-dialog.h:62
+msgid "Options: [--save] [--dir] [--multi] [--filter F[:F...]]"
+msgstr ""
+
+#: ../src/cust-dialog.h:64
+msgid "Set base variable name  (Default: \"dialog\")"
+msgstr ""
+
+#: ../src/cust-dialog.h:66
+msgid "Set minimum width, height, padding (-1 = don't change)"
+msgstr ""
+
+#: ../src/cust-dialog.h:68
+msgid "Add following widgets to a horizontal box"
+msgstr ""
+
+#: ../src/cust-dialog.h:70
+msgid "Add following widgets to a vertical box"
+msgstr ""
+
+#: ../src/cust-dialog.h:72
+msgid "Close the current box of widgets"
+msgstr ""
+
+#: ../src/cust-dialog.h:74
+msgid "Run COMMAND when a key combination is pressed"
+msgstr ""
+
+#: ../src/cust-dialog.h:76
+msgid "Run COMMAND when an element is clicked or focused"
+msgstr ""
+
+#: ../src/cust-dialog.h:78
+msgid "Run COMMAND on window close attempt"
+msgstr ""
+
+#: ../src/cust-dialog.h:80
+msgid "Read commands from FILE or PIPE.  COMMAND for init."
+msgstr ""
+
+#: ../src/cust-dialog.h:144
+msgid "No operation - does nothing but evaluate arguments"
+msgstr ""
+
+#. exit status ?
+#: ../src/cust-dialog.h:146
+msgid "Close the dialog"
+msgstr ""
+
+#: ../src/cust-dialog.h:148
+msgid "Press button named BUTTON-NAME"
+msgstr ""
+
+#: ../src/cust-dialog.h:150
+msgid "Set element NAME to VALUE"
+msgstr ""
+
+#. also do for inputs?
+#: ../src/cust-dialog.h:152
+msgid "Select item VALUE (or first/all) in element NAME"
+msgstr ""
+
+#: ../src/cust-dialog.h:154
+msgid "Unselect item VALUE (or all) in element NAME"
+msgstr ""
+
+#: ../src/cust-dialog.h:156
+msgid "Focus element NAME, or raise dialog window"
+msgstr ""
+
+#: ../src/cust-dialog.h:158
+msgid "Hide element NAME"
+msgstr ""
+
+#: ../src/cust-dialog.h:160
+msgid "Show element NAME if previously hidden"
+msgstr ""
+
+#: ../src/cust-dialog.h:162
+msgid "Disable element NAME"
+msgstr ""
+
+#: ../src/cust-dialog.h:164
+msgid "Enable element NAME if previously disabled"
+msgstr ""
+
+#: ../src/cust-dialog.h:166
+msgid "Save files and write source output to FILE"
+msgstr ""
+
+#: ../src/main.c:123
+msgid "Open folders in new tab of last window (default)"
+msgstr ""
+
+#: ../src/main.c:124
+msgid "Open folder in current tab of last used window"
+msgstr ""
+
+#: ../src/main.c:125
+msgid "Don't load saved tabs"
+msgstr ""
+
+#: ../src/main.c:126
+msgid "Open folders in new window"
+msgstr ""
+
+#: ../src/main.c:127
+msgid "Open folders in panel 'P' (1-4)"
+msgstr ""
+
+#: ../src/main.c:128
+msgid "Launch desktop manager daemon"
+msgstr ""
+
+#: ../src/main.c:129
+msgid "Show desktop settings"
+msgstr ""
+
+#: ../src/main.c:130
+msgid "Show Preferences ('N' is the Pref tab number)"
+msgstr ""
+
+#: ../src/main.c:131
+msgid "Run as a daemon"
+msgstr ""
+
+#: ../src/main.c:132
+msgid "Use DIR as configuration directory"
+msgstr ""
+
+#: ../src/main.c:133
+msgid "Show File Search"
+msgstr ""
+
+#: ../src/main.c:140
+msgid "Set desktop wallpaper to FILE"
+msgstr ""
+
+#: ../src/main.c:142
+msgid "Show a custom dialog (See -g help)"
+msgstr ""
+
+#: ../src/main.c:143
+msgid "Send a socket command (See -s help)"
+msgstr ""
+
+#: ../src/main.c:144 ../src/main.c:145
+msgid "No function - for compatibility only"
+msgstr ""
+
+#: ../src/main.c:146
+msgid "Show version information"
+msgstr ""
+
+#: ../src/main.c:150
+msgid "[DIR | FILE | URL]..."
+msgstr ""
+
+#: ../src/main.c:439
+msgid "Option --config-dir ignored - an instance is already running"
+msgstr ""
+
+#: ../src/main.c:451
+msgid "Option --config-dir contains invalid chars - cannot start"
+msgstr ""
+
+#: ../src/main.c:569
+#, c-format
+msgid "zzzfm: --socket-cmd requires an argument\n"
+msgstr ""
+
+#: ../src/main.c:576
+#, c-format
+msgid "zzzfm: could not create socket\n"
+msgstr ""
+
+#: ../src/main.c:591
+#, c-format
+msgid "zzzfm: could not connect to socket (not running? or DISPLAY not set?)\n"
+msgstr ""
+
+#: ../src/main.c:632
+#, c-format
+msgid "zzzfm: invalid response from socket\n"
+msgstr ""
+
+#. TRANSLATOR:  These three lines should be limited to 80 chars each
+#: ../src/main.c:641
+msgid ""
+"zzzFM socket commands permit external processes (such as command scripts)\n"
+"to read and set GUI property values and execute methods inside running "
+"zzzFM\n"
+"windows.  To handle events see View|Events in the main menu bar."
+msgstr ""
+
+#: ../src/main.c:643
+msgid "Usage:"
+msgstr ""
+
+#: ../src/main.c:645
+msgid "Example:"
+msgstr ""
+
+#: ../src/main.c:648
+msgid ""
+"METHODS\n"
+"-------"
+msgstr ""
+
+#: ../src/main.c:650
+msgid "Sets a property"
+msgstr ""
+
+#: ../src/main.c:653
+msgid "Gets a property"
+msgstr ""
+
+#: ../src/main.c:656
+msgid "Sets a task property"
+msgstr ""
+
+#: ../src/main.c:659
+msgid "Gets a task property"
+msgstr ""
+
+#: ../src/main.c:662
+msgid "Starts a new task"
+msgstr ""
+
+#: ../src/main.c:665
+msgid "Activates a menu item by emitting its shortcut key"
+msgstr ""
+
+#: ../src/main.c:668
+msgid "Runs custom command or shows submenu named NAME"
+msgstr ""
+
+#: ../src/main.c:671
+msgid "Add asynchronous handler COMMAND to EVENT"
+msgstr ""
+
+#: ../src/main.c:674
+msgid "Add synchronous handler COMMAND to EVENT, replacing default handler"
+msgstr ""
+
+#: ../src/main.c:677
+msgid "Remove handler COMMAND from EVENT"
+msgstr ""
+
+#: ../src/main.c:680
+msgid "Shows this help reference.  (Also see manual link below.)"
+msgstr ""
+
+#: ../src/main.c:682
+msgid ""
+"OPTIONS\n"
+"-------"
+msgstr ""
+
+#: ../src/main.c:683
+msgid ""
+"Add options after METHOD to specify a specific window, panel, and/or tab."
+msgstr ""
+
+#: ../src/main.c:684
+msgid ""
+"Otherwise the current tab of the current panel in the last window is used."
+msgstr ""
+
+#: ../src/main.c:687
+msgid "Specify window.  eg:"
+msgstr ""
+
+#: ../src/main.c:689
+msgid "Specify panel 1-4.  eg:"
+msgstr ""
+
+#: ../src/main.c:691
+msgid "Specify tab 1-...  eg:"
+msgstr ""
+
+#: ../src/main.c:693
+msgid ""
+"PROPERTIES\n"
+"----------"
+msgstr ""
+
+#: ../src/main.c:694
+msgid "Set properties with METHOD 'set', or get the value with 'get'."
+msgstr ""
+
+#: ../src/main.c:696
+msgid "eg '800x600'"
+msgstr ""
+
+#: ../src/main.c:697
+msgid "eg '100x50'"
+msgstr ""
+
+#: ../src/main.c:700
+msgid "eg '1024x768'  (read-only)"
+msgstr ""
+
+#: ../src/main.c:701 ../src/main.c:702 ../src/main.c:703 ../src/main.c:704
+#: ../src/main.c:720 ../src/main.c:721 ../src/main.c:722
+msgid "eg '100'"
+msgstr ""
+
+#: ../src/main.c:709
+msgid "Open DIR or default in a new tab"
+msgstr ""
+
+#: ../src/main.c:732
+msgid "eg 'Current Status: Example'"
+msgstr ""
+
+#: ../src/main.c:734
+msgid "DIR            eg '/etc'"
+msgstr ""
+
+#: ../src/main.c:735
+msgid "[FILENAME...]"
+msgstr ""
+
+#: ../src/main.c:736
+msgid "[PATTERN]      eg '*.jpg'"
+msgstr ""
+
+#: ../src/main.c:737 ../src/main.c:738
+msgid "eg 'Some\\nlines\\nof text'"
+msgstr ""
+
+#: ../src/main.c:739 ../src/main.c:740
+msgid "eg '~/copy-file-contents-to-clipboard.txt'"
+msgstr ""
+
+#: ../src/main.c:741
+msgid "FILE...  Files copied to clipboard"
+msgstr ""
+
+#: ../src/main.c:742
+msgid "FILE...  Files cut to clipboard"
+msgstr ""
+
+#: ../src/main.c:744
+msgid ""
+"TASK PROPERTIES\n"
+"---------------"
+msgstr ""
+
+#: ../src/main.c:745
+msgid "contents of Status task column  (read-only)"
+msgstr ""
+
+#: ../src/main.c:746
+msgid "eg 'gtk-open'"
+msgstr ""
+
+#: ../src/main.c:747
+msgid "text to show in Count task column"
+msgstr ""
+
+#: ../src/main.c:748
+msgid "text to show in Folder task column"
+msgstr ""
+
+#: ../src/main.c:749
+msgid "text to show in Item task column"
+msgstr ""
+
+#: ../src/main.c:750
+msgid "text to show in To task column"
+msgstr ""
+
+#: ../src/main.c:751
+msgid "progress percent (1..100) or '' to pulse"
+msgstr ""
+
+#: ../src/main.c:752
+msgid "text to show in Total task column"
+msgstr ""
+
+#: ../src/main.c:753
+msgid "text to show in Current task column"
+msgstr ""
+
+#: ../src/main.c:754
+msgid "text to show in CRemain task column"
+msgstr ""
+
+#: ../src/main.c:755
+msgid "text to show in Average task column"
+msgstr ""
+
+#: ../src/main.c:756
+msgid "text to show in Remain task column"
+msgstr ""
+
+#: ../src/main.c:757
+msgid "contents of Elapsed task column (read-only)"
+msgstr ""
+
+#: ../src/main.c:758
+msgid "contents of Started task column (read-only)"
+msgstr ""
+
+#: ../src/main.c:760
+msgid "COMMAND  command to show a custom task dialog\n"
+msgstr ""
+
+#: ../src/main.c:762
+msgid ""
+"TASK TYPES\n"
+"----------"
+msgstr ""
+
+#: ../src/main.c:764
+msgid "Run COMMAND in DIR"
+msgstr ""
+
+#: ../src/main.c:766
+msgid "Copy|Move|Link FILE(s) or DIR(s) to TARGET dir"
+msgstr ""
+
+#: ../src/main.c:767
+msgid "Recursively delete FILE(s) or DIR(s)"
+msgstr ""
+
+#: ../src/main.c:768
+msgid "Open FILE in user's or root's text editor"
+msgstr ""
+
+#: ../src/main.c:769
+msgid "Open URL in user's web browser"
+msgstr ""
+
+#: ../src/main.c:770
+msgid "Mount DEVICE or URL"
+msgstr ""
+
+#: ../src/main.c:771
+msgid "Unmount DEVICE or mount point DIR"
+msgstr ""
+
+#: ../src/main.c:773
+msgid ""
+"EVENTS\n"
+"------"
+msgstr ""
+
+#: ../src/main.c:774
+#, c-format
+msgid "Instance start        %e"
+msgstr ""
+
+#: ../src/main.c:775
+#, c-format
+msgid "Instance exit         %e"
+msgstr ""
+
+#: ../src/main.c:776
+msgid "Window new            %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:777
+msgid "Window focus          %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:778
+msgid "Window move/resize    %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:779
+msgid "Mouse click           %e %w %p %t %b %m %f"
+msgstr ""
+
+#: ../src/main.c:780
+msgid "Window keypress       %e %w %p %t %k %m"
+msgstr ""
+
+#: ../src/main.c:781
+msgid "Window close          %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:782
+msgid "Panel focus           %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:783
+msgid "Panel show/hide       %e %w %p %t %f %v"
+msgstr ""
+
+#: ../src/main.c:784
+msgid "Selection changed     %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:785
+msgid "Tab new               %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:786
+msgid "Tab change dir        %e %w %p %t %d"
+msgstr ""
+
+#: ../src/main.c:787
+msgid "Tab focus             %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:788
+msgid "Tab close             %e %w %p %t"
+msgstr ""
+
+#: ../src/main.c:789
+msgid "Device change         %e %f %v"
+msgstr ""
+
+#: ../src/main.c:791
+msgid "Event COMMAND Substitution Variables:"
+msgstr ""
+
+#: ../src/main.c:792
+msgid "event type (evt_start|evt_exit|...)"
+msgstr ""
+
+#: ../src/main.c:793
+msgid "window ID"
+msgstr ""
+
+#: ../src/main.c:794
+msgid "panel number (1-4)"
+msgstr ""
+
+#: ../src/main.c:795
+msgid "tab number (1-...)"
+msgstr ""
+
+#: ../src/main.c:796
+msgid "quoted directory ('/etc')"
+msgstr ""
+
+#: ../src/main.c:797
+msgid "mouse button (0=double 1=left 2=middle 3=right ...)"
+msgstr ""
+
+#: ../src/main.c:798
+msgid "key code  (eg 0x63)"
+msgstr ""
+
+#: ../src/main.c:799
+msgid "modifier key (eg 0x4  used with clicks and keypresses)"
+msgstr ""
+
+#: ../src/main.c:800
+msgid "focus element (panelN|filelist|devices|bookmarks|dirtree|pathbar)"
+msgstr ""
+
+#: ../src/main.c:801
+msgid "focus element is visible (0 or 1, or device state change)"
+msgstr ""
+
+#: ../src/main.c:803
+msgid "Examples"
+msgstr ""
+
+#: ../src/main.c:819
+msgid "These files have been copied to the clipboard"
+msgstr ""
+
+#: ../src/main.c:830
+msgid "For full documentation and examples see the zzzFM User's Manual:"
+msgstr ""
+
+#: ../src/main.c:1096 ../src/main.c:1353
+msgid "This build of zzzFM has desktop integration disabled"
+msgstr ""
+
+#: ../src/main.c:1137
+#, c-format
+msgid ""
+"zzzfm: Error: Unable to save session\n"
+"       %s\n"
+msgstr ""
+
+#: ../src/main.c:1205
+msgid "File doesn't exist"
+msgstr "Fitxategia ez da existitzen"
+
+#. MOD
+#. do not use xset_msg_dialog if non-main thread
+#. vfs_file_task_exec_error( task, 0, str );
+#: ../src/main.c:1206 ../src/main.c:1282 ../src/main.c:1284 ../src/main.c:1390
+#: ../src/main.c:1413 ../src/main.c:1415 ../src/main.c:1548
+#: ../src/settings.c:4902 ../src/settings.c:7954
+#: ../src/ptk/ptk-file-browser.c:1846 ../src/ptk/ptk-file-browser.c:1859
+#: ../src/ptk/ptk-file-browser.c:4581 ../src/ptk/ptk-file-browser.c:4587
+#: ../src/ptk/ptk-console-output.c:230 ../src/ptk/ptk-file-misc.c:2514
+#: ../src/ptk/ptk-file-misc.c:3091 ../src/ptk/ptk-file-misc.c:3320
+#: ../src/ptk/ptk-file-misc.c:3414 ../src/ptk/ptk-file-misc.c:3593
+#: ../src/ptk/ptk-file-properties.c:804 ../src/ptk/ptk-file-properties.c:815
+#: ../src/vfs/vfs-file-task.c:1419 ../src/item-prop.c:897
+#, c-format
+msgid "Error"
+msgstr ""
+
+#: ../src/main.c:1282 ../src/main.c:1413
+msgid ""
+"Error: Unable to initialize inotify file change monitor.\n"
+"\n"
+"Do you have an inotify-capable kernel?"
+msgstr ""
+
+#: ../src/main.c:1284 ../src/main.c:1415
+msgid ""
+"Error: Unable to establish connection with FAM.\n"
+"\n"
+"Do you have \"FAM\" or \"Gamin\" installed and running?"
+msgstr ""
+
+#: ../src/main.c:1338
+msgid "--dialog must be first option"
+msgstr ""
+
+#: ../src/main.c:1345
+msgid "--socket-cmd must be first option"
+msgstr ""
+
+#: ../src/main.c:1388
+#, c-format
+msgid ""
+"zzzFM requires bash to be installed.  Other shells are NOT equivalent as "
+"zzzFM uses features only found in genuine bash (v4+).\n"
+"\n"
+"The program %s was not found.  Install bash or use configure option --with-"
+"bash-path to specify a custom location at build time."
+msgstr ""
+
+#: ../src/main.c:1544
+msgid "Don't know how to open the file"
+msgstr "Ez da fitxategia irekitzeko modurik ezagutzen"
+
+#: ../src/main.c:1546
+#, c-format
+msgid ""
+"Unable to open file:\n"
+"\"%s\"\n"
+"%s"
+msgstr ""
+"Ezinezkoa fitxategia irekitzea:\n"
+"\"%s\"\n"
+"%s"
+
+#: ../src/main-window.c:311 ../src/ptk/ptk-handler.c:2565
+msgid "Error Creating Temp Directory"
+msgstr ""
+
+#: ../src/main-window.c:312 ../src/ptk/ptk-handler.c:2565
+msgid "Unable to create temporary directory"
+msgstr ""
+
+#: ../src/main-window.c:559
+#, c-format
+msgid ""
+"Error: Unable to save session file\n"
+"\n"
+"( %s )"
+msgstr ""
+
+#: ../src/main-window.c:561
+msgid "Save Session Error"
+msgstr ""
+
+#. root task
+#: ../src/main-window.c:585
+msgid "Open Root Window"
+msgstr ""
+
+#. do not use xset_msg_dialog if non-main thread
+#. vfs_file_task_exec_error( task, 0, str );
+#: ../src/main-window.c:610 ../src/vfs/vfs-file-task.c:1450
+msgid "Terminal Not Available"
+msgstr ""
+
+#: ../src/main-window.c:611
+msgid "Please set your terminal program in View|Preferences|Advanced"
+msgstr ""
+
+#: ../src/main-window.c:622
+msgid "Open Terminal"
+msgstr ""
+
+#: ../src/main-window.c:911
+msgid "Design Mode Help"
+msgstr ""
+
+#: ../src/main-window.c:911
+msgid ""
+"Design Mode allows you to change the name, shortcut key and icon of menu, "
+"toolbar and bookmark items, show help for an item, and add your own custom "
+"commands and applications.\n"
+"\n"
+"To open the Design Menu, simply right-click on a menu item, bookmark, or "
+"toolbar item.  To open the Design Menu for a submenu, first close the "
+"submenu (by clicking on it).\n"
+"\n"
+"For more information, click the Help button below."
+msgstr ""
+
+#: ../src/main-window.c:1641
+msgid "Panel"
+msgstr ""
+
+#: ../src/main-window.c:1684 ../src/settings.c:4802 ../src/settings.c:5092
+#: ../src/settings.c:6009 ../src/settings.c:6110
+#, c-format
+msgid "New _Command"
+msgstr ""
+
+#: ../src/main-window.c:1796
+#, c-format
+msgid "Show Panel %d"
+msgstr ""
+
+#: ../src/main-window.c:1818 ../src/settings.c:10721
+msgid "_File"
+msgstr "_Fitxategia"
+
+#: ../src/main-window.c:1821 ../src/settings.c:10810
+msgid "_View"
+msgstr "_Ikusi"
+
+#: ../src/main-window.c:1824 ../src/settings.c:11153
+msgid "_Devices"
+msgstr ""
+
+#: ../src/main-window.c:1828 ../src/settings.c:9788 ../src/settings.c:10554
+#: ../src/settings.c:10786 ../src/settings.c:11165
+msgid "_Bookmarks"
+msgstr ""
+
+#. main_window->plug_menu_item = gtk_menu_item_new_with_mnemonic( "_Plugins" );                   // howdy
+#. gtk_menu_shell_append( GTK_MENU_SHELL( main_window->menu_bar ), main_window->plug_menu_item );
+#. main_window->plug_menu = NULL;
+#: ../src/main-window.c:1835
+msgid "_Tools"
+msgstr ""
+
+#. Help
+#: ../src/main-window.c:1838 ../src/settings.c:7052 ../src/settings.c:7560
+#: ../src/settings.c:7883 ../src/settings.c:9848
+msgid "_Help"
+msgstr "_Laguntza"
+
+#: ../src/main-window.c:2101
+#, c-format
+msgid ""
+"Error: Unable to save session file.  Do you want to exit without saving?\n"
+"\n"
+"( %s )"
+msgstr ""
+
+#: ../src/main-window.c:2107
+msgid "zzzFM Error"
+msgstr ""
+
+#: ../src/main-window.c:2120
+msgid "Stop all tasks running in this window?"
+msgstr ""
+
+#: ../src/main-window.c:2125
+msgid "Aborting tasks..."
+msgstr ""
+
+#: ../src/main-window.c:3136
+#, c-format
+msgid " %s free / %s   "
+msgstr ""
+
+#: ../src/main-window.c:3143
+#, c-format
+msgid "%sReading %s ..."
+msgstr ""
+
+#: ../src/main-window.c:3197
+#, c-format
+msgid "   Link → %s"
+msgstr ""
+
+#: ../src/main-window.c:3199
+#, c-format
+msgid "   Link → %s/"
+msgstr ""
+
+#: ../src/main-window.c:3202
+#, c-format
+msgid "   !Link → %s/ (missing)"
+msgstr ""
+
+#: ../src/main-window.c:3208
+#, c-format
+msgid "   Link → %s (%s)"
+msgstr ""
+
+#: ../src/main-window.c:3211
+#, c-format
+msgid "   !Link → %s (missing)"
+msgstr ""
+
+#: ../src/main-window.c:3218
+#, c-format
+msgid "   !Link → ( error reading target )"
+msgstr ""
+
+#: ../src/main-window.c:3262
+msgid "hidden"
+msgid_plural "hidden"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/main-window.c:3264
+#, c-format
+msgid "%s%d visible (%s)   %s"
+msgid_plural "%s%d visible (%s)   %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/main-window.c:3267
+#, c-format
+msgid "%s%d item   %s"
+msgid_plural "%s%d items   %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#. If you change "Status", also change it in on_task_button_press_event
+#: ../src/main-window.c:3690 ../src/main-window.c:5026
+msgid "Status"
+msgstr ""
+
+#: ../src/main-window.c:3690
+msgid "#"
+msgstr ""
+
+#: ../src/main-window.c:3690 ../src/ptk/ptk-file-misc.c:1987
+#: ../src/find-files.c:910 ../src/exo/exo-thumbnail-preview.c:262
+msgid "Folder"
+msgstr ""
+
+#: ../src/main-window.c:3690
+msgid "Item"
+msgstr ""
+
+#: ../src/main-window.c:3691
+msgid "To"
+msgstr ""
+
+#: ../src/main-window.c:3691
+msgid "Progress"
+msgstr ""
+
+#: ../src/main-window.c:3691
+msgid "Total"
+msgstr ""
+
+#: ../src/main-window.c:3692
+msgid "Started"
+msgstr ""
+
+#: ../src/main-window.c:3692
+msgid "Elapsed"
+msgstr ""
+
+#: ../src/main-window.c:3692
+msgid "Current"
+msgstr ""
+
+#: ../src/main-window.c:3692
+msgid "CRemain"
+msgstr ""
+
+#: ../src/main-window.c:3693
+msgid "Average"
+msgstr ""
+
+#: ../src/main-window.c:3693
+msgid "Remain"
+msgstr ""
+
+#: ../src/main-window.c:3705
+msgid "Reorder Columns Help"
+msgstr ""
+
+#: ../src/main-window.c:3705
+msgid ""
+"To change the order of the columns, drag the column header to the desired "
+"location."
+msgstr ""
+
+#: ../src/main-window.c:5131
+msgid "moving"
+msgstr ""
+
+#: ../src/main-window.c:5132
+msgid "copying"
+msgstr ""
+
+#: ../src/main-window.c:5133
+msgid "deleting"
+msgstr ""
+
+#: ../src/main-window.c:5134
+msgid "linking"
+msgstr ""
+
+#: ../src/main-window.c:5135
+msgid "changing"
+msgstr ""
+
+#: ../src/main-window.c:5136
+msgid "running"
+msgstr ""
+
+#: ../src/main-window.c:5208
+#, c-format
+msgid "%d error %s"
+msgstr ""
+
+#: ../src/main-window.c:5208
+#, c-format
+msgid "%d errors %s"
+msgstr ""
+
+#: ../src/main-window.c:5220 ../src/ptk/ptk-file-task.c:1503
+#, c-format
+msgid "paused"
+msgstr ""
+
+#: ../src/main-window.c:5222 ../src/ptk/ptk-file-task.c:1505
+#, c-format
+msgid "queued"
+msgstr ""
+
+#: ../src/main-window.c:5533 ../src/ptk/ptk-file-browser.c:208
+#: ../src/find-files.c:895
+msgid "Name"
+msgstr "Izena"
+
+#: ../src/main-window.c:5533 ../src/ptk/ptk-file-browser.c:208
+#: ../src/find-files.c:916
+msgid "Size"
+msgstr "Tamaina"
+
+#: ../src/main-window.c:5533 ../src/ptk/ptk-file-browser.c:208
+#: ../src/find-files.c:920
+msgid "Type"
+msgstr "Mota"
+
+#: ../src/main-window.c:5533 ../src/ptk/ptk-file-browser.c:208
+msgid "Permission"
+msgstr "Baimena"
+
+#: ../src/main-window.c:5533 ../src/ptk/ptk-file-browser.c:208
+msgid "Owner"
+msgstr ""
+
+#: ../src/main-window.c:5533 ../src/ptk/ptk-file-browser.c:208
+msgid "Modified"
+msgstr ""
+
+#: ../src/main-window.c:5544
+msgid "zzzfm: invalid socket command\n"
+msgstr ""
+
+#: ../src/main-window.c:5573
+#, c-format
+msgid "zzzfm: invalid option '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:5576
+#, c-format
+msgid "zzzfm: option %s requires an argument\n"
+msgstr ""
+
+#: ../src/main-window.c:5585
+msgid "zzzfm: invalid window\n"
+msgstr ""
+
+#: ../src/main-window.c:5603
+#, c-format
+msgid "zzzfm: invalid window %s\n"
+msgstr ""
+
+#: ../src/main-window.c:5613
+#, c-format
+msgid "zzzfm: invalid panel %d\n"
+msgstr ""
+
+#: ../src/main-window.c:5619
+#, c-format
+msgid "zzzfm: panel %d is not visible\n"
+msgstr ""
+
+#: ../src/main-window.c:5630
+#, c-format
+msgid "zzzfm: invalid tab %d\n"
+msgstr ""
+
+#: ../src/main-window.c:5640
+msgid "zzzfm: command set requires an argument\n"
+msgstr ""
+
+#: ../src/main-window.c:5664 ../src/main-window.c:5957
+#, c-format
+msgid "zzzfm: invalid %s value\n"
+msgstr ""
+
+#: ../src/main-window.c:5697 ../src/main-window.c:5844
+msgid "zzzfm: invalid slider value\n"
+msgstr ""
+
+#: ../src/main-window.c:5726
+msgid "zzzfm: invalid panel number\n"
+msgstr ""
+
+#: ../src/main-window.c:5766
+msgid "zzzfm: invalid tab number\n"
+msgstr ""
+
+#: ../src/main-window.c:5818 ../src/main-window.c:6111
+#: ../src/main-window.c:6227 ../src/main-window.c:6478
+#, c-format
+msgid "zzzfm: invalid property %s\n"
+msgstr ""
+
+#: ../src/main-window.c:5864
+msgid "zzzfm: invalid column width\n"
+msgstr ""
+
+#: ../src/main-window.c:5893 ../src/main-window.c:5919
+#: ../src/main-window.c:6282
+#, c-format
+msgid "zzzfm: invalid column name '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6014
+msgid "zzzfm: text is not valid UTF-8\n"
+msgstr ""
+
+#: ../src/main-window.c:6029
+#, c-format
+msgid "zzzfm: %s requires a file path\n"
+msgstr ""
+
+#: ../src/main-window.c:6034
+#, c-format
+msgid "zzzfm: error reading file '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6039
+#, c-format
+msgid "zzzfm: file '%s' does not contain valid UTF-8 text\n"
+msgstr ""
+
+#: ../src/main-window.c:6075
+#, c-format
+msgid "zzzfm: %s requires a directory path\n"
+msgstr ""
+
+#: ../src/main-window.c:6080
+#, c-format
+msgid "zzzfm: directory '%s' does not exist\n"
+msgstr ""
+
+#: ../src/main-window.c:6120 ../src/main-window.c:7027
+#: ../src/main-window.c:7050
+#, c-format
+msgid "zzzfm: command %s requires an argument\n"
+msgstr ""
+
+#: ../src/main-window.c:6486 ../src/main-window.c:6607
+#: ../src/main-window.c:6706 ../src/main-window.c:6757
+#: ../src/main-window.c:6804 ../src/main-window.c:7091
+#, c-format
+msgid "zzzfm: %s requires two arguments\n"
+msgstr ""
+
+#: ../src/main-window.c:6512 ../src/main-window.c:6633
+#, c-format
+msgid "zzzfm: invalid task '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6517
+#, c-format
+msgid "zzzfm: internal task %s is read-only\n"
+msgstr ""
+
+#: ../src/main-window.c:6568
+#, c-format
+msgid "zzzfm: task property '%s' is read-only\n"
+msgstr ""
+
+#: ../src/main-window.c:6583
+#, c-format
+msgid "zzzfm: invalid queue_state '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6598 ../src/main-window.c:6694
+#, c-format
+msgid "zzzfm: invalid task property '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6747 ../src/main-window.c:6944
+#: ../src/main-window.c:6961
+#, c-format
+msgid "zzzfm: no such directory '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6751 ../src/main-window.c:6798
+#: ../src/main-window.c:6825 ../src/main-window.c:6948
+#, c-format
+msgid "zzzfm: invalid %s task option '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6811
+#, c-format
+msgid "zzzfm: no such file '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6830
+#, c-format
+msgid "zzzfm: task type %s requires TARGET argument\n"
+msgstr ""
+
+#. not a valid url
+#: ../src/main-window.c:6851 ../src/main-window.c:6871
+#: ../src/main-window.c:6911
+#, c-format
+msgid "zzzfm: invalid TARGET '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:6977
+#, c-format
+msgid "zzzfm: relative path '%s' requires %s option --dir DIR\n"
+msgstr ""
+
+#: ../src/main-window.c:6999
+#, c-format
+msgid "zzzfm: task type %s requires FILE argument(s)\n"
+msgstr ""
+
+#: ../src/main-window.c:7019
+#, c-format
+msgid "zzzfm: invalid task type '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:7039
+#, c-format
+msgid "zzzfm: invalid keycode '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:7056
+#, c-format
+msgid "zzzfm: custom command or submenu '%s' not found\n"
+msgstr ""
+
+#: ../src/main-window.c:7065
+#, c-format
+msgid "zzzfm: item '%s' context hidden or disabled\n"
+msgstr ""
+
+#: ../src/main-window.c:7096
+#, c-format
+msgid "zzzfm: invalid event type '%s'\n"
+msgstr ""
+
+#: ../src/main-window.c:7119
+#, c-format
+msgid "zzzfm: event handler not found\n"
+msgstr ""
+
+#: ../src/main-window.c:7128
+#, c-format
+msgid "zzzfm: invalid socket method '%s'\n"
+msgstr ""
+
+#: ../src/pref-dialog.c:160 ../src/pref-dialog.c:170 ../src/settings.c:183
+msgid "Default"
+msgstr ""
+
+#: ../src/pref-dialog.c:186
+msgid "Choose Desktop Font"
+msgstr ""
+
+#: ../src/pref-dialog.c:186
+msgid "Example Item 0123456789"
+msgstr ""
+
+#: ../src/pref-dialog.c:411
+msgid "Transparency Requirements"
+msgstr ""
+
+#: ../src/pref-dialog.c:412
+msgid ""
+"General Note: For desktop transparency to work, you need to be running a "
+"compositing window manager or separate compositor like compton or xcompmgr. "
+"You can then use use nitrogen or xwinwrap to set wallpaper on the "
+"background.\n"
+"\n"
+"This message will not repeat."
+msgstr ""
+
+#: ../src/pref-dialog.c:720
+#, c-format
+msgid ""
+"Use of some terminals (%s) with zzzFM may prevent the Run As Task and Run In "
+"Terminal options being used together to run commands, due to limitations in "
+"these terminals.  For example, this may cause protocols mounted in a "
+"terminal to fail to automatically open after being mounted.  For full use of "
+"zzzFM's features, selecting another terminal is recommended."
+msgstr ""
+
+#: ../src/pref-dialog.c:722
+msgid "Limited Terminal Emulator Selected"
+msgstr ""
+
+#. task
+#: ../src/pref-dialog.c:771
+#, c-format
+msgid ""
+"You will now be asked for your root password to save the root settings for "
+"this user to a file in %s/zzzfm/  Supplying the password in the next window "
+"is recommended.  Because zzzFM runs some commands as root via su, these "
+"settings are best protected by root."
+msgstr ""
+
+#: ../src/pref-dialog.c:772 ../src/pref-dialog.c:774
+msgid "Save Root Settings"
+msgstr ""
+
+#. howdy
+#. howdy     "https://gitlab.com/skidoo/zzzfm/";
+#: ../src/settings.c:169
+#, c-format
+msgid ""
+"Enter program or bash command line:\n"
+"\n"
+"Use:\n"
+"\t%%F\tselected files  or  %%f first selected file\n"
+"\t%%N\tselected filenames  or  %%n first selected filename\n"
+"\t%%d\tcurrent directory\n"
+"\t%%v\tselected device (eg /dev/sda1)\n"
+"\t%%m\tdevice mount point (eg /media/dvd);  %%l device label\n"
+"\t%%b\tselected bookmark\n"
+"\t%%t\tselected task directory;  %%p task pid\n"
+"\t%%a\tmenu item value\n"
+"\t$fm_panel, $fm_tab, $fm_command, etc"
+msgstr ""
+
+#: ../src/settings.c:171
+msgid ""
+"Enter an icon name, icon file path, or stock item name:\n"
+"\n"
+"Or click Choose to select an icon.  Not all icons may work properly due to "
+"various issues."
+msgstr ""
+
+#: ../src/settings.c:173
+msgid ""
+"Enter item name:\n"
+"\n"
+"Precede a character with an underscore (_) to underline that character as a "
+"shortcut key if desired."
+msgstr ""
+
+#: ../src/settings.c:174
+msgid ""
+"Enter new item name:\n"
+"\n"
+"Precede a character with an underscore (_) to underline that character as a "
+"shortcut key if desired.\n"
+"\n"
+"TIP: To change this item later, right-click on the item to open the Design "
+"Menu."
+msgstr ""
+
+#: ../src/settings.c:179
+msgid "Show Devices"
+msgstr ""
+
+#: ../src/settings.c:180
+msgid "Show Bookmarks"
+msgstr ""
+
+#: ../src/settings.c:181
+msgid "Show Tree"
+msgstr ""
+
+#: ../src/settings.c:182 ../src/ptk/ptk-location-view.c:3776
+#: ../src/ptk/ptk-location-view.c:4211
+#, c-format
+msgid "Home"
+msgstr ""
+
+#: ../src/settings.c:184
+msgid "Up"
+msgstr ""
+
+#: ../src/settings.c:185
+msgid "Back"
+msgstr "Atzera"
+
+#: ../src/settings.c:186
+msgid "Back History"
+msgstr ""
+
+#: ../src/settings.c:187
+msgid "Forward"
+msgstr "Aurrera"
+
+#: ../src/settings.c:188
+msgid "Forward History"
+msgstr ""
+
+#: ../src/settings.c:189
+msgid "Refresh"
+msgstr "Eguneratu"
+
+#: ../src/settings.c:190
+msgid "New Tab"
+msgstr "Fitxa Berria"
+
+#: ../src/settings.c:191
+msgid "New Tab Here"
+msgstr ""
+
+#: ../src/settings.c:192
+msgid "Show Hidden"
+msgstr ""
+
+#: ../src/settings.c:194
+msgid "Large Icons"
+msgstr ""
+
+#: ../src/settings.c:454
+#, c-format
+msgid "%s: %s contains invalid characters - ignored"
+msgstr ""
+
+#: ../src/settings.c:458
+#, c-format
+msgid "%s: tmp_dir '%s' does not exist - reverting to %s"
+msgstr ""
+
+#: ../src/settings.c:468
+#, fuzzy
+msgid "file not found"
+msgstr "Komandoa ez da aurkitu"
+
+#. General
+#: ../src/settings.c:996
+msgid ""
+"# zzzFM Session File\n"
+"\n"
+"# THIS FILE IS NOT DESIGNED TO BE EDITED - it will be read and OVERWRITTEN\n"
+"\n"
+"# If you delete all session* files, zzzFM will be reset to factory "
+"defaults.\n"
+"\n"
+msgstr ""
+
+#: ../src/settings.c:1157
+#, c-format
+msgid "Error saving file"
+msgstr ""
+
+#: ../src/settings.c:1228
+#, c-format
+msgid "zzzFM Error: Unable to autosave session file ( %s )\n"
+msgstr ""
+
+#: ../src/settings.c:2598
+#, c-format
+msgid ""
+"\n"
+"Selected Menu Item '%s' As Handler\n"
+msgstr ""
+
+#: ../src/settings.c:3502
+msgid "Help Not Available"
+msgstr ""
+
+#: ../src/settings.c:3502
+msgid "This item does not have an associated README file."
+msgstr ""
+
+#. howdy bub   fantastic !
+#: ../src/settings.c:3506
+msgid "Create README"
+msgstr ""
+
+#: ../src/settings.c:3507
+msgid ""
+"No README file exists for this command.\n"
+"\n"
+"Create a default README file for you to fill in?"
+msgstr ""
+
+#: ../src/settings.c:3530
+msgid "Creation Failed"
+msgstr ""
+
+#: ../src/settings.c:3530
+msgid "An error occurred creating a README file for this command."
+msgstr ""
+
+#: ../src/settings.c:3677 ../src/ptk/ptk-handler.c:1267
+#, c-format
+msgid ""
+"An error occurred copying command files\n"
+"\n"
+"%s"
+msgstr ""
+
+#. due to dialog run causes low level thread lock
+#: ../src/settings.c:3678 ../src/settings.c:3709 ../src/ptk/ptk-handler.c:1269
+msgid "Copy Command Error"
+msgstr ""
+
+#: ../src/settings.c:3708
+#, c-format
+msgid ""
+"An error occurred copying command data files\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/settings.c:4673
+msgid "Unable to create temporary files"
+msgstr ""
+
+#: ../src/settings.c:4757
+#, c-format
+msgid "Bookmark target '%s' is missing or invalid."
+msgstr ""
+
+#: ../src/settings.c:4758
+msgid "Invalid Bookmark Target"
+msgstr ""
+
+#: ../src/settings.c:4804
+msgid "Change Item Name"
+msgstr ""
+
+#: ../src/settings.c:5345
+msgid "Editor Not Set"
+msgstr ""
+
+#: ../src/settings.c:5345
+msgid "Please set your editor in View|Preferences|Advanced"
+msgstr ""
+
+#: ../src/settings.c:5353
+msgid "Root Editor Not Set"
+msgstr ""
+
+#: ../src/settings.c:5353
+msgid "Please set root's editor in View|Preferences|Advanced"
+msgstr ""
+
+#. task
+#: ../src/settings.c:5374
+#, c-format
+msgid "Edit %s"
+msgstr ""
+
+#: ../src/settings.c:5544
+msgid "User's Manual Not Found"
+msgstr ""
+
+#: ../src/settings.c:5546
+msgid ""
+"Read the user's manual online?\n"
+"\n"
+"The local copy of the zzzFM user's manual was not found.  Click Yes to read "
+"it online, or click No and then set the correct location in Help|Options|"
+"Manual Location."
+msgstr ""
+
+#: ../src/settings.c:5591
+msgid "Manual Opened ?"
+msgstr ""
+
+#: ../src/settings.c:5591
+msgid ""
+"The zzzFM user's manual should have opened in your browser.  If it didn't "
+"open, or if you would like to use a different browser, set your browser in "
+"Help|Options|Browser.\n"
+"\n"
+"This message will not repeat."
+msgstr ""
+
+#: ../src/settings.c:5607
+msgid "( none )"
+msgstr ""
+
+#: ../src/settings.c:5736
+#, c-format
+msgid ""
+"\t%s\n"
+"\tKeycode: %#4x  Modifier: %#x\n"
+"\n"
+"%s is already assigned to '%s'.\n"
+"\n"
+"Press a different key or click Set to replace the current key assignment."
+msgstr ""
+
+#: ../src/settings.c:5739
+#, c-format
+msgid ""
+"\t%s\n"
+"\tKeycode: %#4x [%#4x]  Modifier: %#x\n"
+"\n"
+"%s is already assigned to '%s'.\n"
+"\n"
+"Press a different key or click Set to replace the current key assignment."
+msgstr ""
+
+#: ../src/settings.c:5749
+#, c-format
+msgid ""
+"\t%s\n"
+"\tKeycode: %#4x  Modifier: %#x"
+msgstr ""
+
+#: ../src/settings.c:5777
+#, c-format
+msgid ""
+"Press your key combination for item '%s' then click Set.  To remove the "
+"current key assignment, click Unset."
+msgstr ""
+
+#: ../src/settings.c:5786
+msgid "Cancel"
+msgstr ""
+
+#: ../src/settings.c:5791
+msgid "Unset"
+msgstr ""
+
+#: ../src/settings.c:5803
+msgid "Set"
+msgstr ""
+
+#: ../src/settings.c:5815
+msgid "Set Key"
+msgstr ""
+
+#. Note: xset_text_dialog uses the title passed to know this is an
+#. icon chooser, so it adds a Choose button.  If you change the title, change xset_text_dialog.
+#. Special hack to add an icon chooser button when this dialog is called to set icons
+#. - see xset_menu_cb() and set init "main_icon"  and xset_design_job
+#: ../src/settings.c:5894 ../src/settings.c:7502 ../src/settings.c:7900
+msgid "Set Icon"
+msgstr ""
+
+#: ../src/settings.c:5958
+msgid "Edit Command Line"
+msgstr ""
+
+#: ../src/settings.c:5980
+msgid "Choose Custom Executable"
+msgstr ""
+
+#: ../src/settings.c:5991
+msgid "Run As User"
+msgstr ""
+
+#: ../src/settings.c:5991
+msgid ""
+"Run this command as username:\n"
+"\n"
+"( Leave blank for current user )"
+msgstr ""
+
+#: ../src/settings.c:5999
+#, c-format
+msgid ""
+"You are adding a custom command to the Default menu item.  This item will "
+"automatically have a pre-context - it will only appear when the MIME type of "
+"the first selected file matches the current type '%s'.\n"
+"\n"
+"Add commands or menus here which you only want to appear for this one MIME "
+"type."
+msgstr ""
+
+#: ../src/settings.c:6000
+msgid "New Context Command"
+msgstr ""
+
+#: ../src/settings.c:6010
+msgid "Set Item Name"
+msgstr ""
+
+#. Bookmark Browse
+#: ../src/settings.c:6038 ../src/item-prop.c:1098
+msgid "Choose Folder"
+msgstr ""
+
+#: ../src/settings.c:6078
+#, c-format
+msgid ""
+"You are adding a custom submenu to the Default menu item.  This item will "
+"automatically have a pre-context - it will only appear when the MIME type of "
+"the first selected file matches the current type '%s'.\n"
+"\n"
+"Add commands or menus here which you only want to appear for this one MIME "
+"type."
+msgstr ""
+
+#: ../src/settings.c:6078
+msgid "(none)"
+msgstr ""
+
+#: ../src/settings.c:6087
+msgid "Set Submenu Name"
+msgstr ""
+
+#: ../src/settings.c:6087
+msgid ""
+"Enter submenu name:\n"
+"\n"
+"Precede a character with an underscore (_) to underline that character as a "
+"shortcut key if desired."
+msgstr ""
+
+#: ../src/settings.c:6087
+msgid "New _Submenu"
+msgstr ""
+
+#: ../src/settings.c:6264
+msgid "( no name )"
+msgstr ""
+
+#: ../src/settings.c:6268
+#, c-format
+msgid ""
+"Permanently remove the '%s' SUBMENU AND ALL ITEMS WITHIN IT?\n"
+"\n"
+"This action will delete all settings and files associated with these items."
+msgstr ""
+
+#: ../src/settings.c:6271
+#, c-format
+msgid ""
+"Permanently remove the '%s' item?\n"
+"\n"
+"This action will delete all settings and files associated with this item."
+msgstr ""
+
+#: ../src/settings.c:6283 ../src/ptk/ptk-handler.c:1780
+msgid "Confirm Remove"
+msgstr ""
+
+#: ../src/settings.c:6350 ../src/item-prop.c:657 ../src/item-prop.c:667
+msgid "Are you sure?"
+msgstr ""
+
+#: ../src/settings.c:6351 ../src/settings.c:6355 ../src/settings.c:6359
+msgid "Dialog Message"
+msgstr ""
+
+#: ../src/settings.c:6351 ../src/settings.c:6355 ../src/settings.c:6359
+msgid ""
+"Enter the message to be displayed in this dialog:\n"
+"\n"
+"Use:\n"
+"\t\\n\tnewline\n"
+"\t\\t\ttab"
+msgstr ""
+
+#. Cut
+#. EDIT
+#: ../src/settings.c:6953 ../src/settings.c:10889
+msgid "Cu_t"
+msgstr ""
+
+#. Copy
+#: ../src/settings.c:6959 ../src/settings.c:9824 ../src/settings.c:10892
+msgid "_Copy"
+msgstr ""
+
+#. Paste
+#: ../src/settings.c:6965 ../src/settings.c:10895
+msgid "_Paste"
+msgstr ""
+
+#. Remove
+#. gtk_widget_add_accelerator( newitem, "activate", accel_group, GDK_k, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+#. Remove
+#. menu is shown from right-click on list
+#. Treeview widgets
+#. list buttons
+#: ../src/settings.c:6971 ../src/ptk/ptk-file-menu.c:1985
+#: ../src/ptk/ptk-handler.c:2636 ../src/ptk/ptk-handler.c:2819
+#: ../src/item-prop.c:1558
+msgid "_Remove"
+msgstr ""
+
+#. Export     //   howdy    bookmarks contextMenu
+#. newitem = xset_design_additem( design_menu, "E_xport", GTK_STOCK_SAVE, XSET_JOB_EXPORT, set );
+#. gtk_widget_set_sensitive( newitem, ( !set->lock  && set->menu_style < XSET_MENU_SEP  && set->tool <= XSET_TOOL_CUSTOM )
+#. || !g_strcmp0( set->name, "main_book" ) );
+#. // New submenu
+#: ../src/settings.c:6982 ../src/settings.c:10716
+msgid "_New"
+msgstr ""
+
+#. New > Bookmark
+#: ../src/settings.c:6992 ../src/settings.c:9280
+msgid "_Bookmark"
+msgstr "Laster-_Markak"
+
+#. New > Application
+#: ../src/settings.c:6995
+msgid "_Application"
+msgstr ""
+
+#. New > Command
+#: ../src/settings.c:6998
+msgid "_Command"
+msgstr ""
+
+#. New > Submenu
+#: ../src/settings.c:7003
+msgid "Sub_menu"
+msgstr ""
+
+#. New > Separator
+#: ../src/settings.c:7006
+msgid "S_eparator"
+msgstr ""
+
+#. "Add" submenu for builtin tool items
+#: ../src/settings.c:7032 ../src/item-prop.c:1563
+msgid "_Add"
+msgstr ""
+
+#: ../src/settings.c:7060
+msgid "T_ooltips"
+msgstr ""
+
+#. Key
+#: ../src/settings.c:7066
+msgid "_Key Shortcut"
+msgstr ""
+
+#. edit as user
+#: ../src/settings.c:7082
+msgid "_Edit Script"
+msgstr ""
+
+#. edit as root         howdy bub
+#: ../src/settings.c:7087
+msgid "E_dit As Root"
+msgstr ""
+
+#. edit command line
+#: ../src/settings.c:7097
+msgid "_Edit Command"
+msgstr ""
+
+#. Properties
+#: ../src/settings.c:7104 ../src/settings.c:9466
+msgid "_Properties"
+msgstr "_Propietateak"
+
+#. btn_icon_choose clicked - preparing the exo icon chooser dialog
+#: ../src/settings.c:7787
+msgid "Choose Icon"
+msgstr ""
+
+#: ../src/settings.c:7891
+msgid "_Edit"
+msgstr "_Editatu"
+
+#. Note: xset_text_dialog uses the title passed to know this is an
+#. icon chooser, so it adds a Choose button.  If you change the title, change xset_text_dialog.
+#: ../src/settings.c:7900 ../src/settings.c:10134
+msgid "Set Window Icon"
+msgstr ""
+
+#: ../src/settings.c:7902 ../src/ptk/ptk-handler.c:2898 ../src/item-prop.c:1469
+#: ../src/item-prop.c:1503
+msgid "C_hoose"
+msgstr ""
+
+#: ../src/settings.c:7916 ../src/settings.c:8079 ../src/settings.c:10768
+msgid "_Default"
+msgstr ""
+
+#: ../src/settings.c:7954
+msgid "Your input is invalid because it contains linefeeds"
+msgstr ""
+
+#: ../src/settings.c:8082
+msgid "_OK"
+msgstr ""
+
+#: ../src/settings.c:8211
+msgid "_Unset"
+msgstr ""
+
+#: ../src/settings.c:9248
+msgid "Remo_ve / Eject"
+msgstr ""
+
+#: ../src/settings.c:9252 ../src/settings.c:9304
+msgid "_Unmount"
+msgstr ""
+
+#: ../src/settings.c:9256
+msgid "Re_load"
+msgstr ""
+
+#: ../src/settings.c:9260
+msgid "_Sync"
+msgstr ""
+
+#. Bookmark list
+#. Removed items config version 30
+#. set = xset_get( "sep_bk1" );
+#. set->menu_style = XSET_MENU_SEP;
+#.
+#. set = xset_get( "sep_bk2" );
+#. set->menu_style = XSET_MENU_SEP;
+#.
+#. set = xset_set( "book_new", "lbl", _("_New") );
+#. xset_set_set( set, "icn", "gtk-new" );
+#.
+#. set = xset_set( "book_rename", "lbl", _("_Rename") );
+#. xset_set_set( set, "icn", "gtk-edit" );
+#.
+#. set = xset_set( "book_edit", "lbl", _("_Edit") );
+#. xset_set_set( set, "icn", "gtk-edit" );
+#.
+#. set = xset_set( "book_remove", "lbl", _("Re_move") );
+#. xset_set_set( set, "icn", "gtk-remove" );
+#.
+#. set = xset_set( "book_tab", "lbl", C_("Bookmarks|Open|", "_Tab") );
+#. xset_set_set( set, "icn", "gtk-add" );
+#.
+#: ../src/settings.c:9264 ../src/settings.c:9760 ../src/settings.c:10600
+#: ../src/find-files.c:273
+msgid "_Open"
+msgstr "_Ireki"
+
+#: ../src/settings.c:9268
+msgctxt "Devices|Open|"
+msgid "Open In _Tab"
+msgstr ""
+
+#: ../src/settings.c:9272 ../src/settings.c:9299
+msgid "_Mount"
+msgstr ""
+
+#: ../src/settings.c:9276
+msgid "Re_/mount"
+msgstr ""
+
+#: ../src/settings.c:9293 ../src/settings.c:11079
+msgid "_Root"
+msgstr ""
+
+#: ../src/settings.c:9309
+msgid "_Label"
+msgstr ""
+
+#: ../src/settings.c:9359
+msgid "_Check"
+msgstr ""
+
+#: ../src/settings.c:9363
+msgid "_Edit fstab"
+msgstr ""
+
+#: ../src/settings.c:9367
+msgid "Edit u_devil.conf"
+msgstr ""
+
+#: ../src/settings.c:9371
+msgid "_Format"
+msgstr ""
+
+#: ../src/settings.c:9431
+msgid "_Backup"
+msgstr ""
+
+#: ../src/settings.c:9453
+msgid "_Restore"
+msgstr ""
+
+#: ../src/settings.c:9458
+msgid "_From File"
+msgstr ""
+
+#: ../src/settings.c:9463 ../src/settings.c:9879
+msgid "File _Info"
+msgstr ""
+
+#: ../src/settings.c:9470
+msgid "Setti_ngs"
+msgstr ""
+
+#. dev settings
+#: ../src/settings.c:9476
+msgid "S_how"
+msgstr ""
+
+#: ../src/settings.c:9481
+msgid "_Internal Drives"
+msgstr ""
+
+#: ../src/settings.c:9486
+msgid "_Empty Drives"
+msgstr ""
+
+#: ../src/settings.c:9491
+msgid "_Partition Tables"
+msgstr ""
+
+#: ../src/settings.c:9495
+msgid "Mounted _Networks"
+msgstr ""
+
+#: ../src/settings.c:9500
+msgid "Mounted _Other"
+msgstr ""
+
+#: ../src/settings.c:9505
+msgid "_Volumes..."
+msgstr ""
+
+#: ../src/settings.c:9506
+msgid "Show/Hide Volumes"
+msgstr ""
+
+#: ../src/settings.c:9507
+msgid ""
+"To force showing or hiding of some volumes, overriding other settings, you "
+"can specify the devices, volume labels, or device IDs in the space-separated "
+"list below.\n"
+"\n"
+"Example:  +/dev/sdd1 -Label With Space +ata-OCZ-part4\n"
+"This would cause /dev/sdd1 and the OCZ device to be shown, and the volume "
+"with label \"Label With Space\" to be hidden.\n"
+"\n"
+"There must be a space between entries and a plus or minus sign directly "
+"before each item.  This list is case-sensitive.\n"
+"\n"
+msgstr ""
+
+#: ../src/settings.c:9510
+msgid "Ignore _Hide Policy"
+msgstr ""
+
+#: ../src/settings.c:9514
+msgid "_Display Name"
+msgstr ""
+
+#: ../src/settings.c:9516
+msgid "Set Display Name Format"
+msgstr ""
+
+#: ../src/settings.c:9517
+#, c-format
+msgid ""
+"Enter device display name format:\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice filename (eg sdd1)\n"
+"\t%%s\ttotal size (eg 800G)\n"
+"\t%%t\tfstype (eg ext4)\n"
+"\t%%l\tvolume label (eg Label or [no media])\n"
+"\t%%m\tmount point if mounted, or ---\n"
+"\t%%i\tdevice ID\n"
+"\t%%n\tmajor:minor device numbers (eg 15:3)\n"
+msgstr ""
+
+#: ../src/settings.c:9523
+msgid "_Auto Mount"
+msgstr ""
+
+#: ../src/settings.c:9528
+msgid "Mount _Optical"
+msgstr ""
+
+#: ../src/settings.c:9533
+msgid "_Mount Removable"
+msgstr ""
+
+#: ../src/settings.c:9538
+msgid "Mount _Volumes..."
+msgstr ""
+
+#: ../src/settings.c:9539
+msgid "Auto-Mount Volumes"
+msgstr ""
+
+#: ../src/settings.c:9540
+msgid ""
+"To force or prevent automounting of some volumes, overriding other settings, "
+"you can specify the devices, volume labels, or device IDs in the space-"
+"separated list below.\n"
+"\n"
+"Example:  +/dev/sdd1 -Label With Space +ata-OCZ-part4\n"
+"This would cause /dev/sdd1 and the OCZ device to be auto-mounted when "
+"detected, and the volume with label \"Label With Space\" to be ignored.\n"
+"\n"
+"There must be a space between entries and a plus or minus sign directly "
+"before each item.  This list is case-sensitive.\n"
+"\n"
+msgstr ""
+
+#: ../src/settings.c:9543
+msgid "Mount _Dirs..."
+msgstr ""
+
+#: ../src/settings.c:9544
+msgid "Automatic Mount Point Dirs"
+msgstr ""
+
+#: ../src/settings.c:9546
+#, c-format
+msgid ""
+"Enter the directory where zzzFM should automatically create mount point "
+"directories for fuse and similar filesystems (%%a in handler commands).  "
+"This directory must be user-writable (do NOT use /media), and empty "
+"subdirectories will be removed.  If left blank, ~/.cache/zzzfm/ (or "
+"$XDG_CACHE_HOME/zzzfm/) is used.  The following variables are recognized: "
+"$USER $UID $HOME $XDG_RUNTIME_DIR $XDG_CACHE_HOME\n"
+"\n"
+"Note that some handlers or mount programs may not obey this setting.\n"
+msgstr ""
+
+#: ../src/settings.c:9549
+msgid "Open _Tab"
+msgstr ""
+
+#: ../src/settings.c:9554
+msgid "_Unmount On Exit"
+msgstr ""
+
+#: ../src/settings.c:9562
+msgid "Auto _Run"
+msgstr ""
+
+#: ../src/settings.c:9568
+msgid "On _Mount"
+msgstr ""
+
+#: ../src/settings.c:9570
+msgid "Auto Run On Mount"
+msgstr ""
+
+#: ../src/settings.c:9571
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically after a removable "
+"drive or data disc is auto-mounted:\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice (eg /dev/sda1)\n"
+"\t%%l\tdevice label\n"
+"\t%%m\tdevice mount point (eg /media/disk)"
+msgstr ""
+
+#: ../src/settings.c:9574
+msgid "On _Audio CD"
+msgstr ""
+
+#: ../src/settings.c:9576
+msgid "Auto Run On Audio CD"
+msgstr ""
+
+#: ../src/settings.c:9577
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when an audio CD "
+"is inserted in a qualified device:\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice (eg /dev/sda1)\n"
+"\t%%l\tdevice label\n"
+"\t%%m\tdevice mount point (eg /media/disk)"
+msgstr ""
+
+#: ../src/settings.c:9580
+msgid "On _Video DVD"
+msgstr ""
+
+#: ../src/settings.c:9582
+msgid "Auto Run On Video DVD"
+msgstr ""
+
+#: ../src/settings.c:9583
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when a video DVD "
+"is auto-mounted:\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice (eg /dev/sda1)\n"
+"\t%%l\tdevice label\n"
+"\t%%m\tdevice mount point (eg /media/disk)"
+msgstr ""
+
+#: ../src/settings.c:9586
+msgid "On _Insert"
+msgstr ""
+
+#: ../src/settings.c:9588
+msgid "Auto Run On Insert"
+msgstr ""
+
+#: ../src/settings.c:9589
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when any device "
+"is inserted:\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice added (eg /dev/sda1)\n"
+"\t%%l\tdevice label\n"
+"\t%%m\tdevice mount point (eg /media/disk)"
+msgstr ""
+
+#: ../src/settings.c:9592
+msgid "On _Unmount"
+msgstr ""
+
+#: ../src/settings.c:9594
+msgid "Auto Run On Unmount"
+msgstr ""
+
+#: ../src/settings.c:9595
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when any device "
+"is unmounted by any means:\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice unmounted (eg /dev/sda1)\n"
+"\t%%l\tdevice label\n"
+"\t%%m\tdevice mount point (eg /media/disk)"
+msgstr ""
+
+#: ../src/settings.c:9598
+msgid "On _Remove"
+msgstr ""
+
+#: ../src/settings.c:9600
+msgid "Auto Run On Remove"
+msgstr ""
+
+#: ../src/settings.c:9601
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when any device "
+"is removed (ejection of media does not qualify):\n"
+"\n"
+"Use:\n"
+"\t%%v\tdevice removed (eg /dev/sda1)\n"
+"\t%%l\tdevice label\n"
+"\t%%m\tdevice mount point (eg /media/disk)"
+msgstr ""
+
+#: ../src/settings.c:9604
+msgid "Ignore _No Policy"
+msgstr ""
+
+#: ../src/settings.c:9608
+msgid "_Mount Options"
+msgstr ""
+
+#: ../src/settings.c:9609
+#, c-format
+msgid ""
+"Enter your comma- or space-separated list of default mount options below "
+"(%%o in handlers).\n"
+"\n"
+"In addition to regular options, you can also specify options to be added or "
+"removed for a specific filesystem type by using the form OPTION+FSTYPE or "
+"OPTION-FSTYPE.\n"
+"\n"
+"Example:  nosuid, sync+vfat, sync+ntfs, noatime, noatime-ext4\n"
+"This will add nosuid and noatime for all filesystem types, add sync for vfat "
+"and ntfs only, and remove noatime for ext4.\n"
+"\n"
+"Note: Some options, such as nosuid, may be added by the mount program even "
+"if you don't include them.  Options in fstab take precedence.  pmount and "
+"some handlers may ignore options set here."
+msgstr ""
+
+#: ../src/settings.c:9611
+msgid "Default Mount Options"
+msgstr ""
+
+#: ../src/settings.c:9619
+msgid "Re/mount With Options"
+msgstr ""
+
+#: ../src/settings.c:9620
+msgid ""
+"Device will be (re)mounted using the options below.\n"
+"\n"
+"In addition to regular options, you can also specify options to be added or "
+"removed for a specific filesystem type by using the form OPTION+FSTYPE or "
+"OPTION-FSTYPE.\n"
+"\n"
+"Example:  nosuid, sync+vfat, sync+ntfs, noatime, noatime-ext4\n"
+"This will add nosuid and noatime for all filesystem types, add sync for vfat "
+"and ntfs only, and remove noatime for ext4.\n"
+"\n"
+"Note: Some options, such as nosuid, may be added by the mount program even "
+"if you don't include them.  Options in fstab take precedence.  pmount "
+"ignores options set here."
+msgstr ""
+
+#: ../src/settings.c:9624
+msgid "_Change Detection"
+msgstr ""
+
+#: ../src/settings.c:9625
+msgid ""
+"Enter your comma- or space-separated list of filesystems which should NOT be "
+"monitored for file changes.  This setting only affects non-block devices "
+"(such as nfs or fuse), and is usually used to prevent zzzFM becoming "
+"unresponsive with network filesystems.  Loading of thumbnails and "
+"subdirectory sizes will also be disabled."
+msgstr ""
+
+#: ../src/settings.c:9627
+msgid "Change Detection Blacklist"
+msgstr ""
+
+#. Removed 0.9.4
+#. //  set = xset_set( "dev_mount_cmd", "lbl", _("Mount _Command") );
+#. //  set->menu_style = XSET_MENU_STRING;
+#. //  xset_set_set( set, "desc", _("Enter the command to mount a device:\n\nUse:\n\t%%v\tdevice file ( eg /dev/sda5 )\n\t%%o\tvolume-specific mount options\n\nudevil:\t/usr/bin/udevil mount -o %%o %%v\npmount:\t/usr/bin/pmount %%v\nUdisks2:\t/usr/bin/udisksctl mount -b %%v -o %%o\nUdisks1:\t/usr/bin/udisks --mount %%v --mount-options %%o\n\nLeave blank for auto-detection.") );
+#. //  xset_set_set( set, "title", _("Mount Command") );
+#. //  xset_set_set( set, "icn", "gtk-edit" );
+#. //  set->line = g_strdup( "#devices-settings-mcmd" );
+#.
+#. //  set = xset_set( "dev_unmount_cmd", "lbl", _("_Unmount Command") );
+#. //  set->menu_style = XSET_MENU_STRING;
+#. //  xset_set_set( set, "desc", _("Enter the command to unmount a device:\n\nUse:\n\t%%v\tdevice file ( eg /dev/sda5 )\n\nudevil:\t/usr/bin/udevil umount %%v\npmount:\t/usr/bin/pumount %%v\nUdisks1:\t/usr/bin/udisks --unmount %%v\nUdisks2:\t/usr/bin/udisksctl unmount -b %%v\n\nLeave blank for auto-detection.") );
+#. //  xset_set_set( set, "title", _("Unmount Command") );
+#. //  xset_set_set( set, "icn", "gtk-edit" );
+#. //  set->line = g_strdup( "#devices-settings-ucmd" );
+#.
+#: ../src/settings.c:9649
+msgid "_Device Handlers"
+msgstr ""
+
+#: ../src/settings.c:9653 ../src/settings.c:10879
+msgid "_Protocol Handlers"
+msgstr ""
+
+#: ../src/settings.c:9670 ../src/settings.c:11231 ../src/settings.c:11243
+msgid "_Icon"
+msgstr ""
+
+#: ../src/settings.c:9675
+msgid "Audio CD"
+msgstr ""
+
+#: ../src/settings.c:9681
+msgid "Optical Mounted"
+msgstr ""
+
+#: ../src/settings.c:9686
+msgid "Optical Has Media"
+msgstr ""
+
+#: ../src/settings.c:9691
+msgid "Optical No Media"
+msgstr ""
+
+#: ../src/settings.c:9696
+msgid "Floppy Mounted"
+msgstr ""
+
+#: ../src/settings.c:9701
+msgid "Floppy Unmounted"
+msgstr ""
+
+#: ../src/settings.c:9706
+msgid "Removable Mounted"
+msgstr ""
+
+#: ../src/settings.c:9711
+msgid "Removable Unmounted"
+msgstr ""
+
+#: ../src/settings.c:9716
+msgid "Internal Mounted"
+msgstr ""
+
+#: ../src/settings.c:9721
+msgid "Internal Unmounted"
+msgstr ""
+
+#: ../src/settings.c:9726
+msgid "Mounted Network"
+msgstr ""
+
+#: ../src/settings.c:9731
+msgid "Mounted Other"
+msgstr ""
+
+#: ../src/settings.c:9764
+msgid "_Settings"
+msgstr ""
+
+#: ../src/settings.c:9769
+msgid "Bookmark _Icon"
+msgstr ""
+
+#: ../src/settings.c:9774
+msgid "Sub_menu Icon"
+msgstr ""
+
+#: ../src/settings.c:9779
+msgid "_Show Bookmarks"
+msgstr ""
+
+#: ../src/settings.c:9784
+msgid "New _Bookmark"
+msgstr ""
+
+#. Rename/Move Dialog
+#: ../src/settings.c:9794 ../src/settings.c:10839 ../src/settings.c:11249
+msgid "_Name"
+msgstr ""
+
+#: ../src/settings.c:9797
+msgid "F_ilename"
+msgstr ""
+
+#: ../src/settings.c:9801
+msgid "_Parent"
+msgstr ""
+
+#: ../src/settings.c:9804 ../src/ptk/ptk-file-misc.c:1004
+msgid "P_ath"
+msgstr ""
+
+#: ../src/settings.c:9808
+msgid "Typ_e"
+msgstr ""
+
+#: ../src/settings.c:9812
+msgid "Ta_rget"
+msgstr ""
+
+#: ../src/settings.c:9816
+msgid "Te_mplate"
+msgstr ""
+
+#: ../src/settings.c:9820
+msgid "_Option"
+msgstr ""
+
+#: ../src/settings.c:9828 ../src/settings.c:10729
+#: ../src/ptk/ptk-file-misc.c:1169 ../src/ptk/ptk-file-misc.c:1180
+msgid "_Link"
+msgstr ""
+
+#: ../src/settings.c:9832 ../src/ptk/ptk-file-misc.c:2321
+msgid "Copy _Target"
+msgstr ""
+
+#: ../src/settings.c:9835
+msgid "Lin_k Target"
+msgstr ""
+
+#: ../src/settings.c:9838
+msgid "_As Root"
+msgstr ""
+
+#: ../src/settings.c:9842 ../src/settings.c:10415 ../src/settings.c:10467
+#: ../src/settings.c:10565 ../src/settings.c:10594 ../src/settings.c:11198
+#: ../src/settings.c:11204 ../src/settings.c:11211 ../src/settings.c:11218
+#: ../src/settings.c:11225 ../src/settings.c:11235
+msgid "_Font"
+msgstr ""
+
+#: ../src/settings.c:9845
+msgid "Move Dialog Font"
+msgstr ""
+
+#: ../src/settings.c:9846
+msgid "/home/user/Example Filename.ext"
+msgstr ""
+
+#: ../src/settings.c:9851
+msgid "_Confirm Create"
+msgstr ""
+
+#: ../src/settings.c:9859
+msgid "Highlight _Bar"
+msgstr ""
+
+#: ../src/settings.c:9860
+msgid "Status Bar Highlight Color"
+msgstr ""
+
+#: ../src/settings.c:9864
+msgid "Highlight _Text"
+msgstr ""
+
+#: ../src/settings.c:9865
+msgid "Status Bar Text Highlight Color"
+msgstr ""
+
+#: ../src/settings.c:9869
+msgid "_Middle Click"
+msgstr ""
+
+#: ../src/settings.c:9873 ../src/settings.c:10919
+msgid "Copy _Name"
+msgstr ""
+
+#: ../src/settings.c:9876 ../src/settings.c:10922
+msgid "Copy _Path"
+msgstr ""
+
+#: ../src/settings.c:9883
+msgid "_Hide Panel"
+msgstr ""
+
+#: ../src/settings.c:9899
+msgid "New _Window"
+msgstr "_Leiho Berria"
+
+#: ../src/settings.c:9902
+msgid "R_oot Window"
+msgstr ""
+
+#: ../src/settings.c:9905
+msgid "_File Search"
+msgstr ""
+
+#: ../src/settings.c:9908
+msgid "_Terminal"
+msgstr ""
+
+#. discovery notification
+#: ../src/settings.c:9911
+msgid "_Root Terminal"
+msgstr ""
+
+#. was previously used for 'Save Session' < 0.9.4 as XSET_MENU_NORMAL
+#: ../src/settings.c:9915
+msgid "Open _URL"
+msgstr ""
+
+#: ../src/settings.c:9918
+msgid "Open URL"
+msgstr ""
+
+#: ../src/settings.c:9919
+msgid ""
+"Enter URL in the format:\n"
+"\tPROTOCOL://USERNAME:PASSWORD@HOST:PORT/SHARE\n"
+"\n"
+"Examples:\n"
+"\tftp://mirrors.kernel.org\n"
+"\tsmb://user:pass@10.0.0.1:50/docs\n"
+"\tssh://user@sys.domain\n"
+"\tmtp://\n"
+"\n"
+"Including a password is unsafe.  To bookmark a URL, right-click on the "
+"mounted network in Devices and select Bookmark.\n"
+msgstr ""
+
+#: ../src/settings.c:9922
+msgid "Save Ta_bs"
+msgstr ""
+
+#: ../src/settings.c:9926
+msgid "E_xit"
+msgstr ""
+
+#: ../src/settings.c:9957 ../src/settings.c:9995 ../src/settings.c:10646
+#: ../src/settings.c:10971 ../src/settings.c:11009
+msgid "Panel _1"
+msgstr ""
+
+#: ../src/settings.c:9962 ../src/settings.c:9997 ../src/settings.c:10647
+#: ../src/settings.c:10972 ../src/settings.c:11010
+msgid "Panel _2"
+msgstr ""
+
+#: ../src/settings.c:9966 ../src/settings.c:9998 ../src/settings.c:10648
+#: ../src/settings.c:10973 ../src/settings.c:11011
+msgid "Panel _3"
+msgstr ""
+
+#: ../src/settings.c:9970 ../src/settings.c:9999 ../src/settings.c:10649
+#: ../src/settings.c:10974 ../src/settings.c:11012
+msgid "Panel _4"
+msgstr ""
+
+#: ../src/settings.c:9974
+msgid "Panel _Bar"
+msgstr ""
+
+#: ../src/settings.c:9979
+msgid "F_ocus"
+msgstr ""
+
+#: ../src/settings.c:9985 ../src/settings.c:10627 ../src/settings.c:10644
+#: ../src/settings.c:10795 ../src/settings.c:10952 ../src/settings.c:10969
+#: ../src/settings.c:10990 ../src/settings.c:11007
+msgid "_Prev"
+msgstr ""
+
+#: ../src/settings.c:9987 ../src/settings.c:10628 ../src/settings.c:10645
+#: ../src/settings.c:10796 ../src/settings.c:10953 ../src/settings.c:10970
+#: ../src/settings.c:10991 ../src/settings.c:11008
+msgid "_Next"
+msgstr ""
+
+#.
+#. xset_set( "panel_left", "lbl", _("_Left") );
+#. xset_set( "panel_right", "lbl", _("_Right") );
+#. xset_set( "panel_top", "lbl", _("_Top") );
+#. xset_set( "panel_bottom", "lbl", _("_Bottom") );
+#.
+#: ../src/settings.c:9994 ../src/settings.c:11014
+msgid "_Hide"
+msgstr ""
+
+#: ../src/settings.c:10001
+msgid "_Event Manager"
+msgstr ""
+
+#: ../src/settings.c:10007
+msgid "_Instance"
+msgstr ""
+
+#: ../src/settings.c:10012
+msgid "_Startup"
+msgstr ""
+
+#: ../src/settings.c:10014
+msgid "Set Instance Startup Command"
+msgstr ""
+
+#: ../src/settings.c:10015
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when a zzzFM "
+"instance starts:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_start)\n"
+msgstr ""
+
+#: ../src/settings.c:10018
+msgid "_Exit"
+msgstr ""
+
+#: ../src/settings.c:10020
+msgid "Set Instance Exit Command"
+msgstr ""
+
+#: ../src/settings.c:10021
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically when a zzzFM "
+"instance exits:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_exit)\n"
+msgstr ""
+
+#: ../src/settings.c:10024
+msgid "_Window"
+msgstr ""
+
+#: ../src/settings.c:10029
+msgctxt "View|Events|Window|"
+msgid "_New"
+msgstr ""
+
+#: ../src/settings.c:10031
+msgid "Set New Window Command"
+msgstr ""
+
+#: ../src/settings.c:10032
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a new "
+"zzzFM window is opened:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_win_new)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10035
+msgctxt "View|Events|Window|"
+msgid "_Focus"
+msgstr ""
+
+#: ../src/settings.c:10037
+msgid "Set Window Focus Command"
+msgstr ""
+
+#: ../src/settings.c:10038
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a zzzFM "
+"window gets focus:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_win_focus)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10041
+msgid "_Move/Resize"
+msgstr ""
+
+#: ../src/settings.c:10043
+msgid "Set Window Move/Resize Command"
+msgstr ""
+
+#: ../src/settings.c:10044
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a zzzFM "
+"window is moved or resized:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_win_move)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command.\n"
+"\n"
+"Note: This command may be run multiple times during resize."
+msgstr ""
+
+#: ../src/settings.c:10047
+msgctxt "View|Events|Window|"
+msgid "_Click"
+msgstr ""
+
+#: ../src/settings.c:10049
+msgid "Set Click Command"
+msgstr ""
+
+#: ../src/settings.c:10050
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever the "
+"mouse is clicked:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_win_click)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\t%%b\tbutton  (mouse button pressed)\n"
+"\t%%m\tmodifier  (modifier keys)\n"
+"\t%%f\tfocus  (element which received the click)\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command when "
+"no asterisk prefix is used.\n"
+"\n"
+"Prefix your command with an asterisk (*) and conditionally return exit "
+"status 0 to inhibit the default handler.  For example:\n"
+"*if [ \"%%b\" != \"2\" ]; then exit 1; fi; zzzfm -g --label \"\\nMiddle "
+"button was clicked in %%f\" --button ok &"
+msgstr ""
+
+#: ../src/settings.c:10053
+msgid "_Keypress"
+msgstr ""
+
+#: ../src/settings.c:10055
+msgid "Set Window Keypress Command"
+msgstr ""
+
+#: ../src/settings.c:10056
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a key is "
+"pressed:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_win_key)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\t%%k\tkey code  (key pressed)\n"
+"\t%%m\tmodifier  (modifier keys)\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command when "
+"no asterisk prefix is used.\n"
+"\n"
+"Prefix your command with an asterisk (*) and conditionally return exit "
+"status 0 to inhibit the default handler.  For example:\n"
+"*if [ \"%%k\" != \"0xffc5\" ]; then exit 1; fi; zzzfm -g --label \"\\nKey F8 "
+"was pressed.\" --button ok &"
+msgstr ""
+
+#: ../src/settings.c:10059
+msgctxt "View|Events|Window|"
+msgid "Cl_ose"
+msgstr ""
+
+#: ../src/settings.c:10061
+msgid "Set Window Close Command"
+msgstr ""
+
+#: ../src/settings.c:10062
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a zzzFM "
+"window is closed:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_win_close)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10065
+msgid "_Panel"
+msgstr ""
+
+#: ../src/settings.c:10070
+msgctxt "View|Events|Panel|"
+msgid "_Focus"
+msgstr ""
+
+#: ../src/settings.c:10072
+msgid "Set Panel Focus Command"
+msgstr ""
+
+#: ../src/settings.c:10073
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a panel "
+"gets focus:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_pnl_focus)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10076
+msgctxt "View|Events|Panel|"
+msgid "_Show"
+msgstr ""
+
+#: ../src/settings.c:10078
+msgid "Set Panel Show Command"
+msgstr ""
+
+#: ../src/settings.c:10079
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a panel "
+"or panel element is shown or hidden:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_pnl_show)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\t%%f\tfocus  (element shown or hidden)\n"
+"\t%%v\tvisible  (1 or 0)\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10082
+msgid "S_elect"
+msgstr ""
+
+#: ../src/settings.c:10084
+msgid "Set Panel Select Command"
+msgstr ""
+
+#: ../src/settings.c:10085
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever the file "
+"selection changes:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_pnl_sel)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command.\n"
+"\n"
+"Prefix your command with an asterisk (*) and conditionally return exit "
+"status 0 to inhibit the default handler."
+msgstr ""
+
+#: ../src/settings.c:10088
+msgctxt "View|Events|"
+msgid "_Tab"
+msgstr ""
+
+#: ../src/settings.c:10093
+msgctxt "View|Events|Tab|"
+msgid "_New"
+msgstr ""
+
+#: ../src/settings.c:10095
+msgid "Set New Tab Command"
+msgstr ""
+
+#: ../src/settings.c:10096
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a new "
+"tab is opened:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_tab_new)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10099
+msgid "_Change Dir"
+msgstr ""
+
+#: ../src/settings.c:10101
+msgid "Set Tab Change Dir Command"
+msgstr ""
+
+#: ../src/settings.c:10102
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a tab "
+"changes to a different directory:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_tab_chdir)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\t%%d\tnew directory\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10105
+msgctxt "View|Events|Tab|"
+msgid "_Focus"
+msgstr ""
+
+#: ../src/settings.c:10107
+msgid "Set Tab Focus Command"
+msgstr ""
+
+#: ../src/settings.c:10108
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a tab "
+"gets focus:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_tab_focus)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\ttab\n"
+"\n"
+"Exxported bash variables (eg $fm_pwd, etc) can be used in this command."
+msgstr ""
+
+#: ../src/settings.c:10111
+msgctxt "View|Events|Tab|"
+msgid "_Close"
+msgstr ""
+
+#: ../src/settings.c:10113
+msgid "Set Tab Close Command"
+msgstr ""
+
+#: ../src/settings.c:10114
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a tab is "
+"closed:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_tab_close)\n"
+"\t%%w\twindow id  (see zzzfm -s help)\n"
+"\t%%p\tpanel\n"
+"\t%%t\tclosed tab"
+msgstr ""
+
+#: ../src/settings.c:10117
+msgctxt "View|Events|"
+msgid "_Device"
+msgstr ""
+
+#: ../src/settings.c:10119
+msgid "Set Device Command"
+msgstr ""
+
+#: ../src/settings.c:10120
+#, c-format
+msgid ""
+"Enter program or bash command line to be run automatically whenever a device "
+"state changes:\n"
+"\n"
+"Use:\n"
+"\t%%e\tevent type  (evt_device)\n"
+"\t%%f\tdevice file\n"
+"\t%%v\tchange  (added|removed|changed)\n"
+msgstr ""
+
+#: ../src/settings.c:10123
+msgid "Wi_ndow Title"
+msgstr ""
+
+#: ../src/settings.c:10125
+msgid "Set Window Title Format"
+msgstr ""
+
+#: ../src/settings.c:10126
+#, c-format
+msgid ""
+"Set window title format:\n"
+"\n"
+"Use:\n"
+"\t%%n\tcurrent folder name (eg bin)\n"
+"\t%%d\tcurrent folder path (eg /usr/bin)\n"
+"\t%%p\tcurrent panel number (1-4)\n"
+"\t%%t\tcurrent tab number\n"
+"\t%%P\ttotal number of panels visible\n"
+"\t%%T\ttotal number of tabs in current panel\n"
+"\t*\tasterisk shown if tasks running in window"
+msgstr ""
+
+#: ../src/settings.c:10130
+msgid "_Window Icon"
+msgstr ""
+
+#. v--------- howdy   nix reference to cube-red here
+#: ../src/settings.c:10136
+msgid ""
+"Enter an icon name, icon file path, or stock item name:\n"
+"\n"
+"Or click Choose to select an icon.  Some icons may not work properly due to "
+"various issues.\n"
+"\n"
+"Provided alternate zzzFM icons:\n"
+"\tzzzfm-[48|128]-[cube]-[blue|red]\n"
+"\tzzzfm-48-folder-[blue|red]\n"
+"\n"
+"For example: zzzfm-48-cube-red"
+msgstr ""
+
+#. x and y store global icon chooser dialog size              howdy
+#: ../src/settings.c:10139
+msgid "_Fullscreen"
+msgstr ""
+
+#: ../src/settings.c:10142
+msgid "_Design Mode"
+msgstr ""
+
+#: ../src/settings.c:10145
+msgid "_Preferences"
+msgstr ""
+
+#: ../src/settings.c:10148
+msgid "_Tool"
+msgstr "_Tresnak"
+
+#: ../src/settings.c:10154
+msgid "_Thumbnails (global)"
+msgstr ""
+
+#: ../src/settings.c:10227
+msgid "_User's Manual"
+msgstr ""
+
+#: ../src/settings.c:10230
+msgid "_FAQ"
+msgstr ""
+
+#.
+#. set = xset_set( "main_homepage", "lbl", _("_Homepage") );
+#. xset_set_set( set, "icn", "zzzfm" );
+#.
+#.
+#. howdy
+#. set = xset_set( "main_getplug", "lbl", "_Get Plugins" );
+#. xset_set_set( set, "icn", "zzzfm" );
+#: ../src/settings.c:10242
+msgid "_Options"
+msgstr ""
+
+#: ../src/settings.c:10247
+msgid "_Browser"
+msgstr ""
+
+#: ../src/settings.c:10249
+msgid "Choose HTML Browser"
+msgstr ""
+
+#: ../src/settings.c:10250
+#, c-format
+msgid ""
+"Enter browser name or bash command line to be used to display HTML files and "
+"URLs:\n"
+"\n"
+"Use:\n"
+"\t%%u\turl\n"
+"\n"
+"(Leave blank for automatic browser detection)"
+msgstr ""
+
+#: ../src/settings.c:10253
+msgid "_Manual Location"
+msgstr ""
+
+#: ../src/settings.c:10255
+msgid "Choose User's Manual Location"
+msgstr ""
+
+#: ../src/settings.c:10256
+msgid ""
+"Enter local file path or remote URL for the zzzFM User's Manual:\n"
+"\n"
+"(Leave blank for default)\n"
+msgstr ""
+
+#: ../src/settings.c:10259
+msgid "_Show Devices"
+msgstr ""
+
+#: ../src/settings.c:10284
+msgid "_Task Manager"
+msgstr ""
+
+#: ../src/settings.c:10289
+msgid "_Status"
+msgstr ""
+
+#. column position
+#. column width
+#: ../src/settings.c:10295
+msgid "_Count"
+msgstr ""
+
+#: ../src/settings.c:10300
+msgid "_Folder"
+msgstr "_Karpeta"
+
+#: ../src/settings.c:10306
+msgid "_Item"
+msgstr ""
+
+#: ../src/settings.c:10312
+msgid "_To"
+msgstr ""
+
+#: ../src/settings.c:10318
+msgid "_Progress"
+msgstr ""
+
+#: ../src/settings.c:10325
+msgid "T_otal"
+msgstr ""
+
+#: ../src/settings.c:10332
+msgid "Sta_rted"
+msgstr ""
+
+#: ../src/settings.c:10337
+msgid "_Elapsed"
+msgstr ""
+
+#: ../src/settings.c:10344
+msgid "C_urrent Speed"
+msgstr ""
+
+#: ../src/settings.c:10350
+msgid "Current Re_main"
+msgstr ""
+
+#: ../src/settings.c:10356
+msgid "_Average Speed"
+msgstr ""
+
+#: ../src/settings.c:10362
+msgid "A_verage Remain"
+msgstr ""
+
+#: ../src/settings.c:10368
+msgid "Reor_der"
+msgstr ""
+
+#: ../src/settings.c:10371 ../src/settings.c:10391
+msgid "_Stop"
+msgstr ""
+
+#: ../src/settings.c:10374 ../src/settings.c:10394
+#: ../src/ptk/ptk-file-task.c:514 ../src/ptk/ptk-file-task.c:771
+msgid "Pa_use"
+msgstr ""
+
+#: ../src/settings.c:10377 ../src/settings.c:10397
+msgid "_Queue"
+msgstr ""
+
+#: ../src/settings.c:10380 ../src/settings.c:10400
+msgid "_Resume"
+msgstr ""
+
+#: ../src/settings.c:10383
+msgid "Sho_w Output"
+msgstr ""
+
+#: ../src/settings.c:10386
+msgid "_All Tasks"
+msgstr ""
+
+#: ../src/settings.c:10404
+msgid "Show _Manager"
+msgstr ""
+
+#. set->x  used for task man height >=0.9.4
+#: ../src/settings.c:10410
+msgid "Auto-_Hide Manager"
+msgstr ""
+
+#: ../src/settings.c:10418
+msgid "Task Manager Font"
+msgstr ""
+
+#: ../src/settings.c:10419
+msgid "copying  File  1:15  65.2 M  30.2 M/s"
+msgstr ""
+
+#: ../src/settings.c:10422
+msgid "_Columns"
+msgstr ""
+
+#: ../src/settings.c:10427
+msgid "_Popups"
+msgstr ""
+
+#: ../src/settings.c:10432
+msgid "Popup _All Tasks"
+msgstr ""
+
+#: ../src/settings.c:10437
+msgid "Stay On _Top"
+msgstr ""
+
+#: ../src/settings.c:10442
+msgid "A_bove Others"
+msgstr ""
+
+#: ../src/settings.c:10447
+msgid "All _Workspaces"
+msgstr ""
+
+#: ../src/settings.c:10452
+msgid "_Detailed Stats"
+msgstr ""
+
+#: ../src/settings.c:10457
+msgid "_Overwrite Option"
+msgstr ""
+
+#: ../src/settings.c:10462
+msgid "_Error Option"
+msgstr ""
+
+#: ../src/settings.c:10470
+msgid "Task Popup Font (affects new tasks)"
+msgstr ""
+
+#: ../src/settings.c:10471
+msgid "Example Output 0123456789"
+msgstr ""
+
+#: ../src/settings.c:10475
+msgid "Err_ors"
+msgstr ""
+
+#: ../src/settings.c:10480
+msgid "Stop If _First"
+msgstr ""
+
+#: ../src/settings.c:10485
+msgid "Stop On _Any"
+msgstr ""
+
+#: ../src/settings.c:10490
+msgid "_Continue"
+msgstr ""
+
+#: ../src/settings.c:10495
+msgid "Qu_eue"
+msgstr ""
+
+#: ../src/settings.c:10500
+msgid "_Queue New Tasks"
+msgstr ""
+
+#: ../src/settings.c:10505
+msgid "_Smart Queue"
+msgstr ""
+
+#: ../src/settings.c:10510
+msgid "_Pause On Error"
+msgstr ""
+
+#: ../src/settings.c:10520
+msgid "Arrange _Icons"
+msgstr ""
+
+#: ../src/settings.c:10525
+msgid "By _Name"
+msgstr ""
+
+#: ../src/settings.c:10528
+msgid "By _Type"
+msgstr ""
+
+#: ../src/settings.c:10531
+msgid "By _Date"
+msgstr ""
+
+#: ../src/settings.c:10534
+msgid "By _Size"
+msgstr ""
+
+#: ../src/settings.c:10537
+msgid "_Custom"
+msgstr ""
+
+#: ../src/settings.c:10540 ../src/settings.c:10851
+msgid "_Ascending"
+msgstr ""
+
+#: ../src/settings.c:10543
+msgid "D_escending"
+msgstr ""
+
+#: ../src/settings.c:10546
+msgid "Desktop _Settings"
+msgstr ""
+
+#. set->b keeps desktop prefs compositing wm info has been shown
+#: ../src/settings.c:10550 ../src/settings.c:10788
+msgid "De_vices"
+msgstr ""
+
+#: ../src/settings.c:10558
+msgid "_Desktop Folder"
+msgstr ""
+
+#: ../src/settings.c:10568
+msgid "Editor Font"
+msgstr ""
+
+#: ../src/settings.c:10569 ../src/settings.c:10598
+msgid "Example Input 0123456789"
+msgstr ""
+
+#: ../src/settings.c:10597
+msgid "Input Font"
+msgstr ""
+
+#: ../src/settings.c:10604
+msgid "E_xecute"
+msgstr "E_xekutatu"
+
+#: ../src/settings.c:10607
+msgid "Edi_t"
+msgstr ""
+
+#: ../src/settings.c:10610
+msgid "Edit As _Root"
+msgstr ""
+
+#: ../src/settings.c:10613
+msgid "_Choose..."
+msgstr ""
+
+#: ../src/settings.c:10616
+msgid "File _Handlers..."
+msgstr ""
+
+#: ../src/settings.c:10620
+msgid "Open With _Default"
+msgstr ""
+
+#. virtual
+#: ../src/settings.c:10622
+msgid "In _Tab"
+msgstr ""
+
+#: ../src/settings.c:10626
+msgid "N_ew"
+msgstr ""
+
+#: ../src/settings.c:10629 ../src/settings.c:10799 ../src/settings.c:10954
+#: ../src/settings.c:10992
+msgid "Tab _1"
+msgstr ""
+
+#: ../src/settings.c:10630 ../src/settings.c:10800 ../src/settings.c:10955
+#: ../src/settings.c:10993
+msgid "Tab _2"
+msgstr ""
+
+#: ../src/settings.c:10631 ../src/settings.c:10801 ../src/settings.c:10956
+#: ../src/settings.c:10994
+msgid "Tab _3"
+msgstr ""
+
+#: ../src/settings.c:10632 ../src/settings.c:10802 ../src/settings.c:10957
+#: ../src/settings.c:10995
+msgid "Tab _4"
+msgstr ""
+
+#: ../src/settings.c:10633 ../src/settings.c:10803 ../src/settings.c:10958
+#: ../src/settings.c:10996
+msgid "Tab _5"
+msgstr ""
+
+#: ../src/settings.c:10634 ../src/settings.c:10804 ../src/settings.c:10959
+#: ../src/settings.c:10997
+msgid "Tab _6"
+msgstr ""
+
+#: ../src/settings.c:10635 ../src/settings.c:10805 ../src/settings.c:10960
+#: ../src/settings.c:10998
+msgid "Tab _7"
+msgstr ""
+
+#: ../src/settings.c:10636 ../src/settings.c:10806 ../src/settings.c:10961
+#: ../src/settings.c:10999
+msgid "Tab _8"
+msgstr ""
+
+#: ../src/settings.c:10637 ../src/settings.c:10807 ../src/settings.c:10962
+#: ../src/settings.c:11000
+msgid "Tab _9"
+msgstr ""
+
+#: ../src/settings.c:10638 ../src/settings.c:10808 ../src/settings.c:10963
+#: ../src/settings.c:11001
+msgid "Tab 1_0"
+msgstr ""
+
+#: ../src/settings.c:10640
+msgid "In _Panel"
+msgstr ""
+
+#: ../src/settings.c:10651 ../src/settings.c:10678
+msgid "_Extract"
+msgstr ""
+
+#: ../src/settings.c:10655 ../src/settings.c:10683
+msgid "Extract _To"
+msgstr "Erauzi _Hona..."
+
+#: ../src/settings.c:10659 ../src/settings.c:10687
+msgid "_List Contents"
+msgstr ""
+
+#: ../src/settings.c:10669
+msgid "_Archive Defaults"
+msgstr ""
+
+#: ../src/settings.c:10674
+msgid "_Open With App"
+msgstr ""
+
+#: ../src/settings.c:10691
+msgid "_Create Subfolder"
+msgstr ""
+
+#: ../src/settings.c:10696
+msgid "_Write Access"
+msgstr ""
+
+#: ../src/settings.c:10701
+msgid "Archive _Handlers"
+msgstr ""
+
+#: ../src/settings.c:10725
+msgid "Fol_der"
+msgstr ""
+
+#: ../src/settings.c:10733
+msgctxt "New|"
+msgid "_Bookmark"
+msgstr "Laster-_Markak"
+
+#: ../src/settings.c:10737
+msgid "_Archive"
+msgstr ""
+
+#. Extract To - Create Subfolder
+#. Extract To - Write Access
+#: ../src/settings.c:10744
+msgctxt "New|"
+msgid "_Tab"
+msgstr ""
+
+#: ../src/settings.c:10746
+msgid "Tab _Here"
+msgstr ""
+
+#: ../src/settings.c:10749
+msgid "_Desktop Application"
+msgstr ""
+
+#: ../src/settings.c:10755
+msgid "_Go"
+msgstr "_Joan"
+
+#: ../src/settings.c:10760
+msgid "_Back"
+msgstr ""
+
+#: ../src/settings.c:10762
+msgid "_Forward"
+msgstr ""
+
+#: ../src/settings.c:10764
+msgid "_Up"
+msgstr ""
+
+#: ../src/settings.c:10766
+msgid "_Home"
+msgstr ""
+
+#: ../src/settings.c:10771
+msgid "_Set Default"
+msgstr ""
+
+#: ../src/settings.c:10774
+msgid "Re_al Path"
+msgstr ""
+
+#: ../src/settings.c:10776
+msgid "Fo_cus"
+msgstr ""
+
+#: ../src/settings.c:10780
+msgid "_Path Bar"
+msgstr ""
+
+#: ../src/settings.c:10782
+msgid "_File List"
+msgstr ""
+
+#: ../src/settings.c:10784
+msgid "_Tree"
+msgstr ""
+
+#: ../src/settings.c:10791
+msgctxt "Go|"
+msgid "_Tab"
+msgstr ""
+
+#: ../src/settings.c:10797
+msgid "_Close"
+msgstr ""
+
+#: ../src/settings.c:10814
+msgid "Styl_e"
+msgstr ""
+
+#: ../src/settings.c:10817
+msgid "C_olumns"
+msgstr ""
+
+#: ../src/settings.c:10820
+msgid "_Reorder"
+msgstr ""
+
+#: ../src/settings.c:10822
+msgid "_Rubberband Select"
+msgstr ""
+
+#: ../src/settings.c:10835
+msgid "_Sort"
+msgstr ""
+
+#. visible
+#. position
+#: ../src/settings.c:10841 ../src/settings.c:11254
+msgid "_Size"
+msgstr ""
+
+#: ../src/settings.c:10843 ../src/settings.c:11261
+msgid "_Type"
+msgstr ""
+
+#: ../src/settings.c:10845 ../src/settings.c:11267
+msgid "_Permission"
+msgstr ""
+
+#: ../src/settings.c:10847 ../src/settings.c:11109 ../src/settings.c:11273
+msgid "_Owner"
+msgstr ""
+
+#: ../src/settings.c:10849 ../src/settings.c:11279
+msgid "_Modified"
+msgstr ""
+
+#: ../src/settings.c:10853
+msgid "_Descending"
+msgstr ""
+
+#: ../src/settings.c:10856
+msgid "Nat_ural"
+msgstr ""
+
+#: ../src/settings.c:10858
+msgid "_Case Sensitive"
+msgstr ""
+
+#: ../src/settings.c:10860
+msgid "Folders Fi_rst"
+msgstr ""
+
+#: ../src/settings.c:10862
+msgid "F_iles First"
+msgstr ""
+
+#: ../src/settings.c:10864
+msgid "Mi_xed"
+msgstr ""
+
+#: ../src/settings.c:10866
+msgid "_Hidden First"
+msgstr ""
+
+#: ../src/settings.c:10868
+msgid "Hidden _Last"
+msgstr ""
+
+#: ../src/settings.c:10871
+msgid "Re_fresh"
+msgstr ""
+
+#: ../src/settings.c:10874
+msgid "Auto See_k"
+msgstr ""
+
+#. set->s was custom protocol handler in sfm<=0.9.3 - retained
+#: ../src/settings.c:10885
+msgid "Path Bar _Help"
+msgstr ""
+
+#: ../src/settings.c:10898 ../src/ptk/ptk-file-misc.c:674
+#: ../src/ptk/ptk-file-misc.c:1159 ../src/ptk/ptk-file-misc.c:2047
+msgid "_Rename"
+msgstr "Berr_izendatu"
+
+#. howdy   ?rename
+#: ../src/settings.c:10902 ../src/settings.c:11032
+msgid "_Delete"
+msgstr "_Ezabatu"
+
+#: ../src/settings.c:10914
+msgid "_Actions"
+msgstr ""
+
+#: ../src/settings.c:10925
+msgid "Copy Pa_rent"
+msgstr ""
+
+#: ../src/settings.c:10928
+msgid "Paste _Link"
+msgstr ""
+
+#: ../src/settings.c:10931
+msgid "Paste _Target"
+msgstr ""
+
+#: ../src/settings.c:10934
+msgid "Paste _As"
+msgstr ""
+
+#: ../src/settings.c:10940 ../src/settings.c:11030
+msgid "_Copy To"
+msgstr ""
+
+#: ../src/settings.c:10944
+msgid "L_ocation"
+msgstr ""
+
+#: ../src/settings.c:10945 ../src/settings.c:10984
+msgid "L_ast Location"
+msgstr ""
+
+#: ../src/settings.c:10948
+msgctxt "Edit|CopyTo|"
+msgid "_Tab"
+msgstr ""
+
+#: ../src/settings.c:10965
+msgctxt "Edit|CopyTo|"
+msgid "_Panel"
+msgstr ""
+
+#: ../src/settings.c:10979
+msgid "_Move To"
+msgstr ""
+
+#: ../src/settings.c:10983
+msgid "_Location"
+msgstr ""
+
+#: ../src/settings.c:10986
+msgctxt "Edit|MoveTo|"
+msgid "_Tab"
+msgstr ""
+
+#: ../src/settings.c:11003
+msgctxt "Edit|MoveTo|"
+msgid "_Panel"
+msgstr ""
+
+#: ../src/settings.c:11016
+msgid "_Select All"
+msgstr ""
+
+#: ../src/settings.c:11019
+msgid "_Unselect All"
+msgstr ""
+
+#: ../src/settings.c:11021
+msgid "_Invert Selection"
+msgstr "Hautapena _Alderantzikatu"
+
+#: ../src/settings.c:11023
+msgid "S_elect By Pattern"
+msgstr ""
+
+#: ../src/settings.c:11025
+msgid "R_oot"
+msgstr ""
+
+#: ../src/settings.c:11031
+msgid "Move _To"
+msgstr ""
+
+#. Properties
+#: ../src/settings.c:11036
+msgid "Propert_ies"
+msgstr ""
+
+#: ../src/settings.c:11047
+msgid "_Quick"
+msgstr ""
+
+#: ../src/settings.c:11069 ../src/settings.c:11099 ../src/settings.c:11125
+msgid "_Recursive"
+msgstr ""
+
+#: ../src/settings.c:11147
+msgid "_Toolbar"
+msgstr ""
+
+#: ../src/settings.c:11159
+msgid "T_ree"
+msgstr ""
+
+#: ../src/settings.c:11171
+msgid "_Side Toolbar"
+msgstr ""
+
+#: ../src/settings.c:11177
+msgid "_Detailed"
+msgstr ""
+
+#: ../src/settings.c:11183
+msgid "_Compact"
+msgstr ""
+
+#: ../src/settings.c:11188
+msgid "_Large Icons"
+msgstr ""
+
+#: ../src/settings.c:11193
+msgid "_Hidden Files"
+msgstr ""
+
+#: ../src/settings.c:11201
+#, c-format
+msgid "File List Font (Panel %d)"
+msgstr ""
+
+#: ../src/settings.c:11202
+msgid "Example  1.1 M  file  -rwxr--r--  user:group  2011-01-01 01:11"
+msgstr ""
+
+#: ../src/settings.c:11207
+#, c-format
+msgid "Devices Font (Panel %d)"
+msgstr ""
+
+#: ../src/settings.c:11208
+msgid "sr0 [no media] :EXAMPLE"
+msgstr ""
+
+#: ../src/settings.c:11214
+#, c-format
+msgid "Bookmarks Font (Panel %d)"
+msgstr ""
+
+#: ../src/settings.c:11215
+msgid "Example Bookmark Name"
+msgstr ""
+
+#: ../src/settings.c:11221
+#, c-format
+msgid "Path Bar Font (Panel %d)"
+msgstr ""
+
+#: ../src/settings.c:11222
+msgid "$ cat /home/user/example"
+msgstr ""
+
+#: ../src/settings.c:11228
+#, c-format
+msgid "Tab Font (Panel %d)"
+msgstr ""
+
+#: ../src/settings.c:11238
+#, c-format
+msgid "Status Bar Font (Panel %d)"
+msgstr ""
+
+#: ../src/settings.c:11239
+msgid "12 G free / 200 G   52 items"
+msgstr ""
+
+#. sort_natural
+#. sort_case
+#. PTK_LIST_SORT_DIR_FIRST from ptk-file-list.h
+#. sort_hidden_first
+#: ../src/settings.c:11291
+msgid "Follow _Dir"
+msgstr ""
+
+#. speed
+#: ../src/settings.c:11300 ../src/settings.c:11309
+msgid "_New Tab"
+msgstr ""
+
+#: ../src/settings.c:11304 ../src/settings.c:11314
+msgid "_Single Click"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:1845
+#, c-format
+msgid ""
+"Directory doesn't exist\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:1858
+#, c-format
+msgid ""
+"Unable to access %s\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:2521 ../src/desktop/desktop-window.c:2110
+msgid "Select By Pattern"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:2522 ../src/desktop/desktop-window.c:2110
+#, c-format
+msgid ""
+"Enter pattern to select files and folders:\n"
+"\n"
+"If your pattern contains any uppercase characters, the matching will be case "
+"sensitive.\n"
+"\n"
+"Example:  *sp*e?m*\n"
+"\n"
+"TIP: You can also enter '%% PATTERN' in the path bar."
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4509 ../src/ptk/ptk-file-misc.c:3657
+#: ../src/desktop/desktop-window.c:3139
+msgid "Choose Location"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4539 ../src/ptk/ptk-file-browser.c:4562
+#: ../src/desktop/desktop-window.c:3169 ../src/desktop/desktop-window.c:3191
+msgid "Invalid Destination"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4539 ../src/desktop/desktop-window.c:3169
+msgid "Destination same as source"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4562 ../src/desktop/desktop-window.c:3191
+msgid "Invalid destination"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4567
+msgid "Hide File"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4568
+msgid ""
+"The names of the selected files will be added to the '.hidden' file located "
+"in this folder, which will hide them from view in zzzFM.  You may need to "
+"refresh the view or restart zzzFM for the files to disappear.\n"
+"\n"
+"To unhide a file, open the .hidden file in your text editor, remove the name "
+"of the file, and refresh."
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4581
+msgid "Error hiding files"
+msgstr ""
+
+#: ../src/ptk/ptk-file-browser.c:4587
+msgid "No files are selected"
+msgstr ""
+
+#. not a valid url
+#: ../src/ptk/ptk-location-view.c:956
+msgid "Invalid URL"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:956
+msgid "The entered URL is not valid."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1004 ../src/ptk/ptk-location-view.c:1124
+msgid "Handler Not Found"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1005
+msgid ""
+"No network handler is configured for this URL, or no mount command is set.  "
+"Add a handler in Devices|Settings|Protocol Handlers."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1058
+#, c-format
+msgid "Open URL %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1120
+msgid "mount"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1122
+msgid "unmount"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1123
+#, c-format
+msgid ""
+"No handler is configured for this device type, or no %s command is set.  Add "
+"a handler in Settings|Device Handlers or Protocol Handlers."
+msgstr ""
+
+#. task
+#: ../src/ptk/ptk-location-view.c:1152 ../src/ptk/ptk-location-view.c:1653
+#: ../src/ptk/ptk-location-view.c:1723 ../src/ptk/ptk-location-view.c:1794
+#, c-format
+msgid "Mount %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1189
+#, c-format
+msgid "%s is currently mounted.  You must unmount it before you can check it."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1190 ../src/ptk/ptk-location-view.c:2006
+#: ../src/ptk/ptk-location-view.c:2076 ../src/ptk/ptk-location-view.c:2396
+msgid "Device Is Mounted"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1197
+#, c-format
+msgid ""
+"Enter filesystem check command:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1202
+msgid "Check As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1203
+msgid "CHECK AS ROOT"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1210
+#, c-format
+msgid "Check As Root %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1242
+#, c-format
+msgid ""
+"Enter mount command:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\t%%%%o\tvolume-specific mount options\n"
+"\t\t( %s )\n"
+"\n"
+"Note: fstab overrides some options\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1249
+msgid "Mount As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1249
+msgid "MOUNT AS ROOT"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1263
+#, c-format
+msgid "Mount As Root %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1292
+#, c-format
+msgid ""
+"Enter unmount command:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1297
+msgid "Unmount As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1298
+msgid "UNMOUNT AS ROOT"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1307
+#, c-format
+msgid "Unmount As Root %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1362
+#, c-format
+msgid ""
+"\n"
+"\n"
+"WARNING: %s is mounted.  You may want or need to unmount it before changing "
+"the label."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1366
+#, c-format
+msgid "Enter volume label for %s:%s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1368
+msgid "Change Volume Label"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1390
+#, c-format
+msgid ""
+"Enter remove label command for fstype '%s':\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\t%%%%l\tnew label ( \"%s\" )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root%s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1394
+#, c-format
+msgid ""
+"Enter change label command for fstype '%s':\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\t%%%%l\tnew label ( \"%s\" )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root%s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1397
+msgid "Change Label As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1398
+msgid "LABEL AS ROOT"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1410
+#, c-format
+msgid "Label As Root %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1470
+#, c-format
+msgid "Unmount %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1586 ../src/ptk/ptk-location-view.c:1596
+#, c-format
+msgid "Remove %s"
+msgstr ""
+
+#. task
+#: ../src/ptk/ptk-location-view.c:1859
+#, c-format
+msgid "Remount %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1949
+#, c-format
+msgid "Reload %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:1975
+msgid "Sync"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2005
+#, c-format
+msgid "%s is currently mounted.  You must unmount it before you can format it."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2017 ../src/ptk/ptk-location-view.c:2159
+#, c-format
+msgid " ( AN ENTIRE DEVICE ) "
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2023
+#, c-format
+msgid ""
+"You are about to erase %s %s- ALL DATA WILL BE LOST.  Be patient - this can "
+"take awhile and dd gives no feedback.\n"
+"\n"
+"Enter command to overwrite entire volume with /dev/%s:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2026
+#, c-format
+msgid ""
+"You are about to format %s %s- ALL DATA WILL BE LOST.\n"
+"\n"
+"Enter %s format command:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2027
+msgid "Format"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2028 ../src/ptk/ptk-location-view.c:2115
+#: ../src/ptk/ptk-location-view.c:2164
+msgid "DATA LOSS WARNING"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2034
+#, c-format
+msgid "Format %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2075
+#, c-format
+msgid ""
+"%s is currently mounted.  You must unmount it before you can restore it."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2081
+msgid "Choose Backup For Restore"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2114
+#, c-format
+msgid ""
+"You are about to overwrite the MBR boot code of %s using %s.\n"
+"\n"
+"This change may prevent your computer from booting properly.  All important "
+"data on the entire device should be backed up first.\n"
+"\n"
+"Proceed?  (If you press Yes, you still have one more opportunity to abort "
+"before the disk is modified.)"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2115
+msgid "Restore MBR"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2125 ../src/ptk/ptk-location-view.c:2323
+msgid "Unknown Type"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2125 ../src/ptk/ptk-location-view.c:2323
+msgid ""
+"The selected file is not a recognized backup file.\n"
+"\n"
+"FSArchiver filenames contain 'fsarchiver' or end in '.fsa'.  Partimage "
+"filenames contain 'partimage' or end in '.000'.  MBR filenames end in '."
+"mbr', '.mbr.bin', or '-MBR-back' and are 512 bytes in size.  If you are SURE "
+"this file is a valid backup, you can rename it to avoid this error."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2162
+#, c-format
+msgid ""
+"You are about to restore %s %susing %s - ALL DATA WILL BE LOST.\n"
+"\n"
+"Enter %s restore command:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\t%%%%s\tbackup file ( %s )\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2163
+msgid "Restore"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2196
+#, c-format
+msgid "%s Restore %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2249
+#, c-format
+msgid "The %s directory was not found.  Is udevil installed?"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2253
+msgid "Directory Missing"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2267
+msgid "Choose Backup For Info"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2319
+msgid "MBR File"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2319
+msgid ""
+"Based on its name, the selected file appears to be an MBR backup file.  No "
+"other information is available for this type of backup."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2332
+msgid "Restore Info"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2387
+#, c-format
+msgid ""
+"\n"
+"\n"
+"WARNING: %s is mounted.  By default, FSArchiver will only backup volumes "
+"mounted read-only.  To backup a read-write volume, you need to add --allow-"
+"rw-mounted to the command.  See 'man fsarchiver' for details."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2395
+#, c-format
+msgid ""
+"%s is currently mounted.  You must unmount it before you can create a backup "
+"using Partimage."
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2411
+#, c-format
+msgid "Save %s Backup"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2427
+msgid "Overwrite?"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2427
+msgid "The selected backup already exists.  Overwrite?"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2454
+#, c-format
+msgid ""
+"Enter %s backup command:\n"
+"\n"
+"Use:\n"
+"\t%%%%v\tdevice file ( %s )\n"
+"\t%%%%s\tbackup file ( %s )%s\n"
+"\n"
+"EDIT WITH CARE   This command is run as root"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2457
+msgid "Backup"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2481
+#, c-format
+msgid "%s Backup %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2580
+#, c-format
+msgid "Properties %s"
+msgstr ""
+
+#: ../src/ptk/ptk-location-view.c:2819 ../src/ptk/ptk-location-view.c:2843
+#, c-format
+msgid ""
+"%sCurrently Selected Device: %s\n"
+"Volume Label: %s\n"
+"Device ID: %s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:450
+msgid "Kill As Other"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:504
+msgid "Q_ueue"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:510
+msgid "Res_ume"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:577
+msgid "Stop As Other"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:577
+msgid "Cont As Other"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:736
+msgid "Move: "
+msgstr "Mugitu:"
+
+#: ../src/ptk/ptk-file-task.c:737
+msgid "Copy: "
+msgstr "Kopiatu:"
+
+#: ../src/ptk/ptk-file-task.c:738
+msgid "Delete: "
+msgstr "Ezabatu:"
+
+#: ../src/ptk/ptk-file-task.c:739
+msgid "Link: "
+msgstr "Esteka:"
+
+#: ../src/ptk/ptk-file-task.c:740
+msgid "Change: "
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:741
+msgid "Run: "
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:745
+msgid "Moving..."
+msgstr "Mugitzen..."
+
+#: ../src/ptk/ptk-file-task.c:746
+msgid "Copying..."
+msgstr "Kopiatzen..."
+
+#: ../src/ptk/ptk-file-task.c:747
+msgid "Deleting..."
+msgstr "Ezabatzen..."
+
+#: ../src/ptk/ptk-file-task.c:748
+msgid "Linking..."
+msgstr "Estekatzen..."
+
+#: ../src/ptk/ptk-file-task.c:749
+msgid "Changing..."
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:750 ../src/ptk/ptk-file-task.c:879
+#: ../src/ptk/ptk-file-task.c:1342
+#, c-format
+msgid "Running..."
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:815
+msgid "From:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:828
+msgid "To:"
+msgstr "Nora:"
+
+#: ../src/ptk/ptk-file-task.c:842
+msgid "Progress:  "
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:870
+msgid "Status:  "
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:875 ../src/ptk/ptk-file-task.c:1307
+#, c-format
+msgid "Paused"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:877 ../src/ptk/ptk-file-task.c:1322
+#, c-format
+msgid "Queued"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:928
+msgid "Ask"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:929
+msgid "Overwrite All"
+msgstr "Gain-idatzi Dena"
+
+#: ../src/ptk/ptk-file-task.c:930
+msgid "Skip All"
+msgstr "Saltatu Dena"
+
+#: ../src/ptk/ptk-file-task.c:931
+msgid "Auto Rename"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:935
+msgid "Stop If Error First"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:936
+msgid "Stop On Any Error"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:937
+msgid "Continue"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1077 ../src/ptk/ptk-file-task.c:1283
+#, c-format
+msgid "Stopped"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1081
+msgid "Errors"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1083 ../src/ptk/ptk-file-task.c:1293
+#: ../src/ptk/ptk-file-task.c:1300
+#, c-format
+msgid "Done"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1230
+#, c-format
+msgid "%s  (%s)  %s remaining"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1273
+#, c-format
+msgid "Error  ( Stop If First )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1275
+#, c-format
+msgid "Error  ( Stop On Any )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1277
+#, c-format
+msgid "Stopped with %d error"
+msgid_plural "Stopped with %d errors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-task.c:1288
+#, c-format
+msgid "Finished with %d error"
+msgid_plural "Finished with %d errors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-task.c:1296
+#, c-format
+msgid "Finished with error  ( exit status %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1298
+#, c-format
+msgid "Finished with error"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1311
+#, c-format
+msgid "Paused  ( pid %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1314
+#, c-format
+msgid "Paused  ( exit status %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1326
+#, c-format
+msgid "Queued  ( pid %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1329
+#, c-format
+msgid "Queued  ( exit status %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1337
+#, c-format
+msgid "Running with %d error"
+msgid_plural "Running with %d errors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-task.c:1345
+#, c-format
+msgid "Running...  ( pid %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1348
+#, c-format
+msgid "Running...  ( exit status %d )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1507 ../src/ptk/ptk-file-task.c:2222
+#, c-format
+msgid "stalled"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1608
+msgid "[ SNIP - additional errors above have been trimmed from this log ]\n"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1932
+msgid "Moving from folder:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1934
+msgid "Linking from folder:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1936
+msgid "Copying from folder:"
+msgstr ""
+
+#. Ask the user whether to overwrite dir content or not
+#: ../src/ptk/ptk-file-task.c:1951
+msgid "Folder Exists"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1952
+msgid "<b>Folder already exists.</b>  Please rename or select an action."
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1967 ../src/ptk/ptk-file-task.c:1971
+msgid "\t<b>( link )</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1975
+msgid "\t<b>! overwrite file with link !</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1980
+msgid "<b>( same size )</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1984 ../src/ptk/ptk-file-task.c:2003
+#, c-format
+msgid "%s\t( %lu bytes )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1986
+msgid "larger"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1988
+msgid "smaller"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1992
+msgid "<b>( same time )</b>\t"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:1998
+msgid "newer"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2000
+msgid "older"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2019
+msgid "Filename Exists"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2020 ../src/ptk/ptk-file-task.c:2033
+msgid "<b>Filename already exists.</b>  Please rename or select an action."
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2030
+msgid "Rename Required"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2032
+msgid "In folder:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2102
+msgid "_Overwrite"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2102
+msgid "Overwrite _All"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2106
+msgid "_Pause"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2108
+msgid "_Skip"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2109
+msgid "S_kip All"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2155
+msgid "To folder:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2177
+msgid "<b>Folder Name:</b>"
+msgstr ""
+
+#. extra buttons
+#: ../src/ptk/ptk-file-task.c:2198
+msgid " _Rename "
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2201
+msgid " A_uto Rename "
+msgstr ""
+
+#: ../src/ptk/ptk-file-task.c:2204
+msgid " Auto Re_name All "
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:204 ../src/ptk/ptk-file-archiver.c:513
+#: ../src/ptk/ptk-file-misc.c:3177 ../src/ptk/ptk-handler.c:1404
+msgid "Error Loading Handler"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:331 ../src/ptk/ptk-file-archiver.c:627
+#: ../src/ptk/ptk-file-archiver.c:655
+msgid "Create Archive"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:340 ../src/ptk/ptk-file-archiver.c:1048
+msgid "Conf_igure"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:375
+msgid "Co_mpress Commands:"
+msgstr ""
+
+#. Telling user to ensure handlers are available and bringing
+#. * up configuration
+#: ../src/ptk/ptk-file-archiver.c:402
+msgid "Archive Handlers - Create Archive"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:403
+msgid ""
+"No archive handlers configured. You must add a handler before creating an "
+"archive."
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:482
+msgid "_Archive Format:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:628
+msgid "The archive creation command is empty.  Please enter a command."
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:656
+#, c-format
+msgid ""
+"The following variables should be in the archive creation command:\n"
+"\n"
+"One of the following:\n"
+"\n"
+"%%%%n: First selected file/directory to archive\n"
+"%%%%N: All selected files/directories to archive\n"
+"\n"
+"and one of the following:\n"
+"\n"
+"%%%%o: Resulting single archive\n"
+"%%%%O: Resulting archive per source file/directory (see %%%%n/%%%%N)\n"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:716 ../src/ptk/ptk-handler.c:1896
+msgid "Error Saving Handler"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:806 ../src/ptk/ptk-file-archiver.c:1333
+#: ../src/ptk/ptk-file-archiver.c:1385 ../src/ptk/ptk-file-menu.c:2003
+#: ../src/vfs/vfs-file-task.c:123
+msgid "copy"
+msgstr ""
+
+#. Creating task
+#: ../src/ptk/ptk-file-archiver.c:925 ../src/ptk/ptk-handler.c:1303
+#, c-format
+msgid "Archive"
+msgstr ""
+
+#. It hasn't - generating dialog to ask user. Only dealing with
+#. * user-writable contents if the user isn't root
+#: ../src/ptk/ptk-file-archiver.c:1039
+msgid "Extract To"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:1078
+msgid "Cre_ate subfolder(s)"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:1079
+msgid "Make contents user-_writable"
+msgstr ""
+
+#: ../src/ptk/ptk-file-archiver.c:1207
+msgid "No archive handler/command found for file:"
+msgstr ""
+
+#. Creating task
+#: ../src/ptk/ptk-file-archiver.c:1443
+#, c-format
+msgid "Extract %s"
+msgstr ""
+
+#: ../src/ptk/ptk-console-output.c:74
+msgid ""
+"\n"
+"Complete!"
+msgstr ""
+"\n"
+"Burututa!"
+
+#: ../src/ptk/ptk-console-output.c:178
+msgid "Command:"
+msgstr "Komandoa:"
+
+#: ../src/ptk/ptk-dir-tree.c:138
+msgid "File System"
+msgstr "Fitxategi Sistema"
+
+#: ../src/ptk/ptk-dir-tree.c:362
+msgid "( no subfolder )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1602
+msgid "Remove Text Type Association"
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1602
+msgid ""
+"NOTE:  When compiling the list of applications to appear in the Open submenu "
+"for a text file, zzzFM will include applications associated with the MIME "
+"type (eg text/html) AND applications associated with text/plain.  If you "
+"select Remove on an application, it will be removed as an associated "
+"application for the MIME type (eg text/html), but will NOT be removed as an "
+"associated application for text/plain (unless the MIME type is text/plain).  "
+"Thus using Remove may not remove the application from the Open submenu for "
+"this type, unless you also remove it from text/plain."
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1616
+#, c-format
+msgid ""
+"The file '%s' does not exist.\n"
+"\n"
+"By copying '%s' to '%s' and editing it, you can adjust the behavior and "
+"appearance of this application for the current user.\n"
+"\n"
+"Create this copy now?"
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1617
+msgid "Copy Desktop File"
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1706
+#, c-format
+msgid ""
+"The file '%s' does not exist.\n"
+"\n"
+"By copying '%s' to '%s' and editing it, you can adjust how MIME type '%s' "
+"files are recognized for the current user.\n"
+"\n"
+"Create this copy now?"
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1708
+#, c-format
+msgid ""
+"The file '%s' does not exist.\n"
+"\n"
+"By creating new file '%s' and editing it, you can define how MIME type '%s' "
+"files are recognized for the current user.\n"
+"\n"
+"Create this file now?"
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:1709
+msgid "Create New XML"
+msgstr ""
+
+#. Set Default
+#: ../src/ptk/ptk-file-menu.c:1981
+msgid "_Set As Default"
+msgstr ""
+
+#. Add
+#: ../src/ptk/ptk-file-menu.c:1988
+msgid "_Add..."
+msgstr ""
+
+#: ../src/ptk/ptk-file-menu.c:2040 ../src/ptk/ptk-file-misc.c:1687
+msgid "new"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:159
+#, c-format
+msgid "Delete %d selected item ?"
+msgid_plural "Delete %d selected items ?"
+msgstr[0] ""
+msgstr[1] ""
+
+#. MOD
+#: ../src/ptk/ptk-file-misc.c:162
+msgid "Confirm Delete"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:616
+msgid "<b>P_ath:</b>   <i>original</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:617
+msgid "<b>_Name:</b>   <i>original</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:618
+msgid "<b>_Filename:</b>   <i>original</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:619
+msgid "<b>_Parent:</b>   <i>original</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:624
+msgid "<b>P_ath:</b>   <i>exists as folder</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:625
+msgid "<b>_Name:</b>   <i>exists as folder</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:626
+msgid "<b>_Filename:</b>   <i>exists as folder</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:627 ../src/ptk/ptk-file-misc.c:637
+#: ../src/ptk/ptk-file-misc.c:643 ../src/ptk/ptk-file-misc.c:666
+#: ../src/ptk/ptk-file-misc.c:2285
+msgid "<b>_Parent:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:634
+msgid "<b>P_ath:</b>   <i>exists as file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:635
+msgid "<b>_Name:</b>   <i>exists as file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:636
+msgid "<b>_Filename:</b>   <i>exists as file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:640
+msgid "<b>P_ath:</b>   <i>* overwrite existing file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:641
+msgid "<b>_Name:</b>   <i>* overwrite existing file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:642
+msgid "<b>_Filename:</b>   <i>* overwrite existing file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:649
+msgid "<b>P_ath:</b>   <i>parent exists as file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:650 ../src/ptk/ptk-file-misc.c:658
+#: ../src/ptk/ptk-file-misc.c:664 ../src/ptk/ptk-file-misc.c:2236
+msgid "<b>_Name:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:651 ../src/ptk/ptk-file-misc.c:659
+#: ../src/ptk/ptk-file-misc.c:665 ../src/ptk/ptk-file-misc.c:2269
+msgid "<b>_Filename:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:652
+msgid "<b>_Parent:</b>   <i>parent exists as file</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:657
+msgid "<b>P_ath:</b>   <i>* create parent</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:660
+msgid "<b>_Parent:</b>   <i>* create parent</i>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:663 ../src/ptk/ptk-file-misc.c:2302
+msgid "<b>P_ath:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:674 ../src/ptk/ptk-file-misc.c:1159
+msgid "_Move"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:811
+msgid "Select Link Target"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:825
+msgid "Select Template File"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:839
+msgid "Select Template Folder"
+msgstr ""
+
+#. action create folder does not work properly so not used:
+#. it creates a folder by default with no way to stop it
+#. it gives 'folder already exists' error popup
+#: ../src/ptk/ptk-file-misc.c:975
+msgid "Browse"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1002
+msgid "Fil_ename"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1003
+msgid "Pa_rent"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1006
+msgid "Insert as"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1139
+msgid "C_reate"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1140
+msgctxt "Title|"
+msgid "Create New"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1142
+msgctxt "Title|CreateNew|"
+msgid "File"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1144
+msgctxt "Title|CreateNew|"
+msgid "Folder"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1146
+msgctxt "Title|CreateNew|"
+msgid "Link"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1160 ../src/ptk/ptk-file-misc.c:2017
+msgid "Move"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1164 ../src/ptk/ptk-file-misc.c:1174
+msgid "C_opy"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1165 ../src/ptk/ptk-file-misc.c:1175
+msgid "Copy"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1170 ../src/ptk/ptk-file-misc.c:1181
+msgid "Create Link To"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1176
+msgid "Link Target"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1182
+msgid "Target"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1187 ../src/ptk/ptk-file-misc.c:2550
+msgid " As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1985
+msgid "Link"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:1989 ../src/ptk/ptk-handler.c:1309
+msgid "File"
+msgstr ""
+
+#. Buttons
+#. Adding standard buttons and saving references in the dialog
+#. 'Restore defaults' button has custom text but a stock image
+#: ../src/ptk/ptk-file-misc.c:2022 ../src/ptk/ptk-handler.c:2746
+msgid "Opt_ions"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2034
+msgid "Re_vert"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2051
+msgid "& _Open"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2084
+#, c-format
+msgid "Link-> %s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2087
+#, c-format
+msgid "!Link-> %s (missing)"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2128
+msgid "<b>_Target:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2164
+msgid "<b>_Template:</b>"
+msgstr ""
+
+#. add entries
+#: ../src/ptk/ptk-file-misc.c:2176 ../src/ptk/ptk-file-misc.c:2641
+msgid "Empty File"
+msgstr ""
+
+#. add entries
+#: ../src/ptk/ptk-file-misc.c:2202 ../src/ptk/ptk-file-misc.c:2713
+msgid "Empty Folder"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2253
+msgid "<b>E_xtension:</b>"
+msgstr ""
+
+#. Options
+#: ../src/ptk/ptk-file-misc.c:2318
+msgid "Mov_e"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2319
+msgid "Cop_y"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2320
+msgid "Lin_k"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2322
+msgid "Link Tar_get"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2323
+msgid "A_s Root"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2325
+msgctxt "New|Radio"
+msgid "Fil_e"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2326
+msgctxt "New|Radio"
+msgid "Fol_der"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2327
+msgctxt "New|Radio"
+msgid "_Link"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2398
+msgid "New"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2514
+msgid "Path contains linefeeds"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2559
+msgid "Create Parent Folder"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2560
+msgid "The parent folder does not exist.  Create it?"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2572
+#, c-format
+msgid ""
+"Error creating parent folder\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2573
+msgid "Mkdir Error"
+msgstr ""
+
+#. just in case
+#: ../src/ptk/ptk-file-misc.c:2585
+msgid "Overwrite Existing File"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2587
+msgid "OVERWRITE WARNING"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2587
+msgid "The file path exists.  Overwrite existing file?"
+msgstr ""
+
+#. new link task
+#. link task
+#: ../src/ptk/ptk-file-misc.c:2596 ../src/ptk/ptk-file-misc.c:2815
+#, c-format
+msgid "Create Link%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2651 ../src/ptk/ptk-file-misc.c:2723
+msgid "Template Missing"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2651 ../src/ptk/ptk-file-misc.c:2723
+msgid "The specified template does not exist"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2676
+#, c-format
+msgid "Create New File%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2743
+#, c-format
+msgid "Create New Folder%s"
+msgstr ""
+
+#. copy task
+#: ../src/ptk/ptk-file-misc.c:2771
+#, c-format
+msgid "Copy%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2783
+msgid "Copy Target Error"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2783 ../src/ptk/ptk-file-misc.c:2825
+msgid "Error determining link's target"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2825
+msgid "Link Target Error"
+msgstr ""
+
+#. move task - this is jumped to from the below rename block on
+#. EXDEV error
+#: ../src/ptk/ptk-file-misc.c:2855
+#, c-format
+msgid "Move%s"
+msgstr ""
+
+#. Unknown error has occurred - alert user as usual
+#: ../src/ptk/ptk-file-misc.c:2886
+#, c-format
+msgid ""
+"Error renaming file\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:2887 ../src/desktop/desktop-window.c:1949
+msgid "Rename Error"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3041
+msgid "New Folder"
+msgstr "Karpeta Berria"
+
+#: ../src/ptk/ptk-file-misc.c:3041
+msgid "New folder name:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3043
+msgid "New File"
+msgstr "Fitxategi Berria"
+
+#: ../src/ptk/ptk-file-misc.c:3043
+msgid "New filename:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3062
+msgid ""
+"Name already exists.\n"
+"\n"
+"Please input a new one:"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3091
+msgid "The new file cannot be created"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3479
+#, c-format
+msgid ""
+"This symlink's target is missing or you do not have permission to access "
+"it:\n"
+"%s\n"
+"\n"
+"Target: %s"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3483
+msgid "Broken Link"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3639
+#, c-format
+msgid "Delete %d selected item as root ?"
+msgid_plural "Delete %d selected items as root ?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-misc.c:3640
+msgid "Confirm Delete As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3641
+msgid "DELETE AS ROOT"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3649
+msgid "Delete As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3665
+msgid "Move As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-file-misc.c:3669
+msgid "Copy As Root"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:157 ../src/ptk/ptk-file-properties.c:161
+#, c-format
+msgid "%s ( %lu bytes )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:168
+#, c-format
+msgid "%d folder"
+msgid_plural "%d folders"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-properties.c:169
+#, c-format
+msgid "%d file, %s"
+msgid_plural "%d files, %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-properties.c:173
+#, c-format
+msgid "%d files"
+msgid_plural "%d files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/ptk/ptk-file-properties.c:307
+msgid "( multiple files )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:418
+msgid "( multiple types )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:477
+msgid "Choose..."
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:516
+msgid "<b>Folder _Name:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:528 ../src/ptk/ptk-file-properties.c:532
+#, c-format
+msgid "%s  ( %lu bytes )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:535
+msgid "1 file"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:569
+msgid "<b>Link _Name:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:583
+msgid "( broken link )"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:587
+msgid "( read link error )"
+msgstr ""
+
+#. The total file size displayed in "File Properties" is not
+#. completely calculated yet. So "Calculating..." is displayed.
+#: ../src/ptk/ptk-file-properties.c:598
+msgid "Calculating..."
+msgstr "Kalkulatzen..."
+
+#: ../src/ptk/ptk-file-properties.c:764
+msgid "Change File Date"
+msgstr ""
+
+#: ../src/ptk/ptk-file-properties.c:804
+msgid "Invalid User"
+msgstr "Erabiltzaile Okerra"
+
+#: ../src/ptk/ptk-file-properties.c:815
+msgid "Invalid Group"
+msgstr "Talde Okerra"
+
+#: ../src/ptk/ptk-path-entry.c:577
+#, c-format
+msgid ""
+"In addition to a folder or file path, commands can be entered in the Path "
+"Bar.  Prefixes:\n"
+"\t$\trun as task\n"
+"\t&\trun and forget\n"
+"\t+\trun in terminal\n"
+"\t!\trun as root\n"
+"Use:\n"
+"\t%%F\tselected files  or  %%f first selected file\n"
+"\t%%N\tselected filenames  or  %%n first selected filename\n"
+"\t%%d\tcurrent directory\n"
+"\t%%v\tselected device (eg /dev/sda1)\n"
+"\t%%m\tdevice mount point (eg /media/dvd);  %%l device label\n"
+"\t%%b\tselected bookmark\n"
+"\t%%t\tselected task directory;  %%p task pid\n"
+"\t%%a\tmenu item value\n"
+"\t$fm_panel, $fm_tab, $fm_command, etc\n"
+"\n"
+"Example:  $ echo \"Current Directory: %%d\"\n"
+"Example:  +! umount %%v"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:69
+msgid "Archive Handlers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:70
+msgid "Device Handlers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:71
+msgid "Protocol Handlers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:72
+msgid "File Handlers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:77
+msgid "Archive Hand_lers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:78
+msgid "Device Hand_lers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:79
+msgid "Protocol Hand_lers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:80
+msgid "File Hand_lers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:636 ../src/ptk/ptk-handler.c:648
+msgid "Error: unable to load command (internal error)"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:661 ../src/ptk/ptk-handler.c:749
+msgid "Error: unable to save command (can't get script path?)"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:732
+msgid "Error reading file"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:743
+msgid "Error: unable to save command (internal error)"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:812
+msgid "Error writing to file"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:1305 ../src/item-prop.c:121
+msgid "Device"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:1307
+msgid "Protocol"
+msgstr ""
+
+#. Adding handler to model
+#: ../src/ptk/ptk-handler.c:1327 ../src/ptk/ptk-handler.c:1479
+#: ../src/ptk/ptk-handler.c:1659 ../src/ptk/ptk-handler.c:1719
+msgid "(optional)"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:1327 ../src/ptk/ptk-handler.c:1480
+#: ../src/ptk/ptk-handler.c:1660 ../src/ptk/ptk-handler.c:1720
+msgid "(disabled)"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:1781
+msgid "Permanently remove the selected handler?"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:1985 ../src/ptk/ptk-handler.c:2016
+msgid "Apply Changes ?"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:1986 ../src/ptk/ptk-handler.c:2017
+msgid "Apply changes to the current handler?"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2088
+msgid "Restore Default Handlers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2089
+msgid ""
+"Missing default handlers will be restored.\n"
+"\n"
+"Also OVERWRITE ALL EXISTING default handlers?"
+msgstr ""
+
+#. Handler name not set - warning user and exiting. Note
+#. * that the created dialog does not have an icon set
+#: ../src/ptk/ptk-handler.c:2194
+msgid "Please enter a valid handler name."
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2203
+msgid "Please enter a valid MIME Type or Pathname pattern."
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2240
+#, c-format
+msgid ""
+"The following substitution variables should probably be in the compression "
+"command:\n"
+"\n"
+"One of the following:\n"
+"\n"
+"%%n: First selected file/directory to archive\n"
+"%%N: All selected files/directories to archive\n"
+"\n"
+"and one of the following:\n"
+"\n"
+"%%o: Resulting single archive\n"
+"%%O: Resulting archive per source file/directory"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2266
+#, c-format
+msgid ""
+"The following variables should probably be in the extraction command:\n"
+"\n"
+"%%x: Archive to extract"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2285
+#, c-format
+msgid ""
+"The following variables should probably be in the list command:\n"
+"\n"
+"%%x: Archive to list"
+msgstr ""
+
+#. howdy
+#. item = add_popup_menuitem( popup, accel_group, "_Export", GTK_STOCK_SAVE, HANDLER_JOB_EXPORT, hnd );
+#. gtk_widget_set_sensitive( item, handler_selected );
+#. howdy
+#. add_popup_menuitem( popup, accel_group, "Import _File", GTK_STOCK_ADD, HANDLER_JOB_IMPORT_FILE, hnd );
+#. add_popup_menuitem( popup, accel_group, "Import _URL", GTK_STOCK_NETWORK, HANDLER_JOB_IMPORT_URL, hnd );
+#: ../src/ptk/ptk-handler.c:2647
+msgid "Restore _Default Handlers"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2753
+msgid "Defa_ults"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2825
+msgid "A_dd"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2830
+msgid "Appl_y"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2836
+msgid "U_p"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2842
+msgid "Do_wn"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2850
+msgid "Ena_ble as a default opener"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2850
+msgid "Ena_ble Handler"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2854
+msgid "_Name:"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2857
+msgid "MIM_E Type:"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2857
+msgid "Whit_elist:"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2861
+msgid "P_athname:"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2861
+msgid "Bl_acklist:"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2867
+msgid "_Icon:"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2875
+msgid "<b>Co_mpress:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2877
+msgid "<b>Open Co_mmand:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2879
+msgid "<b>_Mount:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2884
+msgid "<b>Ex_tract:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2885
+msgid "<b>Unmoun_t:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2889
+msgid "<b>Li_st:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2890
+msgid "<b>Propertie_s:</b>"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2971 ../src/ptk/ptk-handler.c:2973
+#: ../src/ptk/ptk-handler.c:2975 ../src/item-prop.c:1817
+msgid "Run In Terminal"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2973 ../src/item-prop.c:1803
+msgid "Run As Task"
+msgstr ""
+
+#: ../src/ptk/ptk-handler.c:2985 ../src/ptk/ptk-handler.c:2990
+#: ../src/ptk/ptk-handler.c:2995
+msgid "Edit"
+msgstr ""
+
+#: ../src/ptk/ptk-app-chooser.c:228
+msgid "Please choose an application:"
+msgstr ""
+
+#: ../src/ptk/ptk-app-chooser.c:468
+#, c-format
+msgid ""
+"Note:  MIME type '%s' is currently set to open with the '%s' file handler, "
+"rather than with your associated MIME application.\n"
+"\n"
+"You may also need to disable this handler in Open|File Handlers for this "
+"type to be opened with your associated application by default."
+msgstr ""
+
+#: ../src/ptk/ptk-app-chooser.c:470 ../src/ptk/ptk-app-chooser.c:483
+msgid "MIME Type Has Handler"
+msgstr ""
+
+#: ../src/ptk/ptk-app-chooser.c:481
+#, c-format
+msgid ""
+"Note:  MIME type '%s' is currently set to open with the '%s' archive "
+"handler, rather than with your associated MIME application.\n"
+"\n"
+"You may also need to disable this handler in Open|Archive Defaults|Archive "
+"Handlers, OR select global option Open|Archive Defaults|Open With App, for "
+"this type to be opened with your associated application by default."
+msgstr ""
+
+#: ../src/vfs/vfs-app-desktop.c:568
+msgid "Command not found"
+msgstr "Komandoa ez da aurkitu"
+
+#: ../src/vfs/vfs-file-info.c:445 ../src/vfs/vfs-file-info.c:448
+#: ../src/vfs/vfs-file-info.c:531 ../src/vfs/vfs-file-info.c:534
+msgid "T"
+msgstr ""
+
+#: ../src/vfs/vfs-file-info.c:459 ../src/vfs/vfs-file-info.c:462
+#: ../src/vfs/vfs-file-info.c:545 ../src/vfs/vfs-file-info.c:548
+msgid "G"
+msgstr ""
+
+#: ../src/vfs/vfs-file-info.c:476 ../src/vfs/vfs-file-info.c:479
+#: ../src/vfs/vfs-file-info.c:562 ../src/vfs/vfs-file-info.c:565
+msgid "M"
+msgstr ""
+
+#: ../src/vfs/vfs-file-info.c:492 ../src/vfs/vfs-file-info.c:495
+#: ../src/vfs/vfs-file-info.c:578 ../src/vfs/vfs-file-info.c:581
+msgid "K"
+msgstr ""
+
+#. unit = size > 1 ? "Bytes" : "Byte";
+#: ../src/vfs/vfs-file-info.c:498 ../src/vfs/vfs-file-info.c:585
+msgid "B"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:270
+#, c-format
+msgid "Destination directory \"%1$s\" is contained in source \"%2$s\""
+msgstr "\"%1$s\" helburu direktorioa \"%2$s\" jatorrian dago"
+
+#: ../src/vfs/vfs-file-task.c:352 ../src/vfs/vfs-file-task.c:485
+#: ../src/vfs/vfs-file-task.c:580 ../src/vfs/vfs-file-task.c:630
+#: ../src/vfs/vfs-file-task.c:760 ../src/vfs/vfs-file-task.c:790
+#: ../src/vfs/vfs-file-task.c:872 ../src/vfs/vfs-file-task.c:1010
+#: ../src/vfs/vfs-file-task.c:1968
+msgid "Accessing"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:424 ../src/vfs/vfs-file-task.c:457
+#: ../src/vfs/vfs-file-task.c:473 ../src/vfs/vfs-file-task.c:511
+#: ../src/vfs/vfs-file-task.c:548 ../src/vfs/vfs-file-task.c:569
+#: ../src/vfs/vfs-file-task.c:823 ../src/vfs/vfs-file-task.c:830
+#: ../src/vfs/vfs-file-task.c:896
+msgid "Removing"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:431
+msgid "Creating Dir"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:481 ../src/vfs/vfs-file-task.c:904
+msgid "Creating Link"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:537
+msgid "Writing"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:575
+msgid "Creating"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:692
+msgid "Renaming"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1297
+msgid ""
+"Please install /usr/bin/sha256sum so I can improve your security while "
+"running root commands\n"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1387
+msgid ""
+"Please configure a valid Terminal SU command in View|Preferences|Advanced"
+msgstr ""
+
+#. do not use xset_msg_dialog if non-main thread
+#. vfs_file_task_exec_error( task, 0, str );
+#: ../src/vfs/vfs-file-task.c:1391
+msgid "Terminal SU Not Available"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1397
+msgid ""
+"Please configure a valid Graphical SU command in View|Preferences|Advanced"
+msgstr ""
+
+#. do not use xset_msg_dialog if non-main thread
+#. vfs_file_task_exec_error( task, 0, str );
+#: ../src/vfs/vfs-file-task.c:1401
+msgid "Graphical SU Not Available"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1415
+msgid "Cannot create temporary directory"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1446
+msgid "Please set a valid terminal program in View|Preferences|Advanced"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1734
+msgid "zzzfm-auth not found in path - this reduces your security"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1818
+#, c-format
+msgid ""
+"Error executing '%s'\n"
+"See stdout (run zzzfm in a terminal) for debug info"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:1883
+msgid "Error writing temporary file"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:2044
+msgid "Timed out calculating total size\n"
+msgstr ""
+
+#: ../src/vfs/vfs-file-task.c:2350
+#, c-format
+msgid ""
+"\n"
+"%s %s\n"
+"Error: %s\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:2286
+#, c-format
+msgid ":floppy"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:2307
+#, c-format
+msgid ":optical"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:2352
+#, c-format
+msgid "[blank]"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:2356
+#, c-format
+msgid "[audio]"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:2368
+#, c-format
+msgid "[no media]"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3265
+msgid "Selected Device Handler"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3266
+msgid "Selected Protocol Handler"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3521
+#, c-format
+msgid "( no udev device )"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3815
+#, c-format
+msgid ""
+"\n"
+"Autoexec: %s\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3853
+#, c-format
+msgid ""
+"\n"
+"Auto Open Tab for %s in %s\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3893
+#, c-format
+msgid ""
+"\n"
+"Auto-Unmount: %s\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3898
+#, c-format
+msgid ""
+"\n"
+"Auto-Unmount: error: no unmount command available\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3916
+#, c-format
+msgid ""
+"\n"
+"Automount: %s\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:3921
+#, c-format
+msgid ""
+"\n"
+"Automount: error: no mount command available\n"
+msgstr ""
+
+#: ../src/vfs/vfs-volume-nohal.c:4119
+#, c-format
+msgid "Unmount-If-Mounted: %s\n"
+msgstr ""
+
+#: ../src/desktop/desktop-window.c:1918
+#, c-format
+msgid ""
+"You do not have permission to edit the contents of file %s\n"
+"\n"
+"Consider copying the file to the desktop, or link to a copy placed in ~/."
+"local/share/applications/"
+msgstr ""
+
+#: ../src/desktop/desktop-window.c:1919
+msgid "Unable To Rename"
+msgstr ""
+
+#: ../src/desktop/desktop-window.c:1926
+#, c-format
+msgid ""
+"Enter new desktop item name:\n"
+"\n"
+"Changing the name of this desktop item requires modifying the contents of "
+"desktop file %s"
+msgstr ""
+
+#: ../src/desktop/desktop-window.c:1928
+msgid "Change Desktop Item Name"
+msgstr ""
+
+#: ../src/desktop/desktop-window.c:1949
+msgid "An error occurred renaming this desktop item."
+msgstr ""
+
+#: ../src/find-files.c:274
+msgid "Open Containing _Folder"
+msgstr ""
+
+#: ../src/find-files.c:765
+msgid "Select a folder"
+msgstr ""
+
+#: ../src/find-files.c:814
+msgid "Browse..."
+msgstr ""
+
+#: ../src/find-files.c:838
+msgid "Local Volumes"
+msgstr ""
+
+#: ../src/find-files.c:926
+msgid "Last Modified"
+msgstr ""
+
+#: ../src/item-prop.c:22
+msgid ""
+"Enter program or bash command line(s):\n"
+"\n"
+"Use:\n"
+"\t%F\tselected files  or  %f first selected file\n"
+"\t%N\tselected filenames  or  %n first selected filename\n"
+"\t%d\tcurrent directory\n"
+"\t%v\tselected device (eg /dev/sda1)\n"
+"\t%m\tdevice mount point (eg /media/dvd);  %l device label\n"
+"\t%b\tselected bookmark\n"
+"\t%t\tselected task directory;  %p task pid\n"
+"\t%a\tmenu item value\n"
+"\t$fm_panel, $fm_tab, $fm_command, etc"
+msgstr ""
+
+#: ../src/item-prop.c:105
+msgid "MIME Type"
+msgstr ""
+
+#: ../src/item-prop.c:106
+msgid "Filename"
+msgstr ""
+
+#: ../src/item-prop.c:107
+msgid "Directory"
+msgstr ""
+
+#: ../src/item-prop.c:108
+msgid "Dir Write Access"
+msgstr ""
+
+#: ../src/item-prop.c:109
+msgid "File Is Text"
+msgstr ""
+
+#: ../src/item-prop.c:110
+msgid "File Is Dir"
+msgstr ""
+
+#: ../src/item-prop.c:111
+msgid "File Is Link"
+msgstr ""
+
+#: ../src/item-prop.c:112
+msgid "User Is Root"
+msgstr ""
+
+#: ../src/item-prop.c:113
+msgid "Multiple Selected"
+msgstr ""
+
+#: ../src/item-prop.c:114
+msgid "Clipboard Has Files"
+msgstr ""
+
+#: ../src/item-prop.c:115
+msgid "Clipboard Has Text"
+msgstr ""
+
+#: ../src/item-prop.c:116
+msgid "Current Panel"
+msgstr ""
+
+#: ../src/item-prop.c:117
+msgid "Panel Count"
+msgstr ""
+
+#: ../src/item-prop.c:118
+msgid "Current Tab"
+msgstr ""
+
+#: ../src/item-prop.c:119
+msgid "Tab Count"
+msgstr ""
+
+#: ../src/item-prop.c:120 ../src/item-prop.c:220
+msgid "Bookmark"
+msgstr ""
+
+#: ../src/item-prop.c:122
+msgid "Device Mount Point"
+msgstr ""
+
+#: ../src/item-prop.c:123
+msgid "Device Label"
+msgstr ""
+
+#: ../src/item-prop.c:124
+msgid "Device FSType"
+msgstr ""
+
+#: ../src/item-prop.c:125
+msgid "Device UDI"
+msgstr ""
+
+#: ../src/item-prop.c:126
+msgid "Device Properties"
+msgstr ""
+
+#: ../src/item-prop.c:127
+msgid "Task Count"
+msgstr ""
+
+#: ../src/item-prop.c:128
+msgid "Task Directory"
+msgstr ""
+
+#: ../src/item-prop.c:129
+msgid "Task Type"
+msgstr ""
+
+#: ../src/item-prop.c:130
+msgid "Task Name"
+msgstr ""
+
+#: ../src/item-prop.c:131
+msgid "Panel 1 Directory"
+msgstr ""
+
+#: ../src/item-prop.c:132
+msgid "Panel 2 Directory"
+msgstr ""
+
+#: ../src/item-prop.c:133
+msgid "Panel 3 Directory"
+msgstr ""
+
+#: ../src/item-prop.c:134
+msgid "Panel 4 Directory"
+msgstr ""
+
+#: ../src/item-prop.c:135
+msgid "Panel 1 Has Sel"
+msgstr ""
+
+#: ../src/item-prop.c:136
+msgid "Panel 2 Has Sel"
+msgstr ""
+
+#: ../src/item-prop.c:137
+msgid "Panel 3 Has Sel"
+msgstr ""
+
+#: ../src/item-prop.c:138
+msgid "Panel 4 Has Sel"
+msgstr ""
+
+#: ../src/item-prop.c:139
+msgid "Panel 1 Device"
+msgstr ""
+
+#: ../src/item-prop.c:140
+msgid "Panel 2 Device"
+msgstr ""
+
+#: ../src/item-prop.c:141
+msgid "Panel 3 Device"
+msgstr ""
+
+#: ../src/item-prop.c:142
+msgid "Panel 4 Device"
+msgstr ""
+
+#: ../src/item-prop.c:204
+msgid "equals"
+msgstr ""
+
+#: ../src/item-prop.c:205
+msgid "doesn't equal"
+msgstr ""
+
+#: ../src/item-prop.c:206
+msgid "contains"
+msgstr ""
+
+#: ../src/item-prop.c:207
+msgid "doesn't contain"
+msgstr ""
+
+#: ../src/item-prop.c:208
+msgid "begins with"
+msgstr ""
+
+#: ../src/item-prop.c:209
+msgid "doesn't begin with"
+msgstr ""
+
+#: ../src/item-prop.c:210
+msgid "ends with"
+msgstr ""
+
+#: ../src/item-prop.c:211
+msgid "doesn't end with"
+msgstr ""
+
+#: ../src/item-prop.c:212
+msgid "is less than"
+msgstr ""
+
+#: ../src/item-prop.c:213
+msgid "is greater than"
+msgstr ""
+
+#: ../src/item-prop.c:214
+msgid "matches"
+msgstr ""
+
+#: ../src/item-prop.c:215
+msgid "doesn't match"
+msgstr ""
+
+#: ../src/item-prop.c:221
+msgid "Application"
+msgstr ""
+
+#: ../src/item-prop.c:222
+msgid "Command"
+msgstr ""
+
+#: ../src/item-prop.c:478
+msgid "Current: Show"
+msgstr ""
+
+#: ../src/item-prop.c:483
+msgid "Current: Hide"
+msgstr ""
+
+#: ../src/item-prop.c:485
+msgid "Current: Disable"
+msgstr ""
+
+#: ../src/item-prop.c:488
+msgid "Current: Enable"
+msgstr ""
+
+#: ../src/item-prop.c:782
+msgid "Save Modified Script?"
+msgstr ""
+
+#: ../src/item-prop.c:783
+msgid "Save your changes to the command script?"
+msgstr ""
+
+#: ../src/item-prop.c:785
+msgid "Overwrite Script?"
+msgstr ""
+
+#: ../src/item-prop.c:786
+msgid ""
+"The command script on disk has changed.\n"
+"\n"
+"Do you want to overwrite it?"
+msgstr ""
+
+#: ../src/item-prop.c:832 ../src/item-prop.c:1883
+msgid "Command Dir"
+msgstr ""
+
+#: ../src/item-prop.c:832 ../src/item-prop.c:1883 ../src/item-prop.c:1889
+msgid "(no files)"
+msgstr ""
+
+#: ../src/item-prop.c:898
+msgid ""
+"The command line does not begin with a text file (script) to be opened, or "
+"the script was not found in your $PATH."
+msgstr ""
+
+#: ../src/item-prop.c:1004
+msgid "Targets:  (a semicolon-separated list of paths or URLs)"
+msgstr ""
+
+#: ../src/item-prop.c:1009
+msgid "Target:  (a .desktop or executable file)"
+msgstr ""
+
+#. Browse
+#: ../src/item-prop.c:1127
+msgid "Choose Executable"
+msgstr ""
+
+#: ../src/item-prop.c:1209
+#, fuzzy
+msgid "Command Line Too Long"
+msgstr "Komandoa ez da aurkitu"
+
+#: ../src/item-prop.c:1210
+msgid ""
+"Your command line is greater than 2000 characters and may be truncated when "
+"saved.  Consider using a command script instead by selecting Script on the "
+"Command tab."
+msgstr ""
+
+#. Dialog
+#: ../src/item-prop.c:1404
+msgid "Toolbar Item Properties"
+msgstr ""
+
+#: ../src/item-prop.c:1405
+msgid "Menu Item Properties"
+msgstr ""
+
+#: ../src/item-prop.c:1431
+msgid "_Toolbar Item"
+msgstr ""
+
+#: ../src/item-prop.c:1432
+msgid "_Menu Item"
+msgstr ""
+
+#: ../src/item-prop.c:1440
+msgid "Type:"
+msgstr ""
+
+#: ../src/item-prop.c:1449
+msgid "Name:"
+msgstr ""
+
+#: ../src/item-prop.c:1456
+msgid "Key:"
+msgstr ""
+
+#: ../src/item-prop.c:1464
+msgid "Icon:"
+msgstr ""
+
+#: ../src/item-prop.c:1529
+msgid "Con_text"
+msgstr ""
+
+#: ../src/item-prop.c:1568
+msgid "A_pply"
+msgstr ""
+
+#: ../src/item-prop.c:1594
+msgid "matches any rule:"
+msgstr ""
+
+#: ../src/item-prop.c:1595
+msgid "matches all rules:"
+msgstr ""
+
+#: ../src/item-prop.c:1596
+msgid "doesn't match any rule:"
+msgstr ""
+
+#: ../src/item-prop.c:1597
+msgid "doesn't match all rules:"
+msgstr ""
+
+#: ../src/item-prop.c:1602
+msgid "Show"
+msgstr ""
+
+#: ../src/item-prop.c:1603
+msgid "Enable"
+msgstr ""
+
+#: ../src/item-prop.c:1604
+msgid "Hide"
+msgstr ""
+
+#: ../src/item-prop.c:1605
+msgid "Disable"
+msgstr ""
+
+#: ../src/item-prop.c:1625
+msgid "item if context"
+msgstr ""
+
+#: ../src/item-prop.c:1643
+msgid "Edit Rule"
+msgstr ""
+
+#: ../src/item-prop.c:1654
+msgid "Value:"
+msgstr ""
+
+#: ../src/item-prop.c:1662
+msgid "If enabled, use as handler for:"
+msgstr ""
+
+#: ../src/item-prop.c:1665
+msgid "none"
+msgstr ""
+
+#: ../src/item-prop.c:1666
+msgid "files"
+msgstr ""
+
+#: ../src/item-prop.c:1667
+msgid "devices"
+msgstr ""
+
+#. Ignore Context
+#: ../src/item-prop.c:1672
+msgid "_Ignore Context / Show All  (global setting)"
+msgstr ""
+
+#: ../src/item-prop.c:1752
+msgid "Comm_and"
+msgstr ""
+
+#: ../src/item-prop.c:1755
+msgid "Command _Line"
+msgstr ""
+
+#: ../src/item-prop.c:1756
+msgid "_Script"
+msgstr ""
+
+#: ../src/item-prop.c:1759
+msgid "Open In _Editor"
+msgstr ""
+
+#: ../src/item-prop.c:1763
+msgid "_Root Editor"
+msgstr ""
+
+#: ../src/item-prop.c:1793
+msgid "Optio_ns"
+msgstr ""
+
+#: ../src/item-prop.c:1795
+msgid "Run Options"
+msgstr ""
+
+#: ../src/item-prop.c:1806
+msgid "Popup Task"
+msgstr ""
+
+#: ../src/item-prop.c:1807
+msgid "Popup Error"
+msgstr ""
+
+#: ../src/item-prop.c:1808
+msgid "Popup Output"
+msgstr ""
+
+#: ../src/item-prop.c:1809
+msgid "Scroll Output"
+msgstr ""
+
+#: ../src/item-prop.c:1818
+msgid "Keep Terminal Open"
+msgstr ""
+
+#: ../src/item-prop.c:1824
+msgid "Run As User:"
+msgstr ""
+
+#: ../src/item-prop.c:1829
+msgid "( leave blank for current user )"
+msgstr ""
+
+#: ../src/item-prop.c:1834
+msgid "Style"
+msgstr ""
+
+#: ../src/item-prop.c:1843
+msgid "Normal"
+msgstr ""
+
+#: ../src/item-prop.c:1844
+msgid "Checkbox"
+msgstr ""
+
+#: ../src/item-prop.c:1845
+msgid "Confirmation"
+msgstr ""
+
+#: ../src/item-prop.c:1846
+msgid "Input"
+msgstr ""
+
+#: ../src/item-prop.c:1855
+msgid "Confirmation/Input Message:"
+msgstr ""
+
+#: ../src/item-prop.c:1872
+msgid "Open In Browser:"
+msgstr ""
+
+#: ../src/item-prop.c:1889
+msgid "Data Dir"
+msgstr ""
+
+#: ../src/item-prop.c:1913
+msgid "Built-In Toolbar Item"
+msgstr ""
+
+#: ../src/item-prop.c:1915
+msgid "Submenu"
+msgstr ""
+
+#: ../src/item-prop.c:1917
+msgid "Separator"
+msgstr ""
+
+#. built-in
+#: ../src/item-prop.c:1921
+msgid "Built-In Command"
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-ellipsized-text.c:188
+#: ../src/exo/exo-cell-renderer-icon.c:169
+msgid "Follow state"
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-ellipsized-text.c:189
+#: ../src/exo/exo-cell-renderer-icon.c:170
+msgid "Render differently based on the selection state."
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-icon.c:192
+msgid "Icon"
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-icon.c:193
+msgid "The icon to render."
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-icon.c:211
+msgid "GIcon"
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-icon.c:212
+msgid "The GIcon to render."
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-icon.c:233
+msgid "size"
+msgstr ""
+
+#: ../src/exo/exo-cell-renderer-icon.c:234
+msgid "The size of the icon to render in pixels."
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_ACTIONS
+#: ../src/exo/exo-icon-chooser-dialog.c:125
+msgid "Action Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_ANIMATIONS
+#: ../src/exo/exo-icon-chooser-dialog.c:127
+msgid "Animations"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_APPLICATIONS
+#: ../src/exo/exo-icon-chooser-dialog.c:129
+msgid "Application Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_CATEGORIES
+#: ../src/exo/exo-icon-chooser-dialog.c:131
+msgid "Menu Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_DEVICES
+#: ../src/exo/exo-icon-chooser-dialog.c:133
+msgid "Device Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_EMBLEMS
+#: ../src/exo/exo-icon-chooser-dialog.c:135
+msgid "Emblems"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_EMOTES
+#: ../src/exo/exo-icon-chooser-dialog.c:137
+msgid "Emoticons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_INTERNATIONAL
+#: ../src/exo/exo-icon-chooser-dialog.c:139
+msgid "International Denominations"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_MIME_TYPES
+#: ../src/exo/exo-icon-chooser-dialog.c:141
+msgid "File Type Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_PLACES
+#: ../src/exo/exo-icon-chooser-dialog.c:143
+msgid "Location Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_STATUS
+#: ../src/exo/exo-icon-chooser-dialog.c:145
+msgid "Status Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_OTHER
+#: ../src/exo/exo-icon-chooser-dialog.c:147
+msgid "Uncategorized Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_ALL
+#: ../src/exo/exo-icon-chooser-dialog.c:151
+msgid "All Icons"
+msgstr ""
+
+#. EXO_ICON_CHOOSER_CONTEXT_FILE
+#: ../src/exo/exo-icon-chooser-dialog.c:155
+#: ../src/exo/exo-icon-chooser-dialog.c:305
+#, fuzzy
+msgid "Image Files"
+msgstr "Fitxategi Berria"
+
+#. setup the context combo box
+#: ../src/exo/exo-icon-chooser-dialog.c:223
+msgid "Select _icon from:"
+msgstr ""
+
+#. search filter
+#: ../src/exo/exo-icon-chooser-dialog.c:238
+msgid "_Search icon:"
+msgstr ""
+
+#: ../src/exo/exo-icon-chooser-dialog.c:249
+msgid "Clear search field"
+msgstr ""
+
+#: ../src/exo/exo-thumbnail-preview.c:137
+msgid "Preview"
+msgstr ""
+
+#: ../src/exo/exo-thumbnail-preview.c:153
+#: ../src/exo/exo-thumbnail-preview.c:236
+msgid "No file selected"
+msgstr ""
+
+#: ../src/exo/exo-thumbnail-preview.c:252
+msgid "Block Device"
+msgstr ""
+
+#: ../src/exo/exo-thumbnail-preview.c:257
+msgid "Character Device"
+msgstr ""
+
+#: ../src/exo/exo-thumbnail-preview.c:267
+msgid "FIFO"
+msgstr ""
+
+#: ../src/exo/exo-thumbnail-preview.c:272
+msgid "Socket"
+msgstr ""
+
+#~ msgid "Unable to mount device"
+#~ msgstr "Ezin izan da gailua muntatu"
+
+#~ msgid "Unable to unmount device"
+#~ msgstr "Ezin izan da gailua desmuntatu"
+
+#~ msgid "Unable to eject device"
+#~ msgstr "Ezin izan da gailua atera"
+
+#~ msgid "_Eject"
+#~ msgstr "_Atera"

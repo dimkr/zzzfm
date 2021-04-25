@@ -1,0 +1,74 @@
+zzzFM is derived from the SpaceFM v1.0.6 codebase
+https://github.com/IgnorantGuru/spacefm
+
+
+SpaceFM Contributors
+
+Developer:      IgnorantGuru
+
+Contributors:   BwackNinja
+                OmegaPhil
+
+Artwork:        SpaceFM icons and logo by Goran Simovic
+                Additional icons from the Tango Desktop Project icon set
+
+Thanks to SpaceFM users for valuable feedback and to SpaceFM translators and
+packagers!
+
+Special thanks to:
+
+    Jean-Philippe Fleury
+    Vladimir Kudrya
+    VastOne
+    Hasufell
+
+SpaceFM is developed on geany, gcc, and git, with a little help from gdb.
+
+
+==============================================================================
+
+PCManFM Legacy Code:
+
+    Developer: (Hong Jen Yee, aka PCMan)
+    Contributors: (in alphabetical order )
+        Cantona
+        Orlando Fiol
+        Jim Huang (jserv)
+        Ying-Chun Liu (PaulLiu)
+        Mamoru Tasaka
+        Kirilov Georgi
+        Martijn Dekker
+        Eugene Arshinov (statc)
+
+PCManFM Legacy Translators: ( in alphabetical order )
+
+    Johan Andersson
+    Fábio Antunes
+    Inko Illarramendi Arancibia
+    Rüdiger Arp
+    SZERVÁC Attila
+    Frederic Bezies
+    Xisco Bonet
+    Haifeng Chen
+    Héonium - Christophe CRIER
+    Flávio Costa
+    Ersplus - Fraide
+    Roxana Kolosova
+    Hironao Komatsu
+    Muhammad Ali Makki
+    mario
+    mazdac
+    Nuno Miguel
+    Claudio Riva
+    Bekir SONAT
+    Anton Dobkin
+
+External source code taken from other projects:
+    pcmanfm-mod: IgnorantGuru
+    pcmanfm v0.5.2: (Hong Jen Yee, aka PCMan)
+    libmd5-rfc: Aladdin Enterprises
+    Working area detection: Gary Kramlich
+    ExoIconView: os-cillation e.K, Anders Carlsson, &amp; Benedikt Meurer
+    Text and icon renderer uses code from Jonathan Blandford
+    Desktop icons use code from Brian Tarricone
+

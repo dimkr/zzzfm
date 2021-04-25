@@ -1,0 +1,12 @@
+[Desktop Entry]
+_Name=zzzFM Open Folder
+_Comment=Open folder
+TryExec=zzzfm
+Exec=zzzfm %U
+NoDisplay=true
+Terminal=false
+Icon=/usr/share/pixmaps/zzzfm.png
+StartupNotify=true
+Type=Application
+MimeType=inode/directory;
+

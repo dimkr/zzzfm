@@ -1,0 +1,21 @@
+debian/tmp/gtk2/usr/share/locale/* /usr/share/locale/
+debian/tmp/gtk2/usr/share/mime/* /usr/share/mime/
+debian/tmp/gtk2/usr/share/zzzfm/ui/* /usr/share/zzzfm/ui/
+debian/tmp/gtk2/usr/share/doc/* usr/share/doc/
+
+data/zzzfm.png                  /usr/share/pixmaps/
+data/zzzfm-root.png             /usr/share/pixmaps/
+data/zzzfm-find.png             /usr/share/pixmaps/
+
+data/zzzfm-48-folder-blue.png        /usr/share/pixmaps/
+data/zzzfm-48-folder-red.png         /usr/share/pixmaps/
+
+data/zzzfm-48-cube-blue.png          /usr/share/pixmaps/
+data/zzzfm-48-cube-red.png           /usr/share/pixmaps/
+
+data/zzzfm-128-cube-blue.png         /usr/share/pixmaps/
+data/zzzfm-128-cube-red.png          /usr/share/pixmaps/
+
+
+
+

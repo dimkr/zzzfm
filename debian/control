@@ -1,0 +1,72 @@
+Source: zzzfm
+Section: utils
+Priority: optional
+Maintainer: skidoo <email@redact.ed>
+Build-Depends: debhelper-compat (= 11), libgtk2.0-dev (>= 2.24),
+ libcairo2-dev, libpango1.0-dev, libx11-dev, intltool, pkg-config,
+ libglib2.0-dev, libstartup-notification0-dev,
+ libgdk-pixbuf2.0-dev, libudev-dev, libgtk-3-dev,
+Standards-Version: 4.5.0
+Homepage:https://gitlab.com/skidoo/zzzfm
+
+Package: zzzfm
+Architecture: linux-any
+Depends: ${misc:Depends}, ${shlibs:Depends}, zzzfm-common (= ${source:Version}),
+ desktop-file-utils, shared-mime-info, e2fsprogs
+Recommends: udisks2
+Suggests: udevil, eject, lsof, gksu, sshfs, dbus, fuseiso, curlftpfs, jmtpfs, gphotofs, ifuse
+Replaces: zzzfm-gtk3
+Conflicts: zzzfm-gtk3
+Description: Multi-panel tabbed file manager - GTK2 version
+ zzzFM is a multi-panel tabbed file and desktop manager for Linux with
+ built-in VFS, udev device manager, customizable menu system and
+ bash integration.
+ .
+ zzzFM's UI is customizable (use Design Mode to change,
+ and add to, the GUI as-you-go). The program is independent of particular
+ desktop environments, and provides device management featureful enough to
+ replace the various udisks-based *kits when used alongside udevil.
+ .
+ Other highlights include optional desktop management, smart queuing
+ of file operations, user plugins, and the ability to carry out specific
+ commands as root.
+ .
+ If you would prefer a GTK+3 UI, Please install zzzfm-gtk3 instead.
+
+
+Package: zzzfm-common
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: zzzfm | zzzfm-gtk3
+Description: Multi-panel tabbed file manager - common files
+ zzzFM is a multi-panel tabbed file and desktop manager for Linux with
+ built-in VFS, udev -based device manager, customizable menu system
+ and bash integration.
+ .
+ This package contains files used by both the GTK+2 (zzzfm) and
+ GTK+3 (zzzfm-gtk3) versions.
+
+
+Package: zzzfm-gtk3
+Architecture: linux-any
+Depends: ${misc:Depends}, ${shlibs:Depends}, zzzfm-common (= ${source:Version}),
+ desktop-file-utils, shared-mime-info, e2fsprogs
+Recommends: udisks2
+Suggests: udevil, eject, lsof, gksu, sshfs, dbus, fuseiso, curlftpfs, jmtpfs, gphotofs, ifuse
+Replaces: zzzfm
+Conflicts: zzzfm
+Description: Multi-panel tabbed file manager - GTK3 version
+ zzzFM is a multi-panel tabbed file and desktop manager for Linux with
+ built-in VFS, udev device manager, customizable menu system and
+ bash integration.
+ .
+ zzzFM's UI is customizable (use Design Mode to change,
+ and add to, the GUI as-you-go). The program is independent of particular
+ desktop environments, and provides device management featureful enough to
+ replace the various udisks-based *kits when used alongside udevil.
+ .
+ Other highlights include optional desktop management, smart queuing
+ of file operations, user plugins, and the ability to carry out specific
+ commands as root.
+ .
+ If you want to stick with GTK2, please install zzzfm (vs zzzfm-gtk3) instead.
