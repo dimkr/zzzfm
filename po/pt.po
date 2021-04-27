@@ -1662,7 +1662,7 @@ msgstr "Abrir terminal"
 
 #: ../src/main-window.c:911
 msgid "Design Mode Help"
-msgstr "Ajuda do modo de desenho"
+msgstr "Ajuda do modo de designer"
 
 #: ../src/main-window.c:911
 msgid ""
@@ -2306,15 +2306,15 @@ msgstr ""
 
 #: ../src/settings.c:179
 msgid "Show Devices"
-msgstr ""
+msgstr "Mostrar Dispositivos"
 
 #: ../src/settings.c:180
 msgid "Show Bookmarks"
-msgstr ""
+msgstr "Mostrar Marcadores"
 
 #: ../src/settings.c:181
 msgid "Show Tree"
-msgstr ""
+msgstr "Mostrar Árvore"
 
 #: ../src/settings.c:182 ../src/ptk/ptk-location-view.c:3776
 #: ../src/ptk/ptk-location-view.c:4211
@@ -2332,7 +2332,7 @@ msgstr "Recuar"
 
 #: ../src/settings.c:186
 msgid "Back History"
-msgstr ""
+msgstr "Histórico - Recuar"
 
 #: ../src/settings.c:187
 msgid "Forward"
@@ -2340,7 +2340,7 @@ msgstr "Avançar"
 
 #: ../src/settings.c:188
 msgid "Forward History"
-msgstr ""
+msgstr "Histórico - avançar"
 
 #: ../src/settings.c:189
 msgid "Refresh"
@@ -2356,7 +2356,7 @@ msgstr "Novo separador aqui"
 
 #: ../src/settings.c:192
 msgid "Show Hidden"
-msgstr ""
+msgstr "Mostrar Escondidos"
 
 #: ../src/settings.c:194
 #, fuzzy
@@ -2366,12 +2366,12 @@ msgstr "Ícones grandes:"
 #: ../src/settings.c:454
 #, c-format
 msgid "%s: %s contains invalid characters - ignored"
-msgstr ""
+msgstr "%s: %s contem caracteres inválidos - ignorar"
 
 #: ../src/settings.c:458
 #, c-format
 msgid "%s: tmp_dir '%s' does not exist - reverting to %s"
-msgstr ""
+msgstr "%s: tmp_dir '%s' não existe - a reverter para %s"
 
 #: ../src/settings.c:468
 #, fuzzy
@@ -3383,7 +3383,7 @@ msgstr "Definiçõe_s"
 
 #: ../src/settings.c:9769
 msgid "Bookmark _Icon"
-msgstr ""
+msgstr "_Icone de Marcador"
 
 #: ../src/settings.c:9774
 msgid "Sub_menu Icon"
@@ -3391,7 +3391,7 @@ msgstr ""
 
 #: ../src/settings.c:9779
 msgid "_Show Bookmarks"
-msgstr ""
+msgstr "Mostrar Marcardores"
 
 #: ../src/settings.c:9784
 msgid "New _Bookmark"
@@ -3603,7 +3603,7 @@ msgstr "_Ocultar"
 
 #: ../src/settings.c:10001
 msgid "_Event Manager"
-msgstr ""
+msgstr "Gesto de _Eventos"
 
 #: ../src/settings.c:10007
 msgid "_Instance"
@@ -3676,11 +3676,11 @@ msgstr ""
 #: ../src/settings.c:10035
 msgctxt "View|Events|Window|"
 msgid "_Focus"
-msgstr ""
+msgstr "_Foco"
 
 #: ../src/settings.c:10037
 msgid "Set Window Focus Command"
-msgstr ""
+msgstr "Escolher comando de Foco de Janela"
 
 #: ../src/settings.c:10038
 #, c-format
@@ -3699,11 +3699,11 @@ msgstr ""
 
 #: ../src/settings.c:10041
 msgid "_Move/Resize"
-msgstr ""
+msgstr "_Mover/Alterar tamanho"
 
 #: ../src/settings.c:10043
 msgid "Set Window Move/Resize Command"
-msgstr ""
+msgstr "Escolher Comando para Mover/alterar tamanho de Janela"
 
 #: ../src/settings.c:10044
 #, c-format
@@ -4060,11 +4060,11 @@ msgstr ""
 #. x and y store global icon chooser dialog size              howdy
 #: ../src/settings.c:10139
 msgid "_Fullscreen"
-msgstr ""
+msgstr "Ecrã completo"
 
 #: ../src/settings.c:10142
 msgid "_Design Mode"
-msgstr ""
+msgstr "_Modo Designer"
 
 #: ../src/settings.c:10145
 msgid "_Preferences"
@@ -4139,7 +4139,7 @@ msgstr ""
 
 #: ../src/settings.c:10284
 msgid "_Task Manager"
-msgstr ""
+msgstr "Gestor de _Tarefas"
 
 #: ../src/settings.c:10289
 msgid "_Status"
@@ -4593,7 +4593,7 @@ msgstr ""
 
 #: ../src/settings.c:10835
 msgid "_Sort"
-msgstr ""
+msgstr "Ordenar"
 
 #. visible
 #. position
@@ -4627,31 +4627,31 @@ msgstr "Nat_ural"
 
 #: ../src/settings.c:10858
 msgid "_Case Sensitive"
-msgstr ""
+msgstr "Sensível a Maiusculas"
 
 #: ../src/settings.c:10860
 msgid "Folders Fi_rst"
-msgstr ""
+msgstr "Pastas Primeiro"
 
 #: ../src/settings.c:10862
 msgid "F_iles First"
-msgstr ""
+msgstr "F_icheiros Primeiro"
 
 #: ../src/settings.c:10864
 msgid "Mi_xed"
-msgstr ""
+msgstr "Misturado"
 
 #: ../src/settings.c:10866
 msgid "_Hidden First"
-msgstr ""
+msgstr "Ficheiros Escondidos"
 
 #: ../src/settings.c:10868
 msgid "Hidden _Last"
-msgstr ""
+msgstr "Escondidos no Fim"
 
 #: ../src/settings.c:10871
 msgid "Re_fresh"
-msgstr ""
+msgstr "Re_frescar"
 
 #: ../src/settings.c:10874
 msgid "Auto See_k"
@@ -4674,23 +4674,23 @@ msgstr "E_liminar"
 
 #: ../src/settings.c:10914
 msgid "_Actions"
-msgstr ""
+msgstr "_Acções"
 
 #: ../src/settings.c:10925
 msgid "Copy Pa_rent"
-msgstr ""
+msgstr "Copiar Pai"
 
 #: ../src/settings.c:10928
 msgid "Paste _Link"
-msgstr ""
+msgstr "Colar _Ligação"
 
 #: ../src/settings.c:10931
 msgid "Paste _Target"
-msgstr ""
+msgstr "colar Alvo"
 
 #: ../src/settings.c:10934
 msgid "Paste _As"
-msgstr ""
+msgstr "Colar Como"
 
 #: ../src/settings.c:10940 ../src/settings.c:11030
 msgid "_Copy To"
@@ -4763,15 +4763,15 @@ msgstr "Propr_iedades"
 
 #: ../src/settings.c:11047
 msgid "_Quick"
-msgstr ""
+msgstr "Rápido"
 
 #: ../src/settings.c:11069 ../src/settings.c:11099 ../src/settings.c:11125
 msgid "_Recursive"
-msgstr ""
+msgstr "_Recursivo"
 
 #: ../src/settings.c:11147
 msgid "_Toolbar"
-msgstr ""
+msgstr "Barra de ferramentas"
 
 #: ../src/settings.c:11159
 msgid "T_ree"
@@ -4791,7 +4791,7 @@ msgstr "_Compacto"
 
 #: ../src/settings.c:11188
 msgid "_Large Icons"
-msgstr ""
+msgstr "Ícones Grandes"
 
 #: ../src/settings.c:11193
 msgid "_Hidden Files"
@@ -4804,7 +4804,7 @@ msgstr ""
 
 #: ../src/settings.c:11202
 msgid "Example  1.1 M  file  -rwxr--r--  user:group  2011-01-01 01:11"
-msgstr ""
+msgstr "Exemplo  1.1 M  file  -rwxr--r--  user:group  2011-01-01 01:11"
 
 #: ../src/settings.c:11207
 #, c-format
@@ -4822,7 +4822,7 @@ msgstr ""
 
 #: ../src/settings.c:11215
 msgid "Example Bookmark Name"
-msgstr ""
+msgstr "Exemplo de Nome de Marcador"
 
 #: ../src/settings.c:11221
 #, c-format
@@ -4882,7 +4882,7 @@ msgstr ""
 
 #: ../src/ptk/ptk-file-browser.c:2521 ../src/desktop/desktop-window.c:2110
 msgid "Select By Pattern"
-msgstr ""
+msgstr "Seleccionar Por Padrão"
 
 #: ../src/ptk/ptk-file-browser.c:2522 ../src/desktop/desktop-window.c:2110
 #, c-format
@@ -5501,56 +5501,56 @@ msgstr "%s  (%s)  %s em falta"
 #: ../src/ptk/ptk-file-task.c:1273
 #, c-format
 msgid "Error  ( Stop If First )"
-msgstr ""
+msgstr "Error (Parar se primeiro)"
 
 #: ../src/ptk/ptk-file-task.c:1275
 #, c-format
 msgid "Error  ( Stop On Any )"
-msgstr ""
+msgstr "Erro (Parar em quaquer um)"
 
 #: ../src/ptk/ptk-file-task.c:1277
 #, c-format
 msgid "Stopped with %d error"
 msgid_plural "Stopped with %d errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Parado com %d erro"
+msgstr[1] "Parado com %d erros"
 
 #: ../src/ptk/ptk-file-task.c:1288
 #, c-format
 msgid "Finished with %d error"
 msgid_plural "Finished with %d errors"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Terminado com %d erro "
+msgstr[1] "Terminado com %d erros"
 
 #: ../src/ptk/ptk-file-task.c:1296
 #, c-format
 msgid "Finished with error  ( exit status %d )"
-msgstr ""
+msgstr "Terminado com erro ( estado de saída %d ) "
 
 #: ../src/ptk/ptk-file-task.c:1298
 #, c-format
 msgid "Finished with error"
-msgstr ""
+msgstr "Terminado com erro"
 
 #: ../src/ptk/ptk-file-task.c:1311
 #, c-format
 msgid "Paused  ( pid %d )"
-msgstr ""
+msgstr "Em pausa  ( pid %d )"
 
 #: ../src/ptk/ptk-file-task.c:1314
 #, c-format
 msgid "Paused  ( exit status %d )"
-msgstr ""
+msgstr "Em pausa  ( estado de saída %d )"
 
 #: ../src/ptk/ptk-file-task.c:1326
 #, c-format
 msgid "Queued  ( pid %d )"
-msgstr ""
+msgstr "Na fila  ( pid %d ) "
 
 #: ../src/ptk/ptk-file-task.c:1329
 #, c-format
 msgid "Queued  ( exit status %d )"
-msgstr ""
+msgstr "Na fila ( estado de saída %d )"
 
 #: ../src/ptk/ptk-file-task.c:1337
 #, c-format
@@ -5562,91 +5562,91 @@ msgstr[1] ""
 #: ../src/ptk/ptk-file-task.c:1345
 #, c-format
 msgid "Running...  ( pid %d )"
-msgstr ""
+msgstr "A executar...  ( pid %d )"
 
 #: ../src/ptk/ptk-file-task.c:1348
 #, c-format
 msgid "Running...  ( exit status %d )"
-msgstr ""
+msgstr "A executar...  ( estado de saída %d )"
 
 #: ../src/ptk/ptk-file-task.c:1507 ../src/ptk/ptk-file-task.c:2222
 #, c-format
 msgid "stalled"
-msgstr ""
+msgstr "parado"
 
 #: ../src/ptk/ptk-file-task.c:1608
 msgid "[ SNIP - additional errors above have been trimmed from this log ]\n"
-msgstr ""
+msgstr "[ SNIP - os erros adicionais acima foram cortados deste registo ]\n"
 
 #: ../src/ptk/ptk-file-task.c:1932
 msgid "Moving from folder:"
-msgstr ""
+msgstr "A Mover da pasta:"
 
 #: ../src/ptk/ptk-file-task.c:1934
 msgid "Linking from folder:"
-msgstr ""
+msgstr "A fazer ligação da pasta:"
 
 #: ../src/ptk/ptk-file-task.c:1936
 msgid "Copying from folder:"
-msgstr ""
+msgstr "A copiar da pasta:"
 
 #. Ask the user whether to overwrite dir content or not
 #: ../src/ptk/ptk-file-task.c:1951
 msgid "Folder Exists"
-msgstr ""
+msgstr "Pasta Existe"
 
 #: ../src/ptk/ptk-file-task.c:1952
 msgid "<b>Folder already exists.</b>  Please rename or select an action."
-msgstr ""
+msgstr "<b>A Pasta já existe.<b>  Renomeie ou escolha outra acção."
 
 #: ../src/ptk/ptk-file-task.c:1967 ../src/ptk/ptk-file-task.c:1971
 msgid "\t<b>( link )</b>"
-msgstr ""
+msgstr "\t<b>( ligação )</b>"
 
 #: ../src/ptk/ptk-file-task.c:1975
 msgid "\t<b>! overwrite file with link !</b>"
-msgstr ""
+msgstr "\t<b>! gravar ligação por cima do ficheiro !</b>"
 
 #: ../src/ptk/ptk-file-task.c:1980
 msgid "<b>( same size )</b>"
-msgstr ""
+msgstr "<b>( mesmo tamanho )</b>"
 
 #: ../src/ptk/ptk-file-task.c:1984 ../src/ptk/ptk-file-task.c:2003
 #, c-format
 msgid "%s\t( %lu bytes )"
-msgstr ""
+msgstr "%s\t( %lu bytes )"
 
 #: ../src/ptk/ptk-file-task.c:1986
 msgid "larger"
-msgstr ""
+msgstr "maior"
 
 #: ../src/ptk/ptk-file-task.c:1988
 msgid "smaller"
-msgstr ""
+msgstr "menor"
 
 #: ../src/ptk/ptk-file-task.c:1992
 msgid "<b>( same time )</b>\t"
-msgstr ""
+msgstr "<b>( mesmo tempo )</b>\t"
 
 #: ../src/ptk/ptk-file-task.c:1998
 msgid "newer"
-msgstr ""
+msgstr "mais recente"
 
 #: ../src/ptk/ptk-file-task.c:2000
 msgid "older"
-msgstr ""
+msgstr "mais antigo"
 
 #: ../src/ptk/ptk-file-task.c:2019
 msgid "Filename Exists"
-msgstr ""
+msgstr "O nome do Ficheiro já existe"
 
 #: ../src/ptk/ptk-file-task.c:2020 ../src/ptk/ptk-file-task.c:2033
 msgid "<b>Filename already exists.</b>  Please rename or select an action."
-msgstr ""
+msgstr "<b>O Nome do Ficheiro já existe.</b>  Por favor renomeia ou escolha outra acção."
 
 #: ../src/ptk/ptk-file-task.c:2030
 msgid "Rename Required"
-msgstr ""
+msgstr "Necessário Renomear"
 
 #: ../src/ptk/ptk-file-task.c:2032
 msgid "In folder:"
@@ -5654,62 +5654,62 @@ msgstr "No diretório:"
 
 #: ../src/ptk/ptk-file-task.c:2102
 msgid "_Overwrite"
-msgstr ""
+msgstr "Gravar por cima"
 
 #: ../src/ptk/ptk-file-task.c:2102
 msgid "Overwrite _All"
-msgstr ""
+msgstr "Gravar sempre por cima"
 
 #: ../src/ptk/ptk-file-task.c:2106
 msgid "_Pause"
-msgstr ""
+msgstr "_Pausa"
 
 #: ../src/ptk/ptk-file-task.c:2108
 msgid "_Skip"
-msgstr ""
+msgstr "_Ignorar"
 
 #: ../src/ptk/ptk-file-task.c:2109
 msgid "S_kip All"
-msgstr ""
+msgstr "Ignorar Todos"
 
 #: ../src/ptk/ptk-file-task.c:2155
 msgid "To folder:"
-msgstr ""
+msgstr "Para a pasta:"
 
 #: ../src/ptk/ptk-file-task.c:2177
 msgid "<b>Folder Name:</b>"
-msgstr ""
+msgstr "<b>Nome da Pasta:</b>"
 
 #. extra buttons
 #: ../src/ptk/ptk-file-task.c:2198
 msgid " _Rename "
-msgstr ""
+msgstr " _Renomear "
 
 #: ../src/ptk/ptk-file-task.c:2201
 msgid " A_uto Rename "
-msgstr ""
+msgstr " Renomear A_utomaticamente"
 
 #: ../src/ptk/ptk-file-task.c:2204
 msgid " Auto Re_name All "
-msgstr ""
+msgstr " Renomear Tudo Atomaticamente "
 
 #: ../src/ptk/ptk-file-archiver.c:204 ../src/ptk/ptk-file-archiver.c:513
 #: ../src/ptk/ptk-file-misc.c:3177 ../src/ptk/ptk-handler.c:1404
 msgid "Error Loading Handler"
-msgstr ""
+msgstr "Erro ao carregar Handler"
 
 #: ../src/ptk/ptk-file-archiver.c:331 ../src/ptk/ptk-file-archiver.c:627
 #: ../src/ptk/ptk-file-archiver.c:655
 msgid "Create Archive"
-msgstr ""
+msgstr "Criar Ficheiro"
 
 #: ../src/ptk/ptk-file-archiver.c:340 ../src/ptk/ptk-file-archiver.c:1048
 msgid "Conf_igure"
-msgstr ""
+msgstr "Conf_igurar"
 
 #: ../src/ptk/ptk-file-archiver.c:375
 msgid "Co_mpress Commands:"
-msgstr ""
+msgstr "Co_mandos de comprimir:"
 
 #. Telling user to ensure handlers are available and bringing
 #. * up configuration
@@ -5725,11 +5725,11 @@ msgstr ""
 
 #: ../src/ptk/ptk-file-archiver.c:482
 msgid "_Archive Format:"
-msgstr ""
+msgstr "Formato de Ficheiro"
 
 #: ../src/ptk/ptk-file-archiver.c:628
 msgid "The archive creation command is empty.  Please enter a command."
-msgstr ""
+msgstr "O arquivo de criação de comando está vazio. Insira um comando."
 
 #: ../src/ptk/ptk-file-archiver.c:656
 #, c-format
@@ -5749,7 +5749,7 @@ msgstr ""
 
 #: ../src/ptk/ptk-file-archiver.c:716 ../src/ptk/ptk-handler.c:1896
 msgid "Error Saving Handler"
-msgstr ""
+msgstr "Erro ao gravar Handler"
 
 #: ../src/ptk/ptk-file-archiver.c:806 ../src/ptk/ptk-file-archiver.c:1333
 #: ../src/ptk/ptk-file-archiver.c:1385 ../src/ptk/ptk-file-menu.c:2003
@@ -5775,11 +5775,11 @@ msgstr "Cri_ar subpasta(s)"
 
 #: ../src/ptk/ptk-file-archiver.c:1079
 msgid "Make contents user-_writable"
-msgstr ""
+msgstr "Fazer os conteudos alteráveis pelo utilizador"
 
 #: ../src/ptk/ptk-file-archiver.c:1207
 msgid "No archive handler/command found for file:"
-msgstr ""
+msgstr "Nenhum ficheiro handler/comando encontrado para o ficheiro:"
 
 #. Creating task
 #: ../src/ptk/ptk-file-archiver.c:1443
@@ -5805,11 +5805,11 @@ msgstr "Sistema de ficheiros"
 
 #: ../src/ptk/ptk-dir-tree.c:362
 msgid "( no subfolder )"
-msgstr ""
+msgstr "( sem subpasta )"
 
 #: ../src/ptk/ptk-file-menu.c:1602
 msgid "Remove Text Type Association"
-msgstr ""
+msgstr "Remover Associação de Tipo de Texto"
 
 #: ../src/ptk/ptk-file-menu.c:1602
 msgid ""
@@ -5836,7 +5836,7 @@ msgstr ""
 
 #: ../src/ptk/ptk-file-menu.c:1617
 msgid "Copy Desktop File"
-msgstr ""
+msgstr "Copiar Ficheiro de Ambiente de Trabalho"
 
 #: ../src/ptk/ptk-file-menu.c:1706
 #, c-format
@@ -5862,12 +5862,12 @@ msgstr ""
 
 #: ../src/ptk/ptk-file-menu.c:1709
 msgid "Create New XML"
-msgstr ""
+msgstr "Criar Novo XML"
 
 #. Set Default
 #: ../src/ptk/ptk-file-menu.c:1981
 msgid "_Set As Default"
-msgstr ""
+msgstr "Escolher como Padrão"
 
 #. Add
 #: ../src/ptk/ptk-file-menu.c:1988
@@ -5882,101 +5882,101 @@ msgstr "novo"
 #, c-format
 msgid "Delete %d selected item ?"
 msgid_plural "Delete %d selected items ?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eliminar %d item?"
+msgstr[1] "Eliminar %d itens?"
 
 #. MOD
 #: ../src/ptk/ptk-file-misc.c:162
 msgid "Confirm Delete"
-msgstr "Confirmação"
+msgstr "Confirmar Eliminar"
 
 #: ../src/ptk/ptk-file-misc.c:616
 msgid "<b>P_ath:</b>   <i>original</i>"
-msgstr ""
+msgstr "<b>Caminho:</b>   <i>original</i>""
 
 #: ../src/ptk/ptk-file-misc.c:617
 msgid "<b>_Name:</b>   <i>original</i>"
-msgstr ""
+msgstr "<b>_Nome:</b>   <i>original</i>"
 
 #: ../src/ptk/ptk-file-misc.c:618
 msgid "<b>_Filename:</b>   <i>original</i>"
-msgstr ""
+msgstr "Nome do _Ficheiro"
 
 #: ../src/ptk/ptk-file-misc.c:619
 msgid "<b>_Parent:</b>   <i>original</i>"
-msgstr ""
+msgstr "<b>_Pai:</b>   <i>original</i>"
 
 #: ../src/ptk/ptk-file-misc.c:624
 msgid "<b>P_ath:</b>   <i>exists as folder</i>"
-msgstr ""
+msgstr "<b>Caminho:</b>   <i>existe como pasta</i>"
 
 #: ../src/ptk/ptk-file-misc.c:625
 msgid "<b>_Name:</b>   <i>exists as folder</i>"
-msgstr ""
+msgstr "<b>_Nome:</b>   <i>existe como pasta</i>"
 
 #: ../src/ptk/ptk-file-misc.c:626
 msgid "<b>_Filename:</b>   <i>exists as folder</i>"
-msgstr ""
+msgstr "<b>_Ficheiro:</b>   <i>existe como pasta</i>"
 
 #: ../src/ptk/ptk-file-misc.c:627 ../src/ptk/ptk-file-misc.c:637
 #: ../src/ptk/ptk-file-misc.c:643 ../src/ptk/ptk-file-misc.c:666
 #: ../src/ptk/ptk-file-misc.c:2285
 msgid "<b>_Parent:</b>"
-msgstr ""
+msgstr "<b>_Pai:</b>"
 
 #: ../src/ptk/ptk-file-misc.c:634
 msgid "<b>P_ath:</b>   <i>exists as file</i>"
-msgstr ""
+msgstr "<b>Cominho:</b>   <i>existe como ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:635
 msgid "<b>_Name:</b>   <i>exists as file</i>"
-msgstr ""
+msgstr "<b>_Nome:</b>   <i>existe como ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:636
 msgid "<b>_Filename:</b>   <i>exists as file</i>"
-msgstr ""
+msgstr "<b>_Ficheiro:</b>   <i>existe como ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:640
 msgid "<b>P_ath:</b>   <i>* overwrite existing file</i>"
-msgstr ""
+msgstr "<b>Caminho:</b>   <i>* gravar por cima do ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:641
 msgid "<b>_Name:</b>   <i>* overwrite existing file</i>"
-msgstr ""
+msgstr "<b>_Nome:</b>   <i>* gravar por cima do ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:642
 msgid "<b>_Filename:</b>   <i>* overwrite existing file</i>"
-msgstr ""
+msgstr "<b>_Ficheiro:</b>   <i>* gravar por cima do ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:649
 msgid "<b>P_ath:</b>   <i>parent exists as file</i>"
-msgstr ""
+msgstr "<b>Caminho:</b>   <i>pai existe como ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:650 ../src/ptk/ptk-file-misc.c:658
 #: ../src/ptk/ptk-file-misc.c:664 ../src/ptk/ptk-file-misc.c:2236
 msgid "<b>_Name:</b>"
-msgstr ""
+msgstr "<b>_Nome:</b>"
 
 #: ../src/ptk/ptk-file-misc.c:651 ../src/ptk/ptk-file-misc.c:659
 #: ../src/ptk/ptk-file-misc.c:665 ../src/ptk/ptk-file-misc.c:2269
 msgid "<b>_Filename:</b>"
-msgstr ""
+msgstr "<b>Nome do Ficheiro:</b>"
 
 #: ../src/ptk/ptk-file-misc.c:652
 msgid "<b>_Parent:</b>   <i>parent exists as file</i>"
-msgstr ""
+msgstr "<b>_Pai:</b>   <i>pai existe como ficheiro</i>"
 
 #: ../src/ptk/ptk-file-misc.c:657
 msgid "<b>P_ath:</b>   <i>* create parent</i>"
-msgstr ""
+msgstr "<b>Caminho:</b>   <i>* criar pai</i>"
 
 #: ../src/ptk/ptk-file-misc.c:660
 msgid "<b>_Parent:</b>   <i>* create parent</i>"
-msgstr ""
+msgstr "<b>Pai:</b>   <i>* criar pai</i>"
 
 #: ../src/ptk/ptk-file-misc.c:663 ../src/ptk/ptk-file-misc.c:2302
 msgid "<b>P_ath:</b>"
-msgstr ""
+msgstr "<b>Caminho:</b>"
 
 #: ../src/ptk/ptk-file-misc.c:674 ../src/ptk/ptk-file-misc.c:1159
 msgid "_Move"
@@ -5984,34 +5984,34 @@ msgstr "_Mover"
 
 #: ../src/ptk/ptk-file-misc.c:811
 msgid "Select Link Target"
-msgstr ""
+msgstr "Escolher Alvo da Ligação"
 
 #: ../src/ptk/ptk-file-misc.c:825
 msgid "Select Template File"
-msgstr ""
+msgstr "Escolher Ficheiro Modelo"
 
 #: ../src/ptk/ptk-file-misc.c:839
 msgid "Select Template Folder"
-msgstr ""
+msgstr "Escolher Pasta Modelo"
 
 #. action create folder does not work properly so not used:
 #. it creates a folder by default with no way to stop it
 #. it gives 'folder already exists' error popup
 #: ../src/ptk/ptk-file-misc.c:975
 msgid "Browse"
-msgstr ""
+msgstr "Navegar"
 
 #: ../src/ptk/ptk-file-misc.c:1002
 msgid "Fil_ename"
-msgstr ""
+msgstr "Nome do Ficheiro"
 
 #: ../src/ptk/ptk-file-misc.c:1003
 msgid "Pa_rent"
-msgstr ""
+msgstr "Pai"
 
 #: ../src/ptk/ptk-file-misc.c:1006
 msgid "Insert as"
-msgstr ""
+msgstr "Inserir como"
 
 #: ../src/ptk/ptk-file-misc.c:1139
 msgid "C_reate"
@@ -6144,12 +6144,12 @@ msgstr "Co_mo root"
 #: ../src/ptk/ptk-file-misc.c:2325
 msgctxt "New|Radio"
 msgid "Fil_e"
-msgstr ""
+msgstr "Ficheiro"
 
 #: ../src/ptk/ptk-file-misc.c:2326
 msgctxt "New|Radio"
 msgid "Fol_der"
-msgstr ""
+msgstr "Pasta"
 
 #: ../src/ptk/ptk-file-misc.c:2327
 msgctxt "New|Radio"
@@ -6162,15 +6162,15 @@ msgstr "Novo"
 
 #: ../src/ptk/ptk-file-misc.c:2514
 msgid "Path contains linefeeds"
-msgstr ""
+msgstr "O Caminho contem linefeeds"
 
 #: ../src/ptk/ptk-file-misc.c:2559
 msgid "Create Parent Folder"
-msgstr ""
+msgstr "Criar a Pasta Pai"
 
 #: ../src/ptk/ptk-file-misc.c:2560
 msgid "The parent folder does not exist.  Create it?"
-msgstr ""
+msgstr "A pasta pai não existe. Criar?"
 
 #: ../src/ptk/ptk-file-misc.c:2572
 #, c-format
@@ -6179,48 +6179,51 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Erro ao criar pasta pai\n"
+"\n"
+"%s"
 
 #: ../src/ptk/ptk-file-misc.c:2573
 msgid "Mkdir Error"
-msgstr ""
+msgstr "Erro Mkdir"
 
 #. just in case
 #: ../src/ptk/ptk-file-misc.c:2585
 msgid "Overwrite Existing File"
-msgstr ""
+msgstr "Gravar por cima de ficheiro existente"
 
 #: ../src/ptk/ptk-file-misc.c:2587
 msgid "OVERWRITE WARNING"
-msgstr ""
+msgstr "AVISO- GRAVAR POR CIMA"
 
 #: ../src/ptk/ptk-file-misc.c:2587
 msgid "The file path exists.  Overwrite existing file?"
-msgstr ""
+msgstr "O caminho do ficheiro já existe. Gravar por cima do ficheiro?"
 
 #. new link task
 #. link task
 #: ../src/ptk/ptk-file-misc.c:2596 ../src/ptk/ptk-file-misc.c:2815
 #, c-format
 msgid "Create Link%s"
-msgstr ""
+msgstr "Criar ligaçõe%s"
 
 #: ../src/ptk/ptk-file-misc.c:2651 ../src/ptk/ptk-file-misc.c:2723
 msgid "Template Missing"
-msgstr ""
+msgstr "Modelo em Falta"
 
 #: ../src/ptk/ptk-file-misc.c:2651 ../src/ptk/ptk-file-misc.c:2723
 msgid "The specified template does not exist"
-msgstr ""
+msgstr "O modelo especificado não existe"
 
 #: ../src/ptk/ptk-file-misc.c:2676
 #, c-format
 msgid "Create New File%s"
-msgstr ""
+msgstr "Criar Novos Ficheiro%s"
 
 #: ../src/ptk/ptk-file-misc.c:2743
 #, c-format
 msgid "Create New Folder%s"
-msgstr ""
+msgstr "Criar Novas Pasta%s"
 
 #. copy task
 #: ../src/ptk/ptk-file-misc.c:2771
@@ -6230,15 +6233,15 @@ msgstr "Copiar %s"
 
 #: ../src/ptk/ptk-file-misc.c:2783
 msgid "Copy Target Error"
-msgstr ""
+msgstr "Erro ao copiar alvo"
 
 #: ../src/ptk/ptk-file-misc.c:2783 ../src/ptk/ptk-file-misc.c:2825
 msgid "Error determining link's target"
-msgstr ""
+msgstr "Erro ao determinar alvo da ligação"
 
 #: ../src/ptk/ptk-file-misc.c:2825
 msgid "Link Target Error"
-msgstr ""
+msgstr "Erro da ligação do alvo"
 
 #. move task - this is jumped to from the below rename block on
 #. EXDEV error
@@ -6255,10 +6258,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Erro ao renomear ficheiro\n"
+"\n"
+"%s"
 
 #: ../src/ptk/ptk-file-misc.c:2887 ../src/desktop/desktop-window.c:1949
 msgid "Rename Error"
-msgstr ""
+msgstr "Erro ao renomear"
 
 #: ../src/ptk/ptk-file-misc.c:3041
 msgid "New Folder"
@@ -6266,7 +6272,7 @@ msgstr "Nova pasta"
 
 #: ../src/ptk/ptk-file-misc.c:3041
 msgid "New folder name:"
-msgstr ""
+msgstr "Nome da nova pasta"
 
 #: ../src/ptk/ptk-file-misc.c:3043
 msgid "New File"
@@ -6274,7 +6280,7 @@ msgstr "Novo ficheiro"
 
 #: ../src/ptk/ptk-file-misc.c:3043
 msgid "New filename:"
-msgstr ""
+msgstr "Novo nome do ficheiro:"
 
 #: ../src/ptk/ptk-file-misc.c:3062
 msgid ""
@@ -6282,10 +6288,13 @@ msgid ""
 "\n"
 "Please input a new one:"
 msgstr ""
+"Nome já existe.\n"
+"\n"
+"Insirar outro diferente:"
 
 #: ../src/ptk/ptk-file-misc.c:3091
 msgid "The new file cannot be created"
-msgstr ""
+msgstr "Impossível criar novo ficheiro"
 
 #: ../src/ptk/ptk-file-misc.c:3479
 #, c-format
@@ -6296,6 +6305,11 @@ msgid ""
 "\n"
 "Target: %s"
 msgstr ""
+"Este alvo do symlink's está em falta ou não tem permissão para o aceder "
+"it:\n"
+"%s\n"
+"\n"
+"Alvo: %s"
 
 #: ../src/ptk/ptk-file-misc.c:3483
 msgid "Broken Link"
@@ -6305,28 +6319,28 @@ msgstr "Ligação danificada"
 #, c-format
 msgid "Delete %d selected item as root ?"
 msgid_plural "Delete %d selected items as root ?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eliminar como root %d item seleccionado?"
+msgstr[1] "Eliminar como root %d itens seleccionados?"
 
 #: ../src/ptk/ptk-file-misc.c:3640
 msgid "Confirm Delete As Root"
-msgstr ""
+msgstr "Confirmação Eliminar como Root"
 
 #: ../src/ptk/ptk-file-misc.c:3641
 msgid "DELETE AS ROOT"
-msgstr ""
+msgstr "ELIMINAR COMO ROOT"
 
 #: ../src/ptk/ptk-file-misc.c:3649
 msgid "Delete As Root"
-msgstr ""
+msgstr "Eliminar como Root"
 
 #: ../src/ptk/ptk-file-misc.c:3665
 msgid "Move As Root"
-msgstr ""
+msgstr "Mover como Root"
 
 #: ../src/ptk/ptk-file-misc.c:3669
 msgid "Copy As Root"
-msgstr ""
+msgstr "Copiar como Root"
 
 #: ../src/ptk/ptk-file-properties.c:157 ../src/ptk/ptk-file-properties.c:161
 #, c-format
@@ -6368,7 +6382,7 @@ msgstr "Escolha..."
 
 #: ../src/ptk/ptk-file-properties.c:516
 msgid "<b>Folder _Name:</b>"
-msgstr ""
+msgstr "<b>Nome da Pasta:</b>"
 
 #: ../src/ptk/ptk-file-properties.c:528 ../src/ptk/ptk-file-properties.c:532
 #, c-format
@@ -6381,15 +6395,15 @@ msgstr "1 ficheiro"
 
 #: ../src/ptk/ptk-file-properties.c:569
 msgid "<b>Link _Name:</b>"
-msgstr ""
+msgstr "<b>Nome da Ligação:</b>"
 
 #: ../src/ptk/ptk-file-properties.c:583
 msgid "( broken link )"
-msgstr ""
+msgstr "( ligação avariada )"
 
 #: ../src/ptk/ptk-file-properties.c:587
 msgid "( read link error )"
-msgstr ""
+msgstr " ( erro ao ler ligação )"
 
 #. The total file size displayed in "File Properties" is not
 #. completely calculated yet. So "Calculating..." is displayed.
@@ -6399,7 +6413,7 @@ msgstr "A calcular..."
 
 #: ../src/ptk/ptk-file-properties.c:764
 msgid "Change File Date"
-msgstr ""
+msgstr "Alterar a Data do Ficheiro"
 
 #: ../src/ptk/ptk-file-properties.c:804
 msgid "Invalid User"
@@ -6436,7 +6450,7 @@ msgstr ""
 #: ../src/ptk/ptk-handler.c:69
 #, fuzzy
 msgid "Archive Handlers"
-msgstr "Arquivo"
+msgstr "Handler de Fecheiro"
 
 #: ../src/ptk/ptk-handler.c:70
 #, fuzzy
@@ -6478,7 +6492,7 @@ msgstr ""
 
 #: ../src/ptk/ptk-handler.c:732
 msgid "Error reading file"
-msgstr ""
+msgstr "Erro ao ler ficheiro"
 
 #: ../src/ptk/ptk-handler.c:743
 msgid "Error: unable to save command (internal error)"
@@ -6486,7 +6500,7 @@ msgstr ""
 
 #: ../src/ptk/ptk-handler.c:812
 msgid "Error writing to file"
-msgstr ""
+msgstr "Erro ao gravar ficheiro"
 
 #: ../src/ptk/ptk-handler.c:1305 ../src/item-prop.c:121
 msgid "Device"
@@ -6494,34 +6508,34 @@ msgstr "Dispositivo"
 
 #: ../src/ptk/ptk-handler.c:1307
 msgid "Protocol"
-msgstr ""
+msgstr "Protocolo"
 
 #. Adding handler to model
 #: ../src/ptk/ptk-handler.c:1327 ../src/ptk/ptk-handler.c:1479
 #: ../src/ptk/ptk-handler.c:1659 ../src/ptk/ptk-handler.c:1719
 msgid "(optional)"
-msgstr ""
+msgstr "(opcional)"
 
 #: ../src/ptk/ptk-handler.c:1327 ../src/ptk/ptk-handler.c:1480
 #: ../src/ptk/ptk-handler.c:1660 ../src/ptk/ptk-handler.c:1720
 msgid "(disabled)"
-msgstr ""
+msgstr "(desligado)"
 
 #: ../src/ptk/ptk-handler.c:1781
 msgid "Permanently remove the selected handler?"
-msgstr ""
+msgstr "Remover o handler seleccionado permanentemente?"
 
 #: ../src/ptk/ptk-handler.c:1985 ../src/ptk/ptk-handler.c:2016
 msgid "Apply Changes ?"
-msgstr ""
+msgstr "Aplicar alterações?"
 
 #: ../src/ptk/ptk-handler.c:1986 ../src/ptk/ptk-handler.c:2017
 msgid "Apply changes to the current handler?"
-msgstr ""
+msgstr "Aplicar alterações ao handler actual?"
 
 #: ../src/ptk/ptk-handler.c:2088
 msgid "Restore Default Handlers"
-msgstr ""
+msgstr "Restaurar Handlers Padrão"
 
 #: ../src/ptk/ptk-handler.c:2089
 msgid ""
@@ -6825,11 +6839,11 @@ msgstr ""
 
 #: ../src/vfs/vfs-file-task.c:1883
 msgid "Error writing temporary file"
-msgstr ""
+msgstr "Erro ao escrever ficheiro temporário"
 
 #: ../src/vfs/vfs-file-task.c:2044
 msgid "Timed out calculating total size\n"
-msgstr ""
+msgstr "Acabou o tempo ao calcular tamanho total\n"
 
 #: ../src/vfs/vfs-file-task.c:2350
 #, c-format
@@ -6838,21 +6852,24 @@ msgid ""
 "%s %s\n"
 "Error: %s\n"
 msgstr ""
+"\n"
+"%s %s\n"
+"Erro: %s\n"
 
 #: ../src/vfs/vfs-volume-nohal.c:2286
 #, c-format
 msgid ":floppy"
-msgstr ""
+msgstr ":disquete"
 
 #: ../src/vfs/vfs-volume-nohal.c:2307
 #, c-format
 msgid ":optical"
-msgstr ""
+msgstr ":optico"
 
 #: ../src/vfs/vfs-volume-nohal.c:2352
 #, c-format
 msgid "[blank]"
-msgstr ""
+msgstr "[em branco]"
 
 #: ../src/vfs/vfs-volume-nohal.c:2356
 #, c-format
@@ -6862,11 +6879,11 @@ msgstr ""
 #: ../src/vfs/vfs-volume-nohal.c:2368
 #, c-format
 msgid "[no media]"
-msgstr ""
+msgstr "[sem media]"
 
 #: ../src/vfs/vfs-volume-nohal.c:3265
 msgid "Selected Device Handler"
-msgstr ""
+msgstr "Escolher o Handler do Dispositivo"
 
 #: ../src/vfs/vfs-volume-nohal.c:3266
 msgid "Selected Protocol Handler"
@@ -6935,7 +6952,7 @@ msgstr ""
 
 #: ../src/desktop/desktop-window.c:1919
 msgid "Unable To Rename"
-msgstr ""
+msgstr "Impossível Renomear"
 
 #: ../src/desktop/desktop-window.c:1926
 #, c-format
@@ -6948,11 +6965,11 @@ msgstr ""
 
 #: ../src/desktop/desktop-window.c:1928
 msgid "Change Desktop Item Name"
-msgstr ""
+msgstr "Mudar o Nome do Item de Ambiente de trabalho"
 
 #: ../src/desktop/desktop-window.c:1949
 msgid "An error occurred renaming this desktop item."
-msgstr ""
+msgstr "Ocorreu um erro ao mudar o nome deste item de Ambiente de trabalho"
 
 #: ../src/find-files.c:274
 msgid "Open Containing _Folder"
@@ -6964,7 +6981,7 @@ msgstr "Selecionar uma pasta"
 
 #: ../src/find-files.c:814
 msgid "Browse..."
-msgstr "Procurar..."
+msgstr "Navegar..."
 
 #: ../src/find-files.c:838
 msgid "Local Volumes"
@@ -7004,51 +7021,51 @@ msgstr "Diretório"
 
 #: ../src/item-prop.c:108
 msgid "Dir Write Access"
-msgstr ""
+msgstr "Accesso de Escrita Dir"
 
 #: ../src/item-prop.c:109
 msgid "File Is Text"
-msgstr ""
+msgstr "O ficheiro é Texto"
 
 #: ../src/item-prop.c:110
 msgid "File Is Dir"
-msgstr ""
+msgstr "O Ficheiro é Dir"
 
 #: ../src/item-prop.c:111
 msgid "File Is Link"
-msgstr ""
+msgstr "O Ficheiro é Ligação"
 
 #: ../src/item-prop.c:112
 msgid "User Is Root"
-msgstr ""
+msgstr "O Utilizador é Root"
 
 #: ../src/item-prop.c:113
 msgid "Multiple Selected"
-msgstr ""
+msgstr "Várias selecções"
 
 #: ../src/item-prop.c:114
 msgid "Clipboard Has Files"
-msgstr ""
+msgstr "O Clipboard tem ficheiros"
 
 #: ../src/item-prop.c:115
 msgid "Clipboard Has Text"
-msgstr ""
+msgstr "O Clipboard tem Texto"
 
 #: ../src/item-prop.c:116
 msgid "Current Panel"
-msgstr ""
+msgstr "Painel Actual "
 
 #: ../src/item-prop.c:117
 msgid "Panel Count"
-msgstr ""
+msgstr "Contagem de Paineis"
 
 #: ../src/item-prop.c:118
 msgid "Current Tab"
-msgstr ""
+msgstr "Separador Actual"
 
 #: ../src/item-prop.c:119
 msgid "Tab Count"
-msgstr ""
+msgstr "Contagem de Separadores"
 
 #: ../src/item-prop.c:120 ../src/item-prop.c:220
 msgid "Bookmark"
@@ -7068,7 +7085,7 @@ msgstr "Sistema de ficheiros"
 
 #: ../src/item-prop.c:125
 msgid "Device UDI"
-msgstr "UDI"
+msgstr "UDI do Dispositivo"
 
 #: ../src/item-prop.c:126
 msgid "Device Properties"
@@ -7108,91 +7125,91 @@ msgstr "Diretório do painel 4"
 
 #: ../src/item-prop.c:135
 msgid "Panel 1 Has Sel"
-msgstr ""
+msgstr "Painel 1 tem Sel"
 
 #: ../src/item-prop.c:136
 msgid "Panel 2 Has Sel"
-msgstr ""
+msgstr "Painel 2 tem Sel"
 
 #: ../src/item-prop.c:137
 msgid "Panel 3 Has Sel"
-msgstr ""
+msgstr "Painel 3 tem Sel"
 
 #: ../src/item-prop.c:138
 msgid "Panel 4 Has Sel"
-msgstr ""
+msgstr "Painel 4 tem Sel"
 
 #: ../src/item-prop.c:139
 msgid "Panel 1 Device"
-msgstr ""
+msgstr "Painel 1 Dispositivo"
 
 #: ../src/item-prop.c:140
 msgid "Panel 2 Device"
-msgstr ""
+msgstr "Painel 2 Dispositivo"
 
 #: ../src/item-prop.c:141
 msgid "Panel 3 Device"
-msgstr ""
+msgstr "Painel 3 Dispositivo"
 
 #: ../src/item-prop.c:142
 msgid "Panel 4 Device"
-msgstr ""
+msgstr "Painel 4 Dispositivo"
 
 #: ../src/item-prop.c:204
 msgid "equals"
-msgstr ""
+msgstr "igual"
 
 #: ../src/item-prop.c:205
 msgid "doesn't equal"
-msgstr ""
+msgstr "diferente"
 
 #: ../src/item-prop.c:206
 msgid "contains"
-msgstr ""
+msgstr "contém"
 
 #: ../src/item-prop.c:207
 msgid "doesn't contain"
-msgstr ""
+msgstr "não contém"
 
 #: ../src/item-prop.c:208
 msgid "begins with"
-msgstr ""
+msgstr "começa com"
 
 #: ../src/item-prop.c:209
 msgid "doesn't begin with"
-msgstr ""
+msgstr "não começa com"
 
 #: ../src/item-prop.c:210
 msgid "ends with"
-msgstr ""
+msgstr "terminar com"
 
 #: ../src/item-prop.c:211
 msgid "doesn't end with"
-msgstr ""
+msgstr "não termina com"
 
 #: ../src/item-prop.c:212
 msgid "is less than"
-msgstr ""
+msgstr "é menor que"
 
 #: ../src/item-prop.c:213
 msgid "is greater than"
-msgstr ""
+msgstr "é maior que"
 
 #: ../src/item-prop.c:214
 msgid "matches"
-msgstr ""
+msgstr "é igual"
 
 #: ../src/item-prop.c:215
 msgid "doesn't match"
-msgstr ""
+msgstr "é diferente"
 
 #: ../src/item-prop.c:221
 msgid "Application"
-msgstr ""
+msgstr "Aplicação"
 
 #: ../src/item-prop.c:222
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: ../src/item-prop.c:478
 msgid "Current: Show"
@@ -7213,15 +7230,15 @@ msgstr "Atual: Inativo"
 
 #: ../src/item-prop.c:782
 msgid "Save Modified Script?"
-msgstr ""
+msgstr "Salvar Script Modificado?"
 
 #: ../src/item-prop.c:783
 msgid "Save your changes to the command script?"
-msgstr ""
+msgstr "Salvar as suas mudanças ao script de comando?"
 
 #: ../src/item-prop.c:785
 msgid "Overwrite Script?"
-msgstr ""
+msgstr "Gravar por cima do Script?"
 
 #: ../src/item-prop.c:786
 msgid ""
@@ -7229,33 +7246,38 @@ msgid ""
 "\n"
 "Do you want to overwrite it?"
 msgstr ""
+"O script de comando no disco foi alterado.\n"
+"\n"
+"Deseja gravar por cima dele?"
 
 #: ../src/item-prop.c:832 ../src/item-prop.c:1883
 msgid "Command Dir"
-msgstr ""
+msgstr "Dir do Comando"
 
 #: ../src/item-prop.c:832 ../src/item-prop.c:1883 ../src/item-prop.c:1889
 msgid "(no files)"
-msgstr ""
+msgstr "(sem ficheiros)"
 
 #: ../src/item-prop.c:898
 msgid ""
 "The command line does not begin with a text file (script) to be opened, or "
 "the script was not found in your $PATH."
 msgstr ""
+"A linha de comando não começa com um ficheiro de texto (script) a ser aberto, ou "
+"o script não foi encontrado no seu $PATH."
 
 #: ../src/item-prop.c:1004
 msgid "Targets:  (a semicolon-separated list of paths or URLs)"
-msgstr ""
+msgstr "Alvos: (uma lista de caminhos ou URLS separada por ponto e virgula"
 
 #: ../src/item-prop.c:1009
 msgid "Target:  (a .desktop or executable file)"
-msgstr ""
+msgstr "alvo:  (um ficheiro .desktop ou executavel)"
 
 #. Browse
 #: ../src/item-prop.c:1127
 msgid "Choose Executable"
-msgstr ""
+msgstr "Escolher Executável"
 
 #: ../src/item-prop.c:1209
 #, fuzzy
@@ -7268,39 +7290,42 @@ msgid ""
 "saved.  Consider using a command script instead by selecting Script on the "
 "Command tab."
 msgstr ""
+"A sua linha de comando tem mais de 2000 caracteres e pode ser truncado "
+"ao gravar.  Considere usar um script de comando e seleccione Script no "
+"Separador Comando."
 
 #. Dialog
 #: ../src/item-prop.c:1404
 msgid "Toolbar Item Properties"
-msgstr ""
+msgstr "Propriedades de Item da Barra"
 
 #: ../src/item-prop.c:1405
 msgid "Menu Item Properties"
-msgstr ""
+msgstr "Propriedade de Item do Menu"
 
 #: ../src/item-prop.c:1431
 msgid "_Toolbar Item"
-msgstr ""
+msgstr "Item da Barra"
 
 #: ../src/item-prop.c:1432
 msgid "_Menu Item"
-msgstr ""
+msgstr "Item do _Menu"
 
 #: ../src/item-prop.c:1440
 msgid "Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #: ../src/item-prop.c:1449
 msgid "Name:"
-msgstr ""
+msgstr "Nome:"
 
 #: ../src/item-prop.c:1456
 msgid "Key:"
-msgstr ""
+msgstr "Tecla:"
 
 #: ../src/item-prop.c:1464
 msgid "Icon:"
-msgstr ""
+msgstr "Ícone:"
 
 #: ../src/item-prop.c:1529
 msgid "Con_text"
@@ -7312,19 +7337,19 @@ msgstr "A_plicar"
 
 #: ../src/item-prop.c:1594
 msgid "matches any rule:"
-msgstr "coincidente com alguma das regras:"
+msgstr "coincide com alguma regra:"
 
 #: ../src/item-prop.c:1595
 msgid "matches all rules:"
-msgstr "coincidente com todas as regras:"
+msgstr "coincide com todas as regras:"
 
 #: ../src/item-prop.c:1596
 msgid "doesn't match any rule:"
-msgstr "não coincidente com alguma das regras:"
+msgstr "não coincide com nenhuma regra:"
 
 #: ../src/item-prop.c:1597
 msgid "doesn't match all rules:"
-msgstr "não coincidente com todas as regras:"
+msgstr "não coincide com todas as regras:"
 
 #: ../src/item-prop.c:1602
 msgid "Show"
@@ -7344,7 +7369,7 @@ msgstr "Desativar"
 
 #: ../src/item-prop.c:1625
 msgid "item if context"
-msgstr ""
+msgstr "item se contexto"
 
 #: ../src/item-prop.c:1643
 msgid "Edit Rule"
@@ -7356,32 +7381,32 @@ msgstr "Valor:"
 
 #: ../src/item-prop.c:1662
 msgid "If enabled, use as handler for:"
-msgstr ""
+msgstr "Se activado, usar como handler para:"
 
 #: ../src/item-prop.c:1665
 msgid "none"
-msgstr ""
+msgstr "nenhum"
 
 #: ../src/item-prop.c:1666
 msgid "files"
-msgstr ""
+msgstr "ficheiros"
 
 #: ../src/item-prop.c:1667
 msgid "devices"
-msgstr ""
+msgstr "dispositivos"
 
 #. Ignore Context
 #: ../src/item-prop.c:1672
 msgid "_Ignore Context / Show All  (global setting)"
-msgstr ""
+msgstr "_Ignorar Contexto / Exibir tudo (definição global)"
 
 #: ../src/item-prop.c:1752
 msgid "Comm_and"
-msgstr ""
+msgstr "Comando"
 
 #: ../src/item-prop.c:1755
 msgid "Command _Line"
-msgstr ""
+msgstr "_Linha de Comando"
 
 #: ../src/item-prop.c:1756
 msgid "_Script"
@@ -7389,19 +7414,19 @@ msgstr "_Script"
 
 #: ../src/item-prop.c:1759
 msgid "Open In _Editor"
-msgstr ""
+msgstr "Abrir no _Editor"
 
 #: ../src/item-prop.c:1763
 msgid "_Root Editor"
-msgstr ""
+msgstr "Editor _Root"
 
 #: ../src/item-prop.c:1793
 msgid "Optio_ns"
-msgstr ""
+msgstr "Opções"
 
 #: ../src/item-prop.c:1795
 msgid "Run Options"
-msgstr ""
+msgstr "Opções de Execução"
 
 #: ../src/item-prop.c:1806
 msgid "Popup Task"
@@ -7409,7 +7434,7 @@ msgstr ""
 
 #: ../src/item-prop.c:1807
 msgid "Popup Error"
-msgstr ""
+msgstr "Erro de Popup"
 
 #: ../src/item-prop.c:1808
 msgid "Popup Output"
@@ -7421,43 +7446,43 @@ msgstr ""
 
 #: ../src/item-prop.c:1818
 msgid "Keep Terminal Open"
-msgstr ""
+msgstr "Manter Terminal Aberto"
 
 #: ../src/item-prop.c:1824
 msgid "Run As User:"
-msgstr ""
+msgstr "Executar como Utilizador:"
 
 #: ../src/item-prop.c:1829
 msgid "( leave blank for current user )"
-msgstr ""
+msgstr "( deixe em branco para utilizador actual )"
 
 #: ../src/item-prop.c:1834
 msgid "Style"
-msgstr ""
+msgstr "Estilo"
 
 #: ../src/item-prop.c:1843
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: ../src/item-prop.c:1844
 msgid "Checkbox"
-msgstr ""
+msgstr "Checkbox"
 
 #: ../src/item-prop.c:1845
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmação"
 
 #: ../src/item-prop.c:1846
 msgid "Input"
-msgstr ""
+msgstr "Input"
 
 #: ../src/item-prop.c:1855
 msgid "Confirmation/Input Message:"
-msgstr ""
+msgstr "Messagem de confirmação/Intput:"
 
 #: ../src/item-prop.c:1872
 msgid "Open In Browser:"
-msgstr ""
+msgstr "Abrir no Navegador:"
 
 #: ../src/item-prop.c:1889
 msgid "Data Dir"
@@ -7465,30 +7490,30 @@ msgstr ""
 
 #: ../src/item-prop.c:1913
 msgid "Built-In Toolbar Item"
-msgstr ""
+msgstr "Item integrado na Barra"
 
 #: ../src/item-prop.c:1915
 msgid "Submenu"
-msgstr ""
+msgstr "Submenu"
 
 #: ../src/item-prop.c:1917
 msgid "Separator"
-msgstr ""
+msgstr "Separador"
 
 #. built-in
 #: ../src/item-prop.c:1921
 msgid "Built-In Command"
-msgstr ""
+msgstr "Comando Integrado"
 
 #: ../src/exo/exo-cell-renderer-ellipsized-text.c:188
 #: ../src/exo/exo-cell-renderer-icon.c:169
 msgid "Follow state"
-msgstr ""
+msgstr "Seguir estado"
 
 #: ../src/exo/exo-cell-renderer-ellipsized-text.c:189
 #: ../src/exo/exo-cell-renderer-icon.c:170
 msgid "Render differently based on the selection state."
-msgstr ""
+msgstr "Rederizar diferentemente com base no estado de selecção."
 
 #: ../src/exo/exo-cell-renderer-icon.c:192
 #, fuzzy
@@ -7497,7 +7522,7 @@ msgstr "Í_cone"
 
 #: ../src/exo/exo-cell-renderer-icon.c:193
 msgid "The icon to render."
-msgstr ""
+msgstr "Ícone a renderizar."
 
 #: ../src/exo/exo-cell-renderer-icon.c:211
 #, fuzzy
@@ -7506,15 +7531,15 @@ msgstr "Í_cone"
 
 #: ../src/exo/exo-cell-renderer-icon.c:212
 msgid "The GIcon to render."
-msgstr ""
+msgstr "O GIcon a renderizar"
 
 #: ../src/exo/exo-cell-renderer-icon.c:233
 msgid "size"
-msgstr ""
+msgstr "tamanho"
 
 #: ../src/exo/exo-cell-renderer-icon.c:234
 msgid "The size of the icon to render in pixels."
-msgstr ""
+msgstr "O tamanho do ícone em pixeis."
 
 #. EXO_ICON_CHOOSER_CONTEXT_ACTIONS
 #: ../src/exo/exo-icon-chooser-dialog.c:125
@@ -7525,7 +7550,7 @@ msgstr "Definir ícone"
 #. EXO_ICON_CHOOSER_CONTEXT_ANIMATIONS
 #: ../src/exo/exo-icon-chooser-dialog.c:127
 msgid "Animations"
-msgstr ""
+msgstr "Animações"
 
 #. EXO_ICON_CHOOSER_CONTEXT_APPLICATIONS
 #: ../src/exo/exo-icon-chooser-dialog.c:129
@@ -7537,35 +7562,35 @@ msgstr "Escolha a aplicação"
 #: ../src/exo/exo-icon-chooser-dialog.c:131
 #, fuzzy
 msgid "Menu Icons"
-msgstr "Ícones grandes:"
+msgstr "Ícones do Menu:"
 
 #. EXO_ICON_CHOOSER_CONTEXT_DEVICES
 #: ../src/exo/exo-icon-chooser-dialog.c:133
 #, fuzzy
 msgid "Device Icons"
-msgstr "UDI"
+msgstr "Ícones de Dispositivos"
 
 #. EXO_ICON_CHOOSER_CONTEXT_EMBLEMS
 #: ../src/exo/exo-icon-chooser-dialog.c:135
 msgid "Emblems"
-msgstr ""
+msgstr "Emblemas"
 
 #. EXO_ICON_CHOOSER_CONTEXT_EMOTES
 #: ../src/exo/exo-icon-chooser-dialog.c:137
 msgid "Emoticons"
-msgstr ""
+msgstr "Emoticons"
 
 #. EXO_ICON_CHOOSER_CONTEXT_INTERNATIONAL
 #: ../src/exo/exo-icon-chooser-dialog.c:139
 #, fuzzy
 msgid "International Denominations"
-msgstr "Destino inválido"
+msgstr "Denominações Internacionais"
 
 #. EXO_ICON_CHOOSER_CONTEXT_MIME_TYPES
 #: ../src/exo/exo-icon-chooser-dialog.c:141
 #, fuzzy
 msgid "File Type Icons"
-msgstr "Tipo de ficheiro:"
+msgstr "Ícones de Tipo de ficheiro:"
 
 #. EXO_ICON_CHOOSER_CONTEXT_PLACES
 #: ../src/exo/exo-icon-chooser-dialog.c:143
@@ -7577,26 +7602,26 @@ msgstr "_Localização"
 #: ../src/exo/exo-icon-chooser-dialog.c:145
 #, fuzzy
 msgid "Status Icons"
-msgstr "Definir ícone"
+msgstr "ícone de estado"
 
 #. EXO_ICON_CHOOSER_CONTEXT_OTHER
 #: ../src/exo/exo-icon-chooser-dialog.c:147
 #, fuzzy
 msgid "Uncategorized Icons"
-msgstr "Ícones grandes:"
+msgstr "Ícones sem categoria:"
 
 #. EXO_ICON_CHOOSER_CONTEXT_ALL
 #: ../src/exo/exo-icon-chooser-dialog.c:151
 #, fuzzy
 msgid "All Icons"
-msgstr "Ícones pequenos:"
+msgstr "Todos os Ícones"
 
 #. EXO_ICON_CHOOSER_CONTEXT_FILE
 #: ../src/exo/exo-icon-chooser-dialog.c:155
 #: ../src/exo/exo-icon-chooser-dialog.c:305
 #, fuzzy
 msgid "Image Files"
-msgstr "Novo ficheiro"
+msgstr "Ficheiros de Imagem"
 
 #. setup the context combo box
 #: ../src/exo/exo-icon-chooser-dialog.c:223
@@ -7608,11 +7633,11 @@ msgstr "Selecionar uma pasta"
 #: ../src/exo/exo-icon-chooser-dialog.c:238
 #, fuzzy
 msgid "_Search icon:"
-msgstr "Procurar novamente"
+msgstr "Procurar ícone:"
 
 #: ../src/exo/exo-icon-chooser-dialog.c:249
 msgid "Clear search field"
-msgstr ""
+msgstr "Limpar campo de pesquisa"
 
 #: ../src/exo/exo-thumbnail-preview.c:137
 #, fuzzy
@@ -7622,7 +7647,7 @@ msgstr "_Anterior"
 #: ../src/exo/exo-thumbnail-preview.c:153
 #: ../src/exo/exo-thumbnail-preview.c:236
 msgid "No file selected"
-msgstr ""
+msgstr "Nenhum ficheiro seleccionado"
 
 #: ../src/exo/exo-thumbnail-preview.c:252
 #, fuzzy
@@ -7677,7 +7702,7 @@ msgstr ""
 #~ "Também pode mudar o nome do ficheiro e instalar o extra com outro nome."
 
 #~ msgid "Overwrite Plugin ?"
-#~ msgstr "Substituir?"
+#~ msgstr "Substituir Plugin?"
 
 #~ msgid "trashing"
 #~ msgstr "destruição"
