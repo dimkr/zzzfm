@@ -27,9 +27,8 @@ Description: Multi-panel tabbed file manager - GTK2 version
  desktop environments, and provides device management featureful enough to
  replace the various udisks-based *kits when used alongside udevil.
  .
- Other highlights include optional desktop management, smart queuing
- of file operations, user plugins, and the ability to carry out specific
- commands as root.
+ Other highlights include optional desktop management, smart queuing of
+ file operations, and the ability to carry out specific commands as root.
  .
  If you would prefer a GTK+3 UI, Please install zzzfm-gtk3 instead.
 
@@ -65,8 +64,7 @@ Description: Multi-panel tabbed file manager - GTK3 version
  desktop environments, and provides device management featureful enough to
  replace the various udisks-based *kits when used alongside udevil.
  .
- Other highlights include optional desktop management, smart queuing
- of file operations, user plugins, and the ability to carry out specific
- commands as root.
+ Other highlights include optional desktop management, smart queuing of
+ file operations and the ability to carry out specific commands as root.
  .
  If you want to stick with GTK2, please install zzzfm (vs zzzfm-gtk3) instead.

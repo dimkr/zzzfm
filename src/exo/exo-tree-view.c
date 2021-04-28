@@ -177,10 +177,7 @@ static void  exo_tree_view_class_init (ExoTreeViewClass *klass)
     /**
    * ExoTreeView:single-click:
    *
-   * %TRUE to activate items using a single click instead of a
-   * double click.
-   *
-   * Since: 0.3.1.3
+   * %TRUE to activate items using a single click instead of a double click.
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_SINGLE_CLICK,
@@ -196,8 +193,6 @@ static void  exo_tree_view_class_init (ExoTreeViewClass *klass)
    * The amount of time in milliseconds after which the hover row (the row
    * which is hovered by the mouse cursor) will be selected automatically
    * in single-click mode. A value of %0 disables the automatic selection.
-   *
-   * Since: 0.3.1.5
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_SINGLE_CLICK_TIMEOUT,
@@ -779,8 +774,6 @@ static void  exo_tree_view_single_click_timeout_destroy (gpointer user_data)
  * Allocates a new #ExoTreeView instance.
  *
  * Return value: the newly allocated #ExoTreeView.
- *
- * Since: 0.3.1.3
  **/
 GtkWidget*
 exo_tree_view_new (void)
@@ -797,8 +790,6 @@ exo_tree_view_new (void)
  * Returns %TRUE if @tree_view is in single-click mode, else %FALSE.
  *
  * Return value: whether @tree_view is in single-click mode.
- *
- * Since: 0.3.1.3
  **/
 gboolean  exo_tree_view_get_single_click (const ExoTreeView *tree_view)
 {
@@ -815,8 +806,6 @@ gboolean  exo_tree_view_get_single_click (const ExoTreeView *tree_view)
  *
  * If @single_click is %TRUE, @tree_view will use single-click mode, else
  * the default double-click mode will be used.
- *
- * Since: 0.3.1.3
  **/
 void  exo_tree_view_set_single_click (ExoTreeView *tree_view, gboolean     single_click)
 {
@@ -840,10 +829,7 @@ void  exo_tree_view_set_single_click (ExoTreeView *tree_view, gboolean     singl
  * in single click mode. A value of %0 means that the behavior
  * is disabled and the user must alter the selection manually.
  *
- * Return value: the single click autoselect timeout or %0 if
- *               the behavior is disabled.
- *
- * Since: 0.3.1.5
+ * Return value: the single click autoselect timeout or %0 if the behavior is disabled.
  **/
 guint
 exo_tree_view_get_single_click_timeout (const ExoTreeView *tree_view)
@@ -862,15 +848,12 @@ exo_tree_view_get_single_click_timeout (const ExoTreeView *tree_view)
  * If @single_click_timeout is a value greater than zero, it specifies
  * the amount of time in milliseconds after which the item under the
  * mouse cursor will be selected automatically in single click mode.
- * A value of %0 for @single_click_timeout disables the autoselection
- * for @tree_view.
+ * A value of %0 for @single_click_timeout disables the autoselection for @tree_view.
  *
  * This setting does not have any effect unless the @tree_view is in
  * single-click mode, see exo_tree_view_set_single_click().
- *
- * Since: 0.3.1.5
  **/
-void  exo_tree_view_set_single_click_timeout (ExoTreeView *tree_view, guint        single_click_timeout)
+void  exo_tree_view_set_single_click_timeout (ExoTreeView *tree_view, guint single_click_timeout)
 {
     g_return_if_fail (EXO_IS_TREE_VIEW (tree_view));
 

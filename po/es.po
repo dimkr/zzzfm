@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zzzfm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-25 10:33-0400\n"
+"POT-Creation-Date: 2021-04-27 05:07+0000\n"
 "PO-Revision-Date: 2015-09-13 13:46+0000\n"
 "Last-Translator: IgnorantGuru <ignorantguru@gmx.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/ignorantguru/zzzfm/language/"
@@ -5316,11 +5316,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/ptk/ptk-file-browser.c:2521 ../src/desktop/desktop-window.c:2110
+#: ../src/ptk/ptk-file-browser.c:2521 ../src/desktop/desktop-window.c:2100
 msgid "Select By Pattern"
 msgstr "Seleccionar por patrón"
 
-#: ../src/ptk/ptk-file-browser.c:2522 ../src/desktop/desktop-window.c:2110
+#: ../src/ptk/ptk-file-browser.c:2522 ../src/desktop/desktop-window.c:2100
 #, c-format
 msgid ""
 "Enter pattern to select files and folders:\n"
@@ -5342,20 +5342,20 @@ msgstr ""
 "Sugerencia: también puede introducir '%% PATRÓN' en la barra de ruta."
 
 #: ../src/ptk/ptk-file-browser.c:4509 ../src/ptk/ptk-file-misc.c:3657
-#: ../src/desktop/desktop-window.c:3139
+#: ../src/desktop/desktop-window.c:3115
 msgid "Choose Location"
 msgstr "Elija la ubicación"
 
 #: ../src/ptk/ptk-file-browser.c:4539 ../src/ptk/ptk-file-browser.c:4562
-#: ../src/desktop/desktop-window.c:3169 ../src/desktop/desktop-window.c:3191
+#: ../src/desktop/desktop-window.c:3145 ../src/desktop/desktop-window.c:3167
 msgid "Invalid Destination"
 msgstr "El destino no es válido"
 
-#: ../src/ptk/ptk-file-browser.c:4539 ../src/desktop/desktop-window.c:3169
+#: ../src/ptk/ptk-file-browser.c:4539 ../src/desktop/desktop-window.c:3145
 msgid "Destination same as source"
 msgstr "El destino y el origen son el mismo"
 
-#: ../src/ptk/ptk-file-browser.c:4562 ../src/desktop/desktop-window.c:3191
+#: ../src/ptk/ptk-file-browser.c:4562 ../src/desktop/desktop-window.c:3167
 msgid "Invalid destination"
 msgstr "destino no válido"
 
@@ -6833,7 +6833,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/ptk/ptk-file-misc.c:2887 ../src/desktop/desktop-window.c:1949
+#: ../src/ptk/ptk-file-misc.c:2887 ../src/desktop/desktop-window.c:1939
 msgid "Rename Error"
 msgstr "Error de renombrado"
 
@@ -6994,7 +6994,7 @@ msgstr "Usuario no válido"
 msgid "Invalid Group"
 msgstr "Grupo no válido"
 
-#: ../src/ptk/ptk-path-entry.c:577
+#: ../src/ptk/ptk-path-entry.c:565
 #, c-format
 msgid ""
 "In addition to a folder or file path, commands can be entered in the Path "
@@ -7554,7 +7554,7 @@ msgstr ""
 msgid "Unmount-If-Mounted: %s\n"
 msgstr "Desmontar-Si-Montado: %s\n"
 
-#: ../src/desktop/desktop-window.c:1918
+#: ../src/desktop/desktop-window.c:1908
 #, c-format
 msgid ""
 "You do not have permission to edit the contents of file %s\n"
@@ -7567,11 +7567,11 @@ msgstr ""
 "Considere copiar el archivo al escritorio o hacer un enlace a una copia "
 "situada en ~/.local/share/applications/"
 
-#: ../src/desktop/desktop-window.c:1919
+#: ../src/desktop/desktop-window.c:1909
 msgid "Unable To Rename"
 msgstr "No se pudo renombrar"
 
-#: ../src/desktop/desktop-window.c:1926
+#: ../src/desktop/desktop-window.c:1916
 #, c-format
 msgid ""
 "Enter new desktop item name:\n"
@@ -7584,11 +7584,11 @@ msgstr ""
 "Cambiar el nombre de este elemento de escritorio requiere modificar los "
 "contenidos del archivo \"desktop\" %s"
 
-#: ../src/desktop/desktop-window.c:1928
+#: ../src/desktop/desktop-window.c:1918
 msgid "Change Desktop Item Name"
 msgstr "Cambiar nombre del elemento de escritorio"
 
-#: ../src/desktop/desktop-window.c:1949
+#: ../src/desktop/desktop-window.c:1939
 msgid "An error occurred renaming this desktop item."
 msgstr "Un error ocurrió al renombrar este elemento de escritorio."
 
@@ -8133,37 +8133,37 @@ msgstr "Separador"
 msgid "Built-In Command"
 msgstr "Orden incorporada"
 
-#: ../src/exo/exo-cell-renderer-ellipsized-text.c:188
-#: ../src/exo/exo-cell-renderer-icon.c:169
+#: ../src/exo/exo-cell-renderer-ellipsized-text.c:186
+#: ../src/exo/exo-cell-renderer-icon.c:167
 msgid "Follow state"
 msgstr ""
 
-#: ../src/exo/exo-cell-renderer-ellipsized-text.c:189
-#: ../src/exo/exo-cell-renderer-icon.c:170
+#: ../src/exo/exo-cell-renderer-ellipsized-text.c:187
+#: ../src/exo/exo-cell-renderer-icon.c:168
 msgid "Render differently based on the selection state."
 msgstr ""
 
-#: ../src/exo/exo-cell-renderer-icon.c:192
+#: ../src/exo/exo-cell-renderer-icon.c:187
 msgid "Icon"
 msgstr "Icono"
 
-#: ../src/exo/exo-cell-renderer-icon.c:193
+#: ../src/exo/exo-cell-renderer-icon.c:188
 msgid "The icon to render."
 msgstr "Icono a dibujar."
 
-#: ../src/exo/exo-cell-renderer-icon.c:211
+#: ../src/exo/exo-cell-renderer-icon.c:204
 msgid "GIcon"
 msgstr ""
 
-#: ../src/exo/exo-cell-renderer-icon.c:212
+#: ../src/exo/exo-cell-renderer-icon.c:205
 msgid "The GIcon to render."
 msgstr ""
 
-#: ../src/exo/exo-cell-renderer-icon.c:233
+#: ../src/exo/exo-cell-renderer-icon.c:224
 msgid "size"
 msgstr "tamaño"
 
-#: ../src/exo/exo-cell-renderer-icon.c:234
+#: ../src/exo/exo-cell-renderer-icon.c:225
 msgid "The size of the icon to render in pixels."
 msgstr "El tamaño del icono a dibujar en píxeles."
 

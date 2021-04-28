@@ -160,7 +160,6 @@ void main_window_get_counts( PtkFileBrowser* file_browser, int* panel_count,
 gboolean main_window_panel_is_visible( PtkFileBrowser* file_browser, int panel );
 void main_window_open_in_panel( PtkFileBrowser* file_browser, int panel_num, char* file_path );
 void main_window_autosave( PtkFileBrowser* file_browser );
-void main_window_on_plugins_change( FMMainWindow* main_window );
 void main_window_root_bar_all();
 void main_window_rubberband_all();
 void main_window_refresh_all();

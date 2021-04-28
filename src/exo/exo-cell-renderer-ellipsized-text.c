@@ -179,8 +179,6 @@ static void  exo_cell_renderer_ellipsized_text_class_init (ExoCellRendererEllips
    * Specifies whether the text renderer should render the text based on
    * the selection state of the items. This is necessary for #ExoIconView
    * which doesn't draw any item state indicators itself.
-   *
-   * Since: 0.3.1.9
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_FOLLOW_STATE,
@@ -241,7 +239,7 @@ static void  exo_cell_renderer_ellipsized_text_set_property (GObject      *objec
 
 
 
-static void  exo_cell_renderer_ellipsized_text_get_size (GtkCellRenderer *renderer, GtkWidget       *widget,
+static void  exo_cell_renderer_ellipsized_text_get_size (GtkCellRenderer *renderer, GtkWidget *widget,
 
 //sfm-gtk3
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -327,8 +325,7 @@ static void exo_cell_renderer_ellipsized_text_get_preferred_width (GtkCellRender
                                                                    gint            *natural_size)
 {
     // Calling the normal code to get width
-    exo_cell_renderer_ellipsized_text_get_size (renderer, widget, NULL, NULL,
-                                                NULL, minimal_size, NULL);
+    exo_cell_renderer_ellipsized_text_get_size (renderer, widget, NULL, NULL, NULL, minimal_size, NULL);
 
     // If natural size was requested, duplicate
     if (minimal_size && natural_size)
@@ -341,8 +338,7 @@ static void exo_cell_renderer_ellipsized_text_get_preferred_height (GtkCellRende
                                                                    gint            *natural_size)
 {
     // Calling the normal code to get height
-    exo_cell_renderer_ellipsized_text_get_size (renderer, widget, NULL, NULL,
-                                                NULL, NULL, minimal_size);
+    exo_cell_renderer_ellipsized_text_get_size (renderer, widget, NULL, NULL, NULL, NULL, minimal_size);
 
     // If natural size was requested, duplicate
     if (minimal_size && natural_size)
@@ -357,9 +353,7 @@ static void exo_cell_renderer_ellipsized_text_get_preferred_height_for_width (
                                                   gint            *natural_size)
 {
     // Ignoring specified width and just returning the normal height
-    exo_cell_renderer_ellipsized_text_get_preferred_height(renderer, widget,
-                                                           minimal_size,
-                                                           natural_size);
+    exo_cell_renderer_ellipsized_text_get_preferred_height(renderer, widget, minimal_size, natural_size);
 }
 #endif
 
@@ -468,8 +462,7 @@ static void  exo_cell_renderer_ellipsized_text_render (GtkCellRenderer     *rend
                                         &text_width, &text_height);
 #else
             (*GTK_CELL_RENDERER_CLASS (exo_cell_renderer_ellipsized_text_parent_class)->get_size)(
-                                       renderer, widget, &text_area, &x0, &y0,
-                                       &text_width, &text_height);
+                                       renderer, widget, &text_area, &x0, &y0, &text_width, &text_height);
 #endif
 
             /* Adjust the offsets appropriately */

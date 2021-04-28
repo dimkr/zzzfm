@@ -51,8 +51,6 @@
  * returning instantly. It is mostly useful in
  * situations that require a function to be called,
  * but that function does not need to do anything useful.
- *
- * Since: 0.3.1
  **/
 void exo_noop (void) {
 }
@@ -67,8 +65,6 @@ void exo_noop (void) {
  * returns %1, but don't want to perform any other actions.
  *
  * Returns: the integer value %1.
- *
- * Since: 0.3.1
  **/
 gint exo_noop_one (void) {
     return 1;
@@ -84,8 +80,6 @@ gint exo_noop_one (void) {
  * returns %0, but don't want to perform any other actions.
  *
  * Returns: the integer value %0.
- *
- * Since: 0.3.1
  **/
 gint exo_noop_zero (void) {
     return 0;
@@ -101,8 +95,6 @@ gint exo_noop_zero (void) {
  * returns %NULL, but don't want to perform any other actions.
  *
  * Returns: a %NULL pointer.
- *
- * Since: 0.3.1
  **/
 gpointer exo_noop_null (void) {
     return NULL;
@@ -119,8 +111,6 @@ gpointer exo_noop_null (void) {
  * other actions.
  *
  * Returns: the boolean value %TRUE.
- *
- * Since: 0.3.1
  **/
 gboolean  exo_noop_true (void) {
     return TRUE;
@@ -137,8 +127,6 @@ gboolean  exo_noop_true (void) {
  * other actions.
  *
  * Returns: the boolean value %FALSE.
- *
- * Since: 0.3.1
  **/
 gboolean  exo_noop_false (void) {
     return FALSE;

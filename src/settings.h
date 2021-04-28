@@ -234,7 +234,7 @@ enum {
     XSET_JOB_TOOLTIPS
 };
 
-enum {
+enum {           //  howdy bub
     PLUGIN_JOB_INSTALL,
     PLUGIN_JOB_COPY,
     PLUGIN_JOB_REMOVE
@@ -296,7 +296,7 @@ typedef struct
     char scroll_lock;
     char opener;
 
-    // Plugin (not saved at all)
+    // Plugin (not saved at all)(sic)
     gboolean plugin;
     gboolean plugin_top;
     char* plug_name;
@@ -475,8 +475,7 @@ char* multi_input_get_text( GtkWidget* input );
 XSet* xset_custom_new();
 gboolean write_root_settings( FILE* file, const char* path );
 GList* xset_get_plugins( gboolean included );
-void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg,
-                          const char* path, const char* plug_dir, int type,
+void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg, const char* path, const char* plug_dir, int type,
                           int job, XSet* insert_set );
 XSet* xset_import_plugin( const char* plug_dir, gboolean* is_bookmarks );
 void clean_plugin_mirrors();

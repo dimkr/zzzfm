@@ -596,8 +596,6 @@ static void  exo_icon_chooser_dialog_selection_changed (ExoIconChooserDialog *ic
  * Creates a new #ExoIconChooserDialog. This function is analogous to gtk_dialog_new_with_buttons().
  *
  * Returns: a new #ExoIconChooserDialog.
- *
- * Since: 0.3.1.9
  **/
 GtkWidget*
 exo_icon_chooser_dialog_new (const gchar *title, GtkWindow   *parent, const gchar *first_button_text, ...)
@@ -644,8 +642,6 @@ exo_icon_chooser_dialog_new (const gchar *title, GtkWindow   *parent, const gcha
  * The caller is responsible to free the returned string using g_free() when no longer needed.
  *
  * Returns: the currently selected icon for @icon_chooser_dialog or %NULL if no icon is selected.
- *
- * Since: 0.3.1.9
  **/
 gchar*
 exo_icon_chooser_dialog_get_icon (ExoIconChooserDialog *icon_chooser_dialog)
@@ -698,12 +694,9 @@ exo_icon_chooser_dialog_get_icon (ExoIconChooserDialog *icon_chooser_dialog)
  * Preselects the specified @icon in the @icon_chooser_dialog, and returns %TRUE if the
  * @icon was successfully selected.
  *
- * Returns: %TRUE if the @icon was successfully preselected in the @icon_chooser_dialog,
- *          %FALSE otherwise.
- *
- * Since: 0.3.1.9
+ * Returns: %TRUE if the @icon was successfully preselected in the @icon_chooser_dialog, %FALSE otherwise.
  **/
-gboolean  exo_icon_chooser_dialog_set_icon (ExoIconChooserDialog *icon_chooser_dialog, const gchar          *icon)
+gboolean  exo_icon_chooser_dialog_set_icon (ExoIconChooserDialog *icon_chooser_dialog, const gchar *icon)
 {
     ExoIconChooserDialogPrivate *priv = EXO_ICON_CHOOSER_DIALOG_GET_PRIVATE (icon_chooser_dialog);
     GtkTreeModel                *filter;

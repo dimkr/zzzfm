@@ -160,8 +160,6 @@ static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
    * Specifies whether the icon renderer should render icon based on the
    * selection state of the items. This is necessary for #ExoIconView,
    * which doesn't draw any item state indicators itself.
-   *
-   * Since: 0.3.1.9
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_FOLLOW_STATE,
@@ -181,10 +179,7 @@ static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
    *
    * Image files are loaded via the thumbnail database, creating a thumbnail
    * as necessary. The thumbnail database is also used to load scalable icons
-   * in the icon theme, because loading scalable icons is quite expensive
-   * these days.
-   *
-   * Since: 0.3.1.9
+   * in the icon theme, because loading scalable icons is quite expensive these days.
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_ICON,
@@ -202,8 +197,6 @@ static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
    *
    * Currently only #GThemedIcon<!---->s are supported which are loaded
    * using the current icon theme.
-   *
-   * Since: 0.4.0
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_GICON,
@@ -224,8 +217,6 @@ static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
    * view, because during the layouting phase no icons will need to be
    * loaded, but the icons will only be loaded when they need to be rendered,
    * i.e. the view scrolls to the cell.
-   *
-   * Since: 0.3.1.9
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_SIZE,
@@ -262,10 +253,7 @@ static void  exo_cell_renderer_icon_finalize (GObject *object)
 
 
 
-static void  exo_cell_renderer_icon_get_property (GObject    *object,
-                                     guint       prop_id,
-                                     GValue     *value,
-                                     GParamSpec *pspec)
+static void  exo_cell_renderer_icon_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
     const ExoCellRendererIconPrivate *priv = EXO_CELL_RENDERER_ICON_GET_PRIVATE (object);
 
@@ -641,8 +629,6 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
  * different icon in each row of the #GtkTreeView.
  *
  * Returns: the newly allocated #ExoCellRendererIcon.
- *
- * Since: 0.3.1.9
  **/
 GtkCellRenderer*
 exo_cell_renderer_icon_new (void)

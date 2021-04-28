@@ -18,7 +18,7 @@
 #include "gtk2-compat.h"
 
 
-enum {
+enum {           // howdy bub
     HANDLER_JOB_EXPORT,
     HANDLER_JOB_IMPORT_FILE,
     HANDLER_JOB_IMPORT_URL,
@@ -509,8 +509,7 @@ static void restore_defaults( HandlerData* hnd, gboolean all );
 static gboolean validate_archive_handler( HandlerData* hnd );
 static void on_options_button_clicked( GtkWidget* btn, HandlerData* hnd );
 
-gboolean ptk_handler_command_is_empty( const char* command )
-{
+gboolean ptk_handler_command_is_empty( const char* command ) {
     // test if command contains only comments and whitespace
     if ( !command )
         return TRUE;
@@ -533,8 +532,7 @@ gboolean ptk_handler_command_is_empty( const char* command )
     return !found;
 }
 
-void ptk_handler_load_text_view( GtkTextView* view, const char* text )
-{
+void ptk_handler_load_text_view( GtkTextView* view, const char* text ) {
     if ( view )
     {
         GtkTextBuffer* buf = gtk_text_view_get_buffer( GTK_TEXT_VIEW( view ) );
@@ -542,8 +540,7 @@ void ptk_handler_load_text_view( GtkTextView* view, const char* text )
     }
 }
 
-char* ptk_handler_get_text_view( GtkTextView* view )
-{
+char* ptk_handler_get_text_view( GtkTextView* view ) {
     if ( !view )
         return g_strdup( "" );
     GtkTextBuffer* buf = gtk_text_view_get_buffer( view );
@@ -556,8 +553,7 @@ char* ptk_handler_get_text_view( GtkTextView* view )
     return text;
 }
 
-char* ptk_handler_get_command( int mode, int cmd, XSet* handler_set )
-{   /* if handler->disable, get const command, else get script path if exists */
+char* ptk_handler_get_command( int mode, int cmd, XSet* handler_set ) {   /* if handler->disable, get const command, else get script path if exists */
     if ( !handler_set )
         return NULL;
     if ( handler_set->disable )
@@ -624,8 +620,7 @@ char* ptk_handler_get_command( int mode, int cmd, XSet* handler_set )
     return NULL;
 }
 
-char* ptk_handler_load_script( int mode, int cmd, XSet* handler_set, GtkTextView* view, char** text )
-{
+char* ptk_handler_load_script( int mode, int cmd, XSet* handler_set, GtkTextView* view, char** text ) {
     /* places command in textview buffer or char** */
     GtkTextBuffer* buf = NULL;
     GString* gstr = NULL;
@@ -736,8 +731,7 @@ _read_error:
     return str;
 }
 
-char* ptk_handler_save_script( int mode, int cmd, XSet* handler_set, GtkTextView* view, const char* command )
-{
+char* ptk_handler_save_script( int mode, int cmd, XSet* handler_set, GtkTextView* view, const char* command ) {
     /* writes command in textview buffer or const command to script */
     if ( !( handler_set && handler_set->disable == FALSE ) )
         return g_strdup( _("Error: unable to save command (internal error)") );
@@ -759,8 +753,7 @@ char* ptk_handler_save_script( int mode, int cmd, XSet* handler_set, GtkTextView
     // name script
     char* script;
     char* str;
-    str = g_strdup_printf( "/hand-%s-%s.sh", modes[mode], mode == HANDLER_MODE_ARC ?
-                                        cmds_arc[cmd] : cmds_mnt[cmd] );
+    str = g_strdup_printf( "/hand-%s-%s.sh", modes[mode], mode == HANDLER_MODE_ARC ?  cmds_arc[cmd] : cmds_mnt[cmd] );
     script = replace_string( def_script, "/exec.sh", str, FALSE );
     g_free( str );
     g_free( def_script );
@@ -816,8 +809,7 @@ _write_error:
     return str;
 }
 
-gboolean ptk_handler_values_in_list( const char* list, GSList* values, char** msg )
-{   /* test for the presence of values in list, using wildcards.
+gboolean ptk_handler_values_in_list( const char* list, GSList* values, char** msg ) {   /* test for the presence of values in list, using wildcards.
     *  list is space-separated, plus sign (+) indicates required. */
     if ( !( list && list[0] ) || !values )
         return FALSE;
@@ -887,8 +879,7 @@ gboolean ptk_handler_values_in_list( const char* list, GSList* values, char** ms
     return ret;
 }
 
-static gboolean value_in_list( const char* list, const char* value )
-{   // this function must be FAST - is run multiple times on menu popup
+static gboolean value_in_list( const char* list, const char* value ) {   // this function must be FAST - is run multiple times on menu popup
     gboolean supported = FALSE;
     char* ptr;
     char* delim;
@@ -1011,8 +1002,7 @@ GSList* ptk_handler_file_has_handlers( int mode, int cmd,
     return g_slist_reverse( handlers );
 }
 
-void ptk_handler_add_new_default( int mode, const char* default_name, gboolean start )
-{
+void ptk_handler_add_new_default( int mode, const char* default_name, gboolean start ) {
     // This function adds a new default handler to the handlers list
     // If start, it adds it to the start of the list, otherwise end
     int i, nelements;
@@ -1107,8 +1097,7 @@ void ptk_handler_add_new_default( int mode, const char* default_name, gboolean s
     set_conf->s = list;
 }
 
-void ptk_handler_add_defaults( int mode, gboolean overwrite, gboolean add_missing )
-{
+void ptk_handler_add_defaults( int mode, gboolean overwrite, gboolean add_missing ) {
     int i, nelements;
     char* list;
     char* str;
@@ -1203,8 +1192,7 @@ void ptk_handler_add_defaults( int mode, gboolean overwrite, gboolean add_missin
     set_conf->s = list;
 }
 
-XSet* add_new_handler( int mode )
-{
+XSet* add_new_handler( int mode ) {
     // creates a new xset for a custom handler type
     XSet* set;
     char* rand;
@@ -1342,8 +1330,8 @@ void ptk_handler_import( int mode, GtkWidget* handler_dlg, XSet* set ) {    //  
     hnd->changed = hnd->compress_changed = hnd->extract_changed = hnd->list_changed = FALSE;
 }
 
-static void config_load_handler_settings( XSet* handler_xset, gchar* handler_xset_name, const Handler* handler, HandlerData* hnd )
-{   // handler_xset_name optional if handler_xset passed
+static void config_load_handler_settings( XSet* handler_xset, gchar* handler_xset_name, const Handler* handler, HandlerData* hnd ) {
+    // handler_xset_name optional if handler_xset passed
     // Fetching actual xset if only the name has been passed
     if ( !handler_xset )
         if ( !( handler_xset = xset_is( handler_xset_name ) ) )
@@ -1364,19 +1352,11 @@ static void config_load_handler_settings( XSet* handler_xset, gchar* handler_xse
     int start;
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( hnd->chkbtn_handler_enabled ), handler_xset->b == XSET_B_TRUE );
 
-    gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_name ),
-                                    handler_xset->menu_label ?
-                                    handler_xset->menu_label : "" );
-    gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_mime ),
-                                    handler_xset->s ?
-                                    handler_xset->s : "" );
-    gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_extension ),
-                                    handler_xset->x ?
-                                    handler_xset->x : "" );
+    gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_name ),  handler_xset->menu_label ?  handler_xset->menu_label : "" );
+    gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_mime ),  handler_xset->s ?  handler_xset->s : "" );
+    gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_extension ),   handler_xset->x ?  handler_xset->x : "" );
     if ( hnd->entry_handler_icon )
-        gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_icon ),
-                                    handler_xset->icon ?
-                                    handler_xset->icon : "" );
+        gtk_entry_set_text( GTK_ENTRY( hnd->entry_handler_icon ),  handler_xset->icon ?  handler_xset->icon : "" );
 
     if ( handler )
     {
@@ -1414,8 +1394,7 @@ static void config_load_handler_settings( XSet* handler_xset, gchar* handler_xse
                                     handler_xset->scroll_lock == XSET_B_TRUE );
 }
 
-static void config_unload_handler_settings( HandlerData* hnd )
-{
+static void config_unload_handler_settings( HandlerData* hnd ) {
     // Disabling main change buttons
     gtk_widget_set_sensitive( GTK_WIDGET( hnd->btn_remove ), FALSE );
     gtk_widget_set_sensitive( GTK_WIDGET( hnd->btn_up ), FALSE );
@@ -1440,12 +1419,10 @@ static void config_unload_handler_settings( HandlerData* hnd )
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( hnd->chkbtn_handler_list_term ), FALSE);
 
     gtk_widget_set_sensitive( GTK_WIDGET( hnd->btn_apply ), FALSE );
-    hnd->changed = hnd->compress_changed = hnd->extract_changed =
-                                                hnd->list_changed = FALSE;
+    hnd->changed = hnd->compress_changed = hnd->extract_changed = hnd->list_changed = FALSE;
 }
 
-static void populate_archive_handlers( HandlerData* hnd, XSet* def_handler_set )
-{
+static void populate_archive_handlers( HandlerData* hnd, XSet* def_handler_set ) {
     /* Fetching available archive handlers (literally gets member s from
      * the xset) - user-defined order has already been set */
     char* archive_handlers_s = xset_get_s( handler_conf_xset[hnd->mode] );
@@ -1515,16 +1492,14 @@ static void populate_archive_handlers( HandlerData* hnd, XSet* def_handler_set )
     }
 }
 
-static void on_configure_drag_end( GtkWidget* widget, GdkDragContext* drag_context, HandlerData* hnd )
-{
+static void on_configure_drag_end( GtkWidget* widget, GdkDragContext* drag_context, HandlerData* hnd ) {
     // Regenerating archive handlers list xset
     // Obtaining iterator pointing at first handler
     GtkTreeIter iter;
     if (!gtk_tree_model_get_iter_first( GTK_TREE_MODEL( hnd->list ), &iter ))
     {
         // Failed to get iterator - warning user and exiting
-        g_warning("Drag'n'drop end event detected, but unable to get an"
-        " iterator to the start of the model!");
+        g_warning("Drag'n'drop end event detected, but unable to get an iterator to the start of the model!");
         return;
     }
 
@@ -1568,8 +1543,7 @@ static void on_configure_drag_end( GtkWidget* widget, GdkDragContext* drag_conte
 #endif
 }
 
-static void on_configure_button_press( GtkButton* widget, HandlerData* hnd )
-{
+static void on_configure_button_press( GtkButton* widget, HandlerData* hnd ) {
     int i;
     char* err_msg = NULL;
     char* str;
@@ -1902,10 +1876,8 @@ _clean_exit:
     g_free( handler_name_from_model );
 }
 
-static void on_configure_changed( GtkTreeSelection* selection, HandlerData* hnd )
-{
-    /* This event is triggered when the selected row is changed or no row is
-     * selected at all */
+static void on_configure_changed( GtkTreeSelection* selection, HandlerData* hnd ) {
+    /* This event is triggered when the selected row is changed or no row is selected at all */
 
     // Fetching the model and iter from the selection
     GtkTreeIter it;
@@ -1935,8 +1907,7 @@ static void on_configure_changed( GtkTreeSelection* selection, HandlerData* hnd 
     gtk_widget_grab_focus( entry_handler_name );*/
 }
 
-static void on_configure_handler_enabled_check( GtkToggleButton *togglebutton, HandlerData* hnd )
-{
+static void on_configure_handler_enabled_check( GtkToggleButton *togglebutton, HandlerData* hnd ) {
     /* When no handler is selected (i.e. the user selects outside of the
      * populated handlers list), the enabled checkbox might be checked
      * off - however the widgets must not be set insensitive when this
@@ -1976,8 +1947,7 @@ static void on_configure_handler_enabled_check( GtkToggleButton *togglebutton, H
     gtk_widget_set_sensitive( hnd->chkbtn_handler_list_term, enabled );
 }
 
-static gboolean on_handlers_key_press( GtkWidget* widget, GdkEventKey* evt, HandlerData* hnd )
-{
+static gboolean on_handlers_key_press( GtkWidget* widget, GdkEventKey* evt, HandlerData* hnd ) {
     // Current handler hasn't been changed?
     if ( !hnd->changed /* was !gtk_widget_get_sensitive( hnd->btn_apply )*/ )
         return FALSE;
@@ -1990,8 +1960,7 @@ static gboolean on_handlers_key_press( GtkWidget* widget, GdkEventKey* evt, Hand
     return TRUE;  // FALSE doesn't retain key after dialog shown
 }
 
-static gboolean on_handlers_button_press( GtkWidget* view, GdkEventButton* evt, HandlerData* hnd )
-{
+static gboolean on_handlers_button_press( GtkWidget* view, GdkEventButton* evt, HandlerData* hnd ) {
     GtkTreeModel* model;
     GtkTreePath* tree_path = NULL;
     GtkTreeIter it;
@@ -2053,8 +2022,7 @@ static gboolean on_handlers_button_press( GtkWidget* view, GdkEventButton* evt, 
  * or double-clicking, or via keypress space/enter, not merely selected.  */
 static void on_configure_row_activated( GtkTreeView* view, GtkTreePath* tree_path, GtkTreeViewColumn* col, HandlerData* hnd )
 {
-    // This event is triggered when the selected row is changed by the
-    // mouse
+    // This event is triggered when the selected row is changed by the mouse
 
     // Fetching the model from the view
     GtkTreeModel* model = gtk_tree_view_get_model( GTK_TREE_VIEW( view ) );
@@ -2080,8 +2048,7 @@ static void on_configure_row_activated( GtkTreeView* view, GtkTreePath* tree_pat
 }
 #endif
 
-static void restore_defaults( HandlerData* hnd, gboolean all )
-{
+static void restore_defaults( HandlerData* hnd, gboolean all ) {
     if ( all )
     {
         int response = xset_msg_dialog( GTK_WIDGET( hnd->dlg ), GTK_MESSAGE_WARNING,
@@ -2173,8 +2140,7 @@ static void restore_defaults( HandlerData* hnd, gboolean all )
     }
 }
 
-static gboolean validate_archive_handler( HandlerData* hnd )
-{
+static gboolean validate_archive_handler( HandlerData* hnd ) {
     if ( hnd->mode != HANDLER_MODE_ARC )
         // only archive handlers currently have validity checks
         return TRUE;
@@ -2300,11 +2266,9 @@ _cleanup:
     return ret;
 }
 
-void on_textview_font_change( GtkMenuItem* item, HandlerData* hnd )
-{
+void on_textview_font_change( GtkMenuItem* item, HandlerData* hnd ) {
     char* fontname = xset_get_s( "context_dlg" );
-    PangoFontDescription* font_desc = fontname ?
-                        pango_font_description_from_string( fontname ) : NULL;
+    PangoFontDescription* font_desc = fontname ?  pango_font_description_from_string( fontname ) : NULL;
     gtk_widget_modify_font( GTK_WIDGET( hnd->view_handler_compress ), font_desc );
     gtk_widget_modify_font( GTK_WIDGET( hnd->view_handler_extract ), font_desc );
     gtk_widget_modify_font( GTK_WIDGET( hnd->view_handler_list ), font_desc );
@@ -2312,8 +2276,7 @@ void on_textview_font_change( GtkMenuItem* item, HandlerData* hnd )
         pango_font_description_free( font_desc );
 }
 
-void on_textview_popup( GtkTextView *input, GtkMenu *menu, HandlerData* hnd )
-{
+void on_textview_popup( GtkTextView *input, GtkMenu *menu, HandlerData* hnd ) {
     // uses same xsets as item-prop.c:on_script_popup()
     GtkAccelGroup* accel_group = gtk_accel_group_new();
     XSet* set = xset_get( "sep_ctxt" );
@@ -2329,8 +2292,7 @@ void on_textview_popup( GtkTextView *input, GtkMenu *menu, HandlerData* hnd )
     gtk_widget_show_all( GTK_WIDGET( menu ) );
 }
 
-gboolean on_activate_link( GtkLabel* label, gchar* uri, HandlerData* hnd )
-{
+gboolean on_activate_link( GtkLabel* label, gchar* uri, HandlerData* hnd ) {
     // click apply to save handler
     on_configure_button_press( GTK_BUTTON( hnd->btn_apply ), hnd );
     // open in editor
@@ -2362,10 +2324,8 @@ gboolean on_activate_link( GtkLabel* label, gchar* uri, HandlerData* hnd )
     return TRUE;
 }
 
-static gboolean on_textview_keypress ( GtkWidget *widget, GdkEventKey *event, HandlerData* hnd )
-{   // also used on dlg keypress
-    if ( ( event->keyval == GDK_KEY_Return ||
-                                event->keyval == GDK_KEY_KP_Enter ) )
+static gboolean on_textview_keypress ( GtkWidget *widget, GdkEventKey *event, HandlerData* hnd ) {   // also used on dlg keypress
+    if ( ( event->keyval == GDK_KEY_Return ||  event->keyval == GDK_KEY_KP_Enter ) )
     {
         int keymod = ( event->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK |
                  GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
@@ -2411,8 +2371,7 @@ static gboolean on_textview_keypress ( GtkWidget *widget, GdkEventKey *event, Ha
     return FALSE;
 }
 
-void on_textview_buffer_changed( GtkTextBuffer* buf, HandlerData* hnd )
-{
+void on_textview_buffer_changed( GtkTextBuffer* buf, HandlerData* hnd ) {
     if ( buf == hnd->buf_handler_compress && !hnd->compress_changed )
         hnd->compress_changed = TRUE;
     else if ( buf == hnd->buf_handler_extract && !hnd->extract_changed )
@@ -2426,15 +2385,13 @@ void on_textview_buffer_changed( GtkTextBuffer* buf, HandlerData* hnd )
     }
 }
 
-void on_entry_text_insert( GtkEntryBuffer* buffer, guint position, gchar* chars, guint n_chars, HandlerData* hnd )
-{
+void on_entry_text_insert( GtkEntryBuffer* buffer, guint position, gchar* chars, guint n_chars, HandlerData* hnd ) {
     if ( !hnd->changed )
     {
         hnd->changed = TRUE;
         gtk_widget_set_sensitive( hnd->btn_apply, gtk_widget_get_sensitive( hnd->btn_remove ) );
     }
-    if ( hnd->entry_handler_icon &&
-            gtk_entry_get_buffer( GTK_ENTRY( hnd->entry_handler_icon ) ) ==  buffer )
+    if ( hnd->entry_handler_icon &&  gtk_entry_get_buffer( GTK_ENTRY( hnd->entry_handler_icon ) ) ==  buffer )
     {
         // update icon of icon choose button
         const char* icon = gtk_entry_get_text( GTK_ENTRY( hnd->entry_handler_icon ) );
@@ -2442,13 +2399,11 @@ void on_entry_text_insert( GtkEntryBuffer* buffer, guint position, gchar* chars,
     }
 }
 
-void on_entry_text_delete( GtkEntryBuffer* buffer, guint position, guint n_chars, HandlerData* hnd )
-{
+void on_entry_text_delete( GtkEntryBuffer* buffer, guint position, guint n_chars, HandlerData* hnd ) {
     on_entry_text_insert( buffer, position, NULL, n_chars, hnd );
 }
 
-void on_terminal_toggled( GtkToggleButton* togglebutton, HandlerData* hnd )
-{
+void on_terminal_toggled( GtkToggleButton* togglebutton, HandlerData* hnd ) {
     if ( !hnd->changed )
     {
         hnd->changed = TRUE;
@@ -2456,8 +2411,7 @@ void on_terminal_toggled( GtkToggleButton* togglebutton, HandlerData* hnd )
     }
 }
 
-static void on_icon_choose_button_clicked( GtkWidget* widget, HandlerData* hnd )
-{
+static void on_icon_choose_button_clicked( GtkWidget* widget, HandlerData* hnd ) {
     // get current icon
     char* new_icon;
     const char* icon = gtk_entry_get_text( GTK_ENTRY( hnd->entry_handler_icon ) );
@@ -2471,8 +2425,7 @@ static void on_icon_choose_button_clicked( GtkWidget* widget, HandlerData* hnd )
     }
 }
 
-void on_option_cb( GtkMenuItem* item, HandlerData* hnd )
-{
+void on_option_cb( GtkMenuItem* item, HandlerData* hnd ) {
     if ( hnd->changed )
         on_configure_button_press( GTK_BUTTON( hnd->btn_apply ), hnd );
 
@@ -2583,8 +2536,7 @@ void on_option_cb( GtkMenuItem* item, HandlerData* hnd )
     g_free( folder );
 }
 
-static void on_archive_default( GtkMenuItem *menuitem, XSet* set )
-{
+static void on_archive_default( GtkMenuItem *menuitem, XSet* set ) {
     const char* arcname[] =
     {
         "arc_def_open",
@@ -2617,8 +2569,7 @@ static GtkWidget* add_popup_menuitem( GtkWidget* popup,
     return item;
 }
 
-static void on_options_button_clicked( GtkWidget* btn, HandlerData* hnd )
-{
+static void on_options_button_clicked( GtkWidget* btn, HandlerData* hnd ) {
     GtkWidget* item;
     XSet* set;
 
@@ -2697,8 +2648,7 @@ static void on_options_button_clicked( GtkWidget* btn, HandlerData* hnd )
     gtk_menu_popup( GTK_MENU( popup ), NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time() );
 }
 
-void ptk_handler_show_config( int mode, DesktopWindow* desktop, PtkFileBrowser* file_browser, XSet* def_handler_set )
-{
+void ptk_handler_show_config( int mode, DesktopWindow* desktop, PtkFileBrowser* file_browser, XSet* def_handler_set ) {
     HandlerData* hnd = g_slice_new0( HandlerData );
     hnd->mode = mode;
 

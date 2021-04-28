@@ -29,9 +29,11 @@ uidir=$(filedir)/ui
 
 # html-doc
 htmldir = @htmldir@
+# howdy
 html_DATA = zzzfm-manual-en.html
 
-# GtkBuilder UI definition files    howdy  FYI    THE .glade FILES ARE NOT PRESENT OF THE SOURCEPACKAGE
+
+# GtkBuilder UI definition files    howdy  FYI    THE .glade FILES ARE NOT PRESENT IN THE SOURCEPACKAGE
 ui_in_files= \
 	ui/prefdlg.glade \
 	ui/prefdlg2.glade \

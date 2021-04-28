@@ -1,3 +1,10 @@
+zzzfm (1.0.7-1) unstable; urgency=medium
+
+  * dampened the "drag-select" sensitivity of desktop icons
+  * translations: merged pt.po file contributed by PPC
+
+ -- skidoo <email@redact.ed>  Wed, 28 Apr 2021 11:11:11 +0200
+
 zzzfm (1.0.7) unstable; urgency=medium
 
   * initial release

@@ -1,6 +1,6 @@
-debian/tmp/gtk2/usr/bin/*                 /usr/bin
+debian/tmp/gtk2/usr/bin/*                 /usr/bin/
 debian/tmp/gtk2/usr/share/applications/*  /usr/share/applications/
-debian/tmp/gtk2/etc/zzzfm/zzzfm.conf      /etc/zzzfm
+debian/tmp/gtk2/etc/zzzfm/zzzfm.conf      /etc/zzzfm/
 COPYING                                   /usr/share/zzzfm/
 COPYING-LGPL                              /usr/share/zzzfm/
 etc/xdg/*                                     /etc/xdg/zzzfm/

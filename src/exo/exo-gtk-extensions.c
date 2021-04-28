@@ -105,8 +105,6 @@ static void update_preview (GtkFileChooser      *chooser, ExoThumbnailPreview *t
  * gtk_file_chooser_set_select_multiple() method - the behaviour of the
  * preview widget is currently undefined, in that it is not defined for
  * which of the selected files the preview will be displayed.
- *
- * Since: 0.3.1.9
  **/
 void exo_gtk_file_chooser_add_thumbnail_preview (GtkFileChooser *chooser) {
     GtkWidget *thumbnail_preview;

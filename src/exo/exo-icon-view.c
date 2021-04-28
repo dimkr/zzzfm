@@ -369,8 +369,7 @@ static void exo_icon_view_drag_data_received (GtkWidget        *widget,
                                                   GtkSelectionData *selection_data,
                                                   guint             info,
                                                   guint             time);
-static gboolean exo_icon_view_maybe_begin_drag   (ExoIconView      *icon_view,
-                                                  GdkEventMotion   *event);
+static gboolean exo_icon_view_maybe_begin_drag   (ExoIconView      *icon_view,  GdkEventMotion   *event);
 
 static void remove_scroll_timeout            (ExoIconView *icon_view);
 
@@ -716,8 +715,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    *
    * The column-spacing property specifies the space which is inserted between
    * the columns of the icon view.
-   *
-   * Since: 0.3.1
    **/
     g_object_class_install_property (gobject_class, PROP_COLUMN_SPACING,
                                      g_param_spec_int ("column-spacing",
@@ -732,8 +729,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * The columns property contains the number of the columns in which the
    * items should be displayed. If it is -1, the number of columns will
    * be chosen automatically to fill the available area.
-   *
-   * Since: 0.3.1
    **/
     g_object_class_install_property (gobject_class, PROP_COLUMNS,
                                      g_param_spec_int ("columns",
@@ -746,8 +741,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * ExoIconView:enable-search:
    *
    * View allows user to search through columns interactively.
-   *
-   * Since: 0.3.1.3
    **/
     g_object_class_install_property (gobject_class, PROP_ENABLE_SEARCH,
                                      g_param_spec_boolean ("enable-search",
@@ -763,8 +756,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * The item-width property specifies the width to use for each item.
    * If it is set to -1, the icon view will automatically determine a
    * suitable item size.
-   *
-   * Since: 0.3.1
    **/
     g_object_class_install_property (gobject_class, PROP_ITEM_WIDTH,
                                      g_param_spec_int ("item-width",
@@ -781,8 +772,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * which is the default, where items are layed out horizontally in
    * rows from top to bottom, or %EXO_ICON_VIEW_LAYOUT_COLS, where items
    * are layed out vertically in columns from left to right.
-   *
-   * Since: 0.3.1.5
    **/
     g_object_class_install_property (gobject_class, PROP_LAYOUT_MODE,
                                      g_param_spec_enum ("layout-mode",
@@ -797,8 +786,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    *
    * The margin property specifies the space which is inserted
    * at the edges of the icon view.
-   *
-   * Since: 0.3.1
    **/
     g_object_class_install_property (gobject_class, PROP_MARGIN,
                                      g_param_spec_int ("margin",
@@ -869,10 +856,7 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
     /**
    * ExoIconView:reorderable:
    *
-   * The reorderable property specifies if the items can be reordered
-   * by Drag and Drop.
-   *
-   * Since: 0.3.1
+   * The reorderable property specifies if the items can be reordered by Drag and Drop.
    **/
     g_object_class_install_property (gobject_class, PROP_REORDERABLE,
                                      g_param_spec_boolean ("reorderable",
@@ -884,10 +868,7 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
     /**
    * ExoIconView:row-spacing:
    *
-   * The row-spacing property specifies the space which is inserted between
-   * the rows of the icon view.
-   *
-   * Since: 0.3.1
+   * The row-spacing property specifies the space which is inserted between the rows of the icon view.
    **/
     g_object_class_install_property (gobject_class, PROP_ROW_SPACING,
                                      g_param_spec_int ("row-spacing",
@@ -900,8 +881,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * ExoIconView:search-column:
    *
    * Model column to search through when searching through code.
-   *
-   * Since: 0.3.1.3
    **/
     g_object_class_install_property (gobject_class, PROP_SEARCH_COLUMN,
                                      g_param_spec_int ("search-column",
@@ -929,8 +908,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * ExoIconView:single-click:
    *
    * Determines whether items can be activated by single or double clicks.
-   *
-   * Since: 0.3.1.3
    **/
     g_object_class_install_property (gobject_class,
                                      PROP_SINGLE_CLICK,
@@ -946,8 +923,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    * The amount of time in milliseconds after which a prelited item (an item
    * which is hovered by the mouse cursor) will be selected automatically in
    * single click mode. A value of %0 disables the automatic selection.
-   *
-   * Since: 0.3.1.5
    **/
     g_object_class_install_property (gobject_class, PROP_SINGLE_CLICK_TIMEOUT,
                                      g_param_spec_uint ("single-click-timeout",
@@ -961,8 +936,6 @@ static void  exo_icon_view_class_init (ExoIconViewClass *klass)
    *
    * The spacing property specifies the space which is inserted between
    * the cells (i.e. the icon and the text) of an item.
-   *
-   * Since: 0.3.1
    **/
     g_object_class_install_property (gobject_class, PROP_SPACING,
                                      g_param_spec_int ("spacing",
@@ -4990,8 +4963,6 @@ exo_icon_view_get_path_at_pos (const ExoIconView *icon_view, gint               
  * be freed with gtk_tree_path_free().
  *
  * Return value: %TRUE if an item exists at the specified position
- *
- * Since: 0.3.1
  **/
 gboolean
 exo_icon_view_get_item_at_pos (const ExoIconView *icon_view,
@@ -5030,8 +5001,6 @@ exo_icon_view_get_item_at_pos (const ExoIconView *icon_view,
  * Both paths should be freed with gtk_tree_path_free() after use.
  *
  * Return value: %TRUE, if valid paths were placed in @start_path and @end_path
- *
- * Since: 0.3.1
  **/
 gboolean  exo_icon_view_get_visible_range (const ExoIconView *icon_view, GtkTreePath      **start_path, GtkTreePath      **end_path)
 {
@@ -5149,8 +5118,6 @@ void  exo_icon_view_set_selection_mode (ExoIconView      *icon_view, GtkSelectio
  * items in the @icon_view.
  *
  * Return value: the layout mode of @icon_view.
- *
- * Since: 0.3.1.5
  **/
 ExoIconViewLayoutMode
 exo_icon_view_get_layout_mode (const ExoIconView *icon_view)
@@ -5167,8 +5134,6 @@ exo_icon_view_get_layout_mode (const ExoIconView *icon_view)
  * @layout_mode : the new #ExoIconViewLayoutMode for @icon_view.
  *
  * Sets the layout mode of @icon_view to @layout_mode.
- *
- * Since: 0.3.1.5
  **/
 void  exo_icon_view_set_layout_mode (ExoIconView          *icon_view, ExoIconViewLayoutMode layout_mode)
 {
@@ -5835,8 +5800,6 @@ void  exo_icon_view_item_activated (ExoIconView *icon_view, GtkTreePath *path)
  * The returned #GtkTreePath must be freed with gtk_tree_path_free().
  *
  * Return value: %TRUE if the cursor is set.
- *
- * Since: 0.3.1
  **/
 gboolean  exo_icon_view_get_cursor (const ExoIconView *icon_view, GtkTreePath      **path, GtkCellRenderer  **cell)
 {
@@ -5875,8 +5838,6 @@ gboolean  exo_icon_view_get_cursor (const ExoIconView *icon_view, GtkTreePath   
  * This function is often followed by <literal>gtk_widget_grab_focus
  * (icon_view)</literal> in order to give keyboard focus to the widget.
  * Please note that editing can only happen when the widget is realized.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_set_cursor (ExoIconView     *icon_view, GtkTreePath     *path, GtkCellRenderer *cell, gboolean         start_editing)
 {
@@ -5942,8 +5903,6 @@ void  exo_icon_view_set_cursor (ExoIconView     *icon_view, GtkTreePath     *pat
  * This function only works if the model is set, and @path is a valid row on the
  * model.  If the model changes before the @tree_view is realized, the centered
  * path will be modified to reflect this change.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_scroll_to_path (ExoIconView *icon_view,
                               GtkTreePath *path,
@@ -6020,8 +5979,6 @@ void  exo_icon_view_scroll_to_path (ExoIconView *icon_view,
  * whether the labels are drawn beside the icons instead of below.
  *
  * Return value: the relative position of texts and icons
- *
- * Since: 0.3.1
  **/
 GtkOrientation
 exo_icon_view_get_orientation (const ExoIconView *icon_view)
@@ -6039,8 +5996,6 @@ exo_icon_view_get_orientation (const ExoIconView *icon_view)
  *
  * Sets the ::orientation property which determines whether the labels
  * are drawn beside the icons instead of below.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_set_orientation (ExoIconView   *icon_view, GtkOrientation orientation)
 {
@@ -6088,8 +6043,6 @@ exo_icon_view_get_columns (const ExoIconView *icon_view)
  * many columns the icons are arranged. If @columns is
  * -1, the number of columns will be chosen automatically
  * to fill the available area.
- *
- * Since: 0.3.1
  */
 void  exo_icon_view_set_columns (ExoIconView *icon_view, gint         columns)
 {
@@ -6115,8 +6068,6 @@ void  exo_icon_view_set_columns (ExoIconView *icon_view, gint         columns)
  * Returns the value of the ::item-width property.
  *
  * Return value: the width of a single item, or -1
- *
- * Since: 0.3.1
  */
 gint
 exo_icon_view_get_item_width (const ExoIconView *icon_view)
@@ -6135,8 +6086,6 @@ exo_icon_view_get_item_width (const ExoIconView *icon_view)
  * Sets the ::item-width property which specifies the width
  * to use for each item. If it is set to -1, the icon view will
  * automatically determine a suitable item size.
- *
- * Since: 0.3.1
  */
 void  exo_icon_view_set_item_width (ExoIconView *icon_view, gint         item_width)
 {
@@ -6164,8 +6113,6 @@ void  exo_icon_view_set_item_width (ExoIconView *icon_view, gint         item_wi
  * Returns the value of the ::spacing property.
  *
  * Return value: the space between cells
- *
- * Since: 0.3.1
  */
 gint
 exo_icon_view_get_spacing (const ExoIconView *icon_view)
@@ -6184,8 +6131,6 @@ exo_icon_view_get_spacing (const ExoIconView *icon_view)
  * Sets the ::spacing property which specifies the space
  * which is inserted between the cells (i.e. the icon and
  * the text) of an item.
- *
- * Since: 0.3.1
  */
 void  exo_icon_view_set_spacing (ExoIconView *icon_view, gint         spacing)
 {
@@ -6211,8 +6156,6 @@ void  exo_icon_view_set_spacing (ExoIconView *icon_view, gint         spacing)
  * Returns the value of the ::row-spacing property.
  *
  * Return value: the space between rows
- *
- * Since: 0.3.1
  */
 gint
 exo_icon_view_get_row_spacing (const ExoIconView *icon_view)
@@ -6230,8 +6173,6 @@ exo_icon_view_get_row_spacing (const ExoIconView *icon_view)
  *
  * Sets the ::row-spacing property which specifies the space
  * which is inserted between the rows of the icon view.
- *
- * Since: 0.3.1
  */
 void  exo_icon_view_set_row_spacing (ExoIconView *icon_view, gint         row_spacing)
 {
@@ -6257,8 +6198,6 @@ void  exo_icon_view_set_row_spacing (ExoIconView *icon_view, gint         row_sp
  * Returns the value of the ::column-spacing property.
  *
  * Return value: the space between columns
- *
- * Since: 0.3.1
  **/
 gint
 exo_icon_view_get_column_spacing (const ExoIconView *icon_view)
@@ -6276,8 +6215,6 @@ exo_icon_view_get_column_spacing (const ExoIconView *icon_view)
  *
  * Sets the ::column-spacing property which specifies the space
  * which is inserted between the columns of the icon view.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_set_column_spacing (ExoIconView *icon_view, gint         column_spacing)
 {
@@ -6303,8 +6240,6 @@ void  exo_icon_view_set_column_spacing (ExoIconView *icon_view, gint         col
  * Returns the value of the ::margin property.
  *
  * Return value: the space at the borders
- *
- * Since: 0.3.1
  **/
 gint
 exo_icon_view_get_margin (const ExoIconView *icon_view)
@@ -6323,8 +6258,6 @@ exo_icon_view_get_margin (const ExoIconView *icon_view)
  * Sets the ::margin property which specifies the space
  * which is inserted at the top, bottom, left and right
  * of the icon view.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_set_margin (ExoIconView *icon_view, gint         margin)
 {
@@ -6704,8 +6637,8 @@ get_logical_destination (ExoIconView *icon_view, gboolean    *drop_append_mode)
 
     return path;
 }
-
-static gboolean  exo_icon_view_maybe_begin_drag (ExoIconView    *icon_view, GdkEventMotion *event)
+                             // howdy
+static gboolean  exo_icon_view_maybe_begin_drag (ExoIconView *icon_view, GdkEventMotion *event)
 {
     GdkDragContext *context;
     GtkTreePath *path = NULL;
@@ -6735,23 +6668,16 @@ static gboolean  exo_icon_view_maybe_begin_drag (ExoIconView    *icon_view, GdkE
     if (path == NULL)
         goto out;
 
-    if (!GTK_IS_TREE_DRAG_SOURCE (model) ||
-            !gtk_tree_drag_source_row_draggable (GTK_TREE_DRAG_SOURCE (model), path))
+    if (!GTK_IS_TREE_DRAG_SOURCE (model) ||  !gtk_tree_drag_source_row_draggable (GTK_TREE_DRAG_SOURCE (model), path))
         goto out;
 
-    /* FIXME Check whether we're a start button, if not return FALSE and
-   * free path
-   */
+    /* FIXME Check whether we're a start button, if not return FALSE and free path   */
 
     /* Now we can begin the drag */
 
     retval = TRUE;
 
-    context = gtk_drag_begin (GTK_WIDGET (icon_view),
-                              icon_view->priv->source_targets,
-                              icon_view->priv->source_actions,
-                              button,
-                              (GdkEvent*)event);
+    context = gtk_drag_begin (GTK_WIDGET (icon_view), icon_view->priv->source_targets, icon_view->priv->source_actions, button, (GdkEvent*)event);
 
     set_source_row (context, model, path);
 
@@ -6781,11 +6707,7 @@ static void  exo_icon_view_drag_begin (GtkWidget      *widget, GdkDragContext *c
     if (!icon_view->priv->dest_set && !icon_view->priv->source_set)
         return;
 
-    item = exo_icon_view_get_item_at_coords (icon_view,
-                                             icon_view->priv->press_start_x,
-                                             icon_view->priv->press_start_y,
-                                             TRUE,
-                                             NULL);
+    item = exo_icon_view_get_item_at_coords (icon_view, icon_view->priv->press_start_x, icon_view->priv->press_start_y, TRUE, NULL);
 
     _exo_return_if_fail (item != NULL);
 
@@ -6807,12 +6729,12 @@ static void  exo_icon_view_drag_begin (GtkWidget      *widget, GdkDragContext *c
 #endif
 }
 
-static void  exo_icon_view_drag_end (GtkWidget      *widget, GdkDragContext *context)
+static void  exo_icon_view_drag_end (GtkWidget *widget, GdkDragContext *context)
 {
     /* do nothing */
 }
 
-static void  exo_icon_view_drag_data_get (GtkWidget        *widget,
+static void  exo_icon_view_drag_data_get (GtkWidget *widget,
                              GdkDragContext   *context,
                              GtkSelectionData *selection_data,
                              guint             info,
@@ -6853,7 +6775,7 @@ done:
     gtk_tree_path_free (source_row);
 }
 
-static void  exo_icon_view_drag_data_delete (GtkWidget      *widget, GdkDragContext *context)
+static void  exo_icon_view_drag_data_delete (GtkWidget *widget, GdkDragContext *context)
 {
     GtkTreeModel *model;
     ExoIconView *icon_view;
@@ -6973,8 +6895,7 @@ static gboolean  exo_icon_view_drag_drop (GtkWidget      *widget,
 
     if (target != GDK_NONE && path != NULL)
     {
-        /* in case a motion had requested drag data, change things so we
-       * treat drag data receives as a drop.
+        /* in case a motion had requested drag data, change things so we treat drag data receives as a drop.
        */
         set_status_pending (context, 0);
         set_dest_row (context, model, path, icon_view->priv->empty_view_drop, drop_append_mode);
@@ -7081,8 +7002,6 @@ static void  exo_icon_view_drag_data_received (GtkWidget        *widget,
  * @actions           : the bitmask of possible actions for a drag from this widget
  *
  * Turns @icon_view into a drag source for automatic DND.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_enable_model_drag_source (ExoIconView              *icon_view,
                                         GdkModifierType           start_button_mask,
@@ -7114,8 +7033,6 @@ void  exo_icon_view_enable_model_drag_source (ExoIconView              *icon_vie
  * @actions   : the bitmask of possible actions for a drag from this widget
  *
  * Turns @icon_view into a drop destination for automatic DND.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_enable_model_drag_dest (ExoIconView          *icon_view,
                                       const GtkTargetEntry *targets,
@@ -7143,8 +7060,6 @@ void  exo_icon_view_enable_model_drag_dest (ExoIconView          *icon_view,
  * @icon_view : a #ExoIconView
  *
  * Undoes the effect of #exo_icon_view_enable_model_drag_source().
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_unset_model_drag_source (ExoIconView *icon_view)
 {
@@ -7166,8 +7081,6 @@ void  exo_icon_view_unset_model_drag_source (ExoIconView *icon_view)
  * @icon_view : a #ExoIconView
  *
  * Undoes the effect of #exo_icon_view_enable_model_drag_dest().
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_unset_model_drag_dest (ExoIconView *icon_view)
 {
@@ -7191,12 +7104,8 @@ void  exo_icon_view_unset_model_drag_dest (ExoIconView *icon_view)
  * @pos       : Specifies whether to drop, relative to the item
  *
  * Sets the item that is highlighted for feedback.
- *
- * Since: 0.3.1
  */
-void  exo_icon_view_set_drag_dest_item (ExoIconView            *icon_view,
-                                  GtkTreePath            *path,
-                                  ExoIconViewDropPosition pos)
+void  exo_icon_view_set_drag_dest_item (ExoIconView *icon_view, GtkTreePath *path, ExoIconViewDropPosition pos)
 {
     ExoIconViewItem *item;
     GtkTreePath     *previous_path;
@@ -7262,12 +7171,8 @@ void  exo_icon_view_set_drag_dest_item (ExoIconView            *icon_view,
  * @pos       : Return location for the drop position, or %NULL
  *
  * Gets information about the item that is highlighted for feedback.
- *
- * Since: 0.3.1
  **/
-void  exo_icon_view_get_drag_dest_item (ExoIconView              *icon_view,
-                                  GtkTreePath             **path,
-                                  ExoIconViewDropPosition  *pos)
+void  exo_icon_view_get_drag_dest_item (ExoIconView *icon_view, GtkTreePath **path, ExoIconViewDropPosition  *pos)
 {
     g_return_if_fail (EXO_IS_ICON_VIEW (icon_view));
 
@@ -7300,13 +7205,11 @@ void  exo_icon_view_get_drag_dest_item (ExoIconView              *icon_view,
  * widget coordinates first.
  *
  * Return value: whether there is an item at the given position.
- *
- * Since: 0.3.1
  **/
-gboolean  exo_icon_view_get_dest_item_at_pos (ExoIconView              *icon_view,
+gboolean  exo_icon_view_get_dest_item_at_pos (ExoIconView  *icon_view,
                                     gint                      drag_x,
                                     gint                      drag_y,
-                                    GtkTreePath             **path,
+                                    GtkTreePath  **path,
                                     ExoIconViewDropPosition  *pos)
 {
     ExoIconViewItem *item;
@@ -7359,8 +7262,6 @@ gboolean  exo_icon_view_get_dest_item_at_pos (ExoIconView              *icon_vie
  * This image is used for a drag icon.
  *
  * Return value: a newly-allocated pixmap (gtk2) or cairo surface (gtk3) of the drag icon.
- *
- * Since: 0.3.1
  **/
 #if GTK_CHECK_VERSION (3, 0, 0)
 cairo_surface_t*
@@ -7370,15 +7271,15 @@ GdkPixmap*
 exo_icon_view_create_drag_icon (ExoIconView *icon_view, GtkTreePath *path)
 {
     GdkRectangle      area;
-    GtkWidget        *widget = GTK_WIDGET (icon_view);
+    GtkWidget  *widget = GTK_WIDGET (icon_view);
 #if GTK_CHECK_VERSION (3, 0, 0)
     cairo_surface_t  *drawable;
 #else
-    GdkDrawable      *drawable;
+    GdkDrawable  *drawable;
 #endif
-    GList            *lp;
+    GList  *lp;
     gint              index;
-    cairo_t          *cr;
+    cairo_t  *cr;
 
     g_return_val_if_fail (EXO_IS_ICON_VIEW (icon_view), NULL);
     g_return_val_if_fail (gtk_tree_path_get_depth (path) > 0, NULL);
@@ -7442,8 +7343,6 @@ exo_icon_view_create_drag_icon (ExoIconView *icon_view, GtkTreePath *path)
  * See exo_icon_view_set_reorderable().
  *
  * Return value: %TRUE if the list can be reordered.
- *
- * Since: 0.3.1
  **/
 gboolean  exo_icon_view_get_reorderable (ExoIconView *icon_view)
 {
@@ -7469,8 +7368,6 @@ gboolean  exo_icon_view_get_reorderable (ExoIconView *icon_view)
  * This function does not give you any degree of control over the order -- any
  * reordering is allowed.  If more control is needed, you should probably
  * handle drag and drop manually.
- *
- * Since: 0.3.1
  **/
 void  exo_icon_view_set_reorderable (ExoIconView *icon_view, gboolean     reorderable)
 {
@@ -7514,8 +7411,6 @@ void  exo_icon_view_set_reorderable (ExoIconView *icon_view, gboolean     reorde
  * else %FALSE will be returned.
  *
  * Return value: whether @icon_view is currently in single click mode.
- *
- * Since: 0.3.1.3
  **/
 gboolean  exo_icon_view_get_single_click (const ExoIconView *icon_view)
 {
@@ -7532,8 +7427,6 @@ gboolean  exo_icon_view_get_single_click (const ExoIconView *icon_view)
  *
  * If @single_click is %TRUE, @icon_view will be in single click mode
  * afterwards, else @icon_view will be in double click mode.
- *
- * Since: 0.3.1.3
  **/
 void  exo_icon_view_set_single_click (ExoIconView *icon_view, gboolean     single_click)
 {
@@ -7563,8 +7456,6 @@ void  exo_icon_view_set_single_click (ExoIconView *icon_view, gboolean     singl
  *
  * Return value: the single click autoselect timeout or %0 if
  *               the behavior is disabled.
- *
- * Since: 0.3.1.5
  **/
 guint
 exo_icon_view_get_single_click_timeout (const ExoIconView *icon_view)
@@ -7588,8 +7479,6 @@ exo_icon_view_get_single_click_timeout (const ExoIconView *icon_view)
  *
  * This setting does not have any effect unless the @icon_view is in
  * single-click mode, see exo_icon_view_set_single_click().
- *
- * Since: 0.3.1.5
  **/
 void  exo_icon_view_set_single_click_timeout (ExoIconView *icon_view, guint        single_click_timeout)
 {
@@ -7616,7 +7505,7 @@ static gboolean  exo_icon_view_single_click_timeout (gpointer user_data)
 {
     ExoIconViewItem *item;
     gboolean         dirty = FALSE;
-    ExoIconView     *icon_view = EXO_ICON_VIEW (user_data);
+    ExoIconView  *icon_view = EXO_ICON_VIEW (user_data);
 
     GDK_THREADS_ENTER ();
 
@@ -7710,8 +7599,6 @@ static void  exo_icon_view_single_click_timeout_destroy (gpointer user_data)
  *
  * Return value: whether or not to let the user search
  *               interactively.
- *
- * Since: 0.3.1.3
  **/
 gboolean  exo_icon_view_get_enable_search (const ExoIconView *icon_view)
 {
@@ -7731,8 +7618,6 @@ gboolean  exo_icon_view_get_enable_search (const ExoIconView *icon_view)
  *
  * Note that even if this is %FALSE, the user can still initiate a search
  * using the "start-interactive-search" key binding.
- *
- * Since: 0.3.1.3
  **/
 void  exo_icon_view_set_enable_search (ExoIconView *icon_view, gboolean     enable_search)
 {
@@ -7756,8 +7641,6 @@ void  exo_icon_view_set_enable_search (ExoIconView *icon_view, gboolean     enab
  * Returns the column searched on by the interactive search code.
  *
  * Return value: the column the interactive search code searches in.
- *
- * Since: 0.3.1.3
  **/
 gint
 exo_icon_view_get_search_column (const ExoIconView *icon_view)
@@ -7780,8 +7663,6 @@ exo_icon_view_get_search_column (const ExoIconView *icon_view)
  * whether simply typing text will also start an interactive search.
  *
  * Note that @search_column refers to a column of the model.
- *
- * Since: 0.3.1.3
  **/
 void  exo_icon_view_set_search_column (ExoIconView *icon_view, gint         search_column)
 {
@@ -7804,8 +7685,6 @@ void  exo_icon_view_set_search_column (ExoIconView *icon_view, gint         sear
  * Returns the compare function currently in use.
  *
  * Return value: the currently used compare function for the search code.
- *
- * Since: 0.3.1.3
  **/
 ExoIconViewSearchEqualFunc
 exo_icon_view_get_search_equal_func (const ExoIconView *icon_view)
@@ -7829,10 +7708,8 @@ exo_icon_view_get_search_equal_func (const ExoIconView *icon_view)
  *
  * Specifying %NULL for @search_equal_func will reset @icon_view to use the default
  * search equal function.
- *
- * Since: 0.3.1.3
  **/
-void  exo_icon_view_set_search_equal_func (ExoIconView               *icon_view,
+void  exo_icon_view_set_search_equal_func (ExoIconView  *icon_view,
                                      ExoIconViewSearchEqualFunc search_equal_func,
                                      gpointer                   search_equal_data,
                                      GDestroyNotify             search_equal_destroy)
@@ -7862,8 +7739,6 @@ void  exo_icon_view_set_search_equal_func (ExoIconView               *icon_view,
  * Returns the search dialog positioning function currently in use.
  *
  * Return value: the currently used function for positioning the search dialog.
- *
- * Since: 0.3.1.3
  **/
 ExoIconViewSearchPositionFunc
 exo_icon_view_get_search_position_func (const ExoIconView *icon_view)
@@ -7885,10 +7760,8 @@ exo_icon_view_get_search_position_func (const ExoIconView *icon_view)
  *
  * Specifying %NULL for @search_position_func will reset @icon_view to use the default
  * search position function.
- *
- * Since: 0.3.1.3
  **/
-void  exo_icon_view_set_search_position_func (ExoIconView                  *icon_view,
+void  exo_icon_view_set_search_position_func (ExoIconView  *icon_view,
                                         ExoIconViewSearchPositionFunc search_position_func,
                                         gpointer                      search_position_data,
                                         GDestroyNotify                search_position_destroy)
@@ -7907,7 +7780,7 @@ void  exo_icon_view_set_search_position_func (ExoIconView                  *icon
 
 
 
-static void  exo_icon_view_search_activate (GtkEntry    *entry, ExoIconView *icon_view)
+static void  exo_icon_view_search_activate (GtkEntry  *entry, ExoIconView *icon_view)
 {
     GtkTreePath *path;
 
@@ -7926,7 +7799,7 @@ static void  exo_icon_view_search_activate (GtkEntry    *entry, ExoIconView *ico
 
 
 
-static void  exo_icon_view_search_dialog_hide (GtkWidget   *search_dialog, ExoIconView *icon_view)
+static void  exo_icon_view_search_dialog_hide (GtkWidget  *search_dialog, ExoIconView *icon_view)
 {
     _exo_return_if_fail (GTK_IS_WIDGET (search_dialog));
     _exo_return_if_fail (EXO_IS_ICON_VIEW (icon_view));
@@ -8012,7 +7885,7 @@ static void  exo_icon_view_search_ensure_directory (ExoIconView *icon_view)
 
 
 
-static void  exo_icon_view_search_init (GtkWidget   *search_entry, ExoIconView *icon_view)
+static void  exo_icon_view_search_init (GtkWidget  *search_entry, ExoIconView *icon_view)
 {
     GtkTreeModel *model;
     GtkTreeIter   iter;
@@ -8068,7 +7941,7 @@ static gboolean  exo_icon_view_search_iter (ExoIconView  *icon_view,
                            GtkTreeModel *model,
                            GtkTreeIter  *iter,
                            const gchar  *text,
-                           gint         *count,
+                           gint  *count,
                            gint          n)
 {
     GtkTreePath *path;
@@ -8102,7 +7975,7 @@ static gboolean  exo_icon_view_search_iter (ExoIconView  *icon_view,
 
 
 
-static void  exo_icon_view_search_move (GtkWidget   *widget, ExoIconView *icon_view, gboolean     move_up)
+static void  exo_icon_view_search_move (GtkWidget  *widget, ExoIconView *icon_view, gboolean     move_up)
 {
     GtkTreeModel *model;
     const gchar  *text;
@@ -8244,11 +8117,7 @@ static gboolean  exo_icon_view_search_start (ExoIconView *icon_view, gboolean   
 
 
 
-static gboolean  exo_icon_view_search_equal_func (GtkTreeModel *model,
-                                 gint          column,
-                                 const gchar  *key,
-                                 GtkTreeIter  *iter,
-                                 gpointer      user_data)
+static gboolean  exo_icon_view_search_equal_func (GtkTreeModel *model, gint column, const gchar  *key, GtkTreeIter *iter, gpointer user_data)
 {
     const gchar *str;
     gboolean     retval = TRUE;
@@ -8306,7 +8175,7 @@ static gboolean  exo_icon_view_search_equal_func (GtkTreeModel *model,
 
 
 
-static void  exo_icon_view_search_position_func (ExoIconView *icon_view, GtkWidget   *search_dialog, gpointer     user_data)
+static void  exo_icon_view_search_position_func (ExoIconView *icon_view, GtkWidget  *search_dialog, gpointer user_data)
 {
     GtkRequisition requisition;
     GdkRectangle   monitor;
@@ -8348,7 +8217,7 @@ static void  exo_icon_view_search_position_func (ExoIconView *icon_view, GtkWidg
 
 
 
-static gboolean  exo_icon_view_search_button_press_event (GtkWidget      *widget, GdkEventButton *event, ExoIconView    *icon_view)
+static gboolean  exo_icon_view_search_button_press_event (GtkWidget  *widget, GdkEventButton *event, ExoIconView  *icon_view)
 {
     _exo_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
     _exo_return_val_if_fail (EXO_IS_ICON_VIEW (icon_view), FALSE);
@@ -8364,7 +8233,7 @@ static gboolean  exo_icon_view_search_button_press_event (GtkWidget      *widget
 
 
 
-static gboolean  exo_icon_view_search_delete_event (GtkWidget   *widget, GdkEventAny *event, ExoIconView *icon_view)
+static gboolean  exo_icon_view_search_delete_event (GtkWidget  *widget, GdkEventAny *event, ExoIconView *icon_view)
 {
     _exo_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
     _exo_return_val_if_fail (EXO_IS_ICON_VIEW (icon_view), FALSE);
@@ -8377,7 +8246,7 @@ static gboolean  exo_icon_view_search_delete_event (GtkWidget   *widget, GdkEven
 
 
 
-static gboolean  exo_icon_view_search_key_press_event (GtkWidget   *widget, GdkEventKey *event, ExoIconView *icon_view)
+static gboolean  exo_icon_view_search_key_press_event (GtkWidget  *widget, GdkEventKey *event, ExoIconView *icon_view)
 {
     gboolean retval = FALSE;
     int nonlatin_key = 0;
@@ -8448,7 +8317,7 @@ static gboolean  exo_icon_view_search_key_press_event (GtkWidget   *widget, GdkE
 
 
 
-static gboolean  exo_icon_view_search_scroll_event (GtkWidget      *widget, GdkEventScroll *event, ExoIconView    *icon_view)
+static gboolean  exo_icon_view_search_scroll_event (GtkWidget  *widget, GdkEventScroll *event, ExoIconView  *icon_view)
 {
     gboolean retval = TRUE;
 

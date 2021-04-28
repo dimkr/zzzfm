@@ -2062,7 +2062,7 @@ static gboolean   ptk_file_browser_delayed_content_change( PtkFileBrowser* file_
 
 #if 0
 void on_folder_content_update ( FolderContent* content, PtkFileBrowser* file_browser ) {
-    /*  FIXME: Newly added or deleted files should not be delayed.
+    /*  FIXME: Newly added or deleted files should not be delayed.           howdy bub
         This must be fixed before 0.2.0 release.  */
     GTimeVal t;
     g_get_current_time( &t );
@@ -3233,8 +3233,8 @@ gboolean   on_folder_view_button_release_event ( GtkWidget *widget, GdkEventButt
             model = gtk_tree_view_get_model( GTK_TREE_VIEW( widget ) );
             gtk_tree_view_get_path_at_pos( GTK_TREE_VIEW( widget ), event->x, event->y, &tree_path, NULL, NULL, NULL );
             tree_sel = gtk_tree_view_get_selection( GTK_TREE_VIEW( widget ) );
-            if ( tree_path && tree_sel &&
-                        gtk_tree_selection_count_selected_rows( tree_sel ) > 1 )
+
+            if ( tree_path && tree_sel && gtk_tree_selection_count_selected_rows( tree_sel ) > 1 )
             {
                 // unselect all but one file
                 gtk_tree_selection_unselect_all( tree_sel );

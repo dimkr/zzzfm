@@ -34,14 +34,11 @@ static GQuark use_hand_cursor = (GQuark)"hand_cursor";
 #define is_hand_cursor_used( entry )    (g_object_get_qdata(entry, use_hand_cursor))
 */
 
-static char*
-get_cwd( GtkEntry* entry )
-{
+static char* get_cwd( GtkEntry* entry ) {
     const char* path = gtk_entry_get_text( entry );
     if ( path[0] == '/' )
         return g_path_get_dirname( path );
-    else if ( path[0] != '$' && path[0] != '+' && path[0] != '&'
-                        && path[0] != '!' && path[0] != '\0' && path[0] != ' ' )
+    else if ( path[0] != '$' && path[0] != '+' && path[0] != '&'  && path[0] != '!' && path[0] != '\0' && path[0] != ' ' )
     {
         EntryData* edata = (EntryData*)g_object_get_data( G_OBJECT( entry ), "edata" );
         if ( edata && edata->browser )
@@ -55,8 +52,8 @@ get_cwd( GtkEntry* entry )
     return NULL;
 }
 
-gboolean seek_path( GtkEntry* entry )
-{
+
+gboolean seek_path( GtkEntry* entry ) {
     if ( !GTK_IS_ENTRY( entry ) )
         return FALSE;
     EntryData* edata = (EntryData*)g_object_get_data( G_OBJECT( entry ), "edata" );
@@ -76,9 +73,7 @@ gboolean seek_path( GtkEntry* entry )
     char* seek_name = NULL;
     char* full_path;
     const char* path = gtk_entry_get_text( entry );
-    if ( !path || path[0] == '$' || path[0] == '+' || path[0] == '&'
-                    || path[0] == '!' || path[0] == '\0' || path[0] == ' '
-                    || path[0] == '%' )
+    if ( !path || path[0] == '$' || path[0] == '+' || path[0] == '&' || path[0] == '!' || path[0] == '\0' || path[0] == ' ' || path[0] == '%' )
         return FALSE;
 
     // get dir and name prefix
@@ -155,8 +150,8 @@ gboolean seek_path( GtkEntry* entry )
     return FALSE;
 }
 
-void seek_path_delayed( GtkEntry* entry, guint delay )
-{
+
+void seek_path_delayed( GtkEntry* entry, guint delay ) {
     EntryData* edata = (EntryData*)g_object_get_data( G_OBJECT( entry ), "edata" );
     if ( !( edata && edata->browser ) )
         return;
@@ -166,8 +161,8 @@ void seek_path_delayed( GtkEntry* entry, guint delay )
     edata->seek_timer = g_timeout_add( delay ? delay : 250, ( GSourceFunc )seek_path, entry );
 }
 
-static gboolean match_func_cmd( GtkEntryCompletion *completion, const gchar *key, GtkTreeIter *it, gpointer user_data)
-{
+
+static gboolean match_func_cmd( GtkEntryCompletion *completion, const gchar *key, GtkTreeIter *it, gpointer user_data) {
     char* name = NULL;
     GtkTreeModel* model = gtk_entry_completion_get_model(completion);
     gtk_tree_model_get( model, it, COL_NAME, &name, -1 );
@@ -181,8 +176,8 @@ static gboolean match_func_cmd( GtkEntryCompletion *completion, const gchar *key
     return FALSE;
 }
 
-static gboolean match_func( GtkEntryCompletion *completion, const gchar *key, GtkTreeIter *it, gpointer user_data)
-{
+
+static gboolean match_func( GtkEntryCompletion *completion, const gchar *key, GtkTreeIter *it, gpointer user_data) {
     char* name = NULL;
     GtkTreeModel* model = gtk_entry_completion_get_model(completion);
 
@@ -201,16 +196,14 @@ static gboolean match_func( GtkEntryCompletion *completion, const gchar *key, Gt
     return FALSE;
 }
 
-static void update_completion( GtkEntry* entry, GtkEntryCompletion* completion )
-{
+
+static void update_completion( GtkEntry* entry, GtkEntryCompletion* completion ) {
     GtkListStore* list;
     GtkTreeIter it;
 
     const char* text = gtk_entry_get_text( entry );
-    if ( text && ( text[0] == '$' || text[0] == '+' || text[0] == '&'
-                                    || text[0] == '!' || text[0] == '%' ||
-                   ( text[0] != '/' && strstr( text, ":/" ) ) ||
-                   g_str_has_prefix( text, "//" ) ) )
+    if ( text && ( text[0] == '$' || text[0] == '+' || text[0] == '&' || text[0] == '!' || text[0] == '%' ||
+                   ( text[0] != '/' && strstr( text, ":/" ) ) ||  g_str_has_prefix( text, "//" ) ) )
     {
         // command history
         GList* l;
@@ -283,8 +276,8 @@ static void update_completion( GtkEntry* entry, GtkEntryCompletion* completion )
     }
 }
 
-static void  on_changed( GtkEntry* entry, gpointer user_data )
-{
+
+static void  on_changed( GtkEntry* entry, gpointer user_data ) {
     GtkEntryCompletion* completion;
     completion = gtk_entry_get_completion( entry );
     update_completion( entry, completion );
@@ -292,8 +285,8 @@ static void  on_changed( GtkEntry* entry, gpointer user_data )
     seek_path_delayed( GTK_ENTRY( entry ), 0 );
 }
 
-void insert_complete( GtkEntry* entry )
-{
+
+void insert_complete( GtkEntry* entry ) {
     // find a real completion
     const char* prefix = gtk_entry_get_text( GTK_ENTRY( entry ) );
     if ( !prefix )
@@ -394,8 +387,8 @@ void insert_complete( GtkEntry* entry )
     g_free( dir_path );
 }
 
-static gboolean  on_key_press( GtkWidget *entry, GdkEventKey* evt, EntryData* edata )
-{
+
+static gboolean  on_key_press( GtkWidget *entry, GdkEventKey* evt, EntryData* edata ) {
     int keymod = ( evt->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK |
                  GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
 
@@ -409,8 +402,7 @@ static gboolean  on_key_press( GtkWidget *entry, GdkEventKey* evt, EntryData* ed
 
         gtk_entry_completion_insert_prefix( gtk_entry_get_completion(GTK_ENTRY(entry)) );
         const char* path = gtk_entry_get_text( GTK_ENTRY( entry ) );
-        if ( path && path[0] && !g_str_has_suffix( path, "/" ) &&
-                                    g_file_test( path, G_FILE_TEST_IS_DIR ) )
+        if ( path && path[0] && !g_str_has_suffix( path, "/" ) &&  g_file_test( path, G_FILE_TEST_IS_DIR ) )
         {
             char* new_path = g_strdup_printf( "%s/", path );
             gtk_entry_set_text( GTK_ENTRY( entry ), new_path );
@@ -435,14 +427,14 @@ static gboolean  on_key_press( GtkWidget *entry, GdkEventKey* evt, EntryData* ed
     return FALSE;
 }
 
-gboolean on_insert_prefix( GtkEntryCompletion *completion, gchar              *prefix, GtkWidget          *entry )
-{
+
+gboolean on_insert_prefix( GtkEntryCompletion *completion, gchar *prefix, GtkWidget *entry ) {
     // don't use the default handler because it inserts partial names
     return TRUE;
 }
 
-gboolean on_match_selected( GtkEntryCompletion *completion, GtkTreeModel    *model, GtkTreeIter     *iter, GtkWidget       *entry )
-{
+
+gboolean on_match_selected( GtkEntryCompletion *completion, GtkTreeModel *model, GtkTreeIter *iter, GtkWidget *entry ) {
     char* path = NULL;
     gtk_tree_model_get( model, iter, COL_PATH, &path, -1 );
     if ( path && path[0] )
@@ -459,12 +451,9 @@ gboolean on_match_selected( GtkEntryCompletion *completion, GtkTreeModel    *mod
     return TRUE;
 }
 
+
 #if 0
-gboolean on_match_selected( GtkEntryCompletion *completion,
-                               GtkTreeModel    *model,
-                               GtkTreeIter     *iter,
-                               GtkWidget       *entry )
-{
+gboolean on_match_selected( GtkEntryCompletion *completion, GtkTreeModel *model, GtkTreeIter *iter, GtkWidget *entry ) {
     char* path = NULL;
     gtk_tree_model_get( model, iter, COL_PATH, &path, -1 );
     if ( path && path[0] && !g_str_has_suffix( path, "/" ) )
@@ -485,8 +474,8 @@ gboolean on_match_selected( GtkEntryCompletion *completion,
 }
 #endif
 
-static gboolean  on_focus_in( GtkWidget *entry, GdkEventFocus* evt, gpointer user_data )
-{
+
+static gboolean  on_focus_in( GtkWidget *entry, GdkEventFocus* evt, gpointer user_data ) {
     GtkEntryCompletion* completion = gtk_entry_completion_new();
     GtkListStore* list = gtk_list_store_new( N_COLS, G_TYPE_STRING, G_TYPE_STRING );
     GtkCellRenderer* render;
@@ -515,18 +504,18 @@ static gboolean  on_focus_in( GtkWidget *entry, GdkEventFocus* evt, gpointer use
     return FALSE;
 }
 
-static gboolean  on_focus_out( GtkWidget *entry, GdkEventFocus* evt, gpointer user_data )
-{
+
+static gboolean  on_focus_out( GtkWidget *entry, GdkEventFocus* evt, gpointer user_data ) {
     g_signal_handlers_disconnect_by_func( entry, on_changed, NULL );
     gtk_entry_set_completion( GTK_ENTRY(entry), NULL );
     return FALSE;
 }
 
+
 #if 0
 /* Weird!  We cannot change the cursor of GtkEntry... */
 
-static gboolean on_mouse_move(GtkWidget      *entry, GdkEventMotion *evt, gpointer        user_data)
-{
+static gboolean on_mouse_move(GtkWidget *entry, GdkEventMotion *evt, gpointer user_data) {
     if( evt->state == GDK_CONTROL_MASK )
     {
         if( ! is_hand_cursor_used( entry ) )
@@ -548,21 +537,20 @@ static gboolean on_mouse_move(GtkWidget      *entry, GdkEventMotion *evt, gpoint
     }
     return FALSE;
 }
-
 #endif
 
-void ptk_path_entry_man( GtkWidget* widget, GtkWidget* parent )
-{
+
+void ptk_path_entry_man( GtkWidget* widget, GtkWidget* parent ) {
     xset_show_help( parent, NULL, "#gui-pathbar" );
 }
 
-void on_protocol_handlers( GtkWidget* widget, PtkFileBrowser* file_browser )
-{
+
+void on_protocol_handlers( GtkWidget* widget, PtkFileBrowser* file_browser ) {
     ptk_handler_show_config( HANDLER_MODE_NET, NULL, file_browser, NULL );
 }
 
-void on_add_bookmark( GtkWidget* widget, PtkFileBrowser* file_browser )
-{
+
+void on_add_bookmark( GtkWidget* widget, PtkFileBrowser* file_browser ) {
     if ( !( file_browser && file_browser->path_bar ) )
         return;
     const char* text = gtk_entry_get_text( GTK_ENTRY( file_browser->path_bar ) );
@@ -570,8 +558,8 @@ void on_add_bookmark( GtkWidget* widget, PtkFileBrowser* file_browser )
         ptk_bookmark_view_add_bookmark( NULL, file_browser, text );
 }
 
-void ptk_path_entry_help( GtkWidget* widget, GtkWidget* parent )
-{
+
+void ptk_path_entry_help( GtkWidget* widget, GtkWidget* parent ) {
     GtkWidget* parent_win = gtk_widget_get_toplevel( GTK_WIDGET( parent ) );
     GtkWidget* dlg = gtk_message_dialog_new( GTK_WINDOW( parent_win ), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_OK,
                                   _("In addition to a folder or file path, commands can be entered in the Path Bar.  Prefixes:\n\t$\trun as task\n\t&\trun and forget\n\t+\trun in terminal\n\t!\trun as root\nUse:\n\t%%F\tselected files  or  %%f first selected file\n\t%%N\tselected filenames  or  %%n first selected filename\n\t%%d\tcurrent directory\n\t%%v\tselected device (eg /dev/sda1)\n\t%%m\tdevice mount point (eg /media/dvd);  %%l device label\n\t%%b\tselected bookmark\n\t%%t\tselected task directory;  %%p task pid\n\t%%a\tmenu item value\n\t$fm_panel, $fm_tab, $fm_command, etc\n\nExample:  $ echo \"Current Directory: %%d\"\nExample:  +! umount %%v") );
@@ -580,21 +568,20 @@ void ptk_path_entry_help( GtkWidget* widget, GtkWidget* parent )
     gtk_widget_destroy( dlg );
 }
 
-static gboolean on_button_press( GtkWidget* entry, GdkEventButton *evt, gpointer user_data )
-{
+
+static gboolean on_button_press( GtkWidget* entry, GdkEventButton *evt, gpointer user_data ) {
     if ( ( evt_win_click->s || evt_win_click->ob2_data ) &&
             main_window_event( NULL, evt_win_click, "evt_win_click", 0, 0, "pathbar", 0, evt->button, evt->state, TRUE ) )
         return TRUE;
     return FALSE;
 }
 
-static gboolean on_button_release( GtkEntry       *entry, GdkEventButton *evt, gpointer        user_data )
-{
+
+static gboolean on_button_release( GtkEntry *entry, GdkEventButton *evt, gpointer user_data ) {
     if ( GDK_BUTTON_RELEASE != evt->type )
         return FALSE;
 
-    int keymod = ( evt->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK |
-                 GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
+    int keymod = ( evt->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
 
     if ( 1 == evt->button && keymod == GDK_CONTROL_MASK )
     {
@@ -603,8 +590,7 @@ static gboolean on_button_release( GtkEntry       *entry, GdkEventButton *evt, g
         char *path;
 
         text = gtk_entry_get_text( entry );
-        if ( !( text[0] == '$' || text[0] == '+' || text[0] == '&'
-                  || text[0] == '!' || text[0] == '%' || text[0] == '\0' ) )
+        if ( !( text[0] == '$' || text[0] == '+' || text[0] == '&' || text[0] == '!' || text[0] == '%' || text[0] == '\0' ) )
         {
             pos = gtk_editable_get_position( GTK_EDITABLE( entry ) );
             if( G_LIKELY( text && *text ) )
@@ -632,8 +618,7 @@ static gboolean on_button_release( GtkEntry       *entry, GdkEventButton *evt, g
     }
     else if ( 2 == evt->button && keymod == 0 )
     {
-        /* Middle-click - replace path bar contents with primary clipboard
-         * contents and activate */
+        /* Middle-click - replace path bar contents with primary clipboard contents and activate */
         GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_PRIMARY );
         char* clip_text = gtk_clipboard_wait_for_text( clip );
         if ( clip_text && clip_text[0] )
@@ -649,8 +634,8 @@ static gboolean on_button_release( GtkEntry       *entry, GdkEventButton *evt, g
     return FALSE;
 }
 
-void on_populate_popup( GtkEntry *entry, GtkMenu *menu, PtkFileBrowser* file_browser )
-{
+
+void on_populate_popup( GtkEntry *entry, GtkMenu *menu, PtkFileBrowser* file_browser ) {
     if ( !file_browser )
         return;
     XSetContext* context = xset_context_new();
@@ -663,9 +648,7 @@ void on_populate_popup( GtkEntry *entry, GtkMenu *menu, PtkFileBrowser* file_bro
     // New Bookmark
     set = xset_set_cb( "book_add", on_add_bookmark, file_browser );
     const char* text = gtk_entry_get_text( GTK_ENTRY( entry ) );
-    set->disable = !( text && ( g_file_test( text, G_FILE_TEST_EXISTS ) ||
-                                strstr( text, ":/" ) ||
-                                g_str_has_prefix( text, "//" ) ) );
+    set->disable = !( text && ( g_file_test( text, G_FILE_TEST_EXISTS ) || strstr( text, ":/" ) || g_str_has_prefix( text, "//" ) ) );
     xset_add_menuitem( NULL, file_browser, GTK_WIDGET( menu ), accel_group, set );
 
     set = xset_get( "path_seek" );
@@ -680,8 +663,8 @@ void on_populate_popup( GtkEntry *entry, GtkMenu *menu, PtkFileBrowser* file_bro
     g_signal_connect( menu, "key-press-event", G_CALLBACK( xset_menu_keypress ), NULL );
 }
 
-void on_entry_insert( GtkEntryBuffer *buf, guint position, gchar *chars, guint n_chars, gpointer user_data )
-{
+
+void on_entry_insert( GtkEntryBuffer *buf, guint position, gchar *chars, guint n_chars, gpointer user_data ) {
     char* new_text = NULL;
     const char* text = gtk_entry_buffer_get_text( buf );
     if ( !text )
@@ -714,20 +697,19 @@ void on_entry_insert( GtkEntryBuffer *buf, guint position, gchar *chars, guint n
     }
 }
 
-void entry_data_free( EntryData* edata )
-{
+
+void entry_data_free( EntryData* edata ) {
     g_slice_free( EntryData, edata );
 }
 
-GtkWidget* ptk_path_entry_new( PtkFileBrowser* file_browser )
-{
+
+GtkWidget* ptk_path_entry_new( PtkFileBrowser* file_browser ) {
     GtkWidget* entry = gtk_entry_new();
     gtk_entry_set_has_frame( GTK_ENTRY( entry ), TRUE );
     gtk_widget_set_size_request( entry, 50, -1 );
 
     // set font
-    if ( file_browser->mypanel > 0 && file_browser->mypanel < 5 &&
-                        xset_get_s_panel( file_browser->mypanel, "font_path" ) )
+    if ( file_browser->mypanel > 0 && file_browser->mypanel < 5 &&  xset_get_s_panel( file_browser->mypanel, "font_path" ) )
     {
         PangoFontDescription* font_desc = pango_font_description_from_string( xset_get_s_panel( file_browser->mypanel, "font_path" ) );
         gtk_widget_modify_font( entry, font_desc );
@@ -745,7 +727,7 @@ GtkWidget* ptk_path_entry_new( PtkFileBrowser* file_browser )
     g_signal_connect( entry, "key-press-event", G_CALLBACK(on_key_press), edata );
 
 /*
-    g_signal_connect( entry, "motion-notify-event", G_CALLBACK(on_mouse_move), NULL );
+    g_signal_connect( entry, "motion-notify-event", G_CALLBACK(on_mouse_move), NULL );     //  howdy      why outcommented?
 */
     g_signal_connect( entry, "button-press-event", G_CALLBACK(on_button_press), NULL );
     g_signal_connect( entry, "button-release-event", G_CALLBACK(on_button_release), NULL );

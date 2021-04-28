@@ -2063,7 +2063,7 @@ static void xset_write_set( FILE* file, XSet* set ) {
     if ( set->key )
         fprintf( file, "%s-key=%d\n", set->name, set->key );
     if ( set->keymod )
-        fprintf( file, "%s-keymod=%d\n", set->name, set->keymod );
+        fprintf( file, "%s-keymod=%d\n", set->name, set->keymod );   // howdy
     // menu label
     if ( set->menu_label )
     {
@@ -3375,9 +3375,8 @@ char* xset_custom_get_script( XSet* set, gboolean create ) {
     char* old_path;
     char* cscript;
 
-    if ( ( strncmp( set->name, "cstm_", 5 ) && strncmp( set->name, "cust", 4 )
-                                            && strncmp( set->name, "hand", 4 ) )
-                                            || ( create && set->plugin ) )
+    if ( ( strncmp( set->name, "cstm_", 5 ) && strncmp( set->name, "cust", 4 ) && strncmp( set->name, "hand", 4 ) )
+                       || ( create && set->plugin ) )
         return NULL;
 
     if ( create )
@@ -3400,7 +3399,7 @@ char* xset_custom_get_script( XSet* set, gboolean create ) {
 
     if ( !g_file_test( path, G_FILE_TEST_EXISTS ) )
     {
-        // backwards compatible < 0.7.0
+        // backwards compatible < 0.7.0           //   howdy  nixme
         if ( set->plugin )
         {
             cscript = g_strdup_printf( "%s.sh", set->plug_name );
@@ -3438,7 +3437,7 @@ char* xset_custom_get_script( XSet* set, gboolean create ) {
         {
             FILE* file;
             int i;
-             //          howdy   bub    bustass   loooooong line
+             //          howdy bub    bustass   loooooong line
             char* script_default_head = g_strdup_printf(
              "#!%s\n$fm_import    # import file manager variables (scroll down for info)\n#\n# Enter your commands here:    ( then save this file )\n", BASHPATH );
             const char* script_default_tail = "exit $?\n# Example variables available for use: (imported by $fm_import)\n# These variables represent the state of the file manager when command is run.\n# These variables can also be used in command lines and in the Path Bar.\n\n# \"${fm_files[@]}\"          selected files              ( same as %F )\n# \"$fm_file\"                first selected file         ( same as %f )\n# \"${fm_files[2]}\"          third selected file\n\n# \"${fm_filenames[@]}\"      selected filenames          ( same as %N )\n# \"$fm_filename\"            first selected filename     ( same as %n )\n\n# \"$fm_pwd\"                 current directory           ( same as %d )\n# \"${fm_pwd_tab[4]}\"        current directory of tab 4\n# $fm_panel                 current panel number (1-4)\n# $fm_tab                   current tab number\n\n# \"${fm_panel3_files[@]}\"   selected files in panel 3\n# \"${fm_pwd_panel[3]}\"      current directory in panel 3\n# \"${fm_pwd_panel3_tab[2]}\" current directory in panel 3 tab 2\n# ${fm_tab_panel[3]}        current tab number in panel 3\n\n# \"${fm_desktop_files[@]}\"  selected files on desktop (when run from desktop)\n# \"$fm_desktop_pwd\"         desktop directory (eg '/home/user/Desktop')\n\n# \"$fm_device\"              selected device (eg /dev/sr0)  ( same as %v )\n# \"$fm_device_udi\"          device ID\n# \"$fm_device_mount_point\"  device mount point if mounted (eg /media/dvd) (%m)\n# \"$fm_device_label\"        device volume label            ( same as %l )\n# \"$fm_device_fstype\"       device fs_type (eg vfat)\n# \"$fm_device_size\"         device volume size in bytes\n# \"$fm_device_display_name\" device display name\n# \"$fm_device_icon\"         icon currently shown for this device\n# $fm_device_is_mounted     device is mounted (0=no or 1=yes)\n# $fm_device_is_optical     device is an optical drive (0 or 1)\n# $fm_device_is_table       a partition table (usually a whole device)\n# $fm_device_is_floppy      device is a floppy drive (0 or 1)\n# $fm_device_is_removable   device appears to be removable (0 or 1)\n# $fm_device_is_audiocd     optical device contains an audio CD (0 or 1)\n# $fm_device_is_dvd         optical device contains a DVD (0 or 1)\n# $fm_device_is_blank       device contains blank media (0 or 1)\n# $fm_device_is_mountable   device APPEARS to be mountable (0 or 1)\n# $fm_device_nopolicy       policy_noauto set (no automount) (0 or 1)\n\n# \"$fm_panel3_device\"       panel 3 selected device (eg /dev/sdd1)\n# \"$fm_panel3_device_udi\"   panel 3 device ID\n# ...                       (all these are the same as above for each panel)\n\n# \"fm_bookmark\"             selected bookmark directory     ( same as %b )\n# \"fm_panel3_bookmark\"      panel 3 selected bookmark directory\n\n# \"fm_task_type\"            currently SELECTED task type (eg 'run','copy')\n# \"fm_task_name\"            selected task name (custom menu item name)\n# \"fm_task_pwd\"             selected task working directory ( same as %t )\n# \"fm_task_pid\"             selected task pid               ( same as %p )\n# \"fm_task_command\"         selected task command\n# \"fm_task_id\"              selected task id\n# \"fm_task_window\"          selected task window id\n\n# \"$fm_command\"             current command\n# \"$fm_value\"               menu item value             ( same as %a )\n# \"$fm_user\"                original user who ran this command\n# \"$fm_my_task\"             current task's id  (see 'zzzfm -s help')\n# \"$fm_my_window\"           current task's window id\n# \"$fm_cmd_name\"            menu name of current command\n# \"$fm_cmd_dir\"             command files directory (for read only)\n# \"$fm_cmd_data\"            command data directory (must create)\n#                                 To create:   mkdir -p \"$fm_cmd_data\"\n# \"$fm_plugin_dir\"          top plugin directory\n# tmp=\"$(fm_new_tmp)\"       makes new temp directory (destroy when done)\n#                                 To destroy:  rm -rf \"$tmp\"\n# fm_edit \"FILE\"            open FILE in user's configured editor\n\n# $fm_import                command to import above variables (this\n#                           variable is exxported so you can use it in any\n#                           script run from this script)\n\n\n# Script Example 1:\n\n#   # show MD5 sums of selected files\n#   md5sum \"${fm_files[@]}\"\n\n\n# Script Example 2:\n\n#   # Show a confirmation dialog using zzzFM Dialog:\n#   # file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#dialog\n#   # Use QUOTED eval to read variables output by zzzFM Dialog:\n#   eval \"`zzzfm -g --label \"Are you sure?\" --button yes --button no`\"\n#   if [[ \"$dialog_pressed\" == \"button1\" ]]; then\n#       echo \"User pressed Yes - take some action\"\n#   else\n#       echo \"User did NOT press Yes - abort\"\n#   fi\n\n\n# Script Example 3:\n\n#   # Build list of filenames in panel 4:\n#   i=0\n#   for f in \"${fm_panel4_files[@]}\"; do\n#       panel4_names[$i]=\"$(basename \"$f\")\"\n#       (( i++ ))\n#   done\n#   echo \"${panel4_names[@]}\"\n\n\n# Script Example 4:\n\n#   # Copy selected files to panel 2\n#      # make sure panel 2 is visible ?\n#      # and files are selected ?\n#      # and current panel isn't 2 ?\n#   if [ \"${fm_pwd_panel[2]}\" != \"\" ] \\\n#               && [ \"${fm_files[0]}\" != \"\" ] \\\n#               && [ \"$fm_panel\" != 2 ]; then\n#       cp \"${fm_files[@]}\" \"${fm_pwd_panel[2]}\"\n#   else\n#       echo \"Can't copy to panel 2\"\n#       exit 1    # shows error if 'Popup Error' enabled\n#   fi\n\n\n# Script Example 5:\n\n#   # Keep current time in task manager list Item column\n#   # See file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#sockets\n#   while (( 1 )); do\n#       sleep 0.7\n#       zzzfm -s set-task $fm_my_task item \"$(date)\"\n#   done\n\n\n# Bash Scripting Guide:  http://www.tldp.org/LDP/abs/html/index.html\n\n# NOTE: Additional variables or examples may be available in future versions.\n#       To see the latest list, create a new command script or see:\n#       file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#exvar\n\n";
@@ -3464,6 +3463,7 @@ char* xset_custom_get_script( XSet* set, gboolean create ) {
     return path;
 }
 
+
 char* xset_custom_get_help( GtkWidget* parent, XSet* set ) {
     char* dir;
     char* path;
@@ -3482,7 +3482,6 @@ char* xset_custom_get_help( GtkWidget* parent, XSet* set ) {
             chmod( dir, 0700 );
         }
     }
-
 
     char* names[] = { "README", "readme", "README.TXT", "README.txt", "readme.txt", "README.MKD", "README.mkd", "readme.mkd" };
     int i;
@@ -3530,6 +3529,7 @@ char* xset_custom_get_help( GtkWidget* parent, XSet* set ) {
     xset_msg_dialog( parent, 0, _("Creation Failed"), NULL, 0, _("An error occurred creating a README file for this command."), NULL, NULL );
     return NULL;
 }
+
 
 gboolean xset_copy_file( char* src, char* dest ) {   // overwrites!
     int inF, ouF, bytes;
@@ -3783,6 +3783,7 @@ XSet* xset_custom_copy( XSet* set, gboolean copy_next, gboolean delete_set ) {
     return newset;
 }
 
+
 void clean_plugin_mirrors() {   // remove plugin mirrors for non-existent plugins
     GList* l;
     XSet* set;
@@ -3820,8 +3821,7 @@ _redo:
     {
         while ( name = g_dir_read_name( dir ) )
         {
-            if ( strlen( name ) == 13 && g_str_has_prefix( name, "cstm_" )
-                                                            && !xset_is( name ) )
+            if ( strlen( name ) == 13 && g_str_has_prefix( name, "cstm_" )   && !xset_is( name ) )
             {
                 g_dir_close( dir );
                 command = g_strdup_printf( "rm -rf %s/%s", path, name );
@@ -3922,6 +3922,7 @@ GList* xset_get_plugins( gboolean included ) {   // return list of plugin sets (
     plugins = g_list_sort( plugins, (GCompareFunc)compare_plugin_sets );
     return plugins;
 }
+
 
 XSet* xset_get_by_plug_name( const char* plug_dir, const char* plug_name ) {
     GList* l;
@@ -4040,6 +4041,7 @@ void xset_parse_plugin( const char* plug_dir, char* line, int use ) {
     }
 }
 
+
 XSet* xset_import_plugin( const char* plug_dir, int* use ) {
     char line[ 2048 ];
     char* section_name;
@@ -4050,16 +4052,14 @@ XSet* xset_import_plugin( const char* plug_dir, int* use ) {
     if ( use )
         *use = PLUGIN_USE_NORMAL;
 
-    // clear all existing plugin sets with this plug_dir
-    // ( keep the mirrors to retain user prefs )
+    // clear all existing plugin sets with this plug_dir  ( keep the mirrors to retain user prefs )
     gboolean redo = TRUE;
     while ( redo )
     {
         redo = FALSE;
         for ( l = xsets; l; l = l->next )
         {
-            if ( ((XSet*)l->data)->plugin
-                                && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
+            if ( ((XSet*)l->data)->plugin  && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
             {
                 xset_free( (XSet*)l->data );
                 redo = TRUE;  // search list from start again due to changed list
@@ -4125,8 +4125,7 @@ XSet* xset_import_plugin( const char* plug_dir, int* use ) {
     XSet* rset = NULL;
     for ( l = xsets; l; l = l->next )
     {
-        if ( ((XSet*)l->data)->plugin
-                            && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
+        if ( ((XSet*)l->data)->plugin  && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
         {
             set = (XSet*)l->data;
             set->key = set->keymod = set->tool = set->opener = 0;
@@ -4160,7 +4159,6 @@ void on_install_plugin_cb( VFSFileTask* task, PluginData* plugin_data ) {
         {
             xset_custom_delete( plugin_data->set, FALSE );
             clean_plugin_mirrors();
-            //main_window_on_plugins_change( NULL );
         }
     } else {
         char* plugin = g_build_filename( plugin_data->plug_dir, "plugin", NULL );
@@ -4227,8 +4225,7 @@ void on_install_plugin_cb( VFSFileTask* task, PluginData* plugin_data ) {
                 {
                     // This dialog should never be seen - failsafe
                     GDK_THREADS_ENTER(); // due to dialog run causes low level thread lock
-                    xset_msg_dialog( plugin_data->main_window ?
-                                GTK_WIDGET( plugin_data->main_window ) : NULL, GTK_MESSAGE_ERROR, "Handler Plugin",
+                    xset_msg_dialog( plugin_data->main_window ?  GTK_WIDGET( plugin_data->main_window ) : NULL, GTK_MESSAGE_ERROR, "Handler Plugin",
                                 NULL, 0, "This file contains a handler plugin which cannot be installed as a plugin.\n\nYou can import handlers from a handler configuration window, or use Plugins|Import.", NULL, NULL );
                     GDK_THREADS_LEAVE();
                 }
@@ -4284,6 +4281,7 @@ void on_install_plugin_cb( VFSFileTask* task, PluginData* plugin_data ) {
     g_slice_free( PluginData, plugin_data );
 }
 
+
 void xset_remove_plugin( GtkWidget* parent, PtkFileBrowser* file_browser, XSet* set ) {
     char* msg;
 
@@ -4329,7 +4327,14 @@ void xset_remove_plugin( GtkWidget* parent, PtkFileBrowser* file_browser, XSet* 
     ptk_file_task_run( task );
 }
 
+
+
 void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg, const char* path, const char* plug_dir, int type, int job, XSet* insert_set ) {
+
+    // howdy bub!
+    return;
+
+
     char* wget;
     char* file_path;
     char* file_path_q;
@@ -4363,7 +4368,7 @@ void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg, const char*
         file_path_q = bash_quote( file_path );
         g_free( file_path );
         char* url_q = bash_quote( path );
-        wget = g_strdup_printf( "&& wget --tries=1 --connect-timeout=30 -O %s %s ", file_path_q, url_q );
+        wget = "";   //   hoedy bub!   g_strdup_printf( "&& wget --tries=1 --connect-timeout=30 -O %s %s ", file_path_q, url_q );
         g_free( url_q );
         g_free( rem );
         rem = g_strdup_printf( "; rm -f %s", file_path_q );
@@ -4425,7 +4430,15 @@ void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg, const char*
     ptk_file_task_run( task );
 }
 
+
+
+
 gboolean xset_custom_export_files( XSet* set, char* plug_dir ) {
+
+    // howdy bub!
+    return FALSE;
+
+
     char* cscript;
     char* path_src;
     char* path_dest;
@@ -4509,7 +4522,13 @@ gboolean xset_custom_export_files( XSet* set, char* plug_dir ) {
     return ret;
 }
 
+
 gboolean xset_custom_export_write( FILE* file, XSet* set, char* plug_dir ) {   // recursively write set, submenu sets, and next sets
+
+    // howdy bub!
+    return FALSE;
+
+
     xset_write_set( file, set );
     if ( !xset_custom_export_files( set, plug_dir ) )
         return FALSE;
@@ -4526,7 +4545,14 @@ gboolean xset_custom_export_write( FILE* file, XSet* set, char* plug_dir ) {   /
     return TRUE;
 }
 
+
+
 void xset_custom_export( GtkWidget* parent, PtkFileBrowser* file_browser, XSet* set ) {
+
+    // howdy bub!
+    return;
+
+
     char* deffolder;
     char* deffile;
     char* s1;
@@ -4737,8 +4763,7 @@ static void open_spec( PtkFileBrowser* file_browser, const char* url, gboolean i
                     if ( new_tab )
                     {
                         FMMainWindow* main_window_last =  (FMMainWindow*)file_browser->main_window;
-                        file_browser = main_window_last ? PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window_last ) ) :
-                                    NULL;
+                        file_browser = main_window_last ? PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window_last ) ) : NULL;
                         if ( file_browser )
                         {
                             // select path in new browser
@@ -4760,6 +4785,8 @@ static void open_spec( PtkFileBrowser* file_browser, const char* url, gboolean i
     }
     g_free( tilde_url );
 }
+
+
 
 void xset_custom_activate( GtkWidget* item, XSet* set ) {
     GtkWidget* parent;
@@ -5100,6 +5127,7 @@ printf("    set->next = %s\n", set->next );
     return NULL;
 }
 
+
 #if 0
 void xset_custom_insert_before( XSet* target, XSet* set ) {
     XSet* target_prev;
@@ -5170,6 +5198,7 @@ void xset_custom_insert_before( XSet* target, XSet* set ) {
 }
 #endif
 
+
 void xset_custom_insert_after( XSet* target, XSet* set ) {   // inserts single set 'set', no next
     XSet* target_next;
 
@@ -5213,6 +5242,7 @@ void xset_custom_insert_after( XSet* target, XSet* set ) {   // inserts single s
     }
 }
 
+
 gboolean xset_clipboard_in_set( XSet* set ) {   // look upward to see if clipboard is in set's tree
     if ( !set_clipboard || set->lock )
         return FALSE;
@@ -5247,6 +5277,7 @@ gboolean xset_clipboard_in_set( XSet* set ) {   // look upward to see if clipboa
     return FALSE;
 }
 
+
 XSet* xset_custom_new() {
     char* setname;
     XSet* set;
@@ -5263,6 +5294,7 @@ XSet* xset_custom_new() {
     set->task_out = XSET_B_TRUE;
     return set;
 }
+
 
 gboolean have_x_access( const char* path ) {
 #if defined(HAVE_EUIDACCESS)
@@ -5282,6 +5314,7 @@ gboolean have_x_access( const char* path ) {
     return FALSE;
 #endif
 }
+
 
 gboolean have_rw_access( const char* path ) {
     if ( !path )
@@ -5306,6 +5339,7 @@ gboolean have_rw_access( const char* path ) {
 #endif
 }
 
+
 gboolean dir_has_files( const char* path ) {
     GDir* dir;
     gboolean ret = FALSE;
@@ -5322,6 +5356,7 @@ gboolean dir_has_files( const char* path ) {
     }
     return ret;
 }
+
 
 void xset_edit( GtkWidget* parent, const char* path, gboolean force_root, gboolean no_root ) {
     gboolean as_root = FALSE;
@@ -5384,7 +5419,8 @@ void xset_edit( GtkWidget* parent, const char* path, gboolean force_root, gboole
     ptk_file_task_run( task );
 }
 
-void xset_open_url( GtkWidget* parent, const char* url ) {
+
+void xset_open_url( GtkWidget* parent, const char* url ) {   // howdy bub       revisit this
     const char* browser;
     char* command = NULL;
 
@@ -5406,10 +5442,9 @@ void xset_open_url( GtkWidget* parent, const char* url ) {
         {
             int ii = 0;
             char* program;
-            if ( g_str_has_prefix( url, "file://" )
-                                            || g_str_has_prefix( url, "/" ) )
+            if ( g_str_has_prefix( url, "file://" )  || g_str_has_prefix( url, "/" ) )
                 ii = 3;  // xdg,gnome,exo-open use editor for html files so skip at start
-            char* programs[] = { "xdg-open", "gnome-open", "exo-open", "firefox", "iceweasel", "arora", "konqueror", "opera", "epiphany", "midori", "chrome", "xdg-open", "gnome-open", "exo-open" };
+            char* programs[] = { "xdg-open", "exo-open", "firefox", "firefox-esr", "midori", "chrome" };
             int i;
             for(  i = ii; i < G_N_ELEMENTS(programs); ++i)
             {
@@ -5440,6 +5475,7 @@ void xset_open_url( GtkWidget* parent, const char* url ) {
     ptk_file_task_run( task );
 }
 
+
 char* xset_get_manual_url() {
     char* path;
     char* url;
@@ -5451,7 +5487,7 @@ char* xset_get_manual_url() {
         return g_strdup( url );
     }
 
-    // get user's locale
+    // get user's locale            //  howdy bub   document  this
     const char* locale = NULL;
     const char* const * langs = g_get_language_names();
     char* dot = strchr( langs[0], '.' );
@@ -5592,6 +5628,7 @@ void xset_show_help( GtkWidget* parent, XSet* set, const char* anchor ) {
         xset_set_b( "main_help", TRUE );
     }
 }
+
 
 char* xset_get_keyname( XSet* set, int key_val, int key_mod ) {
     int keyval, keymod;

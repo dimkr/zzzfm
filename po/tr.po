@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zzzfm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-25 10:33-0400\n"
+"POT-Creation-Date: 2021-04-27 05:07+0000\n"
 "PO-Revision-Date: 2015-09-13 13:46+0000\n"
 "Last-Translator: IgnorantGuru <ignorantguru@gmx.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/ignorantguru/zzzfm/language/"
@@ -5595,11 +5595,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/ptk/ptk-file-browser.c:2521 ../src/desktop/desktop-window.c:2110
+#: ../src/ptk/ptk-file-browser.c:2521 ../src/desktop/desktop-window.c:2100
 msgid "Select By Pattern"
 msgstr "Desene Göre Seç"
 
-#: ../src/ptk/ptk-file-browser.c:2522 ../src/desktop/desktop-window.c:2110
+#: ../src/ptk/ptk-file-browser.c:2522 ../src/desktop/desktop-window.c:2100
 #, c-format
 msgid ""
 "Enter pattern to select files and folders:\n"
@@ -5621,20 +5621,20 @@ msgstr ""
 "İPUCU: Ayrıca yol çubuğuna '%% PATTERN' girebilirsiniz."
 
 #: ../src/ptk/ptk-file-browser.c:4509 ../src/ptk/ptk-file-misc.c:3657
-#: ../src/desktop/desktop-window.c:3139
+#: ../src/desktop/desktop-window.c:3115
 msgid "Choose Location"
 msgstr "Konum Seç"
 
 #: ../src/ptk/ptk-file-browser.c:4539 ../src/ptk/ptk-file-browser.c:4562
-#: ../src/desktop/desktop-window.c:3169 ../src/desktop/desktop-window.c:3191
+#: ../src/desktop/desktop-window.c:3145 ../src/desktop/desktop-window.c:3167
 msgid "Invalid Destination"
 msgstr "Geçersiz Hedef"
 
-#: ../src/ptk/ptk-file-browser.c:4539 ../src/desktop/desktop-window.c:3169
+#: ../src/ptk/ptk-file-browser.c:4539 ../src/desktop/desktop-window.c:3145
 msgid "Destination same as source"
 msgstr "Hedef kaynakla aynı"
 
-#: ../src/ptk/ptk-file-browser.c:4562 ../src/desktop/desktop-window.c:3191
+#: ../src/ptk/ptk-file-browser.c:4562 ../src/desktop/desktop-window.c:3167
 msgid "Invalid destination"
 msgstr "Geçersiz hedef"
 
@@ -7158,7 +7158,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/ptk/ptk-file-misc.c:2887 ../src/desktop/desktop-window.c:1949
+#: ../src/ptk/ptk-file-misc.c:2887 ../src/desktop/desktop-window.c:1939
 msgid "Rename Error"
 msgstr "Yeniden Adlandırma Hatası"
 
@@ -7328,7 +7328,7 @@ msgstr "Geçersiz Kullanıcı"
 msgid "Invalid Group"
 msgstr "Geçersiz Grup"
 
-#: ../src/ptk/ptk-path-entry.c:577
+#: ../src/ptk/ptk-path-entry.c:565
 #, c-format
 msgid ""
 "In addition to a folder or file path, commands can be entered in the Path "
@@ -7916,7 +7916,7 @@ msgstr ""
 msgid "Unmount-If-Mounted: %s\n"
 msgstr "Bağlıysa-Ayır: %s\n"
 
-#: ../src/desktop/desktop-window.c:1918
+#: ../src/desktop/desktop-window.c:1908
 #, c-format
 msgid ""
 "You do not have permission to edit the contents of file %s\n"
@@ -7929,11 +7929,11 @@ msgstr ""
 "Dosyayı masaüstüne kopyalamayı veya ~/.local/share/applications/ içine "
 "yerleştirilmiş bir kopyasına bağlantı vermeyi düşünün"
 
-#: ../src/desktop/desktop-window.c:1919
+#: ../src/desktop/desktop-window.c:1909
 msgid "Unable To Rename"
 msgstr "Yeniden Adlandırılamıyor"
 
-#: ../src/desktop/desktop-window.c:1926
+#: ../src/desktop/desktop-window.c:1916
 #, c-format
 msgid ""
 "Enter new desktop item name:\n"
@@ -7946,11 +7946,11 @@ msgstr ""
 "Bu masaüstü öğesinin adını değiştirmek için masaüstü dosyasının içeriğini "
 "değiştirmek gerekir%s"
 
-#: ../src/desktop/desktop-window.c:1928
+#: ../src/desktop/desktop-window.c:1918
 msgid "Change Desktop Item Name"
 msgstr "Masaüstü Öğe Adını Değiştir"
 
-#: ../src/desktop/desktop-window.c:1949
+#: ../src/desktop/desktop-window.c:1939
 msgid "An error occurred renaming this desktop item."
 msgstr ""
 
@@ -8508,37 +8508,37 @@ msgstr "Ayırıcı"
 msgid "Built-In Command"
 msgstr "Yerleşik Komut"
 
-#: ../src/exo/exo-cell-renderer-ellipsized-text.c:188
-#: ../src/exo/exo-cell-renderer-icon.c:169
+#: ../src/exo/exo-cell-renderer-ellipsized-text.c:186
+#: ../src/exo/exo-cell-renderer-icon.c:167
 msgid "Follow state"
 msgstr "Durum takibi"
 
-#: ../src/exo/exo-cell-renderer-ellipsized-text.c:189
-#: ../src/exo/exo-cell-renderer-icon.c:170
+#: ../src/exo/exo-cell-renderer-ellipsized-text.c:187
+#: ../src/exo/exo-cell-renderer-icon.c:168
 msgid "Render differently based on the selection state."
 msgstr "Seçim durumuna bağlı olarak farklı hale getir."
 
-#: ../src/exo/exo-cell-renderer-icon.c:192
+#: ../src/exo/exo-cell-renderer-icon.c:187
 msgid "Icon"
 msgstr "Simge"
 
-#: ../src/exo/exo-cell-renderer-icon.c:193
+#: ../src/exo/exo-cell-renderer-icon.c:188
 msgid "The icon to render."
 msgstr "Oluşturulacak simge."
 
-#: ../src/exo/exo-cell-renderer-icon.c:211
+#: ../src/exo/exo-cell-renderer-icon.c:204
 msgid "GIcon"
 msgstr "GIcon"
 
-#: ../src/exo/exo-cell-renderer-icon.c:212
+#: ../src/exo/exo-cell-renderer-icon.c:205
 msgid "The GIcon to render."
 msgstr "Oluşturulacak GIcon."
 
-#: ../src/exo/exo-cell-renderer-icon.c:233
+#: ../src/exo/exo-cell-renderer-icon.c:224
 msgid "size"
 msgstr "boyut"
 
-#: ../src/exo/exo-cell-renderer-icon.c:234
+#: ../src/exo/exo-cell-renderer-icon.c:225
 msgid "The size of the icon to render in pixels."
 msgstr "Piksel olarak oluşturulacak simgenin boyutu."
 

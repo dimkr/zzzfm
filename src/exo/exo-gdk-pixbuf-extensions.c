@@ -88,8 +88,6 @@
  * using g_object_unref() when no longer needed.
  *
  * Returns: the colorized #GdkPixbuf.
- *
- * Since: 0.3.1.3
  **/
 GdkPixbuf* exo_gdk_pixbuf_colorize (const GdkPixbuf *source, const GdkColor  *color) {
     GdkPixbuf *dst;
@@ -251,8 +249,6 @@ static inline void  draw_frame_column (const GdkPixbuf *frame_image,
  * The caller is responsible to free the returned #GdkPixbuf using g_object_unref().
  *
  * Returns: the framed version of @source.
- *
- * Since: 0.3.1.9
  **/
 GdkPixbuf*
 exo_gdk_pixbuf_frame (const GdkPixbuf *source,
@@ -338,8 +334,6 @@ lighten_channel (guchar cur_value)
  * pixbuf using #g_object_unref().
  *
  * Returns: the lightened version of @source.
- *
- * Since: 0.3.1.3
  **/
 GdkPixbuf*
 exo_gdk_pixbuf_spotlight (const GdkPixbuf *source)
@@ -464,8 +458,6 @@ exo_gdk_pixbuf_spotlight (const GdkPixbuf *source)
  * using g_object_unref() when no longer needed.
  *
  * Returns: the resulting #GdkPixbuf.
- *
- * Since: 0.3.1.1
  **/
 GdkPixbuf*
 exo_gdk_pixbuf_scale_down (GdkPixbuf *source,

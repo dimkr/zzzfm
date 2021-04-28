@@ -330,6 +330,7 @@ void on_plugin_install( GtkMenuItem* item, FMMainWindow* main_window, XSet* set2
     g_free( plug_dir );
 }
 
+
 //   howdy   currently, this fn is never called
 GtkWidget* create_plugins_menu( FMMainWindow* main_window ) {
 //  GtkWidget* plug_menu;
@@ -394,36 +395,9 @@ GtkWidget* create_plugins_menu( FMMainWindow* main_window ) {
 }
 
 
-/*  don't use this method because menu must be updated just after user opens it
- * due to file_browser value in xsets
-void main_window_on_plugins_change( FMMainWindow* main_window ) {
-    if ( main_window )
-    {
-        main_window->plug_menu = create_plugins_menu( main_window );
-        // FIXME: We have to popupdown the menu first, if it's showed on screen.
-        // Otherwise, it's rare but possible that we try to replace the menu while it's in use.
-        gtk_menu_popdown( (GtkMenu*)gtk_menu_item_get_submenu ( GTK_MENU_ITEM ( main_window->plug_menu_item ) ) );
-        gtk_menu_item_set_submenu ( GTK_MENU_ITEM ( main_window->plug_menu_item ), main_window->plug_menu );
-    } else {
-        // all windows
-        FMMainWindow* a_window;
-        GList* l;
 
-        for ( l = all_windows; l; l = l->next )
-        {
-            a_window = (FMMainWindow*)l->data;
-            a_window->plug_menu = create_plugins_menu( a_window );
-            gtk_menu_popdown( (GtkMenu*)gtk_menu_item_get_submenu ( GTK_MENU_ITEM ( a_window->plug_menu_item ) ) );
-            gtk_menu_item_set_submenu ( GTK_MENU_ITEM ( a_window->plug_menu_item ), a_window->plug_menu );
-        }
-    }
-}
-*/
-
-
-//  howdy bub       we can skip calling this without ill effect
+//  howdy bub       we can skip calling this without ill effect (but leaving in place, toward supporting "included" plugins)
 void import_all_plugins( FMMainWindow* main_window ) {
-/*
     GDir* dir;
     const char* name;
     char* plug_dir;
@@ -439,7 +413,7 @@ void import_all_plugins( FMMainWindow* main_window ) {
     if ( DATADIR )
     {
         locations = g_list_append( locations, g_build_filename( DATADIR, "zzzfm", "included", NULL ) );
-        locations = g_list_append( locations, g_build_filename( DATADIR, "zzzfm", "plugins", NULL ) );
+        locations = g_list_append( locations, g_build_filename( DATADIR, "zzzfm", "plugins", NULL ) );   // howdy bub!
     }
     const gchar* const * sdir = g_get_system_data_dirs();
     for( ; *sdir; ++sdir )
@@ -497,7 +471,6 @@ void import_all_plugins( FMMainWindow* main_window ) {
     g_list_free( locations );
 
     clean_plugin_mirrors();
-*/   //   howdy
 }
 
 
@@ -1930,8 +1903,7 @@ void fm_main_window_init( FMMainWindow* main_window ) {
 
     g_signal_connect ( G_OBJECT(main_window), "realize", G_CALLBACK ( on_main_window_realize ), main_window );
 
-// howdy bub ------------------------------ may need to reinstate this (to support scripted custom commands)
-//  import_all_plugins( main_window );
+    import_all_plugins( main_window );  // howdy bub! ---------------- removed, then reinstated this call
     main_window->panel_change = FALSE;
     show_panels( NULL, main_window );
     main_window_root_bar_all();

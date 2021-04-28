@@ -585,8 +585,6 @@ static void  exo_icon_chooser_model_item_free (gpointer data)
  * when no longer needed.
  *
  * Returns: an #ExoIconChooserModel for the @widget.
- *
- * Since: 0.3.1.9
  **/
 ExoIconChooserModel*
 _exo_icon_chooser_model_get_for_widget (GtkWidget *widget)
@@ -613,8 +611,6 @@ _exo_icon_chooser_model_get_for_widget (GtkWidget *widget)
  * when no longer needed.
  *
  * Returns: an #ExoIconChooserModel for the @icon_theme.
- *
- * Since: 0.3.1.9
  **/
 ExoIconChooserModel*
 _exo_icon_chooser_model_get_for_icon_theme (GtkIconTheme *icon_theme)
@@ -655,8 +651,6 @@ _exo_icon_chooser_model_get_for_icon_theme (GtkIconTheme *icon_theme)
  * @icon_name was found, %FALSE otherwise.
  *
  * Returns: %TRUE if the iterator for @icon_name was found, %FALSE otherwise.
- *
- * Since: 0.3.1.9
  **/
 gboolean  _exo_icon_chooser_model_get_iter_for_icon_name (ExoIconChooserModel *model, GtkTreeIter         *iter, const gchar         *icon_name)
 {

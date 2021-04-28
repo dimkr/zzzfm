@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <glib/gi18n.h>
 #include <math.h>  // sqrt
+#include <glib.h>
 
 #include "desktop-window.h"
 #include "vfs-file-info.h"
@@ -91,6 +92,7 @@ static gboolean on_button_release( GtkWidget* w, GdkEventButton* evt );
 static gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt );
 static gboolean on_key_press( GtkWidget* w, GdkEventKey* evt );
 static gboolean is_mouse_pressed( GdkEvent* evt );
+static gboolean is_mouse3_pressed( GdkEvent* evt );
 static void on_style_set( GtkWidget* w, GtkStyle* prev );
 static void on_realize( GtkWidget* w );
 static gboolean on_focus_in( GtkWidget* w, GdkEventFocus* evt );
@@ -253,6 +255,7 @@ GType desktop_window_get_type(void) {
     return self_type;
 }
 
+
 static void desktop_window_class_init(DesktopWindowClass *klass) {
     GObjectClass *g_object_class;
     GtkWidgetClass* wc;
@@ -310,6 +313,7 @@ static void desktop_window_class_init(DesktopWindowClass *klass) {
                        G_TYPE_NONE, 1, G_TYPE_POINTER );
     */
 }
+
 
 static void desktop_window_init(DesktopWindow *self) {
     PangoContext* pc;
@@ -394,16 +398,13 @@ static void desktop_window_init(DesktopWindow *self) {
                                             GDK_SCROLL_MASK |
                                             GDK_PROPERTY_CHANGE_MASK );
 
-    gtk_drag_dest_set( (GtkWidget*)self, 0, NULL, 0,
-                       GDK_ACTION_COPY|GDK_ACTION_MOVE|GDK_ACTION_LINK );
+    gtk_drag_dest_set( (GtkWidget*)self, 0, NULL, 0, GDK_ACTION_COPY|GDK_ACTION_MOVE|GDK_ACTION_LINK );
 
     root = gdk_screen_get_root_window( gtk_widget_get_screen( (GtkWidget*)self ) );
-    gdk_window_set_events( root, gdk_window_get_events( root )
-                           | GDK_PROPERTY_CHANGE_MASK );
+    gdk_window_set_events( root, gdk_window_get_events( root )  | GDK_PROPERTY_CHANGE_MASK );
     gdk_window_add_filter( root, on_rootwin_event, self );
 
-    //g_signal_connect( G_OBJECT( self ), "task-notify",
-    //                            G_CALLBACK( ptk_file_task_notify_handler ), NULL );
+    //g_signal_connect( G_OBJECT( self ), "task-notify",  G_CALLBACK( ptk_file_task_notify_handler ), NULL );
 }
 
 
@@ -422,11 +423,13 @@ GtkWidget* desktop_window_new( gboolean transparent ) {
     return (GtkWidget*)w;
 }
 
+
 void desktop_item_free( DesktopItem* item ) {
     if ( item->fi )
         vfs_file_info_unref( item->fi );
     g_slice_free( DesktopItem, item );
 }
+
 
 void desktop_window_finalize(GObject *object) {
     DesktopWindow *self = (DesktopWindow*)object;
@@ -522,6 +525,7 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
     return TRUE;
 }
 
+
 void on_size_allocate( GtkWidget* w, GtkAllocation* alloc ) {
     //printf("on_size_allocate  %p  x,y=%d, %d    w,h=%d, %d\n", w, alloc->x, alloc->y, alloc->width, alloc->height);
     GdkPixbuf* pix;
@@ -535,6 +539,7 @@ void on_size_allocate( GtkWidget* w, GtkAllocation* alloc ) {
     GTK_WIDGET_CLASS(parent_class)->size_allocate( w, alloc );
 }
 
+
 void desktop_window_set_bg_color( DesktopWindow* win, GdkColor* clr ) {
     if( clr )
     {
@@ -547,6 +552,7 @@ void desktop_window_set_bg_color( DesktopWindow* win, GdkColor* clr ) {
             gtk_widget_queue_draw(  (GtkWidget*)win );
     }
 }
+
 
 void desktop_window_set_text_color( DesktopWindow* win, GdkColor* clr, GdkColor* shadow ) {
     if( clr || shadow )
@@ -795,6 +801,7 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
     }
 }
 
+
 void desktop_window_set_icon_size( DesktopWindow* win, int size ) {
     GList* l;
     win->icon_size = size;
@@ -835,8 +842,7 @@ void desktop_window_set_icon_size( DesktopWindow* win, int size ) {
 #ifdef HAVE_FFMPEG
              vfs_file_info_is_video( fi ) ||
 #endif
-             ( fi->size < app_settings.max_thumb_size &&
-                            vfs_file_info_is_image( fi ) ) ) )
+             ( fi->size < app_settings.max_thumb_size &&  vfs_file_info_is_image( fi ) ) ) )
             vfs_thumbnail_loader_request( win->dir, fi, TRUE );
         /* thumbnails are always shown on the desktop
         else if ( !app_settings.show_thumbnail )
@@ -849,6 +855,7 @@ void desktop_window_set_icon_size( DesktopWindow* win, int size ) {
         */
     }
 }
+
 
 void desktop_window_reload_icons( DesktopWindow* win ) {
 /*
@@ -873,13 +880,13 @@ void desktop_window_reload_icons( DesktopWindow* win ) {
 }
 
 
-
 void on_size_request( GtkWidget* w, GtkRequisition* req ) {
     GdkScreen* scr = gtk_widget_get_screen( w );
     req->width = gdk_screen_get_width( scr );
     req->height = gdk_screen_get_height( scr );
     //printf("on_size_request  %p  w,h=%d, %d\n", w, req->width, req->height );
 }
+
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void  desktop_window_get_preferred_width (GtkWidget *widget, gint *minimal_width, gint *natural_width) {
@@ -890,6 +897,7 @@ static void  desktop_window_get_preferred_width (GtkWidget *widget, gint *minima
   *minimal_width = *natural_width = requisition.width;
 }
 
+
 static void  desktop_window_get_preferred_height (GtkWidget *widget, gint *minimal_height, gint *natural_height) {
   GtkRequisition requisition;
 
@@ -898,6 +906,7 @@ static void  desktop_window_get_preferred_height (GtkWidget *widget, gint *minim
   *minimal_height = *natural_height = requisition.height;
 }
 #endif
+
 
 static void calc_rubber_banding_rect( DesktopWindow* self, int x, int y, GdkRectangle* rect ) {
     int x1, x2, y1, y2, w, h;
@@ -924,6 +933,7 @@ static void calc_rubber_banding_rect( DesktopWindow* self, int x, int y, GdkRect
     rect->width = x2 - x1;
     rect->height = y2 - y1;
 }
+
 
 /*
  * Reference: xfdesktop source code
@@ -966,6 +976,7 @@ static void colorize_pixbuf( GdkPixbuf* pix, GdkColor* clr, guint alpha ) {
         pixels += rowstride;
     }
 }
+
 
 void paint_rubber_banding_rect( DesktopWindow* self ) {
     int x1, x2, y1, y2, w, h, pattern_w, pattern_h;
@@ -1051,6 +1062,7 @@ void paint_rubber_banding_rect( DesktopWindow* self ) {
     cairo_destroy( cr );
 }
 
+
 static void update_rubberbanding( DesktopWindow* self, int newx, int newy, gboolean add ) {
     GList* l;
     GdkRectangle old_rect, new_rect;
@@ -1087,8 +1099,7 @@ static void update_rubberbanding( DesktopWindow* self, int newx, int newy, gbool
         DesktopItem* item = (DesktopItem*)l->data;
         gboolean selected;
         if( item->fi &&
-            ( gdk_rectangle_intersect( &new_rect, &item->icon_rect, NULL ) ||
-              gdk_rectangle_intersect( &new_rect, &item->text_rect, NULL ) ) )
+            ( gdk_rectangle_intersect( &new_rect, &item->icon_rect, NULL ) ||  gdk_rectangle_intersect( &new_rect, &item->text_rect, NULL ) ) )
             selected = TRUE;
         else
             selected = FALSE;
@@ -1101,6 +1112,7 @@ static void update_rubberbanding( DesktopWindow* self, int newx, int newy, gbool
     }
 }
 
+
 static void open_clicked_item( DesktopWindow* self, DesktopItem* clicked_item ) {
     if ( !clicked_item->fi )
         return;
@@ -1111,14 +1123,14 @@ static void open_clicked_item( DesktopWindow* self, DesktopItem* clicked_item ) 
 
     GList* sel_files = NULL;
     sel_files = g_list_prepend( sel_files, clicked_item->fi );
-    if ( vfs_file_info_is_dir( clicked_item->fi ) &&
-                                                !app_settings.desk_open_mime )
+    if ( vfs_file_info_is_dir( clicked_item->fi ) &&  !app_settings.desk_open_mime )
         // a folder - open in zzzFM browser by default
         open_folders( sel_files );
     else /* regular files */
         ptk_open_files_with_app( vfs_get_desktop_dir(), sel_files, NULL, self, NULL, TRUE, FALSE );
     g_list_free( sel_files );
 }
+
 
 void show_desktop_menu( DesktopWindow* self, guint event_button, guint32 event_time ) {
     GtkMenu* popup;
@@ -1140,6 +1152,7 @@ void show_desktop_menu( DesktopWindow* self, guint event_button, guint32 event_t
     gtk_menu_popup( popup, NULL, NULL, NULL, NULL, event_button, event_time );
 }
 
+
 gboolean on_button_press( GtkWidget* w, GdkEventButton* evt ) {
     DesktopWindow* self = (DesktopWindow*)w;
     DesktopItem *item, *clicked_item = NULL;
@@ -1160,11 +1173,9 @@ gboolean on_button_press( GtkWidget* w, GdkEventButton* evt ) {
         {
             /* don't cancel selection if clicking on selected items OR
              * clicking on desktop with right button
-            if( !( (evt->button == 1 || evt->button == 3 || evt->button == 0)
-                                && clicked_item && clicked_item->is_selected)
+            if( !( (evt->button == 1 || evt->button == 3 || evt->button == 0)  && clicked_item && clicked_item->is_selected)
                         && !( !clicked_item && evt->button == 3 ) ) */
-            if ( !( ( evt->button == 1 || evt->button == 3 || evt->button == 0 )
-                                && clicked_item && clicked_item->is_selected ) )
+            if ( !( ( evt->button == 1 || evt->button == 3 || evt->button == 0 )  && clicked_item && clicked_item->is_selected ) )
                 desktop_window_select( self, DW_SELECT_NONE );
         }
 
@@ -1230,7 +1241,7 @@ gboolean on_button_press( GtkWidget* w, GdkEventButton* evt ) {
                     popup = GTK_MENU(ptk_file_menu_new( self, NULL, file_path, item->fi, vfs_get_desktop_dir(), sel ));
                     g_free( file_path );
 
-                    gtk_menu_popup( popup, NULL, NULL, NULL, NULL, evt->button, evt->time );
+                    gtk_menu_popup( popup, NULL, NULL, NULL, NULL, evt->button, evt->time );    // howdy      a popup named "popup" eh
                 }
             }
             goto out;
@@ -1280,6 +1291,7 @@ out:
     return TRUE;
 }
 
+
 gboolean on_button_release( GtkWidget* w, GdkEventButton* evt ) {
     DesktopWindow* self = (DesktopWindow*)w;
     DesktopItem* clicked_item = hit_test( self, evt->x, evt->y );
@@ -1294,8 +1306,7 @@ gboolean on_button_release( GtkWidget* w, GdkEventButton* evt ) {
     {
         self->dragging = FALSE;
     }
-    else if ( evt->button == 1 && !( evt->state &
-                      ( GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK ) ) )
+    else if ( evt->button == 1 && !( evt->state &  ( GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK ) ) )
     {
         // unmodified left click release
         if ( self->single_click )
@@ -1321,6 +1332,7 @@ gboolean on_button_release( GtkWidget* w, GdkEventButton* evt ) {
 
     return TRUE;
 }
+
 
 static gboolean on_single_click_timeout( DesktopWindow* self ) {
     GtkWidget* w = (GtkWidget*)self;
@@ -1360,6 +1372,24 @@ gboolean is_mouse_pressed(GdkEvent* evt) {
     return (mask & GDK_BUTTON1_MASK || mask & GDK_BUTTON2_MASK || mask & GDK_BUTTON3_MASK);
 }
 
+
+gboolean is_mouse3_pressed(GdkEvent* evt) {
+    GdkModifierType mask = 0;
+    if (evt->type == GDK_MOTION_NOTIFY) {
+        GdkEventMotion* e = (GdkEventMotion*)evt;
+        if (e->device != NULL && e->window != NULL) {
+            gdk_device_get_state(e->device, e->window, NULL, &mask);
+        }
+    }else if (evt->type == GDK_BUTTON_PRESS || evt->type == GDK_BUTTON_RELEASE) {
+        GdkEventButton* e = (GdkEventButton*)evt;
+        if(e->device != NULL && e->window != NULL) {
+            gdk_device_get_state(e->device, e->window, NULL, &mask);
+        }
+    }
+    return (mask & GDK_BUTTON3_MASK);
+}
+
+
 gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt ) {
     DesktopWindow* self = (DesktopWindow*)w;
     if ( !is_mouse_pressed( ( GdkEvent*)evt ) )
@@ -1379,10 +1409,8 @@ gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt ) {
             {
                 gdk_window_set_cursor( gtk_widget_get_window(w), self->hand_cursor );
                 /* FIXME: timeout should be customizable */
-                if( !app_settings.desk_no_single_hover &&
-                                    0 == self->single_click_timeout_handler )
-                    self->single_click_timeout_handler =
-                                    g_timeout_add( SINGLE_CLICK_TIMEOUT, (GSourceFunc)on_single_click_timeout, self );
+                if( !app_settings.desk_no_single_hover &&  0 == self->single_click_timeout_handler )
+                    self->single_click_timeout_handler =  g_timeout_add( SINGLE_CLICK_TIMEOUT, (GSourceFunc)on_single_click_timeout, self );
             } else {
                 gdk_window_set_cursor( gtk_widget_get_window(w), NULL );
             }
@@ -1392,14 +1420,24 @@ gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt ) {
         return TRUE;
     }
 
+    if ( is_mouse3_pressed( ( GdkEvent*)evt ) ) {  // howdy
+        self->dragging = FALSE;
+    }
+
     if( self->dragging )
     {
     }
     else if( self->rubber_bending )
     {
         update_rubberbanding( self, evt->x, evt->y, !!(evt->state & GDK_CONTROL_MASK) );
-    } else {
-        if ( gtk_drag_check_threshold( w, self->drag_start_x, self->drag_start_y, evt->x, evt->y))
+    } else {     // howdy     we will enforce a minimum, in case  gtk-dnd-drag-threshold is unset
+                 //
+                 //    xref     exo_icon_view_maybe_begin_drag()
+        if (      ABS(self->drag_start_x - evt->x)  > 18
+               && ABS(self->drag_start_y - evt->y)  > 18
+               && gtk_drag_check_threshold( w, self->drag_start_x, self->drag_start_y, evt->x, evt->y)
+               && !is_mouse3_pressed( ( GdkEvent*)evt )
+               )
         {
             GtkTargetList* target_list;
             gboolean virtual_item = FALSE;
@@ -1424,6 +1462,7 @@ gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt ) {
 
     return TRUE;
 }
+
 
 void on_drag_begin( GtkWidget* w, GdkDragContext* ctx ) {
     DesktopWindow* self = (DesktopWindow*)w;
@@ -1467,12 +1506,20 @@ static GdkAtom get_best_target_at_dest( DesktopWindow* self, GdkDragContext* ctx
     return GDK_NONE;
 }
 
+
 #define GDK_ACTION_ALL  (GDK_ACTION_MOVE|GDK_ACTION_COPY|GDK_ACTION_LINK)
 
 gboolean on_drag_motion( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, guint time ) {
     DesktopWindow* self = (DesktopWindow*)w;
     //DesktopItem* item;
     //GdkAtom target;
+
+    //   howdy
+
+
+
+
+
 
     if( ! self->drag_entered )
     {
@@ -1526,7 +1573,15 @@ gboolean on_drag_motion( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, guin
     return TRUE;
 }
 
+
 gboolean on_drag_drop( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, guint time ) {
+    // howdy
+
+
+
+
+
+
     DesktopWindow* self = (DesktopWindow*)w;
     GdkAtom target = get_best_target_at_dest( self, ctx, x, y );
     //printf("DROP: %s\n", gdk_atom_name(target) );
@@ -1538,7 +1593,14 @@ gboolean on_drag_drop( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, guint 
     return TRUE;
 }
 
+
 void on_drag_data_get( GtkWidget* w, GdkDragContext* ctx, GtkSelectionData* data, guint info, guint time ) {
+    // howdy
+
+
+
+
+
     DesktopWindow* self = (DesktopWindow*)w;
     GList *sels, *l;
     char* uri_list;
@@ -1547,7 +1609,6 @@ void on_drag_data_get( GtkWidget* w, GdkDragContext* ctx, GtkSelectionData* data
     if( info == DRAG_TARGET_URI_LIST )
     {
         GString *buf = g_string_sized_new( 4096 );
-
         sels = desktop_window_get_selected_files( self );
 
         for( l = sels; l; l = l->next )
@@ -1583,6 +1644,7 @@ void on_drag_data_get( GtkWidget* w, GdkDragContext* ctx, GtkSelectionData* data
     }
 }
 
+
 static char** get_files_from_selection_data(GtkSelectionData* data) {
     char** files = gtk_selection_data_get_uris(data), **pfile;
     if( files )
@@ -1617,7 +1679,14 @@ static char** get_files_from_selection_data(GtkSelectionData* data) {
     return files;
 }
 
+
 void move_desktop_items( DesktopWindow* self, GdkDragContext* ctx, DesktopItem* target_item ) {
+    // howdy
+
+
+
+
+
     DesktopItem* item;
     GList* l, *ll, *target_l = NULL;
 
@@ -1685,10 +1754,12 @@ gboolean on_insert_item_invalidate( DesktopWindow* self ) {
     return FALSE;
 }
 
+
 void desktop_window_insert_task_complete( VFSFileTask* task, DesktopWindow* self ) {
     // invalidate insert_item 2 seconds after task completion
     g_timeout_add_seconds( 2, ( GSourceFunc ) on_insert_item_invalidate, self );
 }
+
 
 void desktop_window_set_insert_item( DesktopWindow* self ) {
     GList* sel_items = desktop_window_get_selected_items( self, FALSE );
@@ -1701,7 +1772,14 @@ void desktop_window_set_insert_item( DesktopWindow* self ) {
     }
 }
 
+
 void on_drag_data_received( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, GtkSelectionData* data, guint info, guint time ) {
+    // howdy
+
+
+
+
+
     DesktopWindow* self = (DesktopWindow*)w;
     DesktopItem* item;
     if( gtk_selection_data_get_target( data ) == text_uri_list_atom )
@@ -1728,8 +1806,7 @@ void on_drag_data_received( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, G
         GList* file_list;
         struct stat statbuf;    // skip stat64
 
-        if( (gtk_selection_data_get_length( data ) < 0) ||
-                                (gtk_selection_data_get_format( data ) != 8) )
+        if( (gtk_selection_data_get_length( data ) < 0) || (gtk_selection_data_get_format( data ) != 8) )
         {
             gtk_drag_finish( ctx, FALSE, FALSE, time );
             return;
@@ -1757,8 +1834,7 @@ void on_drag_data_received( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, G
                     {
                         for( pfile = files; *pfile; ++pfile )
                         {
-                            if( lstat( *pfile, &statbuf ) == 0
-                                                && statbuf.st_dev != dest_dev )
+                            if( lstat( *pfile, &statbuf ) == 0  && statbuf.st_dev != dest_dev )
                             {
                                 self->drag_src_dev = statbuf.st_dev;
                                 break;
@@ -1807,9 +1883,7 @@ void on_drag_data_received( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, G
                 {
                     src_dir_inode = statbuf.st_ino;
                     src_dir_dev = statbuf.st_dev;
-                    if ( stat( vfs_get_desktop_dir(), &statbuf ) == 0 &&
-                                            statbuf.st_ino == src_dir_inode &&
-                                            statbuf.st_dev == src_dir_dev )
+                    if ( stat( vfs_get_desktop_dir(), &statbuf ) == 0 &&  statbuf.st_ino == src_dir_inode &&  statbuf.st_dev == src_dir_dev )
                     {
                         // source files are on desktop, move items only
                         g_strfreev( files );
@@ -1877,20 +1951,24 @@ void on_drag_data_received( GtkWidget* w, GdkDragContext* ctx, gint x, gint y, G
     }
 }
 
+
 void on_drag_leave( GtkWidget* w, GdkDragContext* ctx, guint time ) {
     DesktopWindow* self = (DesktopWindow*)w;
     self->drag_entered = FALSE;
     self->drag_src_dev = 0;
 }
 
+
 void on_drag_end( GtkWidget* w, GdkDragContext* ctx ) {
     DesktopWindow* self = (DesktopWindow*)w;
 }
+
 
 gboolean on_rename_item_invalidate( DesktopWindow* self ) {
     self->renaming_item = self->renamed_item = NULL;
     return FALSE;
 }
+
 
 void desktop_window_rename_selected_files( DesktopWindow* self, GList* files, const char* cwd ) {
     GList* l;
@@ -1990,6 +2068,7 @@ void desktop_window_rename_selected_files( DesktopWindow* self, GList* files, co
     }
 }
 
+
 DesktopItem* get_next_item( DesktopWindow* self, int direction ) {
     DesktopItem *item, *current_item;
     DesktopItem* next_item = NULL;
@@ -2085,6 +2164,7 @@ DesktopItem* get_next_item( DesktopWindow* self, int direction ) {
     return current_item;
 }
 
+
 void focus_item( DesktopWindow* self, DesktopItem* item ) {
     if ( !item )
         return;
@@ -2094,6 +2174,7 @@ void focus_item( DesktopWindow* self, DesktopItem* item ) {
     self->focus = item;
     redraw_item( self, item );
 }
+
 
 void desktop_window_select( DesktopWindow* self, DWSelectMode mode ) {
     char* key;
@@ -2158,6 +2239,7 @@ void desktop_window_select( DesktopWindow* self, DWSelectMode mode ) {
     }
 }
 
+
 void select_item( DesktopWindow* self, DesktopItem* item, gboolean val ) {
     if ( !item )
         return;
@@ -2165,11 +2247,11 @@ void select_item( DesktopWindow* self, DesktopItem* item, gboolean val ) {
     redraw_item( self, item );
 }
 
+
 gboolean on_key_press( GtkWidget* w, GdkEventKey* event ) {
     int nonlatin_key = 0;
     DesktopWindow* desktop = (DesktopWindow*)w;
-    int keymod = ( event->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK |
-                 GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
+    int keymod = ( event->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
 
     if ( event->keyval == 0 )
         return FALSE;
@@ -2206,8 +2288,7 @@ gboolean on_key_press( GtkWidget* w, GdkEventKey* event ) {
             else
                 continue;
         }
-        if ( ((XSet*)l->data)->key == event->keyval
-                                        && ((XSet*)l->data)->keymod == keymod )
+        if ( ((XSet*)l->data)->key == event->keyval  && ((XSet*)l->data)->keymod == keymod )
         {
             set = (XSet*)l->data;
 _key_found:
@@ -2344,6 +2425,7 @@ _key_found:
     return FALSE;
 }
 
+
 void on_style_set( GtkWidget* w, GtkStyle* prev ) {
     DesktopWindow* self = (DesktopWindow*)w;
 
@@ -2357,6 +2439,7 @@ void on_style_set( GtkWidget* w, GtkStyle* prev ) {
     font_h = pango_font_metrics_get_ascent(metrics) + pango_font_metrics_get_descent (metrics);
     font_h /= PANGO_SCALE;
 }
+
 
 void on_realize( GtkWidget* w ) {
     guint32 val;
@@ -2387,6 +2470,7 @@ void on_realize( GtkWidget* w ) {
 //        gdk_window_set_back_pixmap( w->window, self->background, FALSE );
 }
 
+
 gboolean on_focus_in( GtkWidget* w, GdkEventFocus* evt ) {
     DesktopWindow* self = (DesktopWindow*) w;
     //sfm gtk3 gtk_widget_grab_focus( w ) not equivalent
@@ -2400,6 +2484,7 @@ gboolean on_focus_in( GtkWidget* w, GdkEventFocus* evt ) {
         redraw_item( self, self->focus );
     return FALSE;
 }
+
 
 gboolean on_focus_out( GtkWidget* w, GdkEventFocus* evt ) {
     DesktopWindow* self = (DesktopWindow*) w;
@@ -2416,6 +2501,7 @@ gboolean on_focus_out( GtkWidget* w, GdkEventFocus* evt ) {
     return FALSE;
 }
 
+
 gboolean on_scroll( GtkWidget *w, GdkEventScroll *evt ) {
     if ( ((DesktopWindow*)w)->transparent )
     {
@@ -2430,10 +2516,10 @@ gboolean on_scroll( GtkWidget *w, GdkEventScroll *evt ) {
         }
     }
     /* In other cases, return FALSE to use the default scroll behavior.
-     * forward_event_to_rootwin code causes issues with scrollwheel in Openbox.
-     * Issue #524 */
+     * forward_event_to_rootwin code causes issues with scrollwheel in Openbox. Issue #524 */
     return FALSE;
 }
+
 
 void on_sort_by_name ( GtkMenuItem *menuitem, DesktopWindow* self ) {
     desktop_window_sort_items( self, DW_SORT_BY_NAME, self->sort_type );
@@ -2463,6 +2549,7 @@ void on_sort_descending( GtkMenuItem *menuitem, DesktopWindow* self ) {
     desktop_window_sort_items( self, self->sort_by, GTK_SORT_DESCENDING );
 }
 
+
 void desktop_window_on_autoopen_cb( gpointer task, gpointer aop ) {
     if ( !aop )
         return;
@@ -2478,8 +2565,7 @@ void desktop_window_on_autoopen_cb( gpointer task, gpointer aop ) {
         VFSFileInfo* file;
 
         // select item on desktop
-        if ( GTK_IS_WINDOW( self ) && self->dir &&
-                                    !g_strcmp0( cwd, vfs_get_desktop_dir() ) )
+        if ( GTK_IS_WINDOW( self ) && self->dir &&  !g_strcmp0( cwd, vfs_get_desktop_dir() ) )
         {
             char* name = g_path_get_basename( ao->path );
 
@@ -2493,8 +2579,7 @@ void desktop_window_on_autoopen_cb( gpointer task, gpointer aop ) {
             for ( l = self->items; l; l = l->next )
             {
                 item = (DesktopItem*)l->data;
-                if ( item->fi &&
-                            !g_strcmp0( vfs_file_info_get_name( item->fi ), name ) )
+                if ( item->fi &&  !g_strcmp0( vfs_file_info_get_name( item->fi ), name ) )
                     break;
             }
 
@@ -2530,6 +2615,7 @@ void desktop_window_on_autoopen_cb( gpointer task, gpointer aop ) {
     g_free( ao->path );
     g_slice_free( AutoOpenCreate, ao );
 }
+
 
 void on_settings( GtkMenuItem *menuitem, DesktopWindow* self ) {
     fm_edit_preference( GTK_WINDOW( self ), PREF_DESKTOP );
@@ -2603,6 +2689,7 @@ void calc_item_size( DesktopWindow* self, DesktopItem* item ) {
     item->icon_rect.width = item->icon_rect.height = self->icon_size;
 }
 
+
 void layout_items( DesktopWindow* self ) {
     GList* l;
     GList* ll;
@@ -2639,8 +2726,7 @@ start_layout:
             if ( !self->row_count )
                 self->row_count = row_count;
             row_count = 1;  // adding first row of new column
-            if ( self->sort_by == DW_SORT_CUSTOM &&
-                                self->order_rows > self->row_count && l->prev )
+            if ( self->sort_by == DW_SORT_CUSTOM &&  self->order_rows > self->row_count && l->prev )
             {
                 // saved row count was greater than current - eat empties
                 GList* l_prev = l->prev;
@@ -2703,12 +2789,10 @@ start_layout:
             }
             // scan up above box_count and remove empties until all items fit
             gboolean empty_removed = TRUE;
-            while ( empty_removed &&
-                                g_list_length( self->items ) > self->box_count )
+            while ( empty_removed &&  g_list_length( self->items ) > self->box_count )
             {
                 empty_removed = FALSE;
-                for ( ll = g_list_nth( self->items, self->box_count - 1 ); ll;
-                                                                ll = ll->prev )
+                for ( ll = g_list_nth( self->items, self->box_count - 1 ); ll;  ll = ll->prev )
                 {
                     if ( !((DesktopItem*)ll->data)->fi )
                     {
@@ -2787,6 +2871,7 @@ start_layout:
     gtk_widget_queue_draw( GTK_WIDGET(self) );
 }
 
+
 void on_file_listed( VFSDir* dir, gboolean is_cancelled, DesktopWindow* self ) {
     GList* l, *items = NULL;
     VFSFileInfo* fi;
@@ -2846,8 +2931,7 @@ void on_file_listed( VFSDir* dir, gboolean is_cancelled, DesktopWindow* self ) {
 #ifdef HAVE_FFMPEG
              vfs_file_info_is_video( fi ) ||
 #endif
-             ( fi->size < app_settings.max_thumb_size &&
-                            vfs_file_info_is_image( fi ) ) ) )
+             ( fi->size < app_settings.max_thumb_size &&  vfs_file_info_is_image( fi ) ) ) )
             vfs_thumbnail_loader_request( dir, fi, TRUE );
     }
     g_mutex_unlock( dir->mutex );
@@ -2890,6 +2974,7 @@ void on_file_listed( VFSDir* dir, gboolean is_cancelled, DesktopWindow* self ) {
     layout_items( self );
 }
 
+
 void on_thumbnail_loaded( VFSDir* dir,  VFSFileInfo* fi, DesktopWindow* self ) {
     GList* l;
     GtkWidget* w = (GtkWidget*)self;
@@ -2909,6 +2994,7 @@ void on_thumbnail_loaded( VFSDir* dir,  VFSFileInfo* fi, DesktopWindow* self ) {
         }
     }
 }
+
 
 void on_file_created( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
     GList *l;
@@ -2938,8 +3024,7 @@ void on_file_created( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
 #ifdef HAVE_FFMPEG
              vfs_file_info_is_video( item->fi ) ||
 #endif
-             ( item->fi->size < app_settings.max_thumb_size
-                                && vfs_file_info_is_image( item->fi ) ) ) )
+             ( item->fi->size < app_settings.max_thumb_size  && vfs_file_info_is_image( item->fi ) ) ) )
         vfs_thumbnail_loader_request( dir, item->fi, TRUE );
 
     GCompareDataFunc comp_func = get_sort_func( self );
@@ -2949,8 +3034,7 @@ void on_file_created( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
     {
         // custom sort
         GList* ll;
-        if ( self->insert_item &&
-                        ( l = g_list_find( self->items, self->insert_item ) ) )
+        if ( self->insert_item &&  ( l = g_list_find( self->items, self->insert_item ) ) )
         {
             // insert where dropped
             if ( ((DesktopItem*)self->insert_item)->fi )
@@ -2974,8 +3058,7 @@ void on_file_created( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
                 self->insert_item = l->next ? l->next->data : NULL;
             }
         }
-        else if ( self->renamed_item && !((DesktopItem*)self->renamed_item)->fi &&
-                        ( l = g_list_find( self->items, self->renamed_item ) ) )
+        else if ( self->renamed_item && !((DesktopItem*)self->renamed_item)->fi &&  ( l = g_list_find( self->items, self->renamed_item ) ) )
         {
             // insert where item was renamed
             desktop_item_free( (DesktopItem*)self->renamed_item );
@@ -3008,6 +3091,7 @@ void on_file_created( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
     /* FIXME: put this in idle handler with priority higher than redraw but lower than resize */
     layout_items( self );
 }
+
 
 void on_file_deleted( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
     GList *l;
@@ -3062,6 +3146,7 @@ void on_file_deleted( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
     }
 }
 
+
 void on_file_changed( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
     GList *l;
     DesktopWindow* self = (DesktopWindow*)user_data;
@@ -3091,11 +3176,9 @@ void on_file_changed( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
          * See also ptk-file-list.c:_ptk_file_list_file_changed() */
         if ( !item->fi->big_thumbnail && (
 #ifdef HAVE_FFMPEG
-         ( vfs_file_info_is_video( item->fi ) &&
-           time( NULL ) - *vfs_file_info_get_mtime( item->fi ) > 5 ) ||
+         ( vfs_file_info_is_video( item->fi ) &&  time( NULL ) - *vfs_file_info_get_mtime( item->fi ) > 5 ) ||
 #endif
-             ( item->fi->size < app_settings.max_thumb_size
-                                && vfs_file_info_is_image( item->fi ) ) ) )
+             ( item->fi->size < app_settings.max_thumb_size  && vfs_file_info_is_image( item->fi ) ) ) )
             vfs_thumbnail_loader_request( dir, item->fi, TRUE );
 
         if( gtk_widget_get_visible( w ) )
@@ -3105,6 +3188,7 @@ void on_file_changed( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
         }
     }
 }
+
 
 void desktop_window_copycmd( DesktopWindow* desktop, GList* sel_files, char* cwd, char* setname ) {
     if ( !setname || !desktop || !sel_files )
@@ -3127,8 +3211,7 @@ void desktop_window_copycmd( DesktopWindow* desktop, GList* sel_files, char* cwd
     else if ( strcmp( setname, "copy_loc" ) && strcmp( setname, "move_loc" ) )
         return;
 
-    if ( !strcmp( setname, "copy_loc" ) || !strcmp( setname, "move_loc" ) ||
-                                            ( !copy_dest && !move_dest ) )
+    if ( !strcmp( setname, "copy_loc" ) || !strcmp( setname, "move_loc" ) ||  ( !copy_dest && !move_dest ) )
     {
         char* folder;
         set2 = xset_get( "copy_loc_last" );
@@ -3191,6 +3274,7 @@ void desktop_window_copycmd( DesktopWindow* desktop, GList* sel_files, char* cwd
         xset_msg_dialog( GTK_WIDGET( desktop ), GTK_MESSAGE_ERROR, _("Invalid Destination"), NULL, 0, _("Invalid destination"), NULL, NULL );
     }
 }
+
 
 /*-------------- Private methods -------------------*/
 
@@ -3287,8 +3371,7 @@ void paint_item( DesktopWindow* self, DesktopItem* item, GdkRectangle* expose_ar
 #else
         gtk_paint_focus( gtk_widget_get_style(widget), gtk_widget_get_window(widget),
                         GTK_STATE_NORMAL,/*item->is_selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL,*/
-                        &item->text_rect, widget, "icon_view",
-                        item->text_rect.x, item->text_rect.y,
+                        &item->text_rect, widget, "icon_view", item->text_rect.x, item->text_rect.y,
                         item->text_rect.width, item->text_rect.height);
 #endif
     }
@@ -3314,6 +3397,7 @@ void paint_item( DesktopWindow* self, DesktopItem* item, GdkRectangle* expose_ar
     cairo_destroy( cr );
 }
 
+
 void move_item( DesktopWindow* self, DesktopItem* item, int x, int y, gboolean is_offset ) {
     GdkRectangle old = item->box;
 
@@ -3333,9 +3417,11 @@ void move_item( DesktopWindow* self, DesktopItem* item, int x, int y, gboolean i
     gtk_widget_queue_draw_area( (GtkWidget*)self, item->box.x, item->box.y, item->box.width, item->box.height );
 }
 
+
 static gboolean is_point_in_rect( GdkRectangle* rect, int x, int y ) {
     return rect->x < x && x < (rect->x + rect->width) && y > rect->y && y < (rect->y + rect->height);
 }
+
 
 DesktopItem* hit_test( DesktopWindow* self, int x, int y ) {   // hit on icon or text ?
     DesktopItem* item;
@@ -3345,12 +3431,12 @@ DesktopItem* hit_test( DesktopWindow* self, int x, int y ) {   // hit on icon or
         item = (DesktopItem*) l->data;
         if ( !item->fi )
             continue;  // empty box
-        if ( is_point_in_rect( &item->icon_rect, x, y )
-                        || is_point_in_rect( &item->text_rect, x, y ) )
+        if ( is_point_in_rect( &item->icon_rect, x, y ) || is_point_in_rect( &item->text_rect, x, y ) )
             return item;
     }
     return NULL;
 }
+
 
 DesktopItem* hit_test_icon( DesktopWindow* self, int x, int y ) {   // hit on icon ?
     DesktopItem* item;
@@ -3365,6 +3451,7 @@ DesktopItem* hit_test_icon( DesktopWindow* self, int x, int y ) {   // hit on ic
     }
     return NULL;
 }
+
 
 gboolean hit_test_text( DesktopWindow* self, int x, int y, DesktopItem** next_item ) {   // hit on text ?   sets next item
     DesktopItem* item;
@@ -3391,6 +3478,7 @@ gboolean hit_test_text( DesktopWindow* self, int x, int y, DesktopItem** next_it
     return FALSE;
 }
 
+
 DesktopItem* hit_test_box( DesktopWindow* self, int x, int y )  //sfm
 {   // hit on box ?
     DesktopItem* item;
@@ -3401,9 +3489,7 @@ DesktopItem* hit_test_box( DesktopWindow* self, int x, int y )  //sfm
         item = (DesktopItem*)l->data;
         if ( is_point_in_rect( &item->box, x, y ) )
         {
-            if ( item->fi && l->next &&
-                         ((DesktopItem*)l->next->data)->box.x == item->box.x &&
-                         y > item->text_rect.y )
+            if ( item->fi && l->next &&  ((DesktopItem*)l->next->data)->box.x == item->box.x  &&  y > item->text_rect.y )
                 // clicked in lower area of non-empty box,  return next box if same column
                 return (DesktopItem*)l->next->data;
             return item;
@@ -3437,6 +3523,7 @@ DesktopItem* hit_test_box( DesktopWindow* self, int x, int y )  //sfm
         return closest_l->next ? (DesktopItem*)closest_l->next->data : NULL;
     return (DesktopItem*)closest_l->data;
 }
+
 
 /* FIXME: this is too dirty and here is some redundant code.
  *  We really need better and cleaner APIs for this */
@@ -3489,6 +3576,7 @@ void open_folders( GList* folders ) {
     gtk_window_present( GTK_WINDOW( main_window ) );
 }
 
+
 void desktop_window_open_desktop_dir( GtkMenuItem *menuitem, DesktopWindow* desktop ) {
     FMMainWindow* main_window;
     gboolean new_window = FALSE;
@@ -3519,6 +3607,7 @@ void desktop_window_open_desktop_dir( GtkMenuItem *menuitem, DesktopWindow* desk
     gtk_window_present( GTK_WINDOW( main_window ) );
 }
 
+
 GCompareDataFunc get_sort_func( DesktopWindow* win ) {
     GCompareDataFunc comp;
 
@@ -3545,9 +3634,11 @@ GCompareDataFunc get_sort_func( DesktopWindow* win ) {
     return comp;
 }
 
+
 /* return -1 if item1 is virtual, and item2 is not, and vice versa. return 0 if both are, or both aren't. */
 #define COMP_VIRTUAL( item1, item2 )  \
   ( ( ((item2->fi->flags & VFS_FILE_INFO_VIRTUAL) ? 1 : 0) - ((item1->fi->flags & VFS_FILE_INFO_VIRTUAL) ? 1 : 0) ) )
+
 
 int comp_item_by_name( DesktopItem* item1, DesktopItem* item2, DesktopWindow* win ) {
     int ret;
@@ -3742,6 +3833,7 @@ void desktop_window_sort_items( DesktopWindow* win, DWSortType sort_by, GtkSortT
     */
 }
 
+
 GList* desktop_window_get_selected_items( DesktopWindow* win, gboolean current_first ) {
     GList* sel = NULL;
     GList* l;
@@ -3760,6 +3852,7 @@ GList* desktop_window_get_selected_items( DesktopWindow* win, gboolean current_f
 
     return sel;
 }
+
 
 GList* desktop_window_get_selected_files( DesktopWindow* win ) {
     GList* sel = desktop_window_get_selected_items( win, TRUE );
@@ -3783,6 +3876,7 @@ GList* desktop_window_get_selected_files( DesktopWindow* win ) {
     }
     return sel;
 }
+
 
 void desktop_window_add_application( DesktopWindow* desktop ) {
     char* app = NULL;
@@ -3824,6 +3918,7 @@ void desktop_window_add_application( DesktopWindow* desktop ) {
     vfs_mime_type_unref( mime_type );
 }
 
+
 static void custom_order_write( DesktopWindow* self ) {
     if ( self->sort_by != DW_SORT_CUSTOM || !self->file_listed )
         return;
@@ -3851,6 +3946,7 @@ static void custom_order_write( DesktopWindow* self ) {
         g_warning( "Error writing to file %s\n", path );
     g_free( path );
 }
+
 
 static GHashTable* custom_order_read( DesktopWindow* self ) {
     char line[ 2048 ];
@@ -3902,6 +3998,7 @@ static GHashTable* custom_order_read( DesktopWindow* self ) {
     return order_hash;
 }
 
+
 /*----------------- X11-related sutff ----------------*/
 
 static GdkFilterReturn on_rootwin_event ( GdkXEvent *xevent, GdkEvent *event, gpointer data ) {
@@ -3942,6 +4039,7 @@ static GdkFilterReturn on_rootwin_event ( GdkXEvent *xevent, GdkEvent *event, gp
     }
     return GDK_FILTER_TRANSLATE;
 }
+
 
 /* This function is taken from xfdesktop */
 void forward_event_to_rootwin( GdkScreen *gscreen, GdkEvent *event ) {
@@ -4012,6 +4110,7 @@ void forward_event_to_rootwin( GdkScreen *gscreen, GdkEvent *event ) {
     XSendEvent( dpy, xev2.window, False, ButtonPressMask | ButtonReleaseMask, ( XEvent * ) & xev2 );
 }
 
+
 /* FIXME: set single click timeout */
 void desktop_window_set_single_click( DesktopWindow* win, gboolean single_click ) {
     if( single_click == win->single_click )
@@ -4027,6 +4126,7 @@ void desktop_window_set_single_click( DesktopWindow* win, gboolean single_click 
             gdk_window_set_cursor( gtk_widget_get_window((GtkWidget*)win), NULL );
     }
 }
+
 
 #if 0
 GdkPixmap* get_root_pixmap( GdkWindow* root ) {
@@ -4057,11 +4157,13 @@ GdkPixmap* get_root_pixmap( GdkWindow* root ) {
     return root_pix ? gdk_pixmap_foreign_new( root_pix ) : NULL;
 }
 
+
 gboolean set_root_pixmap(  GdkWindow* root, GdkPixmap* pix ) {
     return TRUE;
 }
 
 #endif
+
 
 void desktop_context_fill( DesktopWindow* win, gpointer context ) {
     GtkClipboard* clip = NULL;
@@ -4090,8 +4192,7 @@ void desktop_context_fill( DesktopWindow* win, gpointer context ) {
     {
         if ( !clip )
             clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
-        c->var[CONTEXT_CLIP_TEXT] = gtk_clipboard_wait_is_text_available( clip ) ?
-                                    g_strdup( "true" ) : g_strdup( "false" );
+        c->var[CONTEXT_CLIP_TEXT] = gtk_clipboard_wait_is_text_available( clip ) ?   g_strdup( "true" ) : g_strdup( "false" );
     }
 
     c->var[CONTEXT_BOOKMARK] = g_strdup( "" );
@@ -4121,6 +4222,7 @@ void desktop_context_fill( DesktopWindow* win, gpointer context ) {
 
     c->valid = TRUE;
 }
+
 
 gboolean desktop_write_exports( VFSFileTask* vtask, const char* value, FILE* file ) {
     int result;
@@ -4271,8 +4373,7 @@ gboolean desktop_write_exports( VFSFileTask* vtask, const char* value, FILE* fil
     }
 
     // tmp
-    if ( geteuid() != 0 && vtask->exec_as_user
-                                    && !strcmp( vtask->exec_as_user, "root" ) )
+    if ( geteuid() != 0 && vtask->exec_as_user  && !strcmp( vtask->exec_as_user, "root" ) )
         fprintf( file, "fm_tmp_dir=%s\n", xset_get_shared_tmp_dir() );
     else
         fprintf( file, "fm_tmp_dir=%s\n", xset_get_user_tmp_dir() );
@@ -4281,6 +4382,7 @@ gboolean desktop_write_exports( VFSFileTask* vtask, const char* value, FILE* fil
     result = fputs( "\n", file );
     return result >= 0;
 }
+
 
 /* This does not detect screen size changes, only fires initially
  * and when desktop window is manually resized
