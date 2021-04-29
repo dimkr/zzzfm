@@ -3,9 +3,7 @@ data/Makefile.in_ART
 data/build-manual_RENAMED
 data/_zzzfm.png
 data/_plugins.html
-data/zzzfm-manual-en.html
 data/devmon.html
-data/zzzfm-manual-enSAFE.html
 etc/Makefile.in_ART
 src/Makefile.in_ART
 Makefile
