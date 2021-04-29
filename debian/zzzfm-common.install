@@ -3,21 +3,22 @@ debian/tmp/gtk2/usr/share/mime/*      /usr/share/mime/
 debian/tmp/gtk2/usr/share/zzzfm/ui/*  /usr/share/zzzfm/ui/
 debian/tmp/gtk2/usr/share/doc/* usr/share/doc/
 
-debian/tmp/gtk2/usr/share/doc/* usr/share/doc/
-#data/zzzfm-manual-en.html       /usr/share/doc/zzzfm/
+debian/tmp/gtk2/usr/share/doc/*      usr/share/doc/
 
-data/zzzfm.png                  /usr/share/pixmaps/
-data/zzzfm-root.png             /usr/share/pixmaps/
-data/zzzfm-find.png             /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/doc/zzzfm/zzzfm-manual-en.html     /usr/share/doc/zzzfm/
 
-data/zzzfm-48-folder-blue.png        /usr/share/pixmaps/
-data/zzzfm-48-folder-red.png         /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm.png                  /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-root.png             /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-find.png             /usr/share/pixmaps/
 
-data/zzzfm-48-cube-blue.png          /usr/share/pixmaps/
-data/zzzfm-48-cube-red.png           /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-48-folder-blue.png        /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-48-folder-red.png         /usr/share/pixmaps/
 
-data/zzzfm-128-cube-blue.png         /usr/share/pixmaps/
-data/zzzfm-128-cube-red.png          /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-48-cube-blue.png          /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-48-cube-red.png           /usr/share/pixmaps/
+
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-128-cube-blue.png         /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-128-cube-red.png          /usr/share/pixmaps/
 
 
 

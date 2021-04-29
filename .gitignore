@@ -41,7 +41,6 @@ debian/rules_buildGTK2only
 debian/zzzfm-common.install_PRIOR
 aclocal.m4_RENAMED
 compile_RENAMED
-configure_noHAAAAL
 _leak_check_valgrind_.txt
 Makefile.in_RENAMED
 mkinstalldirs_RENAMED
