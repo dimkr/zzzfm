@@ -44,7 +44,7 @@ struct _PtkMenuItemEntry
   GdkModifierType mod;
   struct _PtkMenuItemEntry* sub_menu;
   GtkWidget** ret;
-  GtkWidget* menu;  //MOD
+  GtkWidget* menu;
 };
 typedef struct _PtkMenuItemEntry PtkMenuItemEntry;
 
@@ -80,9 +80,6 @@ void ptk_menu_add_items_from_data( GtkWidget* menu,
                                    gpointer cb_data,
                                    GtkAccelGroup* accel_group );
 
-GtkWidget* ptk_toolbar_add_items_from_data( GtkWidget* toolbar,
-                                            PtkToolItemEntry* entries,
-                                            gpointer cb_data );
 
 /* The string 'message' can contain pango markups.
   * If special characters like < and > are used in the string, they should be escaped with g_markup_escape_text().

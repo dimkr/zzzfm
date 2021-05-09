@@ -363,7 +363,7 @@ GtkWidget* file_properties_dlg_new( GtkWindow* parent, const char* dir_path, GLi
         data->chmod_btns[ i ] = GTK_TOGGLE_BUTTON( (GtkWidget*)gtk_builder_get_object( builder, chmod_names[ i ] ) );
     }
 
-    //MOD
+
     VFSMimeType* type;
     VFSMimeType* type2 = NULL;
     for ( l = sel_files; l ; l = l->next )
@@ -386,7 +386,7 @@ GtkWidget* file_properties_dlg_new( GtkWindow* parent, const char* dir_path, GLi
     data->recurse = (GtkWidget*)gtk_builder_get_object( builder, "recursive" );
     gtk_widget_set_sensitive( data->recurse, is_dirs );
 
-/*  //MOD
+/*
     for ( l = sel_files; l && l->next; l = l->next )
     {
         VFSMimeType *type, *type2;
@@ -511,9 +511,8 @@ GtkWidget* file_properties_dlg_new( GtkWindow* parent, const char* dir_path, GLi
             gtk_entry_set_text( GTK_ENTRY( name ), disp_name );
             g_free( disp_name );
         } else {
-            if ( vfs_file_info_is_dir( file ) &&
-                                            !vfs_file_info_is_symlink( file ) )
-                gtk_label_set_markup_with_mnemonic( GTK_LABEL( label_name ), _("<b>Folder _Name:</b>") );
+            if ( vfs_file_info_is_dir( file ) && !vfs_file_info_is_symlink( file ) )
+                gtk_label_set_markup_with_mnemonic( GTK_LABEL( label_name ), _("<b>Folder Name:</b>") );   //    dayum   replaces  the default string present in the .ui file
             gtk_entry_set_text( GTK_ENTRY( name ), vfs_file_info_get_disp_name( file ) );
         }
 
@@ -521,8 +520,7 @@ GtkWidget* file_properties_dlg_new( GtkWindow* parent, const char* dir_path, GLi
 
         if ( ! vfs_file_info_is_dir( file ) )
         {
-            /* Only single "file" is selected, so we don't need to
-                caculate total file size */
+            /* Only a single "file" is selected, so we don't need to caculate total file size */
             need_calc_size = FALSE;
 
             sprintf( buf, _("%s  ( %lu bytes )"), vfs_file_info_get_disp_size( file ), ( guint64 ) vfs_file_info_get_size( file ) );
@@ -536,8 +534,6 @@ GtkWidget* file_properties_dlg_new( GtkWindow* parent, const char* dir_path, GLi
         }
 
         // Modified / Accessed
-        //gtk_entry_set_text( GTK_ENTRY( mtime ),
-        //                    vfs_file_info_get_disp_mtime( file ) );
         strftime( buf, sizeof( buf ), time_format, localtime( vfs_file_info_get_mtime( file ) ) );
         gtk_entry_set_text( GTK_ENTRY( data->mtime ), buf );
         data->orig_mtime = g_strdup( buf );
@@ -593,8 +589,7 @@ GtkWidget* file_properties_dlg_new( GtkWindow* parent, const char* dir_path, GLi
 
     if ( need_calc_size )
     {
-        /* The total file size displayed in "File Properties" is not
-           completely calculated yet. So "Calculating..." is displayed. */
+        /* The total file size displayed in "File Properties" is not completely calculated yet. So "Calculating..." is displayed. */
         calculating = _( "Calculating..." );
         gtk_label_set_text( data->total_size_label, calculating );
         gtk_label_set_text( data->size_on_disk_label, calculating );
@@ -720,17 +715,25 @@ void  on_dlg_response ( GtkDialog *dialog, gint response_id, gpointer user_data 
 
         if ( response_id == GTK_RESPONSE_OK )
         {
+
+
             // change file dates
+/*
+//howdy      nixed
+// THIS LACKS SUFFICIENT ERRORHANDLING
+// AND "atime" is OFTEN NULLED VIA "noatime" MOUNT OPTION IN EFFECT
+// AND A USER CAN CREATE A SIMPLE "touch" CUSTOM COMMAND, IF DESIRED (AND INVOKE IT MORE EASILY THAN VIA REPEATED VISITS TO "INFO" PANE)
+//                e.g. menu custom command  Actions}}"Touch"
+
             char* cmd = NULL;
             char* quoted_time;
             char* quoted_path;
+
             const char* new_mtime = gtk_entry_get_text( data->mtime );
-            if ( !( new_mtime && new_mtime[0] ) ||
-                                !g_strcmp0( data->orig_mtime, new_mtime ) )
+            if ( !( new_mtime && new_mtime[0] ) ||  !g_strcmp0( data->orig_mtime, new_mtime ) )
                 new_mtime = NULL;
             const char* new_atime = gtk_entry_get_text( data->atime );
-            if ( !( new_atime && new_atime[0] ) ||
-                                !g_strcmp0( data->orig_atime, new_atime ) )
+            if ( !( new_atime && new_atime[0] ) ||  !g_strcmp0( data->orig_atime, new_atime ) )
                 new_atime = NULL;
 
             if ( ( new_mtime || new_atime ) && data->file_list )
@@ -770,6 +773,7 @@ void  on_dlg_response ( GtkDialog *dialog, gint response_id, gpointer user_data 
                     ptk_file_task_run( task );
                 }
             }
+*/
 
             /* Set default action for mimetype */
             GtkWidget* open_with;
@@ -845,7 +849,7 @@ void  on_dlg_response ( GtkDialog *dialog, gint response_id, gpointer user_data 
                 }
 
                 task = ptk_file_task_new( VFS_FILE_TASK_CHMOD_CHOWN, file_list, NULL, GTK_WINDOW(gtk_widget_get_parent( GTK_WIDGET( dialog ) )), NULL );
-                //MOD
+
                 ptk_file_task_set_recursive( task, gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->recurse ) ) );
                 /*
                 for ( l = data->file_list; l; l = l->next )

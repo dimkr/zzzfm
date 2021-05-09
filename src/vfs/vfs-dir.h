@@ -54,13 +54,13 @@ struct _VFSDir
     gboolean load_complete : 1;
     gboolean cancel: 1;
     gboolean show_hidden : 1;
-    gboolean avoid_changes : 1;  //sfm
+    gboolean avoid_changes : 1;
 
     struct _VFSThumbnailLoader* thumbnail_loader;
 
     GSList* changed_files;
-    GSList* created_files;  //MOD
-    glong xhidden_count;  //MOD
+    GSList* created_files;
+    glong xhidden_count;
 };
 
 struct _VFSDirClass
@@ -100,7 +100,7 @@ void vfs_dir_flush_notify_cache();
 /* get the path of desktop dir */
 const char* vfs_get_desktop_dir();
 
-gboolean vfs_dir_add_hidden( const char* path, const char* file_name );  //MOD added
+gboolean vfs_dir_add_hidden( const char* path, const char* file_name );
 
 /* call function "func" for every VFSDir instances */
 void vfs_dir_foreach( GHFunc func, gpointer user_data );

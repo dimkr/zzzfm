@@ -31,8 +31,8 @@ static void vfs_dir_finalize( GObject *obj );
 static void vfs_dir_set_property ( GObject *obj, guint prop_id, const GValue *value, GParamSpec *pspec );
 static void vfs_dir_get_property ( GObject *obj, guint prop_id, GValue *value, GParamSpec *pspec );
 
-char* gethidden( const char* path );  //MOD added
-gboolean ishidden( const char* hidden, const char* file_name );  //MOD added
+char* gethidden( const char* path );
+gboolean ishidden( const char* hidden, const char* file_name );
 
 /* constructor is private */
 static VFSDir* vfs_dir_new( const char* path );
@@ -438,7 +438,7 @@ static gboolean is_dir_virtual( const char* path ) {
     return FALSE;   /* FIXME: not implemented */
 }
 
-char* gethidden( const char* path )  //MOD added
+char* gethidden( const char* path )
 {
     // Read .hidden into string
     char* hidden_path = g_build_filename( path, ".hidden", NULL );
@@ -481,7 +481,7 @@ char* gethidden( const char* path )  //MOD added
     return NULL;
 }
 
-gboolean ishidden( const char* hidden, const char* file_name )  //MOD added
+gboolean ishidden( const char* hidden, const char* file_name )
 {   // assumes hidden,file_name != NULL
     char* str;
     char c;
@@ -569,11 +569,11 @@ gpointer vfs_dir_load_thread(  VFSAsyncTask* task, VFSDir* dir ) {
     char* full_path;
     GDir* dir_content;
     VFSFileInfo* file;
-    char* hidden = NULL;  //MOD added
+    char* hidden = NULL;
 
     dir->file_listed = 0;
     dir->load_complete = 0;
-    dir->xhidden_count = 0;  //MOD
+    dir->xhidden_count = 0;
     if ( dir->path )
     {
         /* Install file alteration monitor */

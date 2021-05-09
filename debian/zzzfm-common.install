@@ -9,6 +9,8 @@ debian/tmp/gtk3/usr/share/doc/zzzfm/zzzfm-manual-en.html     /usr/share/doc/zzzf
 
 debian/tmp/gtk3/usr/share/pixmaps/zzzfm.png                  /usr/share/pixmaps/
 debian/tmp/gtk3/usr/share/pixmaps/zzzfm-root.png             /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm24.png                  /usr/share/pixmaps/
+debian/tmp/gtk3/usr/share/pixmaps/zzzfm-root24.png             /usr/share/pixmaps/
 debian/tmp/gtk3/usr/share/pixmaps/zzzfm-find.png             /usr/share/pixmaps/
 
 debian/tmp/gtk3/usr/share/pixmaps/zzzfm-48-folder-blue.png        /usr/share/pixmaps/

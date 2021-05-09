@@ -39,8 +39,8 @@ typedef struct {
     gpointer user_data;
 }VFSMimeReloadCbEnt;
 
-static gboolean vfs_mime_type_reload( gpointer user_data )
-{
+
+static gboolean vfs_mime_type_reload( gpointer user_data ) {
     GList* l;
     /* FIXME: process mime database reloading properly. */
     /* Remove all items in the hash table */
@@ -65,8 +65,8 @@ static gboolean vfs_mime_type_reload( gpointer user_data )
     return FALSE;
 }
 
-static void on_mime_cache_changed( VFSFileMonitor* fm, VFSFileMonitorEvent event, const char* file_name, gpointer user_data )
-{
+
+static void on_mime_cache_changed( VFSFileMonitor* fm, VFSFileMonitorEvent event, const char* file_name, gpointer user_data ) {
     MimeCache* cache = (MimeCache*)user_data;
     switch( event )
     {
@@ -84,8 +84,8 @@ static void on_mime_cache_changed( VFSFileMonitor* fm, VFSFileMonitorEvent event
     }
 }
 
-void vfs_mime_type_init()
-{
+
+void vfs_mime_type_init() {
     GtkIconTheme * theme;
     MimeCache** caches;
     int i, n_caches;
@@ -111,8 +111,8 @@ void vfs_mime_type_init()
     theme_change_notify = g_signal_connect( theme, "changed", G_CALLBACK( on_icon_theme_changed ), NULL );
 }
 
-void vfs_mime_type_clean()
-{
+
+void vfs_mime_type_clean() {
     GtkIconTheme * theme;
     MimeCache** caches;
     int i, n_caches;
@@ -134,23 +134,24 @@ void vfs_mime_type_clean()
     g_hash_table_destroy( mime_hash );
 }
 
-VFSMimeType* vfs_mime_type_get_from_file_name( const char* ufile_name )
-{
+
+//  howdy bub      vulnerability-prone, but only called (if compiled with vidthumb support) to lookup video handlermimetype
+VFSMimeType* vfs_mime_type_get_from_file_name( const char* ufile_name ) {
     const char * type;
     /* type = xdg_mime_get_mime_type_from_file_name( ufile_name ); */
     type = mime_type_get_by_filename( ufile_name, NULL );
     return vfs_mime_type_get_from_type( type );
 }
 
-VFSMimeType* vfs_mime_type_get_from_file( const char* file_path, const char* base_name, struct stat64* pstat )
-{
+
+VFSMimeType* vfs_mime_type_get_from_file( const char* file_path, const char* base_name, struct stat64* pstat ) {
     const char * type;
     type = mime_type_get_by_file( file_path, pstat, base_name );
     return vfs_mime_type_get_from_type( type );
 }
 
-VFSMimeType* vfs_mime_type_get_from_type( const char* type )
-{
+
+VFSMimeType* vfs_mime_type_get_from_type( const char* type ) {
     VFSMimeType * mime_type;
 
     g_static_rw_lock_reader_lock( &mime_hash_lock );
@@ -168,21 +169,21 @@ VFSMimeType* vfs_mime_type_get_from_type( const char* type )
     return mime_type;
 }
 
-VFSMimeType* vfs_mime_type_new( const char* type_name )
-{
+
+VFSMimeType* vfs_mime_type_new( const char* type_name ) {
     VFSMimeType * mime_type = g_slice_new0( VFSMimeType );
     mime_type->type = g_strdup( type_name );
     mime_type->n_ref = 1;
     return mime_type;
 }
 
-void vfs_mime_type_ref( VFSMimeType* mime_type )
-{
+
+void vfs_mime_type_ref( VFSMimeType* mime_type ) {
     g_atomic_int_inc(&mime_type->n_ref);
 }
 
-void vfs_mime_type_unref( gpointer mime_type_ )
-{
+
+void vfs_mime_type_unref( gpointer mime_type_ ) {
     VFSMimeType* mime_type = (VFSMimeType*)mime_type_;
     if ( g_atomic_int_dec_and_test(&mime_type->n_ref) )
     {
@@ -197,8 +198,8 @@ void vfs_mime_type_unref( gpointer mime_type_ )
     }
 }
 
-GdkPixbuf* vfs_mime_type_get_icon( VFSMimeType* mime_type, gboolean big )
-{
+
+GdkPixbuf* vfs_mime_type_get_icon( VFSMimeType* mime_type, gboolean big ) {
     GdkPixbuf * icon = NULL;
     const char* sep;
     char icon_name[ 100 ];
@@ -331,8 +332,8 @@ GdkPixbuf* vfs_mime_type_get_icon( VFSMimeType* mime_type, gboolean big )
     return icon ? g_object_ref( icon ) : NULL;
 }
 
-static void free_cached_icons ( gpointer key, gpointer value, gpointer user_data )
-{
+
+static void free_cached_icons ( gpointer key, gpointer value, gpointer user_data ) {
     VFSMimeType * mime_type = ( VFSMimeType* ) value;
     gboolean big = GPOINTER_TO_INT( user_data );
     if ( big )
@@ -351,8 +352,8 @@ static void free_cached_icons ( gpointer key, gpointer value, gpointer user_data
     }
 }
 
-void vfs_mime_type_set_icon_size( int big, int small )
-{
+
+void vfs_mime_type_set_icon_size( int big, int small ) {
     g_static_rw_lock_writer_lock( &mime_hash_lock );
     if ( big != big_icon_size )
     {
@@ -369,22 +370,21 @@ void vfs_mime_type_set_icon_size( int big, int small )
     g_static_rw_lock_writer_unlock( &mime_hash_lock );
 }
 
-void vfs_mime_type_get_icon_size( int* big, int* small )
-{
+
+void vfs_mime_type_get_icon_size( int* big, int* small ) {
     if ( big )
         * big = big_icon_size;
     if ( small )
         * small = small_icon_size;
 }
 
-const char* vfs_mime_type_get_type( VFSMimeType* mime_type )
-{
+
+const char* vfs_mime_type_get_type( VFSMimeType* mime_type ) {
     return mime_type->type;
 }
 
 /* Get human-readable description of mime type */
-const char* vfs_mime_type_get_description( VFSMimeType* mime_type )
-{
+const char* vfs_mime_type_get_description( VFSMimeType* mime_type ) {
     if ( G_UNLIKELY( ! mime_type->description ) )
     {
         mime_type->description = mime_type_get_desc_icon( mime_type->type, NULL, NULL );
@@ -402,12 +402,12 @@ const char* vfs_mime_type_get_description( VFSMimeType* mime_type )
     return mime_type->description;
 }
 
+
 /*
 * Join two string vector containing app lists to generate a new one.
 * Duplicated app will be removed.
 */
-char** vfs_mime_type_join_actions( char** list1, gsize len1, char** list2, gsize len2 )
-{
+char** vfs_mime_type_join_actions( char** list1, gsize len1, char** list2, gsize len2 ) {
     gchar **ret = NULL;
     int i, j, k;
 
@@ -433,13 +433,13 @@ char** vfs_mime_type_join_actions( char** list1, gsize len1, char** list2, gsize
     return ret;
 }
 
-char** vfs_mime_type_get_actions( VFSMimeType* mime_type )
-{
+
+char** vfs_mime_type_get_actions( VFSMimeType* mime_type ) {
     return (char**)mime_type_get_actions( mime_type->type );
 }
 
-char* vfs_mime_type_get_default_action( VFSMimeType* mime_type )
-{
+
+char* vfs_mime_type_get_default_action( VFSMimeType* mime_type ) {
     char* def = (char*)mime_type_get_default_action( mime_type->type );
     /* FIXME:
      * If default app is not set, choose one from all availble actions.
@@ -462,8 +462,7 @@ char* vfs_mime_type_get_default_action( VFSMimeType* mime_type )
 * Set default app.desktop for specified file.
 * app can be the name of the desktop file or a command line.
 */
-void vfs_mime_type_set_default_action( VFSMimeType* mime_type, const char* desktop_id )
-{
+void vfs_mime_type_set_default_action( VFSMimeType* mime_type, const char* desktop_id ) {
     char* cust_desktop = NULL;
 /*
     if( ! g_str_has_suffix( desktop_id, ".desktop" ) )
@@ -476,18 +475,17 @@ void vfs_mime_type_set_default_action( VFSMimeType* mime_type, const char* deskt
     g_free( cust_desktop );
 }
 
-void vfs_mime_type_remove_action( VFSMimeType* mime_type, const char* desktop_id )
-{
+
+void vfs_mime_type_remove_action( VFSMimeType* mime_type, const char* desktop_id ) {
     mime_type_update_association( mime_type->type, desktop_id, MIME_TYPE_ACTION_REMOVE );
 }
 
 /* If user-custom desktop file is created, it's returned in custom_desktop. */
-void vfs_mime_type_add_action( VFSMimeType* mime_type, const char* desktop_id, char** custom_desktop )
-{
+void vfs_mime_type_add_action( VFSMimeType* mime_type, const char* desktop_id, char** custom_desktop ) {
     //MOD  don't create custom desktop file if desktop_id is not a command
     if ( !g_str_has_suffix( desktop_id, ".desktop" ) )
         mime_type_add_action( mime_type->type, desktop_id, custom_desktop );
-    else if ( custom_desktop )  //sfm
+    else if ( custom_desktop )
         *custom_desktop = g_strdup( desktop_id );
 
 }
@@ -501,31 +499,26 @@ void vfs_mime_type_add_action( VFSMimeType* mime_type, const char* desktop_id, c
 */
 
 #if 0
-static void hash_to_strv ( gpointer key, gpointer value, gpointer user_data )
-{
+static void hash_to_strv ( gpointer key, gpointer value, gpointer user_data ) {
     char***all_apps = ( char*** ) user_data;
     **all_apps = ( char* ) key;
     ++*all_apps;
 }
 #endif
 
-void on_icon_theme_changed( GtkIconTheme *icon_theme, gpointer user_data )
-{
+
+void on_icon_theme_changed( GtkIconTheme *icon_theme, gpointer user_data ) {
     /* reload_mime_icons */
     g_static_rw_lock_writer_lock( &mime_hash_lock );
 
-    g_hash_table_foreach( mime_hash,
-                          free_cached_icons,
-                          GINT_TO_POINTER( 1 ) );
-    g_hash_table_foreach( mime_hash,
-                          free_cached_icons,
-                          GINT_TO_POINTER( 0 ) );
+    g_hash_table_foreach( mime_hash,  free_cached_icons,  GINT_TO_POINTER( 1 ) );
+    g_hash_table_foreach( mime_hash,  free_cached_icons,  GINT_TO_POINTER( 0 ) );
 
     g_static_rw_lock_writer_unlock( &mime_hash_lock );
 }
 
-GList* vfs_mime_type_add_reload_cb( GFreeFunc cb, gpointer user_data )
-{
+
+GList* vfs_mime_type_add_reload_cb( GFreeFunc cb, gpointer user_data ) {
     VFSMimeReloadCbEnt* ent = g_slice_new( VFSMimeReloadCbEnt );
     ent->cb = cb;
     ent->user_data = user_data;
@@ -533,19 +526,19 @@ GList* vfs_mime_type_add_reload_cb( GFreeFunc cb, gpointer user_data )
     return g_list_last( reload_cb );
 }
 
-void vfs_mime_type_remove_reload_cb( GList* cb )
-{
+
+void vfs_mime_type_remove_reload_cb( GList* cb ) {
     g_slice_free( VFSMimeReloadCbEnt, cb->data );
     reload_cb = g_list_delete_link( reload_cb, cb );
 }
 
-char* vfs_mime_type_locate_desktop_file( const char* dir, const char* desktop_id )
-{
+
+char* vfs_mime_type_locate_desktop_file( const char* dir, const char* desktop_id ) {
     return mime_type_locate_desktop_file( dir, desktop_id );
 }
 
-void vfs_mime_type_append_action( const char* type, const char* desktop_id )
-{
+
+void vfs_mime_type_append_action( const char* type, const char* desktop_id ) {
     mime_type_update_association( type, desktop_id, MIME_TYPE_ACTION_APPEND );
 }
 

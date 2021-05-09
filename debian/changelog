@@ -1,3 +1,38 @@
+zzzfm (1.0.7-4) unstable; urgency=medium
+
+  * increased mainwindow initial size request dimensions
+  * removed from preseeded zzzfm session file the hardcoded "home/demo" strings
+  * vfs-file-task.c: increased smart queue copy/move limit, to 100 MB (and the delete limit, to 10 GB)
+  * store thumnail files in a/the XDG-compliant directory
+  * ptk-handler.c: add android-file transfer support (aft-mtp-mount )
+  * find files: larger initial dimensions of results window
+  * item-properties: suppress ability to edit timestamps (doc now advises use of 'touch -m %F' custom command)
+  * toolbar displays a blueCube icon; redCube instead for AsRoot window
+  * suppress main_help_opt, pending implementation of a safer xset_open_url()
+  * (pending followup) limit exposure to main_open_network_location
+  * suppress availability of hand_net_http, aka webdav, aka davfs
+    until I find time (if ever) to assess the significance of
+    https://github.com/IgnorantGuru/spacefm/issues/648
+    "One thing I don't like about this solution is that it momentarily opens a terminal to open a
+     regular http link in the user's web browser, which is why I used terminal conditionally in the original.
+     I think it would be better to only run the terminal for udevil if possible."
+  * adjustments within the /etx/xdg/session file
+  * first-run, display tree to left panel by default (gauge feedback on this)
+
+ -- skidoo <email@redact.ed>  Sat, 08 May 2021 22:22:22 +0200
+
+zzzfm (1.0.7-3~contibs1) unstable; urgency=medium
+
+  * Updated translations for pt, pt_BR, fr, fr_BE, es, de and ru
+
+ -- nXecure <not@telling.you>  Sat, 08 May 2021 21:48:53 +0200
+
+zzzfm (1.0.7-2) unstable; urgency=medium
+
+  * internal testing build; unreleased
+
+ -- skidoo <email@redact.ed>  Thu, 29 Apr 2021 13:13:13 +0200
+
 zzzfm (1.0.7-1) unstable; urgency=medium
 
   * dampened the "drag-select" sensitivity of desktop icons

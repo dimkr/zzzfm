@@ -152,13 +152,13 @@ void ptk_delete_files( GtkWindow* parent_win, const char* cwd, GList* sel_files,
     if ( ! sel_files )
         return ;
 
-    if( ! app_settings.no_confirm ) //MOD
+    if( ! app_settings.no_confirm )
     {
         // count
         int count = g_list_length( sel_files );
         char* msg = g_strdup_printf( ngettext( "Delete %d selected item ?", "Delete %d selected items ?", count ), count );
         dlg = gtk_message_dialog_new( parent_win, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, msg, NULL );
-        gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_YES); //MOD
+        gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_YES);
         gtk_window_set_title( GTK_WINDOW( dlg ), _("Confirm Delete") );
         xset_set_window_icon( GTK_WINDOW( dlg ) );
 
@@ -1724,8 +1724,8 @@ char* get_template_dir()
     }
     if ( !g_strcmp0( templates_path, g_get_home_dir() ) )
     {
-        /* If $XDG_TEMPLATES_DIR == $HOME this means it is disabled. Don't
-         * recurse it as this is too many files/folders and may slow
+        /* If $XDG_TEMPLATES_DIR == $HOME this means it is disabled.
+         * Don't recurse it as this is too many files/folders and may slow
          * dialog open and cause filesystem find loops.
          * https://wiki.freedesktop.org/www/Software/xdg-user-dirs/ */
         g_free( templates_path );
@@ -2445,7 +2445,7 @@ int ptk_rename_file( DesktopWindow* desktop, PtkFileBrowser* file_browser,
     on_move_change( GTK_WIDGET( mset->buf_full_path ), mset );
     on_opt_toggled( NULL, mset );
 
-    /* instead of using last used widget, just use first visible
+/* instead of using last used widget, just use first visible
     // last widget
     int last = xset_get_int( "move_dlg_font", "z" );
     if ( last == 1 )
@@ -2470,7 +2470,7 @@ int ptk_rename_file( DesktopWindow* desktop, PtkFileBrowser* file_browser,
         else if ( gtk_widget_get_visible( gtk_widget_get_parent( mset->input_full_path ) ) )
             mset->last_widget = mset->input_full_path;
     }
-    */
+*/
     if ( gtk_widget_get_visible( gtk_widget_get_parent( mset->input_name ) ) )
         mset->last_widget = mset->input_name;
     else if ( gtk_widget_get_visible( gtk_widget_get_parent( mset->input_full_name ) ) )
@@ -2524,8 +2524,7 @@ int ptk_rename_file( DesktopWindow* desktop, PtkFileBrowser* file_browser,
             if ( response == GTK_RESPONSE_APPLY )
                 ret = 2;
 
-            if ( !create_new && ( mset->full_path_same ||
-                                    !strcmp( full_path, mset->full_path ) ) )
+            if ( !create_new && ( mset->full_path_same ||  !strcmp( full_path, mset->full_path ) ) )
             {
                 // not changed, proceed to next file
                 g_free( full_path );
@@ -3034,7 +3033,7 @@ gboolean  ptk_create_new_file( GtkWindow* parent_win, const char* cwd, gboolean 
     int result;
     GtkWidget* dlg;
     gboolean ret = FALSE;
-        gboolean looponce = FALSE;  //MOD
+        gboolean looponce = FALSE;
 
     if ( create_folder )
     {
@@ -3045,7 +3044,7 @@ gboolean  ptk_create_new_file( GtkWindow* parent_win, const char* cwd, gboolean 
 
     while ( gtk_dialog_run( GTK_DIALOG( dlg ) ) == GTK_RESPONSE_OK )
     {
-                looponce = TRUE;  //MOD
+                looponce = TRUE;
         ufile_name = ptk_input_dialog_get_text( dlg );
         if ( g_get_filename_charsets( NULL ) )
             file_name = ufile_name;
@@ -3087,7 +3086,7 @@ gboolean  ptk_create_new_file( GtkWindow* parent_win, const char* cwd, gboolean 
     }
     gtk_widget_destroy( dlg );
 
-    if( ! ret && looponce )  //MOD
+    if( ! ret && looponce )
         ptk_show_error( parent_win, _("Error"), _( "The new file cannot be created" ) );
 
     return ret;

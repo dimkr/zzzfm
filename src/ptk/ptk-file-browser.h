@@ -48,8 +48,8 @@ struct _PtkFileBrowser
     /* <private> */
     GList* history;
     GList* curHistory;
-    GList* histsel;  //MOD added
-    GList* curhistsel;  //MOD added
+    GList* histsel;
+    GList* curhistsel;
 
     VFSDir* dir;
     GtkTreeModel* file_list;
@@ -96,7 +96,7 @@ struct _PtkFileBrowser
     glong prev_update_time;
     guint update_timeout;
 
-    //MOD
+
     int mypanel;
     GtkWidget* mynotebook;
     GtkWidget* task_view;
@@ -218,8 +218,8 @@ void ptk_file_browser_open_selected_files( PtkFileBrowser* file_browser );
 
 gboolean ptk_file_browser_can_paste( PtkFileBrowser* file_browser );
 void ptk_file_browser_paste( PtkFileBrowser* file_browser );
-void ptk_file_browser_paste_link( PtkFileBrowser* file_browser );       //MOD added
-void ptk_file_browser_paste_target( PtkFileBrowser* file_browser );     //MOD added
+void ptk_file_browser_paste_link( PtkFileBrowser* file_browser );
+void ptk_file_browser_paste_target( PtkFileBrowser* file_browser );
 
 gboolean ptk_file_browser_can_cut_or_copy( PtkFileBrowser* file_browser );
 void ptk_file_browser_cut( PtkFileBrowser* file_browser );
@@ -229,10 +229,10 @@ gboolean ptk_file_browser_can_delete( PtkFileBrowser* file_browser );
 void ptk_file_browser_delete( PtkFileBrowser* file_browser );
 
 void ptk_file_browser_select_all( GtkWidget* item, PtkFileBrowser* file_browser );
-void ptk_file_browser_select_last( PtkFileBrowser* file_browser ); //MOD added
+void ptk_file_browser_select_last( PtkFileBrowser* file_browser );
 void ptk_file_browser_invert_selection( GtkWidget* item, PtkFileBrowser* file_browser );
 void ptk_file_browser_unselect_all( GtkWidget* item, PtkFileBrowser* file_browser );
-void ptk_file_browser_select_pattern( GtkWidget* item, PtkFileBrowser* file_browser, const char* search_key ); //sfm
+void ptk_file_browser_select_pattern( GtkWidget* item, PtkFileBrowser* file_browser, const char* search_key );
 void ptk_file_browser_canon( PtkFileBrowser* file_browser, const char* path );
 
 void ptk_file_browser_rename_selected_files( PtkFileBrowser* file_browser, GList* files, char* cwd );
@@ -250,7 +250,7 @@ void ptk_file_browser_show_thumbnails( PtkFileBrowser* file_browser, int max_fil
 
 void ptk_file_browser_emit_open( PtkFileBrowser* file_browser, const char* path, PtkOpenAction action );
 
-//MOD
+
 int ptk_file_browser_no_access( const char* cwd, const char* smode );
 void ptk_file_browser_update_views( GtkWidget* item, PtkFileBrowser* file_browser );
 void ptk_file_browser_go_home( GtkWidget* item, PtkFileBrowser* file_browser );

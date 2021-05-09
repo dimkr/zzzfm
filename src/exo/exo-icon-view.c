@@ -7720,7 +7720,7 @@ void  exo_icon_view_set_search_equal_func (ExoIconView  *icon_view,
 
     /* destroy the previous data (if any) */
     if (G_UNLIKELY (icon_view->priv->search_equal_destroy != NULL
-                    && icon_view->priv->search_equal_data != NULL)) //sfm
+                    && icon_view->priv->search_equal_data != NULL))
         (*icon_view->priv->search_equal_destroy) (icon_view->priv->search_equal_data);
 
     icon_view->priv->search_equal_func = (search_equal_func != NULL) ?
@@ -8354,7 +8354,7 @@ static void  exo_icon_view_search_timeout_destroy (gpointer user_data)
     EXO_ICON_VIEW (user_data)->priv->search_timeout_id = 0;
 }
 
-gboolean exo_icon_view_is_rubber_banding_active( ExoIconView* icon_view )  //sfm
+gboolean exo_icon_view_is_rubber_banding_active( ExoIconView* icon_view )
 {
     return icon_view->priv->doing_rubberband;
 }

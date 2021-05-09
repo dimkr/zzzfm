@@ -14,6 +14,8 @@ icondir = $(datadir)/pixmaps
 icon_DATA = \
 			zzzfm.png \
 			zzzfm-root.png \
+			zzzfm24.png \
+			zzzfm-root24.png \
 			zzzfm-find.png \
 			zzzfm-128-cube-blue.png \
 			zzzfm-128-cube-red.png \

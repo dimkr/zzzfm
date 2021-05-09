@@ -33,22 +33,17 @@
 
 #include "exo-string.h"
 
-
-
 /**
  * exo_str_elide_underscores:
  * @text : A zero terminated string.
  *
- * Returns a copy of @text with all mnemonic underscores
- * stripped off.
+ * Returns a copy of @text with all mnemonic underscores stripped off.
  *
  * Return value: A copy of @text without underscores. The
- *               returned string must be freed when no
- *               longer required.
+ *               returned string must be freed when no longer required.
  **/
 gchar*
-exo_str_elide_underscores (const gchar *text)
-{
+exo_str_elide_underscores (const gchar *text) {    // howdy  currently, nothing calls this fn
     const gchar *s;
     gboolean     last_underscore = FALSE;
     gchar       *result;
@@ -86,8 +81,7 @@ exo_str_elide_underscores (const gchar *text)
  *
  * Return value: %TRUE if @a equals @b, else %FALSE.
  **/
-gboolean  exo_str_is_equal (const gchar *a, const gchar *b)
-{
+gboolean  exo_str_is_equal (const gchar *a, const gchar *b) {   // howdy  currently, nothing calls this fn
     if (a == NULL && b == NULL)
         return TRUE;
     else if (a == NULL || b == NULL)
@@ -112,9 +106,7 @@ gboolean  exo_str_is_equal (const gchar *a, const gchar *b)
  *
  * Return value: The new string vector. Should be freed using g_strfreev() when no longer needed.
  **/
-gchar**
-exo_strndupv (gchar **strv, gint    num)
-{
+gchar**  exo_strndupv (gchar **strv, gint num) {     // howdy  currently, nothing calls this fn
     gchar **result;
 
     g_return_val_if_fail (strv != NULL, NULL);

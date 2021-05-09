@@ -72,12 +72,8 @@ static void fm_main_window_finalize( GObject *obj );
 static void fm_main_window_get_property ( GObject *obj, guint prop_id, GValue *value, GParamSpec *pspec );
 static void fm_main_window_set_property ( GObject *obj, guint prop_id, const GValue *value, GParamSpec *pspec );
 static gboolean fm_main_window_delete_event ( GtkWidget *widget, GdkEvent *event );
-#if 0
-static void fm_main_window_destroy ( GtkObject *object );
-#endif
 
-//static gboolean fm_main_window_key_press_event ( GtkWidget *widget,
-//                                                 GdkEventKey *event );
+//static gboolean fm_main_window_key_press_event ( GtkWidget *widget, GdkEventKey *event );
 
 static gboolean fm_main_window_window_state_event ( GtkWidget *widget, GdkEventWindowState *event );
 static void fm_main_window_next_tab ( FMMainWindow* widget );
@@ -101,7 +97,7 @@ static gboolean on_main_window_focus( GtkWidget* main_window, GdkEventFocus *eve
 
 static gboolean on_main_window_keypress( FMMainWindow* main_window, GdkEventKey* event, XSet* known_set );
 //static gboolean on_main_window_keyrelease( FMMainWindow* widget, GdkEventKey* event, gpointer data);
-static gboolean on_window_button_press_event( GtkWidget* widget, GdkEventButton *event, FMMainWindow* main_window );     //sfm
+static gboolean on_window_button_press_event( GtkWidget* widget, GdkEventButton *event, FMMainWindow* main_window );
 static void on_new_window_activate ( GtkMenuItem *menuitem, gpointer user_data );
 static void fm_main_window_close( FMMainWindow* main_window );
 
@@ -121,8 +117,6 @@ void on_task_popup_errset( GtkMenuItem* item, FMMainWindow* main_window, char* n
 void show_task_dialog( GtkWidget* widget, GtkWidget* view );
 void on_main_help_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window );
 void on_main_faq ( GtkMenuItem *menuitem, FMMainWindow* main_window );
-void on_homepage_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window );
-void on_getplug_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window );
 void update_window_title( GtkMenuItem* item, FMMainWindow* main_window );
 void on_toggle_panelbar( GtkWidget* widget, FMMainWindow* main_window );
 void on_fullscreen_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window );
@@ -210,270 +204,6 @@ gboolean on_window_configure_event( GtkWindow *window, GdkEvent *event, FMMainWi
 }
 
 
-//   howdy bub       recheck:  can this method be invoked via commandline arg, or via socket call?
-void on_plugin_install( GtkMenuItem* item, FMMainWindow* main_window, XSet* set2 ) {
-    XSet* set;
-    char* path = NULL;
-    char* deffolder;
-    char* plug_dir;
-    char* msg;
-    int type = 0;
-    int job = PLUGIN_JOB_INSTALL;
-
-    if ( !item )
-        set = set2;
-    else
-        set = (XSet*)g_object_get_data( G_OBJECT(item), "set" );
-    if ( !set )
-        return;
-
-    if ( g_str_has_suffix( set->name, "cfile" ) || g_str_has_suffix( set->name, "curl" ) )
-        job = PLUGIN_JOB_COPY;
-
-    if ( g_str_has_suffix( set->name, "file" ) )
-    {
-        // get file path
-        XSet* save = xset_get( "plug_ifile" );
-        if ( save->s )  //&& g_file_test( save->s, G_FILE_TEST_IS_DIR )
-            deffolder = save->s;
-        else
-        {
-            if ( !( deffolder = xset_get_s( "go_set_default" ) ) )
-                deffolder = "/";
-        }
-        path = xset_file_dialog( GTK_WIDGET( main_window ), GTK_FILE_CHOOSER_ACTION_OPEN, "Choose Plugin File", deffolder, NULL );  // howdy nixme
-        if ( !path )
-            return;
-        if ( save->s )
-            g_free( save->s );
-        save->s = g_path_get_dirname( path );
-    } else {
-        // get url                 howdy bub
-//      if ( !xset_text_dialog( GTK_WIDGET( main_window ), "Enter Plugin URL", NULL, FALSE,  "Enter Plugin URL:\n\n(wget will be used to download the plugin file)", NULL, NULL, &path, NULL, FALSE, job == 0 ? "#plugins-install" : "#plugins-import" ) || !path || path[0] == '\0' )
-            return;
-        type = 1;  //url
-    }
-
-    if ( job == PLUGIN_JOB_INSTALL )
-    {
-        // install job
-        char* filename = g_path_get_basename( path );
-        char* ext = strstr( filename, ".zzzfm-plugin" );
-        if ( !ext )
-            ext = strstr( filename, ".tar.gz" );
-        if ( ext )
-            ext[0] = '\0';
-        char* plug_dir_name = plain_ascii_name( filename );
-        if ( ext )
-            ext[0] = '.';
-        g_free( filename );
-        if ( plug_dir_name[0] == '\0' )
-        {
-            msg = g_strdup_printf( "This plugin's filename is invalid.  Please rename it using alpha-numeric ASCII characters and try again." );
-            xset_msg_dialog( GTK_WIDGET( main_window ), GTK_MESSAGE_ERROR, "Invalid Plugin Filename", NULL, 0, msg, NULL, "#plugins-install" );
-            {
-                g_free( plug_dir_name );
-                g_free( path );
-                g_free( msg );
-                return;
-            }
-        }
-
-        if ( DATADIR )
-            plug_dir = g_build_filename( DATADIR, "zzzfm", "plugins", plug_dir_name, NULL );
-        else if ( !g_file_test( "/usr/share/zzzfm/plugins", G_FILE_TEST_IS_DIR ) &&
-                    g_file_test( "/usr/local/share/zzzfm/plugins", G_FILE_TEST_IS_DIR ) )
-            plug_dir = g_build_filename( "/usr/local/share/zzzfm/plugins", plug_dir_name, NULL );
-        else
-            plug_dir = g_build_filename( "/usr/share/zzzfm/plugins", plug_dir_name, NULL );
-
-        if ( g_file_test( plug_dir, G_FILE_TEST_EXISTS ) )
-        {
-            msg = g_strdup_printf( "There is already a plugin installed as '%s'.  Overwrite ?\n\nTip: You can also rename this plugin file to install it under a different name.", plug_dir_name );
-            if ( xset_msg_dialog( GTK_WIDGET( main_window ), GTK_MESSAGE_WARNING, "Overwrite Plugin ?", NULL,
-                                        GTK_BUTTONS_YES_NO, msg, NULL, "#plugins-install" ) != GTK_RESPONSE_YES )
-            {
-                g_free( plug_dir_name );
-                g_free( plug_dir );
-                g_free( path );
-                g_free( msg );
-                return;
-            }
-            g_free( msg );
-        }
-        g_free( plug_dir_name );
-    } else {
-        // copy job
-        const char* user_tmp = xset_get_user_tmp_dir();
-        if ( !user_tmp )
-        {
-            xset_msg_dialog( GTK_WIDGET( main_window ), GTK_MESSAGE_ERROR,
-                                _("Error Creating Temp Directory"), NULL, 0,
-                                _("Unable to create temporary directory"), NULL, NULL );
-            g_free( path );
-            return;
-        }
-        char* hex8;
-        plug_dir = NULL;
-        while ( !plug_dir || ( plug_dir && g_file_test( plug_dir, G_FILE_TEST_EXISTS ) ) )
-        {
-            hex8 = randhex8();
-            if ( plug_dir )
-                g_free( plug_dir );
-            plug_dir = g_build_filename( user_tmp, hex8, NULL );
-            g_free( hex8 );
-        }
-    }
-
-    install_plugin_file( main_window, NULL, path, plug_dir, type, job, NULL );
-    g_free( path );
-    g_free( plug_dir );
-}
-
-
-//   howdy   currently, this fn is never called
-GtkWidget* create_plugins_menu( FMMainWindow* main_window ) {
-//  GtkWidget* plug_menu;
-//  GtkWidget* item;
-//  GList* l;
-//  GList* plugins = NULL;
-//  XSet* set;
-
-//  PtkFileBrowser* file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window ) );
-//  GtkAccelGroup* accel_group = gtk_accel_group_new ();
-//  plug_menu = gtk_menu_new();
-//  if ( !file_browser )
-//      return plug_menu;
-
-// howdy
-//  set = xset_set_cb( "plug_ifile", on_plugin_install, main_window );
-//      xset_set_ob1( set, "set", set );
-
-//     howdy  bub
-//  set = xset_set_cb( "plug_iurl", on_plugin_install, main_window );
-//        xset_set_ob1( set, "set", set );
-//
-//  set = xset_set_cb( "plug_cfile", on_plugin_install, main_window );
-//      xset_set_ob1( set, "set", set );
-
-// howdy bub
-//  set = xset_set_cb( "plug_curl", on_plugin_install, main_window );
-//      xset_set_ob1( set, "set", set );
-
-//  set = xset_get( "plug_install" );
-//  xset_add_menuitem( NULL, file_browser, plug_menu, accel_group, set );
-//  set = xset_get( "plug_copy" );
-//  xset_add_menuitem( NULL, file_browser, plug_menu, accel_group, set );
-
-//  item = gtk_separator_menu_item_new();
-//  gtk_menu_shell_append( GTK_MENU_SHELL( plug_menu ), item );
-
-//  set = xset_get( "plug_inc" );
-//  item = xset_add_menuitem( NULL, file_browser, plug_menu, accel_group, set );
-//  if ( item )
-//  {
-//      GtkWidget* inc_menu = gtk_menu_item_get_submenu( GTK_MENU_ITEM ( item ) );
-
-//      plugins = xset_get_plugins( TRUE );
-//      for ( l = plugins; l; l = l->next )
-//          xset_add_menuitem( NULL, file_browser, inc_menu, accel_group, (XSet*)l->data );
-//  }
-//  set->disable = !plugins;
-//  if ( plugins )
-//      g_list_free( plugins );
-
-//  plugins = xset_get_plugins( FALSE );
-//  for ( l = plugins; l; l = l->next )
-//      xset_add_menuitem( NULL, file_browser, plug_menu, accel_group, (XSet*)l->data );
-//  if ( plugins )
-//      g_list_free( plugins );
-
-//  gtk_widget_show_all( plug_menu );
-//  if ( set->disable )
-//      gtk_widget_hide( item );  // temporary until included available
-//  return plug_menu;
-}
-
-
-
-//  howdy bub       we can skip calling this without ill effect (but leaving in place, toward supporting "included" plugins)
-void import_all_plugins( FMMainWindow* main_window ) {
-    GDir* dir;
-    const char* name;
-    char* plug_dir;
-    char* plug_file;
-    char* bookmarks_dir;
-    int i;
-    gboolean found = FALSE;
-    gboolean found_plugins = FALSE;
-
-    // get potential locations
-    char* path;
-    GList* locations = NULL;
-    if ( DATADIR )
-    {
-        locations = g_list_append( locations, g_build_filename( DATADIR, "zzzfm", "included", NULL ) );
-        locations = g_list_append( locations, g_build_filename( DATADIR, "zzzfm", "plugins", NULL ) );   // howdy bub!
-    }
-    const gchar* const * sdir = g_get_system_data_dirs();
-    for( ; *sdir; ++sdir )
-    {
-        path = g_build_filename( *sdir, "zzzfm", "included", NULL );
-        if ( !g_list_find_custom( locations, path, (GCompareFunc)g_strcmp0 ) )
-            locations = g_list_append( locations, path );
-        else
-            g_free( path );
-        path = g_build_filename( *sdir, "zzzfm", "plugins", NULL );
-        if ( !g_list_find_custom( locations, path, (GCompareFunc)g_strcmp0 ) )
-            locations = g_list_append( locations, path );
-        else
-            g_free( path );
-    }
-    if ( !g_list_find_custom( locations, "/usr/local/share/zzzfm/included", (GCompareFunc)g_strcmp0 ) )
-        locations = g_list_append( locations, g_strdup( "/usr/local/share/zzzfm/included" ) );
-    if ( !g_list_find_custom( locations, "/usr/share/zzzfm/included", (GCompareFunc)g_strcmp0 ) )
-        locations = g_list_append( locations, g_strdup( "/usr/share/zzzfm/included" ) );
-    if ( !g_list_find_custom( locations, "/usr/local/share/zzzfm/plugins", (GCompareFunc)g_strcmp0 ) )
-        locations = g_list_append( locations, g_strdup( "/usr/local/share/zzzfm/plugins" ) );
-    if ( !g_list_find_custom( locations, "/usr/share/zzzfm/plugins", (GCompareFunc)g_strcmp0 ) )
-        locations = g_list_append( locations, g_strdup( "/usr/share/zzzfm/plugins" ) );
-
-    GList* l;
-    for ( l = locations; l; l = l->next )
-    {
-        dir = g_dir_open( (char*)l->data, 0, NULL );
-        if ( dir )
-        {
-            while ( ( name = g_dir_read_name( dir ) ) )
-            {
-                bookmarks_dir = g_build_filename( (char*)l->data, name, "main_book", NULL );
-                plug_file = g_build_filename( (char*)l->data, name, "plugin", NULL );
-                if ( g_file_test( plug_file, G_FILE_TEST_EXISTS ) &&  !g_file_test( bookmarks_dir, G_FILE_TEST_EXISTS ) )
-                {
-                    plug_dir = g_build_filename( (char*)l->data, name, NULL );
-                    if ( xset_import_plugin( plug_dir, NULL ) )
-                    {
-                        found = TRUE;
-                        if ( i == 1 )
-                            found_plugins = TRUE;
-                    }
-                    else
-                        printf( "Invalid Plugin Ignored: %s/\n", plug_dir );
-                    g_free( plug_dir );
-                }
-                g_free( plug_file );
-                g_free( bookmarks_dir );
-            }
-            g_dir_close( dir );
-        }
-    }
-    g_list_foreach( locations, (GFunc)g_free, NULL );
-    g_list_free( locations );
-
-    clean_plugin_mirrors();
-}
-
-
 void on_devices_show( GtkMenuItem* item, FMMainWindow* main_window ) {
     PtkFileBrowser* file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window ) );
     if ( !file_browser )
@@ -518,23 +248,16 @@ GtkWidget* create_devices_menu( FMMainWindow* main_window ) {
     return dev_menu;
 }
 
-void on_open_url( GtkWidget* widget, FMMainWindow* main_window ) {
+
+//   xref    main_open_network_location
+void on_location_view_mount_network( GtkWidget* widget, FMMainWindow* main_window ) {
     PtkFileBrowser* file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window ) );
-    char* url = xset_get_s( "main_save_session" );
+
+//  char* url = xset_get_s( "main_save_session" );      // howdy   was a misleading varname
+    char* url = xset_get_s( "main_open_network_location" );
+
     if ( file_browser && url && url[0] )
         ptk_location_view_mount_network( file_browser, url, TRUE, TRUE );
-#if 0
-    /* was on_save_session */
-    xset_autosave_cancel();
-    char* err_msg = save_settings( main_window );
-    if ( err_msg )
-    {
-        char* msg = g_strdup_printf( _("Error: Unable to save session file\n\n( %s )"), err_msg );
-        g_free( err_msg );
-        xset_msg_dialog( GTK_WIDGET( main_window ), GTK_MESSAGE_ERROR, _("Save Session Error"), NULL, 0, msg, NULL, "#programfiles-home-session" );
-        g_free( msg );
-    }
-#endif
 }
 
 void on_find_file_activate ( GtkMenuItem *menuitem, gpointer user_data ) {
@@ -908,10 +631,11 @@ void main_window_bookmark_changed( const char* changed_set_name ) {
     }
 }
 
+
+//     nothing currently calls this fn
 void main_window_refresh_all_tabs_matching( const char* path ) {
-    // This function actually closes the tabs because refresh doesn't work.
-    // dir objects have multiple refs and unreffing them all wouldn't finalize
-    // the dir object for unknown reason.
+    // This inherited from past decade function actually CLOSES the tabs because refresh doesn't work.
+    // dir objects have multiple refs and unreffing them all would not finalize the dir object for unknown reason.
 
     // This breaks auto open of tabs on automount
     return;
@@ -1077,8 +801,7 @@ void main_window_toggle_thumbnails_all_windows() {
             for ( i = 0; i < n; ++i )
             {
                 file_browser = PTK_FILE_BROWSER( gtk_notebook_get_nth_page( notebook, i ) );
-                ptk_file_browser_show_thumbnails( file_browser, app_settings.show_thumbnail ?
-                              app_settings.max_thumb_size : 0 );
+                ptk_file_browser_show_thumbnails( file_browser, app_settings.show_thumbnail ?  app_settings.max_thumb_size : 0 );
             }
         }
     }
@@ -1238,8 +961,7 @@ void show_panels( GtkMenuItem* item, FMMainWindow* main_window ) {
     }
 
     // show panelbar
-    if ( !!gtk_widget_get_visible( main_window->panelbar ) !=
-                !!( !main_window->fullscreen && xset_get_b( "main_pbar" ) ) )
+    if ( !!gtk_widget_get_visible( main_window->panelbar ) !=   !!( !main_window->fullscreen && xset_get_b( "main_pbar" ) ) )
     {
         if ( xset_get_b( "main_pbar" ) )
             gtk_widget_show( GTK_WIDGET( main_window->panelbar ) );
@@ -1303,15 +1025,15 @@ void show_panels( GtkMenuItem* item, FMMainWindow* main_window ) {
                 xset_set_b_panel_mode( p, "show_toolbox", mode, xset_get_b_panel( p, "show_toolbox" ) );
                 xset_set_b_panel_mode( p, "show_devmon",  mode, xset_get_b_panel( p, "show_devmon" ) );
                 if ( xset_is( "show_dirtree" ) )
-                    xset_set_b_panel_mode( p, "show_dirtree", mode, xset_get_b_panel( p, "show_dirtree" ) );
-                xset_set_b_panel_mode( p, "show_book",        mode, xset_get_b_panel( p, "show_book" ) );
-                xset_set_b_panel_mode( p, "show_sidebar",     mode, xset_get_b_panel( p, "show_sidebar" ) );
-                xset_set_b_panel_mode( p, "detcol_name",      mode, xset_get_b_panel( p, "detcol_name" ) );
-                xset_set_b_panel_mode( p, "detcol_size",      mode, xset_get_b_panel( p, "detcol_size" ) );
-                xset_set_b_panel_mode( p, "detcol_type",      mode, xset_get_b_panel( p, "detcol_type" ) );
-                xset_set_b_panel_mode( p, "detcol_perm",      mode, xset_get_b_panel( p, "detcol_perm" ) );
-                xset_set_b_panel_mode( p, "detcol_owner",     mode, xset_get_b_panel( p, "detcol_owner" ) );
-                xset_set_b_panel_mode( p, "detcol_date",      mode, xset_get_b_panel( p, "detcol_date" ) );
+                    xset_set_b_panel_mode( p, "show_dirtree",   mode, xset_get_b_panel( p, "show_dirtree" ) );
+                xset_set_b_panel_mode( p, "show_book",          mode, xset_get_b_panel( p, "show_book" ) );
+                xset_set_b_panel_mode( p, "show_sidebar",       mode, xset_get_b_panel( p, "show_sidebar" ) );
+                xset_set_b_panel_mode( p, "detcol_name",        mode, xset_get_b_panel( p, "detcol_name" ) );
+                xset_set_b_panel_mode( p, "detcol_size",        mode, xset_get_b_panel( p, "detcol_size" ) );
+                xset_set_b_panel_mode( p, "detcol_type",        mode, xset_get_b_panel( p, "detcol_type" ) );
+                xset_set_b_panel_mode( p, "detcol_perm",        mode, xset_get_b_panel( p, "detcol_perm" ) );
+                xset_set_b_panel_mode( p, "detcol_owner",       mode, xset_get_b_panel( p, "detcol_owner" ) );
+                xset_set_b_panel_mode( p, "detcol_date",        mode, xset_get_b_panel( p, "detcol_date" ) );
                 set_old = xset_get_panel( p, "slider_positions" );
                 set = xset_get_panel_mode( p, "slider_positions", mode );
                 set->x = g_strdup( set_old->x ? set_old->x : "0" );
@@ -1334,9 +1056,7 @@ void show_panels( GtkMenuItem* item, FMMainWindow* main_window ) {
                 if ( ( set->s && app_settings.load_saved_tabs ) || set->ob1 )
                 {
                     // set->ob1 is preload path
-                    tabs_add = g_strdup_printf( "%s%s%s", set->s && app_settings.load_saved_tabs ? set->s : "",
-                                                        set->ob1 ? "///" : "",
-                                                        set->ob1 ? set->ob1 : "" );
+                    tabs_add = g_strdup_printf( "%s%s%s", set->s && app_settings.load_saved_tabs ? set->s : "",   set->ob1 ? "///" : "",   set->ob1 ? set->ob1 : "" );
                     tabs = tabs_add;
                     while ( tabs && !strncmp( tabs, "///", 3 ) )
                     {
@@ -1368,7 +1088,7 @@ void show_panels( GtkMenuItem* item, FMMainWindow* main_window ) {
                             }
                             if ( g_file_test( tab_dir, G_FILE_TEST_IS_DIR ) )
                                 folder_path = tab_dir;
-                            else if ( !( folder_path = xset_get_s( "go_set_default" ) ) )
+                            else if ( !( folder_path = xset_get_s( "go_set_default" ) ) )     //  howdy bub   ?option to instead close the tab (unless doing so would leave zero open tabs)
                             {
                                 if ( geteuid() != 0 )
                                     folder_path = g_get_home_dir();
@@ -1408,7 +1128,7 @@ void show_panels( GtkMenuItem* item, FMMainWindow* main_window ) {
                         else
                             folder_path = "/";
                     }
-                    fm_main_window_add_new_tab( main_window, folder_path );
+                    fm_main_window_add_new_tab( main_window, folder_path );     // howdy
                 }
             }
             if ( ( evt_pnl_show->s || evt_pnl_show->ob2_data ) &&  !gtk_widget_get_visible( GTK_WIDGET( main_window->panel[p-1] ) ) )
@@ -1539,9 +1259,19 @@ void rebuild_menus( FMMainWindow* main_window ) {
     xset_set_cb( "main_search", on_find_file_activate, main_window );
     xset_set_cb( "main_terminal", on_open_terminal_activate, main_window );
     xset_set_cb( "main_root_terminal", on_open_root_terminal_activate, main_window );
-    xset_set_cb( "main_save_session", on_open_url, main_window );
+
+//  xset_set_cb( "main_save_session", on_open_url, main_window );   // howdy   was a misleading varname
+    xset_set_cb( "main_open_network_location", on_location_view_mount_network, main_window );
+
     xset_set_cb( "main_exit", on_quit_activate, main_window );
-    menu_elements = g_strdup_printf( "main_save_session main_search sep_f1 main_terminal main_root_terminal main_new_window main_root_window sep_f2 main_save_tabs sep_f3 main_exit" );
+
+    if ( geteuid() != 0 )
+    {                                        //  howdy     ws  misleading varname       howdy bub      revisit this
+//      menu_elements = g_strdup_printf( "main_save_session          main_search sep_f1 main_terminal main_root_terminal main_new_window main_root_window sep_f2 main_save_tabs sep_f3 main_exit" );
+        menu_elements = g_strdup_printf( "main_open_network_location main_search sep_f1 main_terminal main_root_terminal main_new_window main_root_window sep_f2 main_save_tabs sep_f3 main_exit" );
+    } else {
+        menu_elements = g_strdup_printf( "main_search sep_f1 main_terminal main_root_terminal main_new_window main_root_window sep_f2 main_save_tabs sep_f3 main_exit" );
+    }
     xset_add_menu( NULL, file_browser, newmenu, accel_group, menu_elements );
     g_free( menu_elements );
     gtk_widget_show_all( GTK_WIDGET(newmenu) );
@@ -1642,12 +1372,6 @@ void rebuild_menus( FMMainWindow* main_window ) {
     g_signal_connect( newmenu, "key-press-event", G_CALLBACK( xset_menu_keypress ), NULL );
     gtk_menu_item_set_submenu( GTK_MENU_ITEM( main_window->book_menu_item ), newmenu );
 
-    // Plugins
-// howdy
-//  main_window->plug_menu = create_plugins_menu( main_window );
-//  gtk_menu_item_set_submenu( GTK_MENU_ITEM( main_window->plug_menu_item ), main_window->plug_menu );
-//  g_signal_connect( main_window->plug_menu, "key-press-event", G_CALLBACK( xset_menu_keypress ), NULL );
-
     // Tool
     newmenu = gtk_menu_new();
     set = xset_get( "main_tool" );
@@ -1676,17 +1400,12 @@ void rebuild_menus( FMMainWindow* main_window ) {
                //
 
 
-    //xset_set_cb( "main_getplug", on_getplug_activate, main_window );   // howdy bub
 
-/////////////////                   howdy bub
-               //     Documentation for the CURRENT version is installed.
-               //     The documentation includes the (scant) helpful details from the wiki.
-               //     No "operators are standing by", online, to receive any issue tickets or feature requests.
-               //     IT WOULD BE A DISSERVICE TO DIRECT THE USER TO VISIT SOME "CRUFTY" HOMEPAGE/WIKI
-
-//  menu_elements = g_strdup_printf( "main_faq main_help sep_h1 main_homepage main_getplug sep_h2 main_help_opt sep_h3" );
+//  menu_elements = g_strdup_printf( "main_faq main_help sep_h1 sep_h2 main_help_opt sep_h3" );
 //      howdy    peek
-    menu_elements = g_strdup_printf( "main_help main_faq sep_h1 main_help_opt sep_h3" );
+//  menu_elements = g_strdup_printf( "main_help main_faq sep_h1 main_help_opt sep_h3" );
+//              howdy  bub
+    menu_elements = g_strdup_printf( "main_help main_faq sep_h1 sep_h3" );
 
     xset_add_menu( NULL, file_browser, newmenu, accel_group, menu_elements );
     g_free( menu_elements );
@@ -1716,8 +1435,7 @@ void fm_main_window_init( FMMainWindow* main_window ) {
 
     main_window->configure_evt_timer = 0;
     main_window->fullscreen = FALSE;
-    main_window->opened_maximized = main_window->maximized =
-                                                        app_settings.maximized;
+    main_window->opened_maximized = main_window->maximized = app_settings.maximized;
 
     /* this is used to limit the scope of gtk_grab and modal dialogs */
     main_window->wgroup = gtk_window_group_new();
@@ -1760,9 +1478,7 @@ void fm_main_window_init( FMMainWindow* main_window ) {
     gtk_toolbar_set_style( GTK_TOOLBAR( main_window->panelbar ), GTK_TOOLBAR_ICONS );
     gtk_toolbar_set_icon_size( GTK_TOOLBAR( main_window->panelbar ), GTK_ICON_SIZE_MENU );
     // set pbar background to menu bar background
-    //gtk_widget_modify_bg( main_window->panelbar, GTK_STATE_NORMAL,
-    //                                    &GTK_WIDGET( main_window )
-    //                                    ->style->bg[ GTK_STATE_NORMAL ] );
+    //gtk_widget_modify_bg( main_window->panelbar, GTK_STATE_NORMAL, &GTK_WIDGET( main_window ) ->style->bg[ GTK_STATE_NORMAL ] );
     for ( i = 0; i < 4; i++ )
     {
         main_window->panel_btn[i] = GTK_WIDGET( gtk_toggle_tool_button_new() );
@@ -1788,6 +1504,14 @@ void fm_main_window_init( FMMainWindow* main_window ) {
     gtk_box_pack_start ( GTK_BOX ( menu_hbox ), main_window->panelbar, TRUE, TRUE, 0 );
     gtk_box_pack_start ( GTK_BOX ( main_window->main_vbox ), menu_hbox, FALSE, FALSE, 0 );
 
+    GtkWidget* prod_icon = NULL;
+    if (geteuid() != 0)
+        prod_icon = gtk_image_new_from_file ( "/usr/share/pixmaps/zzzfm24.png" );
+    else
+        prod_icon = gtk_image_new_from_file ( "/usr/share/pixmaps/zzzfm-root24.png" );
+    gtk_box_pack_start ( GTK_BOX ( menu_hbox ), prod_icon, FALSE, FALSE, 4 );
+
+
     main_window->file_menu_item = gtk_menu_item_new_with_mnemonic( _("_File") );
     gtk_menu_shell_append( GTK_MENU_SHELL( main_window->menu_bar ), main_window->file_menu_item );
 
@@ -1801,9 +1525,6 @@ void fm_main_window_init( FMMainWindow* main_window ) {
     main_window->book_menu_item = gtk_menu_item_new_with_mnemonic( _("_Bookmarks") );
     gtk_menu_shell_append( GTK_MENU_SHELL( main_window->menu_bar ), main_window->book_menu_item );
 
-//  main_window->plug_menu_item = gtk_menu_item_new_with_mnemonic( "_Plugins" );                   // howdy
-//  gtk_menu_shell_append( GTK_MENU_SHELL( main_window->menu_bar ), main_window->plug_menu_item );
-//  main_window->plug_menu = NULL;
 
     main_window->tool_menu_item = gtk_menu_item_new_with_mnemonic( _("_Tools") );
     gtk_menu_shell_append( GTK_MENU_SHELL( main_window->menu_bar ), main_window->tool_menu_item );
@@ -1816,18 +1537,15 @@ void fm_main_window_init( FMMainWindow* main_window ) {
 /*
 #ifdef SUPER_USER_CHECKS
     // Create warning bar for super user
-    if ( geteuid() == 0 )                 // Run as super user!
+    if ( geteuid() == 0 )                 // Run as super user!     howdy bub flea
     {
         main_window->status_bar = gtk_event_box_new();
-        gtk_widget_modify_bg( main_window->status_bar, GTK_STATE_NORMAL,
-                              &main_window->status_bar->style->bg[ GTK_STATE_SELECTED ] );
+        gtk_widget_modify_bg( main_window->status_bar, GTK_STATE_NORMAL, &main_window->status_bar->style->bg[ GTK_STATE_SELECTED ] );
         label = GTK_LABEL( gtk_label_new ( _( "Warning: You are in super user mode" ) ) );
         gtk_misc_set_padding( GTK_MISC( label ), 0, 2 );
-        gtk_widget_modify_fg( GTK_WIDGET( label ), GTK_STATE_NORMAL,
-                              &GTK_WIDGET( label ) ->style->fg[ GTK_STATE_SELECTED ] );
+        gtk_widget_modify_fg( GTK_WIDGET( label ), GTK_STATE_NORMAL, &GTK_WIDGET( label ) ->style->fg[ GTK_STATE_SELECTED ] );
         gtk_container_add( GTK_CONTAINER( main_window->status_bar ), GTK_WIDGET( label ) );
-        gtk_box_pack_start ( GTK_BOX ( main_window->main_vbox ),
-                             main_window->status_bar, FALSE, FALSE, 2 );
+        gtk_box_pack_start ( GTK_BOX ( main_window->main_vbox ), main_window->status_bar, FALSE, FALSE, 2 );
     }
 #endif
 */
@@ -1888,7 +1606,6 @@ void fm_main_window_init( FMMainWindow* main_window ) {
     g_signal_connect( G_OBJECT( main_window->view_menu_item ), "button-press-event", G_CALLBACK( on_menu_bar_event ), main_window );
     g_signal_connect( G_OBJECT( main_window->dev_menu_item ),  "button-press-event", G_CALLBACK( on_menu_bar_event ), main_window );
     g_signal_connect( G_OBJECT( main_window->book_menu_item ), "button-press-event", G_CALLBACK( on_menu_bar_event ), main_window );
-//  g_signal_connect( G_OBJECT( main_window->plug_menu_item ), "button-press-event", G_CALLBACK( on_menu_bar_event ), main_window );
     g_signal_connect( G_OBJECT( main_window->tool_menu_item ), "button-press-event", G_CALLBACK( on_menu_bar_event ), main_window );
     g_signal_connect( G_OBJECT( main_window->help_menu_item ), "button-press-event", G_CALLBACK( on_menu_bar_event ), main_window );
 
@@ -1903,7 +1620,6 @@ void fm_main_window_init( FMMainWindow* main_window ) {
 
     g_signal_connect ( G_OBJECT(main_window), "realize", G_CALLBACK ( on_main_window_realize ), main_window );
 
-    import_all_plugins( main_window );  // howdy bub! ---------------- removed, then reinstated this call
     main_window->panel_change = FALSE;
     show_panels( NULL, main_window );
     main_window_root_bar_all();
@@ -2271,6 +1987,7 @@ void main_window_get_counts( PtkFileBrowser* file_browser, int* panel_count, int
     *panel_count = count;
 }
 
+
 void on_close_notebook_page( GtkButton* btn, PtkFileBrowser* file_browser ) {
     PtkFileBrowser* a_browser;
 
@@ -2287,7 +2004,7 @@ void on_close_notebook_page( GtkButton* btn, PtkFileBrowser* file_browser ) {
         main_window_event( main_window, evt_tab_close, "evt_tab_close", file_browser->mypanel,
                             gtk_notebook_page_num( GTK_NOTEBOOK( main_window->notebook ), GTK_WIDGET( file_browser ) ) + 1, NULL, 0, 0, 0, FALSE );
 
-    // save solumns and slider positions of tab to be closed
+    // save columns and slider positions of tab to be closed
     ptk_file_browser_slider_release( NULL, NULL, file_browser );
     ptk_file_browser_save_column_widths( GTK_TREE_VIEW( file_browser->folder_view ), file_browser );
 
@@ -2345,8 +2062,8 @@ _done_close:
         xset_autosave( FALSE, TRUE );
 }
 
-gboolean notebook_clicked (GtkWidget* widget, GdkEventButton * event, PtkFileBrowser* file_browser)  //MOD added
-{
+
+gboolean notebook_clicked (GtkWidget* widget, GdkEventButton * event, PtkFileBrowser* file_browser) {
     on_file_browser_panel_change( file_browser, (FMMainWindow*)file_browser->main_window );
     if ( ( evt_win_click->s || evt_win_click->ob2_data ) &&  main_window_event( file_browser->main_window, evt_win_click, "evt_win_click",
                             0, 0, "tabbar", 0, event->button, event->state, TRUE ) )
@@ -2388,9 +2105,11 @@ gboolean notebook_clicked (GtkWidget* widget, GdkEventButton * event, PtkFileBro
     return FALSE;
 }
 
+
 void on_file_browser_begin_chdir( PtkFileBrowser* file_browser, FMMainWindow* main_window ) {
     fm_main_window_update_status_bar( main_window, file_browser );
 }
+
 
 void on_file_browser_after_chdir( PtkFileBrowser* file_browser, FMMainWindow* main_window ) {
     //fm_main_window_stop_busy_task( main_window );
@@ -2417,7 +2136,7 @@ void on_file_browser_after_chdir( PtkFileBrowser* file_browser, FMMainWindow* ma
         }
     } else {
         ptk_file_browser_select_last( file_browser );  //MOD restore last selections
-        gtk_widget_grab_focus( GTK_WIDGET( file_browser->folder_view ) );  //MOD
+        gtk_widget_grab_focus( GTK_WIDGET( file_browser->folder_view ) );
     }
     if ( xset_get_b( "main_save_tabs" ) )
         xset_autosave( FALSE, TRUE );
@@ -2425,6 +2144,7 @@ void on_file_browser_after_chdir( PtkFileBrowser* file_browser, FMMainWindow* ma
     if ( evt_tab_chdir->s || evt_tab_chdir->ob2_data )
         main_window_event( main_window, evt_tab_chdir, "evt_tab_chdir", 0, 0, NULL, 0, 0, 0, TRUE );
 }
+
 
 GtkWidget* fm_main_window_create_tab_label( FMMainWindow* main_window, PtkFileBrowser* file_browser ) {
     GtkEventBox * evt_box;
@@ -2506,10 +2226,9 @@ GtkWidget* fm_main_window_create_tab_label( FMMainWindow* main_window, PtkFileBr
 #if GTK_CHECK_VERSION (3, 20, 0)
             /* code below produces Adwaita theme parse warnings on GTK >= 3.20
              * Theme parsing error: <data>:2:28: The style property
-             * GtkButton:default-border is deprecated and shouldn't be used
-             * anymore. It will be removed in a future version  */
+             * GtkButton:default-border is deprecated and shouldn't be used anymore. It will be removed in a future version  */
 #elif GTK_CHECK_VERSION (3, 0, 0)
-            /* Code modified from gedit: gedit-close-button.c */
+            /* Code mogrified from gedit: gedit-close-button.c */
             static const gchar button_style[] =
                   "* {\n"
                   "-GtkButton-default-border : 0;\n"
@@ -2684,34 +2403,33 @@ void fm_main_window_preference( FMMainWindow* main_window ) {
 }
 
 
-#if 0
-void   on_file_assoc_activate ( GtkMenuItem *menuitem, gpointer user_data ) {
-    GtkWindow * main_window = GTK_WINDOW( user_data );
-    edit_file_associations( main_window );
-}
-#endif
 
-/* callback used to open default browser when URLs got clicked */
+/*                               howdy     nixme
+//   WAS the GtkAboutDialog callback used to open default browser when URLs are clicked
 static void open_url( GtkAboutDialog *dlg, const gchar *url, gpointer data) {
     xset_open_url( GTK_WIDGET( dlg ), url );
+
 #if 0
-    /* FIXME: is there any better way to do this? */
-    char* programs[] = { "xdg-open", "gnome-open" /* Sorry, KDE users. :-P */, "exo-open" };
-    int i;
-    for(  i = 0; i < G_N_ELEMENTS(programs); ++i)
-    {
-        char* open_cmd = NULL;
-        if( (open_cmd = g_find_program_in_path( programs[i] )) )
-        {
-             char* cmd = g_strdup_printf( "%s \'%s\'", open_cmd, url );
-             g_spawn_command_line_async( cmd, NULL );
-             g_free( cmd );
-             g_free( open_cmd );
-             break;
-        }
-    }
+    // FIXME: is there any better way to do this?
+//  char* programs[] = { "xdg-open", "exo-open" };
+//  int i;
+//  for(  i = 0; i < G_N_ELEMENTS(programs); ++i)
+//  {
+//      char* open_cmd = NULL;
+//      if( (open_cmd = g_find_program_in_path( programs[i] )) )
+//      {
+//           char* cmd = g_strdup_printf( "%s \'%s\'", open_cmd, url );
+//           g_spawn_command_line_async( cmd, NULL );
+//           g_free( cmd );
+//           g_free( open_cmd );
+//           break;
+//      }
+//  }
 #endif
 }
+*/
+
+
 
 void on_main_help_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window ) {
     const char* help;
@@ -2734,32 +2452,6 @@ void on_main_faq ( GtkMenuItem *menuitem, FMMainWindow* main_window ) {
     xset_show_help( GTK_WIDGET( main_window ), NULL, "#quickstart-faq" );     // howdy    TODO install  a local copy of this doc
 }
 
-void on_homepage_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window ) {
-    //   howdy
-    //xset_open_url( GTK_WIDGET( main_window ), NULL );
-}
-
-
-void on_getplug_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window ) {
-    // xset_open_url( GTK_WIDGET( main_window ), "https://example.com/" );       // howdy bub
-}
-
-
-
-#if 0
-gboolean   on_back_btn_popup_menu ( GtkWidget *widget, gpointer user_data ) {
-    ////GtkWidget* file_browser = fm_main_window_get_current_file_browser( widget );
-    return FALSE;
-}
-#endif
-
-
-#if 0
-gboolean   on_forward_btn_popup_menu ( GtkWidget *widget, gpointer user_data ) {
-    ////GtkWidget* file_browser = fm_main_window_get_current_file_browser( widget );
-    return FALSE;
-}
-#endif
 
 void fm_main_window_add_new_window( FMMainWindow* main_window ) {
     if ( main_window && !main_window->maximized && !main_window->fullscreen )
@@ -2775,12 +2467,13 @@ void fm_main_window_add_new_window( FMMainWindow* main_window ) {
     GtkWidget* new_win = fm_main_window_new();
 }
 
+
 void   on_new_window_activate ( GtkMenuItem *menuitem, gpointer user_data ) {
     FMMainWindow* main_window = FM_MAIN_WINDOW( user_data );
 
     xset_autosave_cancel();
     fm_main_window_store_positions( main_window );
-    save_settings( main_window );
+    save_settings( main_window );    // howdy     the called fn may return an errmsg string, yet we do not test for a returned value (and display a popup?)
 
 /* this works - enable if desired
     // open active tabs only
@@ -2802,6 +2495,7 @@ void   on_new_window_activate ( GtkMenuItem *menuitem, gpointer user_data ) {
 */
     fm_main_window_add_new_window( main_window );
 }
+
 
 static gboolean delayed_focus( GtkWidget* widget ) {
     if ( GTK_IS_WIDGET( widget ) )
@@ -2864,8 +2558,7 @@ void set_panel_focus( FMMainWindow* main_window, PtkFileBrowser* file_browser ) 
 }
 
 void on_fullscreen_activate ( GtkMenuItem *menuitem, FMMainWindow* main_window ) {
-    PtkFileBrowser* file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser
-                                                            ( main_window ) );
+    PtkFileBrowser* file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window ) );
     if ( xset_get_b( "main_full" ) )
     {
         if ( file_browser && file_browser->view_mode == PTK_FB_LIST_VIEW )
@@ -3059,9 +2752,7 @@ void on_file_browser_open_item( PtkFileBrowser* file_browser, const char* path, 
             break;
         case PTK_OPEN_NEW_WINDOW:
             //file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window ) );
-            //fm_main_window_add_new_window( main_window, path,
-            //                               file_browser->show_side_pane,
-             //                              file_browser->side_pane_mode );
+            //fm_main_window_add_new_window( main_window, path, file_browser->show_side_pane, file_browser->side_pane_mode );
             break;
         case PTK_OPEN_TERMINAL:
             //fm_main_window_open_terminal( GTK_WINDOW(main_window), path );
@@ -3074,7 +2765,8 @@ void on_file_browser_open_item( PtkFileBrowser* file_browser, const char* path, 
     }
 }
 
-void fm_main_window_update_status_bar( FMMainWindow* main_window, PtkFileBrowser* file_browser ) {
+
+void fm_main_window_update_status_bar( FMMainWindow* main_window, PtkFileBrowser* file_browser ) {   // howdy statusbar
     int num_sel, num_vis, num_hid, num_hidx;
     guint64 total_size;
     char *msg;
@@ -3105,7 +2797,7 @@ void fm_main_window_update_status_bar( FMMainWindow* main_window, PtkFileBrowser
         vfs_file_size_to_string_format( size_str, fs_stat.f_bsize * fs_stat.f_bavail, NULL );
         // calc total space
         vfs_file_size_to_string_format( total_size_str, fs_stat.f_frsize * fs_stat.f_blocks, NULL );
-        g_snprintf( free_space, G_N_ELEMENTS(free_space), _(" %s free / %s   "), size_str, total_size_str );  //MOD
+        g_snprintf( free_space, G_N_ELEMENTS(free_space), _("  %s free / %s    "), size_str, total_size_str );
     }
 #endif
 
@@ -3122,10 +2814,10 @@ void fm_main_window_update_status_bar( FMMainWindow* main_window, PtkFileBrowser
     num_sel = ptk_file_browser_get_n_sel( file_browser, &total_size );
     num_vis = ptk_file_browser_get_n_visible_files( file_browser );
 
-    char* link_info = NULL;  //MOD added
+    char* link_info = NULL;
     if ( num_sel > 0 )
     {
-        if ( num_sel == 1 )  //MOD added
+        if ( num_sel == 1 )
         // display file name or symlink info in status bar if one file selected
         {
             GList* files;
@@ -3201,10 +2893,8 @@ void fm_main_window_update_status_bar( FMMainWindow* main_window, PtkFileBrowser
             link_info = g_strdup( "" );
 
         vfs_file_size_to_string( size_str, total_size );
-        msg = g_strdup_printf( "%s%d / %d (%s)%s", free_space, num_sel, num_vis, size_str, link_info );
-        //msg = g_strdup_printf( ngettext( _("%s%d sel (%s)%s"),  //MOD
-        //                 _("%s%d sel (%s)"), num_sel ), free_space, num_sel,
-        //                                        size_str, link_info );  //MOD
+        msg = g_strdup_printf( "%s%d / %d   (%s)%s  ", free_space, num_sel, num_vis, size_str, link_info );
+      //msg = g_strdup_printf( ngettext( _("%s%d sel (%s)%s"),  _("%s%d sel (%s)"), num_sel ), free_space, num_sel,  size_str, link_info );
     } else {
         // cur dir is link ?  canonicalize
         char* dirmsg;
@@ -3233,15 +2923,16 @@ void fm_main_window_update_status_bar( FMMainWindow* main_window, PtkFileBrowser
             char *hnc = NULL;
             char* hidtext = ngettext( "hidden", "hidden", num_hid);
             g_snprintf( hidden, 127, g_strdup_printf( "%d%s %s", num_hid, xhidden, hidtext ), num_hid );
-            msg = g_strdup_printf( ngettext( "%s%d visible (%s)   %s", "%s%d visible (%s)   %s", num_vis ), free_space, num_vis, hidden, dirmsg );
+            msg = g_strdup_printf( ngettext( "%s%d visible (%s)     %s", "%s%d visible (%s)     %s", num_vis ), free_space, num_vis, hidden, dirmsg );
         }
         else
-            msg = g_strdup_printf( ngettext( "%s%d item   %s", "%s%d items   %s", num_vis ), free_space, num_vis, dirmsg );
+            msg = g_strdup_printf( ngettext( "%s%d item     %s", "%s%d items     %s", num_vis ), free_space, num_vis, dirmsg );
         g_free( dirmsg );
     }
     gtk_statusbar_push( GTK_STATUSBAR( file_browser->status_bar ), 0, msg );
     g_free( msg );
 }
+
 
 void on_file_browser_panel_change( PtkFileBrowser* file_browser, FMMainWindow* main_window ) {
 //printf("panel_change  panel %d\n", file_browser->mypanel );
@@ -3250,6 +2941,7 @@ void on_file_browser_panel_change( PtkFileBrowser* file_browser, FMMainWindow* m
     //set_window_title( main_window, file_browser );
     set_panel_focus( main_window, file_browser );
 }
+
 
 void on_file_browser_sel_change( PtkFileBrowser* file_browser, FMMainWindow* main_window ) {
 //printf("sel_change  panel %d\n", file_browser->mypanel );
@@ -3271,10 +2963,12 @@ void on_file_browser_sel_change( PtkFileBrowser* file_browser, FMMainWindow* mai
 //    if ( fm_main_window_get_current_file_browser( main_window ) == GTK_WIDGET( file_browser ) )
 }
 
+
 void on_file_browser_content_change( PtkFileBrowser* file_browser, FMMainWindow* main_window ) {
 //printf("content_change  panel %d\n", file_browser->mypanel );
     fm_main_window_update_status_bar( main_window, file_browser );
 }
+
 
 gboolean on_tab_drag_motion ( GtkWidget *widget, GdkDragContext *drag_context, gint x, gint y, guint time, PtkFileBrowser* file_browser ) {
     GtkNotebook * notebook;
@@ -3287,14 +2981,13 @@ gboolean on_tab_drag_motion ( GtkWidget *widget, GdkDragContext *drag_context, g
     return FALSE;
 }
 
-gboolean on_window_button_press_event( GtkWidget* widget, GdkEventButton *event, FMMainWindow* main_window )     //sfm
+gboolean on_window_button_press_event( GtkWidget* widget, GdkEventButton *event, FMMainWindow* main_window )
 {
     if ( event->type != GDK_BUTTON_PRESS )
         return FALSE;
 
     // handle mouse back/forward buttons anywhere in the main window
-    if ( event->button == 4 || event->button == 5 ||
-         event->button == 8 || event->button == 9 )   //sfm
+    if ( event->button == 4 || event->button == 5 || event->button == 8 || event->button == 9 )
     {
         PtkFileBrowser* file_browser = PTK_FILE_BROWSER( fm_main_window_get_current_file_browser( main_window ) );
         if ( !file_browser )
@@ -3351,18 +3044,13 @@ static gboolean on_main_window_keypress( FMMainWindow* main_window, GdkEventKey*
     int keymod = ( event->state & ( GDK_SHIFT_MASK | GDK_CONTROL_MASK |
                  GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK ) );
 
-    if (       ( event->keyval == GDK_KEY_Home &&  ( keymod == 0 ||
-                                                     keymod == GDK_SHIFT_MASK ) )
-            || ( event->keyval == GDK_KEY_End &&   ( keymod == 0 ||
-                                                     keymod == GDK_SHIFT_MASK ) )
+    if (       ( event->keyval == GDK_KEY_Home &&  ( keymod == 0 || keymod == GDK_SHIFT_MASK ) )
+            || ( event->keyval == GDK_KEY_End &&   ( keymod == 0 || keymod == GDK_SHIFT_MASK ) )
             || ( event->keyval == GDK_KEY_Delete  && keymod == 0 )
             || ( event->keyval == GDK_KEY_Tab     && keymod == 0 )
-            || ( keymod == 0 && ( event->keyval == GDK_KEY_Return ||
-                                  event->keyval == GDK_KEY_KP_Enter ) )
-            || ( event->keyval == GDK_KEY_Left &&  ( keymod == 0 ||
-                                                     keymod == GDK_SHIFT_MASK ) )
-            || ( event->keyval == GDK_KEY_Right && ( keymod == 0 ||
-                                                     keymod == GDK_SHIFT_MASK ) )
+            || ( keymod == 0 && ( event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_KP_Enter ) )
+            || ( event->keyval == GDK_KEY_Left &&  ( keymod == 0 ||  keymod == GDK_SHIFT_MASK ) )
+            || ( event->keyval == GDK_KEY_Right && ( keymod == 0 ||  keymod == GDK_SHIFT_MASK ) )
             || ( event->keyval == GDK_KEY_BackSpace && keymod == 0 )
             || ( keymod == 0 && event->keyval != GDK_KEY_Escape &&  gdk_keyval_to_unicode( event->keyval ) ) ) // visible char
     {
@@ -3391,8 +3079,7 @@ static gboolean on_main_window_keypress( FMMainWindow* main_window, GdkEventKey*
             // set has shared key
             // nonlatin key match is for nonlatin keycodes set prior to 1.0.3
             set = xset_get( ((XSet*)l->data)->shared_key );
-            if ( ( set->key == event->keyval ||
-                            ( nonlatin_key && set->key == nonlatin_key ) ) &&  set->keymod == keymod )
+            if ( ( set->key == event->keyval || ( nonlatin_key && set->key == nonlatin_key ) ) &&  set->keymod == keymod )
             {
                 // shared key match
                 if ( g_str_has_prefix( set->name, "panel" ) )
@@ -3470,8 +3157,10 @@ _key_found:
                     on_open_terminal_activate( NULL, main_window );
                 else if ( !strcmp( xname, "root_terminal" ) )
                     on_open_root_terminal_activate( NULL, main_window );
-                else if ( !strcmp( xname, "save_session" ) )
-                    on_open_url( NULL, main_window );
+//
+//              else if ( !strcmp( xname, "save_session" ) )
+//                  location_view_mount_network( NULL, main_window );            //   howdy   nixme?   or reassign to  [main_]open_network_location
+//
                 else if ( !strcmp( xname, "exit" ) )
                     on_quit_activate( NULL, main_window );
                 else if ( !strcmp( xname, "full" ) )
@@ -3493,11 +3182,6 @@ _key_found:
                     on_main_help_activate( NULL, main_window );
                 else if ( !strcmp( xname, "faq" ) )
                     on_main_faq( NULL, main_window );
-//              else if ( !strcmp( xname, "homepage" ) )
-//                  on_homepage_activate( NULL, main_window );
-
-                //else if ( !strcmp( xname, "getplug" ) )     // howdy  bub
-                //    on_getplug_activate( NULL, main_window );
             }
             else if ( g_str_has_prefix( set->name, "panel_" ) )
             {
@@ -3512,8 +3196,6 @@ _key_found:
                     i = atoi( xname );
                 focus_panel( NULL, main_window, i );
             }
-          //else if ( g_str_has_prefix( set->name, "plug_" ) )
-          //    on_plugin_install( NULL, main_window, set );         // howdy
             else if ( g_str_has_prefix( set->name, "task_" ) )
             {
                 xname = set->name + 5;
@@ -3707,8 +3389,7 @@ void main_context_fill( PtkFileBrowser* file_browser, XSetContext* c ) {
             c->var[CONTEXT_DIR] = g_strdup( "" );
         else
         {
-            c->var[CONTEXT_WRITE_ACCESS] = ptk_file_browser_no_access( c->var[CONTEXT_DIR], NULL ) ?
-                                    g_strdup( "false" ) : g_strdup( "true" );
+            c->var[CONTEXT_WRITE_ACCESS] = ptk_file_browser_no_access( c->var[CONTEXT_DIR], NULL ) ?  g_strdup( "false" ) : g_strdup( "true" );
         }
 
         if ( sel_files = ptk_file_browser_get_selected_files( file_browser ) )
@@ -3726,12 +3407,9 @@ void main_context_fill( PtkFileBrowser* file_browser, XSetContext* c ) {
         } else {
             c->var[CONTEXT_NAME] = g_strdup( vfs_file_info_get_name( file ) );
             path = g_build_filename( c->var[CONTEXT_DIR], c->var[CONTEXT_NAME], NULL );
-            c->var[CONTEXT_IS_DIR] = path &&  g_file_test( path, G_FILE_TEST_IS_DIR ) ?
-                                    g_strdup( "true" ) : g_strdup( "false" );
-            c->var[CONTEXT_IS_TEXT] = vfs_file_info_is_text( file, path ) ?
-                                    g_strdup( "true" ) : g_strdup( "false" );
-            c->var[CONTEXT_IS_LINK] = vfs_file_info_is_symlink( file ) ?
-                                    g_strdup( "true" ) : g_strdup( "false" );
+            c->var[CONTEXT_IS_DIR] = path &&  g_file_test( path, G_FILE_TEST_IS_DIR ) ?  g_strdup( "true" ) : g_strdup( "false" );
+            c->var[CONTEXT_IS_TEXT] = vfs_file_info_is_text( file, path ) ?  g_strdup( "true" ) : g_strdup( "false" );
+            c->var[CONTEXT_IS_LINK] = vfs_file_info_is_symlink( file ) ?  g_strdup( "true" ) : g_strdup( "false" );
 
             mime_type = vfs_file_info_get_mime_type( file );
             if ( mime_type )
@@ -3742,8 +3420,7 @@ void main_context_fill( PtkFileBrowser* file_browser, XSetContext* c ) {
             else
                 c->var[CONTEXT_MIME] = g_strdup( "" );
 
-            c->var[CONTEXT_MUL_SEL] = sel_files->next ?
-                                        g_strdup( "true" ) : g_strdup( "false" );
+            c->var[CONTEXT_MUL_SEL] = sel_files->next ?  g_strdup( "true" ) : g_strdup( "false" );
 
             vfs_file_info_unref( file );
             g_free( path );
@@ -3756,8 +3433,7 @@ void main_context_fill( PtkFileBrowser* file_browser, XSetContext* c ) {
     }
 
     if ( !c->var[CONTEXT_IS_ROOT] )
-        c->var[CONTEXT_IS_ROOT] = geteuid() == 0 ?
-                                        g_strdup( "true" ) : g_strdup( "false" );
+        c->var[CONTEXT_IS_ROOT] = geteuid() == 0 ?  g_strdup( "true" ) : g_strdup( "false" );
 
     if ( !c->var[CONTEXT_CLIP_FILES] )
     {
@@ -3773,8 +3449,7 @@ void main_context_fill( PtkFileBrowser* file_browser, XSetContext* c ) {
     {
         if ( !clip )
             clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
-        c->var[CONTEXT_CLIP_TEXT] = gtk_clipboard_wait_is_text_available( clip ) ?
-                                    g_strdup( "true" ) : g_strdup( "false" );
+        c->var[CONTEXT_CLIP_TEXT] = gtk_clipboard_wait_is_text_available( clip ) ?  g_strdup( "true" ) : g_strdup( "false" );
     }
 
     // hack - Due to ptk_file_browser_update_views main iteration, fb tab may be destroyed
@@ -4293,42 +3968,20 @@ gboolean main_write_exports( VFSFileTask* vtask, const char* value, FILE* file )
     if ( set )
     {
         // cmd_dir
-        if ( set->plugin )
-        {
-            path = g_build_filename( set->plug_dir, "files", NULL );
-            if ( !g_file_test( path, G_FILE_TEST_EXISTS ) )
-            {
-                g_free( path );
-                path = g_build_filename( set->plug_dir, set->plug_name, NULL );
-            }
-        } else {
-            path = g_build_filename( xset_get_config_dir(), "scripts", set->name, NULL );
-        }
+        path = g_build_filename( xset_get_config_dir(), "scripts", set->name, NULL );
+
         esc_path = bash_quote( path );
         fprintf( file, "fm_cmd_dir=%s\n", esc_path );
         g_free( esc_path );
         g_free( path );
 
         // cmd_data
-        if ( set->plugin )
-        {
-            XSet* mset = xset_get_plugin_mirror( set );
-            path = g_build_filename( xset_get_config_dir(), "mydat", mset->name, NULL );
-        }
-        else
-            path = g_build_filename( xset_get_config_dir(), "mydat", set->name, NULL );
+        path = g_build_filename( xset_get_config_dir(), "mydat", set->name, NULL );
+
         esc_path = bash_quote( path );
         fprintf( file, "fm_cmd_data=%s\n", esc_path );
         g_free( esc_path );
         g_free( path );
-
-        // plugin_dir
-        if ( set->plugin )
-        {
-            esc_path = bash_quote( set->plug_dir );
-            fprintf( file, "fm_plugin_dir=%s\n", esc_path );
-            g_free( esc_path );
-        }
 
         // cmd_name
         if ( set->menu_label )
@@ -4339,7 +3992,7 @@ gboolean main_write_exports( VFSFileTask* vtask, const char* value, FILE* file )
         }
     }
 
-    // tmp            howdy bub       recheck this "AsRoot" sanity
+    // tmp      howdy bub       this "AsRoot" is a valid sanity check (avoid placing root-owned tmpfiles into user-writable dirs)
     if ( geteuid() != 0 && vtask->exec_as_user    && !strcmp( vtask->exec_as_user, "root" ) )
         fprintf( file, "fm_tmp_dir=%s\n", xset_get_shared_tmp_dir() );
     else
@@ -5502,12 +5155,12 @@ char main_window_socket_command( char* argv[], char** reply ) {
     // must match file-browser.c
     const char* column_titles[] =
     {
-        N_( "Name" ), N_( "Size" ), N_( "Type" ), N_( "Permission" ), N_( "Owner" ), N_( "Modified" )
+        N_( "Name" ), N_( "Size" ), N_( "Type" ), N_( "Permission" ), N_( "Owner" ), N_( "Modified" ), N_( "Created" )
     };  // howdy
 
     const char* column_names[] =
     {
-        "detcol_name", "detcol_size", "detcol_type", "detcol_perm", "detcol_owner", "detcol_date"
+        "detcol_name", "detcol_size", "detcol_type", "detcol_perm", "detcol_owner", "detcol_date",
     };            // howdy bub    peekaboo
 
     *reply = NULL;
@@ -5585,8 +5238,7 @@ _missing_arg:
         *reply = g_strdup_printf( _("zzzfm: invalid panel %d\n"), panel );
         return 2;
     }
-    if ( !xset_get_b_panel( panel, "show" ) ||
-                        gtk_notebook_get_current_page( GTK_NOTEBOOK( main_window->panel[panel-1] ) ) == -1 )
+    if ( !xset_get_b_panel( panel, "show" ) ||  gtk_notebook_get_current_page( GTK_NOTEBOOK( main_window->panel[panel-1] ) ) == -1 )
     {
         *reply = g_strdup_printf( _("zzzfm: panel %d is not visible\n"), panel );
         return 2;
@@ -5804,9 +5456,7 @@ _missing_arg:
                 xset_set_b_panel( panel, str, bool( argv[i+1] ) );
             update_views_all_windows( NULL, file_browser );
         }
-        else if ( !strcmp( argv[i], "panel_hslider_top" ) ||
-                  !strcmp( argv[i], "panel_hslider_bottom" ) ||
-                  !strcmp( argv[i], "panel_vslider" ) )
+        else if ( !strcmp( argv[i], "panel_hslider_top" ) ||  !strcmp( argv[i], "panel_hslider_bottom" ) ||  !strcmp( argv[i], "panel_vslider" ) )
         {
             width = -1;
             if ( argv[i+1] )
@@ -5859,6 +5509,7 @@ _missing_arg:
                         break;
                     else if ( !g_strcmp0( argv[i+1], "modified" ) &&  !g_strcmp0( str, _(column_titles[5]) ) )
                         break;
+
                 }
                 if ( j == 6 )
                 {
@@ -5870,7 +5521,7 @@ _missing_arg:
         }
         else if ( !strcmp( argv[i], "sort_by" ) )
         {   // COLUMN
-            j = -10;
+            j = -10;                    //  howdy    recheck this offset
             if ( !argv[i+1] )
             {}
             else if ( !strcmp( argv[i+1], "name" ) )
@@ -5897,8 +5548,7 @@ _missing_arg:
         {
             if ( !strcmp( argv[i] + 5, "ascend" ) )
             {
-                ptk_file_browser_set_sort_type( file_browser, bool( argv[i+1] ) ?
-                                        GTK_SORT_ASCENDING : GTK_SORT_DESCENDING );
+                ptk_file_browser_set_sort_type( file_browser, bool( argv[i+1] ) ?  GTK_SORT_ASCENDING : GTK_SORT_DESCENDING );
                 return 0;
             }
             else if ( !strcmp( argv[i] + 5, "natural" ) )
@@ -5978,23 +5628,19 @@ _missing_arg:
                 gtk_widget_grab_focus( file_browser->path_bar );
             }
         }
-        else if ( !strcmp( argv[i], "clipboard_text" ) ||
-                  !strcmp( argv[i], "clipboard_primary_text" ) )
+        else if ( !strcmp( argv[i], "clipboard_text" ) ||  !strcmp( argv[i], "clipboard_primary_text" ) )
         {
             if ( argv[i+1] && !g_utf8_validate( argv[i+1], -1, NULL ) )
             {
                 *reply = g_strdup( _("zzzfm: text is not valid UTF-8\n") );
                 return 2;
             }
-            GtkClipboard * clip = gtk_clipboard_get( !strcmp( argv[i], "clipboard_text" ) ?
-                                                    GDK_SELECTION_CLIPBOARD :
-                                                    GDK_SELECTION_PRIMARY );
+            GtkClipboard * clip = gtk_clipboard_get( !strcmp( argv[i], "clipboard_text" ) ?   GDK_SELECTION_CLIPBOARD :  GDK_SELECTION_PRIMARY );
             str = unescape( argv[i+1] ? argv[i+1] : "" );
             gtk_clipboard_set_text( clip, str, -1 );
             g_free( str );
         }
-        else if ( !strcmp( argv[i], "clipboard_from_file" ) ||
-                  !strcmp( argv[i], "clipboard_primary_from_file" ) )
+        else if ( !strcmp( argv[i], "clipboard_from_file" ) ||  !strcmp( argv[i], "clipboard_primary_from_file" ) )
         {
             if ( !argv[i+1] )
             {
@@ -6013,18 +5659,15 @@ _missing_arg:
                 return 2;
             }
             GtkClipboard * clip = gtk_clipboard_get( !strcmp( argv[i], "clipboard_from_file" ) ?
-                                                    GDK_SELECTION_CLIPBOARD :
-                                                    GDK_SELECTION_PRIMARY );
+                                                    GDK_SELECTION_CLIPBOARD :  GDK_SELECTION_PRIMARY );
             gtk_clipboard_set_text( clip, str, -1 );
             g_free( str );
         }
-        else if ( !strcmp( argv[i], "clipboard_cut_files" ) ||
-                  !strcmp( argv[i], "clipboard_copy_files" ) )
+        else if ( !strcmp( argv[i], "clipboard_cut_files" ) ||  !strcmp( argv[i], "clipboard_copy_files" ) )
         {
             ptk_clipboard_copy_file_list( argv + i + 1, !strcmp( argv[i], "clipboard_copy_files" ) );
         }
-        else if ( !strcmp( argv[i], "selected_filenames" ) ||
-                  !strcmp( argv[i], "selected_files" ) )
+        else if ( !strcmp( argv[i], "selected_filenames" ) ||  !strcmp( argv[i], "selected_files" ) )
         {
             if ( !argv[i+1] || argv[i+1][0] == '\0' )
                 // unselect all
@@ -6114,10 +5757,8 @@ _invalid_set:
             height = gdk_screen_get_height( gtk_widget_get_screen( (GtkWidget*)main_window ) );
             *reply = g_strdup_printf( "%dx%d\n", width, height );
         }
-        else if ( !strcmp( argv[i], "window_vslider_top" ) ||
-                  !strcmp( argv[i], "window_vslider_bottom" ) ||
-                  !strcmp( argv[i], "window_hslider" ) ||
-                  !strcmp( argv[i], "window_tslider" ) )
+        else if ( !strcmp( argv[i], "window_vslider_top" ) ||  !strcmp( argv[i], "window_vslider_bottom" ) ||
+                  !strcmp( argv[i], "window_hslider" )     ||  !strcmp( argv[i], "window_tslider" ) )
         {
             if ( !strcmp( argv[i] + 7, "vslider_top" ) )
                 widget = main_window->hpane_top;
@@ -6288,8 +5929,7 @@ _invalid_set:
             if ( !strcmp( argv[i] + 5, "ascend" ) )
                 *reply = g_strdup_printf( "%d\n", file_browser->sort_type == GTK_SORT_ASCENDING ? 1 : 0 );
             else if ( !strcmp( argv[i] + 5, "natural" ) )
-                *reply = g_strdup_printf( "%d\n", xset_get_b_panel( file_browser->mypanel, "sort_extra" ) ?
-                                                                        1 : 0 );
+                *reply = g_strdup_printf( "%d\n", xset_get_b_panel( file_browser->mypanel, "sort_extra" ) ?  1 : 0 );
             else if ( !strcmp( argv[i] + 5, "case" ) )
                 *reply = g_strdup_printf( "%d\n", xset_get_b_panel( file_browser->mypanel, "sort_extra" ) &&
                         xset_get_int_panel( file_browser->mypanel, "sort_extra", "x" ) == XSET_B_TRUE ? 1 : 0 );
@@ -6317,13 +5957,11 @@ _invalid_set:
         }
         else if ( !strcmp( argv[i], "show_thumbnails" ) )
         {
-            *reply = g_strdup_printf( "%d\n", app_settings.show_thumbnail ?
-                                                                    1 : 0 );
+            *reply = g_strdup_printf( "%d\n", app_settings.show_thumbnail ?  1 : 0 );
         }
         else if ( !strcmp( argv[i], "large_icons" ) )
         {
-            *reply = g_strdup_printf( "%d\n", file_browser->large_icons ?
-                                                                    1 : 0 );
+            *reply = g_strdup_printf( "%d\n", file_browser->large_icons ?  1 : 0 );
         }
         else if ( !strcmp( argv[i], "statusbar_text" ) )
         {
@@ -6334,20 +5972,16 @@ _invalid_set:
             if ( GTK_IS_WIDGET( file_browser->path_bar ) )
                 *reply = g_strdup_printf( "%s\n", gtk_entry_get_text( GTK_ENTRY( file_browser->path_bar ) ) );
         }
-        else if ( !strcmp( argv[i], "clipboard_text" ) ||
-                  !strcmp( argv[i], "clipboard_primary_text" ) )
+        else if ( !strcmp( argv[i], "clipboard_text" ) || !strcmp( argv[i], "clipboard_primary_text" ) )
         {
             GtkClipboard * clip = gtk_clipboard_get( !strcmp( argv[i], "clipboard_text" ) ?
-                                                    GDK_SELECTION_CLIPBOARD :
-                                                    GDK_SELECTION_PRIMARY );
+                                                    GDK_SELECTION_CLIPBOARD :  GDK_SELECTION_PRIMARY );
             *reply = gtk_clipboard_wait_for_text( clip );
         }
-        else if ( !strcmp( argv[i], "clipboard_from_file" ) ||
-                  !strcmp( argv[i], "clipboard_primary_from_file" ) )
+        else if ( !strcmp( argv[i], "clipboard_from_file" ) ||  !strcmp( argv[i], "clipboard_primary_from_file" ) )
         {
         }
-        else if ( !strcmp( argv[i], "clipboard_cut_files" ) ||
-                  !strcmp( argv[i], "clipboard_copy_files" ) )
+        else if ( !strcmp( argv[i], "clipboard_cut_files" ) ||  !strcmp( argv[i], "clipboard_copy_files" ) )
         {
             GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
             GdkAtom gnome_target;
@@ -6363,8 +5997,7 @@ _invalid_set:
                 if ( !sel_data )
                     return 0;
             }
-            if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                            gtk_selection_data_get_format( sel_data ) != 8 )
+            if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
             {
                 gtk_selection_data_free( sel_data );
                 return 0;
@@ -6703,10 +6336,10 @@ _invalid_get:
                     opt_scroll = opt_task = TRUE;
                 else if ( !strcmp( argv[j], "--terminal" ) )
                     opt_terminal = TRUE;
-                /* disabled due to potential misuse of password caching su programs
-                else if ( !strcmp( argv[j], "--user" ) )
-                    opt_user = argv[++j];
-                */
+/////// disabled due to potential misuse of password caching su programs          howdy bub
+//              else if ( !strcmp( argv[j], "--user" ) )
+//                  opt_user = argv[++j];
+///////
                 else if ( !strcmp( argv[j], "--title" ) )
                     opt_title = argv[++j];
                 else if ( !strcmp( argv[j], "--icon" ) )
@@ -6733,9 +6366,9 @@ _invalid_get:
             while ( argv[++j] )
                 g_string_append_printf( gcmd, " %s", argv[j] );
 
-            PtkFileTask* ptask = ptk_file_exec_new( opt_title ? opt_title : gcmd->str, opt_cwd ? opt_cwd :
-                                         ptk_file_browser_get_cwd( file_browser ),
-                                       GTK_WIDGET( file_browser ), file_browser->task_view );
+            PtkFileTask* ptask = ptk_file_exec_new( opt_title ? opt_title : gcmd->str,
+                                        opt_cwd ? opt_cwd : ptk_file_browser_get_cwd( file_browser ),
+                                        GTK_WIDGET( file_browser ), file_browser->task_view );
             ptask->task->exec_browser = file_browser;
             ptask->task->exec_command = g_string_free( gcmd, FALSE );
             ptask->task->exec_as_user = g_strdup( opt_user );
@@ -6755,11 +6388,11 @@ _invalid_get:
                 *reply = g_strdup_printf( "#!%s\n# Note: $new_task_id not valid until approx one half second after task start\nnew_task_window=%p\nnew_task_id=%p\n",
                                             BASHPATH, main_window, ptask );
         }
-        else if ( !strcmp( argv[i], "edit" ) || !strcmp( argv[i], "web" ) )
+        else if ( !strcmp(argv[i], "edit") )       /////   || !strcmp( argv[i], "web" ) )     // howdy bub    check all callers
         {
-            // edit or web
-            // edit [--as-root] FILE
-            // web URL
+            // edit
+            // or edit [--as-root] FILE
+            // or web URL                          ///////////////   naw, fugoutahere
             gboolean opt_root = FALSE;
             for ( j = i + 1; argv[j] && argv[j][0] == '-'; j++ )
             {
@@ -6785,8 +6418,10 @@ _invalid_get:
                 }
                 xset_edit( GTK_WIDGET( file_browser ), argv[j], opt_root, !opt_root );
             }
-            else
-                xset_open_url( GTK_WIDGET( file_browser ), argv[j] );
+            else            //   as a socket command?!?  Naw
+///////         xset_open_url( GTK_WIDGET( file_browser ), argv[j] );           // howdy bub     wrap    if(opt_root=FALSE)
+                return 2;   //  fugoutahere
+
         }
         else if ( !strcmp( argv[i], "mount" ) || !strcmp( argv[i], "unmount" ) )
         {
@@ -6812,8 +6447,7 @@ _invalid_get:
             if ( !strcmp( argv[i], "unmount" ) &&  g_file_test( real_path, G_FILE_TEST_IS_DIR ) )
             {
                 // unmount DIR
-                if ( path_is_mounted_mtab( NULL, real_path, &device_file, NULL )
-                                                            && device_file )
+                if ( path_is_mounted_mtab( NULL, real_path, &device_file, NULL )  && device_file )
                 {
                     if ( !( stat64( device_file, &statbuf ) == 0 &&  S_ISBLK( statbuf.st_mode ) ) )
                     {
@@ -7252,8 +6886,7 @@ gboolean run_event( FMMainWindow* main_window, PtkFileBrowser* file_browser, XSe
             }
             else if ( var[1] == 'd' )
             {
-                rep = bash_quote( file_browser ?
-                                    ptk_file_browser_get_cwd( file_browser ) : NULL );
+                rep = bash_quote( file_browser ?  ptk_file_browser_get_cwd( file_browser ) : NULL );
                 cmd = replace_string( str, var, rep, FALSE );
                 g_free( rep );
             } else {

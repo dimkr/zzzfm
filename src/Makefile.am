@@ -84,8 +84,6 @@ EXO_SOURCES = \
     exo/exo-marshal.c exo/exo-marshal.h \
     exo/exo-cell-renderer-icon.c exo/exo-cell-renderer-icon.h \
     exo/exo-gtk-extensions.c exo/exo-gtk-extensions.h \
-    exo/exo-icon-chooser-dialog.c exo/exo-icon-chooser-dialog.h \
-    exo/exo-icon-chooser-model.c exo/exo-icon-chooser-model.h \
     exo/exo-gdk-pixbuf-extensions.c exo/exo-gdk-pixbuf-extensions.h \
     exo/exo-thumbnail-preview.c exo/exo-thumbnail-preview.h \
     exo/exo-utils.c exo/exo-utils.h \

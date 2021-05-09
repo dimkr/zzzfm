@@ -68,11 +68,11 @@ void ptk_open_files_with_app( const char* cwd,
                               gboolean xforce, gboolean xnever );
 
 void ptk_file_misc_paste_as( DesktopWindow* desktop, PtkFileBrowser* file_browser,
-                                            const char* cwd, GFunc callback ); //sfm
+                                            const char* cwd, GFunc callback );
 
 void ptk_file_misc_rootcmd( DesktopWindow* desktop, PtkFileBrowser* file_browser,
                                                 GList* sel_files,
-                                                char* cwd, char* setname ); //sfm
+                                                char* cwd, char* setname );
 
 char* get_real_link_target( const char* link_path );
 

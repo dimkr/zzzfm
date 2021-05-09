@@ -188,7 +188,7 @@ see: /usr/share/common-licenses/LGPL-3 &nbsp; &nbsp; /usr/share/zzzfm/COPYING-LG
     <blockquote>
     zzzFM's GUI aims to be simple and uncluttered, while still providing extensive
     capabilities for power users and flexibility in customizing window components, behavior, and appearance.
-        <br><b>‣</b> Each window may contain up to four independently configured, interactive browser panels <a href="#gui-pan">*</a>
+        <br><b>‣</b> Each window may contain up to four independently configured, interactive file browser panels <a href="#gui-pan">*</a>
         <br><br>
         <b>‣</b> Each panel supports multiple <del>folder</del> directory tabs
         <br><br>
@@ -237,7 +237,8 @@ see: /usr/share/common-licenses/LGPL-3 &nbsp; &nbsp; /usr/share/zzzfm/COPYING-LG
     zzzFM's unique extensible GUI rivals the flexibility and capabilities of the Linux command line.  Using zzzFM and making gradual adjustments as you go,
      you become the designer of your own version of the file manager.
         <br><br>
-        <b>‣</b> Almost every built-in menu and toolbar item can be renamed or hidden from view, bound to any keyboard shortcut, and given a custom icon
+        <b>‣</b> Almost every built-in menu and toolbar item can be renamed or hidden from view, and can be assigned to any keyboard shortcut
+        <!--         , and given a custom icon    -->
          <a href="#designmode">*</a>
         <br><br>
         <b>‣</b> Add your own custom menu items and submenus to any position in most menus.  Like word processor macros, custom menu items enable you to
@@ -327,7 +328,7 @@ see: /usr/share/common-licenses/LGPL-3 &nbsp; &nbsp; /usr/share/zzzfm/COPYING-LG
     </blockquote>
 <b>Daemon Mode</b> ~~ <i>optionally, Keep zzzFM always running</i>
     <blockquote>
-    Run zzzFM in the background as a daemon to auto-mount and auto-open devices, and quickly open browser windows on demand.
+    Run zzzFM in the background as a daemon to auto-mount and auto-open devices, and quickly open file browser windows on demand.
     <a href="#invocation-daemonmode">*</a>
     </blockquote>
 <b>Network Support</b> ~~ <i>capable of mounting network filesystems and ISO files</i>
@@ -689,6 +690,15 @@ line to ~/.config/openbox/autostart.sh:
      &nbsp &nbsp;  (you can assign any key shortcut to this item using <a href="#designmode-designmenu-key">Design Mode</a>).
 <br><br>
 
+<b>Q.</b> When I edit details in "File Properties" dialog window, why are the changes not saved?   <br>
+<b>A.</b> Only a changed "Open With" selection is saved. The other fields are "editable" only    <br>
+ &nbsp; &nbsp; &nbsp; to the extent that they enable you to select/copy various bits of detail information.
+<br>  &nbsp; &nbsp; &nbsp; -=-<br>
+ &nbsp; &nbsp; &nbsp;      you can, however, create a custom command to edit an item's ModifiedTime or AccessedTime:  <br>
+ &nbsp; &nbsp; &nbsp;      touch -m %f (or %F, to accommodate multiple selected items) to alter Modified timestamp <br>
+ &nbsp; &nbsp; &nbsp;      touch -a %f (or %F, to accommodate multiple selected items) to alter Accessed timestamp
+<br><br>
+
 <b>Q+A</b> <a href="#handlers-arc-arcdef">How do I make archives (tar.gz etc) open with an application?</a>
 <br><br>
 
@@ -721,15 +731,15 @@ line to ~/.config/openbox/autostart.sh:
 
 <b>Q.</b> Why isn't feature <i>such-and-such</i> working on my system?   <br>
 <b>A.</b> Debian (and antiX) provides software and library files which, whenever practicable,      <br>
- &nbsp &nbsp; are segregated into multiple, separate "packages" to avoid maintaining and distributing     <br>
- &nbsp &nbsp; redundant copies of components shared by various programs. A manifest associated with each package    <br>
- &nbsp &nbsp; declares a list of additional needed (Depends:) packages. Additionally, a package manifest may,    <br>
- &nbsp &nbsp; optionally, declare lists of "Recommends:", "Enhances:", and "Suggests:" external packages.    <br>
- &nbsp &nbsp; .<br>
- &nbsp &nbsp; Unlike the "kitchen sink" policy of  Mint / Ubuntu, which employ a "treat-Recommends-as-Depends"   <br>
- &nbsp &nbsp; default rule, Debian (and antiX) systems are configured to automatically install only "Depends" items.    <br>
- &nbsp &nbsp; In order to get "<i>such-and-such</i>" certain features working, you may need to (identify and) manually   <br>
- &nbsp &nbsp; install additional package(s).
+ &nbsp; &nbsp; are segregated into multiple, separate "packages" to avoid maintaining and distributing     <br>
+ &nbsp; &nbsp; redundant copies of components shared by various programs. A manifest associated with each package    <br>
+ &nbsp; &nbsp; declares a list of additional needed (Depends:) packages. Additionally, a package manifest may,    <br>
+ &nbsp; &nbsp; optionally, declare lists of "Recommends:", "Enhances:", and "Suggests:" external packages.    <br>
+ &nbsp; &nbsp; .<br>
+ &nbsp; &nbsp; Unlike the "kitchen sink" policy of  Mint / Ubuntu, which employ a "treat-Recommends-as-Depends"   <br>
+ &nbsp; &nbsp; default rule, Debian (and antiX) systems are configured to automatically install only "Depends" items.    <br>
+ &nbsp; &nbsp; In order to get "<i>such-and-such</i>" certain features working, you may need to (identify and) manually   <br>
+ &nbsp; &nbsp; install additional package(s).
 <div style="padding-left:58px;">
 <pre>
 Package: zzzfm                v---  (provides the zzzfm localization files)
@@ -980,10 +990,12 @@ For additional URL examples, see the URL protocols and formats handled by udevil
 
 <p>In addition, custom <a href="#handlers-pro">protocol handlers</a> may be added which accept URLs in the above formats, or in any format you prefer.
 
-<p>URLs may also be opened via the main menu bar's File|Open URL item, which is equivalent to entering them in the Path Bar, or on the command line.
+<p>URLs may also be opened via the main menu bar's File|Open URL item,
+ which is equivalent to entering them in the Path Bar, or on the command line.
 
 <p>TIP:  You can sometimes right-click on a mounted network in the <a href="#devices-list">Devices List</a> and select
- <a href="#devices-menu-bookmark">Bookmark</a> to bookmark the URL for future use.  Or, right-click on the Path Bar containing a URL and select New Bookmark.
+ <a href="#devices-menu-bookmark">Bookmark</a> to bookmark the URL for future use.
+   Or, right-click on the Path Bar containing a URL and select New Bookmark.
    Or, edit an existing bookmark to contain a URL target.
 
 
@@ -1124,8 +1136,8 @@ See also: <a href="#gui-pathbar-pattern">Select By Pattern</a>.
 <P>The Browse button enables you to browse for a filename, parent, or path, and insert it into the dialog.
 
 <P>TIPS:  To select all the text in an entry, click the entry's label (eg 'Filename:'), press the Alt key shortcut, or use Tab.  To quickly copy
- an entry's text to the clipboard, double- or middle-click on the entry's label (eg 'Filename:').  Multiple files can be selected in the file browser
-  to rename a batch of files.
+ an entry's text to the clipboard, double- or middle-click on the entry's label (eg 'Filename:').
+  Multiple files can be selected in the file browser to rename a batch of files.
 
 <br><br></td></tr>
 
@@ -2081,7 +2093,7 @@ The Icon submenu enables you to set custom icons to be displayed at the left of 
   For example, to change the icon used for an internal, mounted drive, click Icon|Internal Mounted and enter the desired icon name.
 
 <p>By default, zzzFM reuses a limited number of icons so that only stock GTK icons are required.
- If you would like the device icons to better reflect the changing state of devices, it is valuable to customize these icons.
+ If you would like the device icons to better reflect the changing state of devices, it is valuable <!-- (sic)   --> to customize these icons.
 
 <p><a name="devices-settings-font"/><a href="#devices-settings-font"><b>Font</b></a><br>
 Font opens a font selection dialog which enables you to select the font to be used for the Devices list.
@@ -2487,7 +2499,7 @@ If two or more tasks involve files on mutually exclusive disks (parent devices),
 <p><b>Size Exceptions</b><br>
 Often while copying a set of large files, you may want to perform a quick operation on a set of small files.  Because the latter task is brief, it is reasonably efficient to permit it to run concurrently.  This way you don't have to wait for the longer task to finish before your quick task is run.
 
-<p>When a task involves copying or moving a set of files less than 10 MB in total size, an exception is made which permits the task to run immediately, even if other tasks are running on the same devices.  An exception is also made when a task involves deleting a set of files less than 5 GB in total size.  This permits small tasks to run immediately.
+<p>When a task involves copying or moving a set of files less than 100 MB in total size, an exception is made which permits the task to run immediately, even if other tasks are running on the same devices.  An exception is also made when a task involves deleting a set of files less than 10 GB in total size.  This permits small tasks to run immediately.
 
 <p><b>Functional Exceptions</b><br>
 Internal tasks involving creating links, and changing file permissions or ownership are typically very fast as little data is written to disk.  Thus an exception is always made for these task types - they are run immediately.
@@ -2683,9 +2695,11 @@ The Add submenu will only appear in the Design Menu when it is opened by right-c
 The Tooltips checkbox item will only be visible in the Design Menu when it is opened by right-clicking on a <a href="#designmode-toolbars">toolbar</a> item.  Checking the Tooltips option will cause tooltips to be shown when the mouse hovers over a toolbar item (the item's name is shown).  This setting is global (for all toolbars).
 
 <p><a name="designmode-designmenu-help"/><a href="#designmode-designmenu-help"><b>Help</b></a><br>
-Help opens contextual help for an item.  For built-in items, the zzzFM user's manual will be opened in your browser.  If no help is currently available, Help will be disabled.  [Note: Because the user's manual is still incomplete, not all items will have specific help available.]
+Help opens contextual help for an item.  For built-in items, the zzzFM user's manual will be opened in your web browser.
+ If no help is currently available, Help will be disabled.
+  [Note: Because the user's manual is still incomplete, not all items will have specific help available.]
 
-<p>Your browser may be customized in Help|Options|Browser, and a custom location for the user's manual can be set in Help|Options|Manual Location.
+<p>You may specify a preferred web browser via Help|Options|Browser. Also, a custom location for the user's manual can be set in Help|Options|Manual Location.
 
 <!--  howdy  spectacular feature: custom, per custom command, linked helpfile    -->
 <p><b>For custom items, Help will open the plain text README file for the item in your text editor.</b>
@@ -2812,20 +2826,29 @@ Tip:  To prevent the Bookmarks side pane's <a href="#gui-book-side">Follow Dir</
 
 <p><a name="designmode-props-context"/><a href="#designmode-props-context"><b>Context</b></a><br>
 The Context page of the <a href="#designmode-props">Item Properties</a> dialog enables you to set rules which determine when and how a
- menu item appears in the menu.  Context rules can be set for both built-in and custom items, and or separators.  Context cannot be set for toolbar items
+ menu item appears in the menu.  Context rules can be set for both built-in and custom items, and or separators.
+   Context cannot be set for toolbar items
  (except items in custom toolbar submenus), and context will not apply to items when they are shown in the Bookmarks side pane.
 
-<p>Context refers to the state of the entire file browser window or desktop when a menu is shown.  For example, the MIME type of the currently selected file is one subject of the context.  Another context subject is the filename of the selected file.  Another is any device that is currently selected in the <a href="#devices-list">Devices list</a>.  There are many subjects which can be used in context rules.
+<p>Context refers to the state of the entire file browser window or desktop when a menu is shown.
+ For example, the MIME type of the currently selected file is one subject of the context.
+  Another context subject is the filename of the selected file.
+    Another is any device that is currently selected in the <a href="#devices-list">Devices list</a>.
+     There are many subjects which can be used in context rules.
 
-<p>By default, the top line of the context dialog reads "Show item if context matches any rule:", and is followed by an empty rule box.  When the rule box is empty, the item will always be shown regardless of context.
+<p>By default, the top line of the context dialog reads "Show item if context matches any rule:", and is followed by an empty rule box.
+  When the rule box is empty, the item will always be shown regardless of context.
 
 <p>You can change 'Show item if context matches any rule:' to 'Enable item if context matches any rule:'.
  If the action is to 'Show', its opposite is to hide.  If the action is to 'Enable', then its opposite to disable.
-  Thus if we change the top line to read 'Enable item if context matches any rule:', then the menu item will be enabled or disabled depending on context,
-   but will never be completely hidden from view in the menu.  Or, to reverse the logic, action can be set to 'Hide' or 'Disable' when any rule is matched.
+  Thus if we change the top line to read 'Enable item if context matches any rule:', then the menu item will be
+   enabled or disabled depending on context,
+   but will never be completely hidden from view in the menu.  Or, to reverse the logic, action can be set to 'Hide' or 'Disable'
+    when any rule is matched.
 
 <p>The 'matches any rules:' box can also be changed so that it requires all rules to be matched instead of just one.
- This is like putting an AND between the rules, instead of OR.  Or you can reverse the matching logic by choosing one of the 'doesn't match' options.
+ This is like putting an AND between the rules, instead of OR.  Or you can reverse the matching logic by
+ choosing one of the 'doesn't match' options.
 
 <p><b>Composing Rules</b>
 <br>Rather than using an arcane syntax, context rules are composed using words and phrases, which make the rules readable sentences.
@@ -2845,7 +2868,7 @@ The Context page of the <a href="#designmode-props">Item Properties</a> dialog e
 <p>Below the value box is a 'Value:' label, which may or may not show a value.
   This label shows the subject's value in the <i>current context</i>.
    When you opened the Design Menu, the file browser had a context - perhaps some files or a device were selected,
-    the browser was in a particular directory, etc.  For example, if a file is selected when you open the properties dialog,
+    the file browser was in a particular directory, etc.  For example, if a file is selected when you open the properties dialog,
     and the subject is set to 'MIME Type', then the selected file's MIME type will appear next to 'Value:'.
      If no file is selected, then 'Value:' will show nothing.  (Tip:  You can quickly copy a value into the value box by double-clicking it.)
 
@@ -3042,147 +3065,181 @@ to show custom dialogs from within the script, and <a href="#sockets">socket com
 
 <p><a name="exvar">When you select Script</a>, a <a href="#exvar">default bash script</a> is generated as shown below:
 <pre>
+__________________________________________________________
+
 #!/bin/bash
-$fm_import    # import file manager variables (scroll down for info)
-#
-# Enter your commands here:     ( then save this file )
+### import zzzfm variables
+### To see a list of all available variables, refer to
+###    file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#exvar
+$fm_import
+###
+###
+### Enter your commands here, below:     ( then save this file )
+
 
 
 
 exit $?
-# Example variables available for use: (imported by $fm_import)
-# These variables represent the state of the file manager when command is run.
-# These variables can also be used in command lines and in the <a href="#gui-pathbar-cmd">Path Bar</a>.
-
-# "${fm_files[@]}"          selected files              ( same as %F )
-# "$fm_file"                first selected file         ( same as %f )
-# "${fm_files[2]}"          third selected file
-
-# "${fm_filenames[@]}"      selected filenames          ( same as %N )
-# "$fm_filename"            first selected filename     ( same as %n )
-
-# "$fm_pwd"                 current directory           ( same as %d )
-# "${fm_pwd_tab[4]}"        current directory of tab 4
-# $fm_panel                 current panel number (1-4)
-# $fm_tab                   current tab number
-
-# "${fm_panel3_files[@]}"   selected files in panel 3
-# "${fm_pwd_panel[3]}"      current directory in panel 3
-# "${fm_pwd_panel3_tab[2]}" current directory in panel 3 tab 2
-# ${fm_tab_panel[3]}        current tab number in panel 3
-
-# "${fm_desktop_files[@]}"  selected files on desktop (when run from desktop)
-# "$fm_desktop_pwd"         desktop directory (eg '/home/user/Desktop')
-
-# "$fm_device"              selected device (eg /dev/sr0)  ( same as %v )
-# "$fm_device_udi"          device ID
-# "$fm_device_mount_point"  device mount point if mounted (eg /media/dvd) (%m)
-# "$fm_device_label"        device volume label            ( same as %l )
-# "$fm_device_fstype"       device fs_type (eg vfat)
-# "$fm_device_size"         device volume size in bytes
-# "$fm_device_display_name" device display name
-# "$fm_device_icon"         icon currently shown for this device
-# $fm_device_is_mounted     device is mounted (0=no or 1=yes)
-# $fm_device_is_optical     device is an optical drive (0 or 1)
-# $fm_device_is_table       a partition table (usually a whole device)
-# $fm_device_is_floppy      device is a floppy drive (0 or 1)
-# $fm_device_is_removable   device appears to be removable (0 or 1)
-# $fm_device_is_audiocd     optical device contains an audio CD (0 or 1)
-# $fm_device_is_dvd         optical device contains a DVD (0 or 1)
-# $fm_device_is_blank       device contains blank media (0 or 1)
-# $fm_device_is_mountable   device APPEARS to be mountable (0 or 1)
-# $fm_device_nopolicy       policy_noauto set (no automount) (0 or 1)
-
-# "$fm_panel3_device"       panel 3 selected device (eg /dev/sdd1)
-# "$fm_panel3_device_udi"   panel 3 device ID
-# ...                       (all these are the same as above for each panel)
-
-# "fm_bookmark"             selected bookmark directory     ( same as %b )
-# "fm_panel3_bookmark"      panel 3 selected bookmark directory
-
-# "fm_task_type"            currently SELECTED task type (eg 'run','copy')
-# "fm_task_name"            selected task name (custom menu item name)
-# "fm_task_pwd"             selected task working directory ( same as %t )
-# "fm_task_pid"             selected task pid               ( same as %p )
-# "fm_task_command"         selected task command
-# "fm_task_id"              selected task id
-# "fm_task_window"          selected task window id
-
-# "$fm_command"             current command
-# "$fm_value"               menu item value             ( same as %a )
-# "$fm_user"                original user who ran this command
-# "$fm_my_task"             current task's id  (see '<a href="#sockets-invoc-help">zzzfm -s help</a>')
-# "$fm_my_window"           current task's window id
-# "$fm_cmd_name"            menu name of current command
-# "$fm_cmd_dir"             command files directory (for read only)
-# "$fm_cmd_data"            command data directory (must create)
-#                                 To create:   mkdir -p "$fm_cmd_data"
-# tmp="$(fm_new_tmp)"       makes new temp directory (destroy when done)
-#                                 To destroy:  rm -rf "$tmp"
-# fm_edit "FILE"            open FILE in user's configured editor
-
-# $fm_import                command to import above variables (this
-#                           variable is exported so you can use it in any
-#                           script run from this script)
+__________________________________________________________
 
 
-# Script Example 1:
-
-#   # show MD5 sums of selected files
-#   md5sum "${fm_files[@]}"
 
 
-# Script Example 2:
+zzzfm variables available for use within custom scripts:
+These are imported by the  $fm_import  line atop your custom scripts.
+These variables represent the state of the file manager when command is run.
+These variables can ALSO be used in command lines and in the <a href="#gui-pathbar-cmd">Path Bar</a>
 
-#   # Show a confirmation dialog using <a href="#dialog">zzzFM Dialog</a>:
-#   # Use QUOTED eval to read variables output by zzzFM Dialog:
-#   eval "`zzzfm -g --label "Are you sure?" --button yes --button no`"
-#   if [[ "$dialog_pressed" == "button1" ]]; then
-#       echo "User pressed Yes - take some action"
-#   else
-#       echo "User did NOT press Yes - abort"
-#   fi
+      Below, notice that variables which will be replaced by a string value
+      are shown here enclosed within quotationmark characters. They should be
+      similarly quoted when used within your scripts.  Variables which will only
+      produce a numeric runtime value (or no whitespace characters, at least)
+      are shown here unquoted.
 
-
-# Script Example 3:
-
-#   # Build list of filenames in panel 4:
-#   i=0
-#   for f in "${fm_panel4_files[@]}"; do
-#       panel4_names[$i]="$(basename "$f")"
-#       (( i++ ))
-#   done
-#   echo "${panel4_names[@]}"
+      Bash Scripting Guide:  <a target="_new" href=" http://www.tldp.org/LDP/abs/html/index.html">http://www.tldp.org/LDP/abs/html/index.html</a>
 
 
-# Script Example 4:
+"${fm_files[@]}"             selected files              ( same as %F )
+"$fm_file"                   first selected file         ( same as %f )
+"${fm_files[2]}"             third selected file
 
-#   # Copy selected files to panel 2
-#      # make sure panel 2 is visible ?
-#      # and files are selected ?
-#      # and current panel isn't 2 ?
-#   if [ "${fm_pwd_panel[2]}" != "" ] \
-#               &amp;&amp; [ "${fm_files[0]}" != "" ] \
-#               &amp;&amp; [ "$fm_panel" != 2 ]; then
-#       cp "${fm_files[@]}" "${fm_pwd_panel[2]}"
-#   else
-#       echo "Can't copy to panel 2"
-#       exit 1    # shows error if 'Popup Error' enabled
-#   fi
+"${fm_filenames[@]}"         selected filenames          ( same as %N )
+"$fm_filename"               first selected filename     ( same as %n )
+
+"$fm_pwd"                    current directory           ( same as %d )
+"${fm_pwd_tab[4]}"           current directory of tab 4
+$fm_panel                    current panel number (1-4)
+$fm_tab                      current tab number
+
+"${fm_panel3_files[@]}"      selected files in panel 3
+"${fm_pwd_panel[3]}"         current directory in panel 3
+"${fm_pwd_panel3_tab[2]}"    current directory in panel 3 tab 2
+${fm_tab_panel[3]}           current tab number in panel 3
+
+"${fm_desktop_files[@]}"     selected files on desktop (when run from desktop)
+"$fm_desktop_pwd"            desktop directory  (eg '/home/user/Desktop')
+
+"$fm_device"                 selected device (eg /dev/sr0)  ( same as %v )
+"$fm_device_udi"             device ID
+"$fm_device_mount_point"     device mount point if mounted  (eg /media/dvd) (%m)
+"$fm_device_label"           device volume label           ( same as %l )
+"$fm_device_fstype"          device fs_type  (eg vfat)
+"$fm_device_size"            device volume size in bytes
+"$fm_device_display_name"    device display name
+"$fm_device_icon"            icon currently shown for this device
+$fm_device_is_mounted        device is mounted  (0=no or 1=yes)
+$fm_device_is_optical        device is an optical drive  (0 or 1)
+$fm_device_is_table          a partition table  (usually a whole device)
+$fm_device_is_floppy         device is a floppy drive  (0 or 1)
+$fm_device_is_removable      device appears to be removable  (0 or 1)
+$fm_device_is_audiocd        optical device contains an audio CD  (0 or 1)
+$fm_device_is_dvd            optical device contains a DVD  (0 or 1)
+$fm_device_is_blank          device contains blank media  (0 or 1)
+$fm_device_is_mountable      device APPEARS to be mountable  (0 or 1)
+$fm_device_nopolicy          policy_noauto set (no automount)  (0 or 1)
+
+"$fm_panel3_device"          panel 3 selected device  (eg /dev/sdd1)
+"$fm_panel3_device_udi"      panel 3 device ID
+...                          (all these are the same as above for each panel)
+
+"fm_bookmark"                selected bookmark directory     ( same as %b )
+"fm_panel3_bookmark"         panel 3 selected bookmark directory
+
+"fm_task_type"               currently SELECTED task type  (eg 'run','copy')
+"fm_task_name"               selected task name  (custom menu item name)
+"fm_task_pwd"                selected task working directory ( same as %t )
+"fm_task_pid"                selected task pid               ( same as %p )
+"fm_task_command"            selected task command
+"fm_task_id"                 selected task id
+"fm_task_window"             selected task window id
+
+"$fm_command"                current command
+"$fm_value"                  menu item value             ( same as %a )
+"$fm_user"                   original user who ran this command
+"$fm_my_task"                current task's id  (see '<a href="#sockets-invoc-help">zzzfm -s help</a>')
+"$fm_my_window"              current task's window id
+"$fm_cmd_name"               menu name of current command
+"$fm_cmd_dir"                command files directory  (for read only)
+"$fm_cmd_data"               command data directory  (must create)
+                                   To create:   mkdir -p "$fm_cmd_data"
+tmp="$(fm_new_tmp)"          makes new temp directory  (destroy when done)
+                                   To destroy:  rm -rf "$tmp"
+fm_edit "FILE"               open FILE in user's configured editor
+
+$fm_import        command to import above variables
+                  This variable is exported to the runtime bash shell; you can also
+                  use it in any script run from (sourced by) your custom command script.
+
+______________________________________________
 
 
-# Script Example 5:
+Script Example 1:
+Note: a result idendical to this example No.1 could be achieved
+via a NON-scripted custom command, ala: md5sum %F
 
-#   # Keep current time in task manager list Item column
-#   # See <a href="#sockets">#sockets</a>
-#
-#   while (( 1 )); do
-#       sleep 0.7
-#       zzzfm -s <a href="#sockets-methods-set-task">set-task</a> $fm_my_task item "$(date)"
-#   done
+  ### show MD5 sums of currently selected files
+  md5sum "${fm_files[@]}"
+
+
+
+Script Example 2:
+
+  ### Show a confirmation dialog using <a href="#dialog">zzzFM Dialog</a>:
+  ### Use QUOTED eval to read variables output by zzzFM Dialog:
+  eval "`zzzfm -g --label "Are you sure?" --button yes --button no`"
+  if [[ "$dialog_pressed" == "button1" ]]; then
+      echo "User pressed Yes - take some action"
+  else
+      echo "User did NOT press Yes - abort"
+  fi
+
+
+Script Example 3:
+
+  ### Build list of filenames in panel 4:
+  i=0
+  for f in "${fm_panel4_files[@]}"; do
+      panel4_names[$i]="$(basename "$f")"
+      (( i++ ))
+  done
+  echo "${panel4_names[@]}"
+
+[[[ TODO: run the sample script and paste the output here, inline, within the docs ]]]
+
+
+Script Example 4:
+
+  ### Copy selected files to panel 2
+  ###   ensure panel 2 is visible
+  ###   and files are selected
+  ###   and current panel is not 2
+  if [ "${fm_pwd_panel[2]}" != "" ] \
+              && [ "${fm_files[0]}" != "" ] \
+              && [ "$fm_panel" != 2 ]; then
+      cp "${fm_files[@]}" "${fm_pwd_panel[2]}"
+  else
+      echo "Cannot copy to panel 2"
+      exit 1    ###  shows error if [Popup Error] enabled
+  fi
+
+
+Script Example 5:
+
+  ### Keep current time in task manager list Item column
+  ###    ~~ refer to the <a href="#sockets">#sockets</a> section of this UserManual ~~
+
+  while (( 1 )); do
+      sleep 0.7
+      zzzfm -s <a href="#sockets-methods-set-task">set-task</a> $fm_my_task item "$(date)"
+  done
+
+______________________________________________
 </pre>
 
-<b>Or, if you would like to use another script as your default</b>, save it as <a href="#programfiles-home-defscript">~/.config/zzzfm/scripts/default-script</a>.  It is recommended that you include the example variables shown above at the end of your default script.
+
+
+<b>Or, if you would like to use another script as your default</b>, save it as
+ <a href="#programfiles-home-defscript">~/.config/zzzfm/scripts/default-script</a>
 
 <p><a name="scriptdir"><b>Script Directories</b></a>
 <br>If your script requires additional files to work, they should be placed in the <a href="#designmode-command-browse-files">command directory</a>.  You can refer to this directory in your script as "$fm_cmd_dir".  Files in this directory should not be modified by the script.
@@ -3279,7 +3336,12 @@ If your command is a command-line program which produces much output, or you nee
 
 <p>When you check the Run In Terminal option, the <a href="#designmode-command-task">Run As Task</a> option will be unchecked automatically as a convenience.  If you do want both Run In Terminal and Run As Task, you can then check Run As Task as well.  If you do so, normally nothing will be shown in the output monitor.
 
-<p>Note that <b>gnome-terminal, konsole, lxterminal, and urxvtc</b> lack a --disable-server or similar option to force a new instance to be started for each terminal window.  This means that these terminals cannot generally be used successfully with a combination of both the Run In Terminal and Run As Task options, unless no other terminal window is open when the command is run.  Thus use of these terminals may prevent zzzFM working correctly in some cases.  For example, if a handler mounts a protocol in a terminal, the mount point may not be automatically opened when the mount command finishes.  If you really want to use these terminals, you can, but you should note that not all functions may work as expected.
+<p>Note that <b>gnome-terminal, konsole, lxterminal, and urxvtc </b> (and possibly other terminal emulator programs)
+lack a --disable-server or similar option to force a new instance to be started for each terminal window.
+ This means that these terminals cannot generally be used successfully with a combination of both the Run In Terminal and Run As Task options,
+  unless no other terminal window is open when the command is run.  Thus use of these terminals may prevent zzzFM working correctly in some cases.
+   For example, if a handler mounts a protocol in a terminal, the mount point may not be automatically opened when the mount command finishes.
+    If you really want to use these terminals, you can, but you should note that not all functions may work as expected.
 
 <p><a name="designmode-command-keep"><b>Keep Terminal Open</b></a><br>
 Enabled by default when using <a href="#designmode-command-terminal">Run In Terminal</a>, Keep Terminal Open will cause the terminal to stay open even after the command or program has finished.  This is useful for programs which produce some output and then exit.  Without Keep Terminal Open, the terminal window would close before you had a chance to read the output.
@@ -3305,25 +3367,35 @@ are stored in root's home (/root/.config/zzzfm), and are protected by root. (sic
  in the file browser is done as root, including opening applications.  At the very least, be sure to have an up-to-date
  system backup if running zzzFM as root.  It is your responsibility to evaluate this option for your purposes.
 
-<p>When running a custom command as another non-root user, depending on the permissions of your zzzFM config and scripts directories, this user may not have permission to access the command directory, including the command script.  To avoid this limitation, you can use a command line, or use a script which is in a mutually accessible directory.
+<p>When running a custom command as another non-root user, depending on the permissions of your zzzFM config and scripts directories,
+ this user may not have permission to access the command directory, including the command script.
+  To avoid this limitation, you can use a command line, or use a script which is in a mutually accessible directory.
 
 <p>To run a command as the current user, simply leave the Run As User field empty.
 
 
 <p><a name="designmode-props-style"/><a href="#designmode-props-style"><b>Style</b></a><br>
-The Style section of the <a href="#designmode-props-opts">Options page</a> of the <a href="#designmode-props">Item Properties</a> dialog enables you to choose whether the item acts as a normal menu item, a checkbox, a confirmation dialog, or an input dialog.
+The Style section of the <a href="#designmode-props-opts">Options page</a> of the <a href="#designmode-props">Item Properties</a> dialog
+ enables you to choose whether the item acts as a normal menu item, a checkbox, a confirmation dialog, or an input dialog.
 
 <p><a name="designmode-style-normal"><b>Normal</b></a><br>
-If your menu item's style is set to Normal, it will be displayed as a normal menu item, with an optional icon to the left, and a key shortcut to the right, or as a toolbar item.  When clicked, your command will be run immediately.  Normal is the default style for new commands.
+If your menu item's style is set to Normal, it will be displayed as a normal menu item, with an optional icon to the left, and a key
+ shortcut to the right, or as a toolbar item.  When clicked, your command will be run immediately.  Normal is the default style for new commands.
 
 <p><a name="designmode-style-checkbox"><b>Checkbox</b></a><br>
-If your menu item's style is set to Checkbox, it will be displayed as a checkbox menu item with a checkbox to the left, and a key shortcut to the right.  No icon will be displayed.  The checkbox will contain or not contain a checkmark.  Each time the user clicks the menu item, the checkbox will be toggled (if checked it will uncheck; if unchecked it will check), just like the checkbox menu items you are accustomed to.  After the checkbox is toggled, your command will be run.
+If your menu item's style is set to Checkbox, it will be displayed as a checkbox menu item with a checkbox to the left, and a key
+ shortcut to the right.  No icon will be displayed.  The checkbox will contain or not contain a checkmark.
+  Each time the user clicks the menu item, the checkbox will be toggled (if checked it will uncheck; if unchecked it will check),
+  just like the checkbox menu items you are accustomed to.  After the checkbox is toggled, your command will be run.
 
-<p>On the toolbar, a Checkbox style item will appear as an icon, and clicking it will show the button depressed.  In the Bookmarks list, an icon will be shown when a Checkbox style item is checked, and no icon will be shown when it is unchecked.
+<p>On the toolbar, a Checkbox style item will appear as an icon, and clicking it will show the button depressed.
+  In the Bookmarks list, an icon will be shown when a Checkbox style item is checked, and no icon will be shown when it is unchecked.
 
-<p>Your command can read the value of the checkbox using the variable <i>$fm_value</i> (or %a in command lines).  This will equal 1 if checked, or 0 if unchecked.  This enables your command to take different actions depending on the state of the checkbox.
+<p>Your command can read the value of the checkbox using the variable <i>$fm_value</i> (or %a in command lines).
+ This will equal 1 if checked, or 0 if unchecked.  This enables your command to take different actions depending on the state of the checkbox.
 
-<p>For example, add a new Command menu item called 'Checker'.  Then open the Properties dialog for the new item and select style Checkbox.  Enter or paste this command line on the Command page:
+<p>For example, add a new Command menu item called 'Checker'.  Then open the Properties dialog for the new item and select style Checkbox.
+ Enter or paste this command line on the Command page:
 <pre>    if [ $fm_value -eq 1 ]; then echo "Box is checked"; else echo "Box is unchecked"; fi</pre>
 
 <p>Now when you click your menu item, you will be told if the box is checked or unchecked - each time you click the item, it will change.
@@ -3347,9 +3419,10 @@ If your command's style is set to Input, it will be displayed as a normal menu i
 
 <p>Alternatively, to show a dialog while your script is running, or to easily create custom dialogs, see <a href="#dialog">zzzFM Dialog</a>.
 
-<p><a name="designmode-props-open"/><a href="#designmode-props-open"><b>Open In Browser</b></a><br>
-The Open In Browser drop-down list is located at the bottom of the Options page of the <a href="#designmode-props">Item Properties</a> dialog.
-  Each Command item has <a href="#scriptdir">several directories</a> where associated files are stored, and Open In Browser enables you to
+           <!--  drowning the reader in agonizingly overwhelming detail  -->
+<p><a name="designmode-props-open"/><a href="#designmode-props-open"><b>Open In File Browser</b></a><br>
+The 'Open In File Browser' drop-down list is located at the bottom of the Options page of the <a href="#designmode-props">Item Properties</a> dialog.
+  Each Command item has <a href="#scriptdir">several directories</a> where associated files are stored, and Open In File Browser enables you to
    conveniently open these directories.  Simply select a directory and it will be opened.
      When designing more complex scripts, this facility can be used to help manage associated files.
 
@@ -3403,7 +3476,20 @@ store persistent settings or data used by the command.  The data directory's pat
    but also a menu button which opens a drop-down list showing path history for the current browser tab.
 
 <p>When adding or pasting a custom submenu into a toolbar, it will also be displayed as a button with a smaller menu button next to it.
- The large button will have the icon (and tooltip) of the first item in the submenu (unless a custom icon is set for the submenu), and clicking
+ The large button will have the icon (and tooltip) of the first item in the submenu
+
+<!--
+    CURRENTLY, THE ABILITY TO CHOOSE A "MENU ITEM CUSTOM ICON" IS SUPPRESSED
+    TESTED ON ANTIX 19FULL, i FOUND THAT 10500 (ten thousand five hundred!) ( cumulative size on disk: 50MB+ )
+    ARE PREINSTALLED... AND, UPON CLICKING THE "CHOOSE" BUTTON... STALLS THE PROGRAM   45SECONDS WAITING FOR
+     ALL OF EM TO BE LOADED INTO THE CHOOSER DIALOG SCROLLED WINDOW.
+      (AND THE TEST SCENARIO WAS LOADING FROM FROM RAMDRIVE!)
+
+  (unless a custom icon is set for the submenu)
+
+-->
+
+  , and clicking
  this button will activate that first item.  To use other items in the submenu, click the smaller menu button.
   Design Mode can also be used within this menu by right-clicking on a menu item.  To set properties for the submenu itself, right-click on either button.
 
@@ -3820,7 +3906,12 @@ The Properties text box contains the commands which will be run if the user sele
 <a name="handlers-pro"/><a href="#handlers-pro"><font size=+2>Protocols </font></a>
 
 <a name="gui-pathbar-protohand"><p>Protocol handlers</a>
- tell zzzFM how to respond when a URL is opened or unmounted, such as mounting or unmounting a network filesystem, or showing properties for a mounted URL.  Anytime you enter a URL in zzzFM's <a href="#gui-pathbar-proto">Path Bar</a> (eg ftp://mirrors.kernel.org), open a bookmark containing a URL, select Open URL from the file menu, or specify a URL on the command-line, a handler is used to open the URL.  This handler can run another program (such as a web browser), can mount the URL as a filesystem, or take any other action you specify.
+ tell zzzFM how to respond when a URL is opened or unmounted, such as mounting or unmounting a network filesystem,
+  or showing properties for a mounted URL.
+   Anytime you enter a URL in zzzFM's <a href="#gui-pathbar-proto">Path Bar</a> (eg ftp://mirrors.kernel.org),
+   open a bookmark containing a URL, select Open URL from the file menu, or specify a URL on the command-line,
+    a handler is used to open the URL.  This handler can run another program (such as a web browser),
+     can mount the URL as a filesystem, or take any other action you specify.
 
 <p>To configure protocol handlers, right-click in the Path Bar and select Protocol Handlers, or select Settings|Protocol Handlers from the Devices menu.  Like <a href="#handlers-dev">Device Handlers</a>, protocol handlers have an Enable checkbox, a whitelist and blacklist which determine when the handler is used, and command boxes.
 
@@ -4837,7 +4928,9 @@ The files do not need to be created (they will be created automatically), unless
 <p><a name="dialog-simple-icon"/><a href="#dialog-simple-icon"><b>--icon</b></a><br>
 Usage: <code><b>--icon ICON|@FILE [COMMAND...]</b></code>
 
-<p>An --icon element packs a dialog-sized icon into the dialog.  ICON specifies an icon name (not a path - to use a path use <a href="#dialog-simple-image">--image</a> instead).  The icon is selected using your current icon theme.  For example:
+<p>An --icon element packs a dialog-sized icon into the dialog.
+ ICON specifies an icon name (not a path - to use a path use <a href="#dialog-simple-image">--image</a> instead).
+  The icon is selected using your current icon theme.  For example:
 <pre>    zzzfm -g --icon gtk-open</pre>
 
 <b>--icon also accepts a file instead of a string</b>.  For example:
@@ -4851,9 +4944,14 @@ and the icon will change to reflect the value in the file.
 <p>If a <a href="#dialog-cmd">command</a> is included, the COMMAND(s) will be run whenever the icon is clicked.  For example:
 <pre>    zzzfm -g --icon gtk-open <b>bash -c 'echo "# %n clicked %v" &gt;&amp;2'</b></pre>
 
-When you run the above command and click the icon in the dialog, a message will be written to the terminal showing what mouse button was pressed and the location of the click.  Both values are in the element's value (%v).  Note that the location is relative to the upper-left corner of the event box holding the icon, not necessarily the corner of the icon itself (pack the icon into a compact <a href="#dialog-nonvis-vbox">--vbox</a> for the latter).
+When you run the above command and click the icon in the dialog, a message will be written to the terminal showing what mouse button
+ was pressed and the location of the click.  Both values are in the element's value (%v).  Note that the location is relative to the
+  upper-left corner of the event box holding the icon, not necessarily the corner of the icon itself (pack the icon into a
+   compact <a href="#dialog-nonvis-vbox">--vbox</a> for the latter).
 
-<p>In commands, the value of an --icon element (eg %icon1) when referenced from another element will equal the icon name, while the current --icon element's value (%v) will equal the mouse button and click location.  If internal command <a href="#dialog-int-set">set</a> is used on an --icon, the icon name is changed.
+<p>In commands, the value of an --icon element (eg %icon1) when referenced from another element will equal the icon name,
+ while the current --icon element's value (%v) will equal the mouse button and click location.
+  If internal command <a href="#dialog-int-set">set</a> is used on an --icon, the icon name is changed.
 <br><br>
 
 
@@ -5983,7 +6081,9 @@ queue_state                     run|pause|queue|stop
                                 Copy|Move|Link FILE(s) or DIR(s) to TARGET dir
 <a href="#run-task-del">delete</a> [--dir DIR] FILE|DIR...  Recursively delete FILE(s) or DIR(s)
 <a href="#run-task-edit">edit</a> [--as-root] FILE           Open FILE in user's or root's text editor
-<a href="#run-task-web">web</a> URL                         Open URL in user's web browser
+
+<!--     OUCH.  No! Why would it be a good/sane idea to have a webrequest passthru the "file manager" ?!?    -->
+<!-- <a href="#run-task-web">web</a> URL                         Open URL in user's web browser   -->
 <a href="#run-task-mount">mount</a> DEVICE|URL                Mount DEVICE or URL
 <a href="#run-task-unmount">unmount</a> DEVICE|DIR              Unmount DEVICE or mount point DIR
 
@@ -6385,7 +6485,11 @@ Usage: <b>zzzfm -s run-task [OPTIONS] TASKTYPE [TYPEOPTIONS] ARGUMENTS</b>
 <p>The run-task method is used to tell a running zzzFM window to start a new task.  A task may run an asynchronous command (run and forget),
  a command run as a zzzFM task (shown in the <a href="#tasks-man">Task Manager</a> if it runs for more than one half second),
   or an internal task to copy, move, or delete files, or create links.  A task can also be used to run a command in the user's configured terminal,
-   open a file in the user's configured text editor, or open a URL in the user's web browser.
+   open a file in the user's configured text editor.
+   <!-- , or open a URL in the user's web browser. -->
+   <!--    ^----- IT IS STILL POSSIBLE FOR USERS TO MANUALLY CONSTRUCT SUCH A TASK (e.g. CALL A WRAPPER SCRIPT VS DIRECTLY LAUNCHING BROWSER)
+                  BUT,  HERE IN THE MANUAL, LET'S NOT ENCOURAGE SUCH
+   -->
 
 <p>To run a task in a particular zzzFM window, or with the <a href="#exvar">exported bash variables</a> of a particular tab, --window, --panel,
  and --tab <a href="#socket-options">OPTIONS</a> may be included.
@@ -6428,10 +6532,17 @@ cmd also accepts the following TYPEOPTIONS:
                 <td>--terminal</td>
                 <td>Run COMMAND in the user's configured terminal emulator.  This is equivalent to custom command option
                 <a href="#designmode-command-terminal">Run In Terminal</a>.  Generally this option is used <i>without</i> --task or --popup.</td>
+
+<!--  removed, then reinstated, the following bit regarding task icons  -->
         </tr><tr>
                 <td>--icon ICON</td>
                 <td>Use ICON as the task's icon in the Task Manager and popup dialog, where ICON is an icon name or absolute path.
                  Not all icons may be shown due to various issues.</td>
+
+
+
+
+
         </tr><tr>
                 <td>--dir DIR</td>
                 <td>Start COMMAND in working directory DIR.  If not specified, zzzFM's current working directory is used.</td>
@@ -6504,15 +6615,19 @@ or script must show one itself.  Also note that any specified directories are de
    This task type is always asynchronous (run and forgotten).  For example:
 <pre>    zzzfm -s run-task edit /etc/fstab</pre>
 
+<!--
+                   howdy    WHAT IS THE USE CASE HERE?
+                            RIGHT-CLICK AN IMAGEFILE AND... upload to some web API endpoint?
 
 <p><a name="run-task-web"><a href="#run-task-web">web URL</a></a>
 
 <p>The web TASKTYPE opens URL in the user's configured or auto-discovered web browser (set in Help|Options|Browser).
  This task type is always asynchronous (run and forgotten).  For example:
 <pre>    zzzfm -s run-task web http://example.com/bogus/</pre>
-          <!-- howdy bub      recheck: this feature should be unaviable during "root" usage    -->
-
 <br><br>
+-->
+          <!-- howdy bub      recheck: this feature should, AT LEAST, be unaviable during "root" usage    -->
+
 
 <p><a name="run-task-mount"><a href="#run-task-mount">mount DEVICE|URL</a></a>
 
@@ -7103,12 +7218,13 @@ In case your usage of zzzfm involves udevil, here (below) is an excerpt from the
 </p><p>By default, /etc/udevil/udevil.conf is set to permit mounting of only local fileystems and ISO files,<br>
  with mounting of networks disallowed.  To allow networks and files to be mounted, in /etc/udevil/udevil.conf set:
 
-</p><pre>    allowed_types = $KNOWN_FILESYSTEMS, file, cifs, nfs, curlftpfs, sshfs, davfs
+</p><pre>    allowed_types = $KNOWN_FILESYSTEMS, file, cifs, nfs, curlftpfs, sshfs  <!--  , davfs  -->
 </pre>
 
 You may also need to install <a href="http://linuxconfig.org/mount-remote-ftp-directory-host-locally-into-linux-filesystem">curlftpfs</a>
 or <a href="http://www.techrepublic.com/article/mount-ftp-volumes-locally-with-ftpfs/5031896">ftpfs</a> (ftp://), cifs-utils or smbfs (smb://),
- sshfs (ssh://), and <a href="http://linux.die.net/man/8/mount.davfs">davfs2</a> (http://).
+and
+ sshfs (ssh://)  <!--   , and <a href="http://linux.die.net/man/8/mount.davfs">davfs2</a> (http://).   -->
 
 <p><b>NTFS-3G</b>
 
@@ -7181,7 +7297,7 @@ EXAMPLES
         udevil mount //sys.domain/share -t smbfs    # samba share w/ smbfs
         udevil mount ssh://user@sys.domain    # sshfs with user - requires sshfs
         udevil mount -t sshfs user@sys.domain   # sshfs with user
-        udevil mount http://sys.domain/dav/    # WebDAV - requires davfs2
+<!--    udevil mount http://sys.domain/dav/    # WebDAV - requires davfs2                             -->
         udevil mount tmpfs # make a ram drive
         WARNING !!! a password on the command line is UNSAFE - see filesystem docs
 

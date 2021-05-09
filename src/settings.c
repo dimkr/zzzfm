@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <pwd.h>
 
 #include "glib-utils.h" /* for g_mkdir_with_parents() */
 #include <glib/gi18n.h>
@@ -40,14 +41,10 @@
 #include "ptk-file-menu.h"
 #include "vfs-utils.h" /* for vfs_load_icon */
 #include "ptk-location-view.h"
-#include "exo-icon-chooser-dialog.h" /* for exo_icon_chooser_dialog_new */
 
 #define CONFIG_VERSION "39"   // 1.0.6 used  "38" to recognize  whether the ~/.config/zzzfm/session file is inherited(stale)
                               //    although I have not yet modded the sessionfile syntax, during betatesting we want to disregard pre-existing sessionfile
 #define DEFAULT_TMP_DIR "/tmp"
-
-/* Dirty hack: check whether we are under LXDE or not */
-#define is_under_LXDE()     (g_getenv( "_LXSESSION_PID" ) != NULL)
 
 AppSettings app_settings = {0};
 /* const gboolean singleInstance_default = TRUE; */
@@ -162,9 +159,6 @@ XSet* xset_custom_copy( XSet* set, gboolean copy_next, gboolean delete_set );
 void xset_free( XSet* set );
 
 const char* user_manual_url = "file:///usr/share/doc/zzzfm/zzzfm-manual-en.html";   // howdy
-
-
-const char* homepage = "";    //   howdy     "https://gitlab.com/skidoo/zzzfm/";
 
 const char* enter_command_line = N_("Enter program or bash command line:\n\nUse:\n\t%%F\tselected files  or  %%f first selected file\n\t%%N\tselected filenames  or  %%n first selected filename\n\t%%d\tcurrent directory\n\t%%v\tselected device (eg /dev/sda1)\n\t%%m\tdevice mount point (eg /media/dvd);  %%l device label\n\t%%b\tselected bookmark\n\t%%t\tselected task directory;  %%p task pid\n\t%%a\tmenu item value\n\t$fm_panel, $fm_tab, $fm_command, etc");
 
@@ -307,7 +301,7 @@ static void parse_general_settings( char* line ) {
     else if ( 0 == strcmp( name, "use_si_prefix" ) )
         app_settings.use_si_prefix = atoi( value );
     else if ( 0 == strcmp( name, "no_execute" ) )
-        app_settings.no_execute = atoi( value );  //MOD
+        app_settings.no_execute = atoi( value );
     else if ( 0 == strcmp( name, "home_folder" ) )
     {
         // backwards compat
@@ -315,7 +309,7 @@ static void parse_general_settings( char* line ) {
             xset_set( "go_set_default", "s", value );
     }
     else if ( 0 == strcmp( name, "no_confirm" ) )
-        app_settings.no_confirm = atoi( value );  //MOD
+        app_settings.no_confirm = atoi( value );
     /*
     else if ( 0 == strcmp( name, "singleInstance" ) )
         app_settings.singleInstance = atoi( value );
@@ -351,12 +345,12 @@ static void parse_window_state( char* line ) {
     if ( 0 == strcmp( name, "width" ) )
     {
         v = atoi( value );
-        app_settings.width = ( v > 0 ? v : 640 );
+        app_settings.width = ( v > 0 ? v : 780 );
     }
     if ( 0 == strcmp( name, "height" ) )
     {
         v = atoi( value );
-        app_settings.height = ( v > 0 ? v : 480 );
+        app_settings.height = ( v > 0 ? v : 580 );
     }
     if ( 0 == strcmp( name, "maximized" ) )
     {
@@ -636,10 +630,10 @@ void load_settings( char* config_dir ) {
     //app_settings.terminal = NULL;
     app_settings.use_si_prefix = use_si_prefix_default;
     //app_settings.show_location_bar = show_location_bar_default;
-    //app_settings.home_folder = NULL;   //MOD
-    app_settings.no_execute = TRUE;   //MOD
-    app_settings.no_confirm = FALSE;   //MOD
-    app_settings.date_format = NULL;   //MOD
+    //app_settings.home_folder = NULL;
+    app_settings.no_execute = TRUE;
+    app_settings.no_confirm = FALSE;
+    app_settings.date_format = NULL;
 
     /* Interface */
     app_settings.always_show_tabs = always_show_tabs_default;
@@ -649,20 +643,11 @@ void load_settings( char* config_dir ) {
 
     /* Window State */
     //app_settings.splitter_pos = 160;
-    app_settings.width = 640;
-    app_settings.height = 480;
+    app_settings.width = 780;
+    app_settings.height = 580;
 
     // MOD extra settings
     xset_defaults();
-
-    /* load settings */   //MOD
-    /* Dirty hacks for LXDE */
-    /*
-    if( is_under_LXDE() )
-    {
-        show_desktop_default = app_settings.show_desktop = TRUE;   // show the desktop by default
-    }
-    */
 
     // set tmp dirs
     if ( !settings_tmp_dir )
@@ -680,8 +665,7 @@ void load_settings( char* config_dir ) {
 
     // copy /etc/xdg/zzzfm
     char* xdg_path = g_build_filename( SYSCONFDIR, "xdg", "zzzfm", NULL );
-    if ( !g_file_test( settings_config_dir, G_FILE_TEST_EXISTS )
-                && g_file_test( xdg_path, G_FILE_TEST_IS_DIR ) )
+    if ( !g_file_test( settings_config_dir, G_FILE_TEST_EXISTS )  && g_file_test( xdg_path, G_FILE_TEST_IS_DIR ) )
     {
         char* command = g_strdup_printf( "cp -r %s '%s'", xdg_path, settings_config_dir );
         printf( "COMMAND=%s\n", command );
@@ -712,16 +696,13 @@ void load_settings( char* config_dir ) {
                 path = g_build_filename( settings_config_dir, "session-prior", NULL );
                 break;
             case 3:
-                path = g_build_filename( settings_config_dir, "main.lxde", NULL );
                 break;
             case 4:
-                path = g_build_filename( settings_config_dir, "main", NULL );
+                path = g_build_filename( settings_config_dir, "main", NULL );    // howdy bub    nixme?
                 break;
             case 5:
-                path = g_build_filename( g_get_user_config_dir(), "pcmanfm", "main.lxde", NULL );
                 break;
             case 6:
-                path = g_build_filename( g_get_user_config_dir(), "pcmanfm", "main", NULL );
                 break;
             default:
                 path = NULL;
@@ -770,7 +751,7 @@ void load_settings( char* config_dir ) {
                     func = &parse_interface_settings;
                 else if ( 0 == strcmp( line + 1, "Desktop" ) )
                     func = &parse_desktop_settings;
-                else if ( 0 == strcmp( line + 1, "MOD" ) )  //MOD
+                else if ( 0 == strcmp( line + 1, "MOD" ) )
                     func = &xset_parse;
                 else
                     func = NULL;
@@ -986,8 +967,6 @@ char* save_settings( gpointer main_window_ptr ) {
         goto _save_error;
 
     path = g_build_filename( settings_config_dir, "session.tmp", NULL );
-
-    /* Dirty hacks for LXDE */
     file = fopen( path, "w" );
 
     if ( file )
@@ -1043,11 +1022,11 @@ char* save_settings( gpointer main_window_ptr ) {
 //        if ( app_settings.show_location_bar != show_location_bar_default )
 //            fprintf( file, "show_location_bar=%d\n", app_settings.show_location_bar );
 /*        if ( app_settings.home_folder )
-            fprintf( file, "home_folder=%s\n", app_settings.home_folder );  //MOD
+            fprintf( file, "home_folder=%s\n", app_settings.home_folder );
 */        if ( !app_settings.no_execute )
-            fprintf( file, "no_execute=%d\n", !!app_settings.no_execute );  //MOD
+            fprintf( file, "no_execute=%d\n", !!app_settings.no_execute );
         if ( app_settings.no_confirm )
-            fprintf( file, "no_confirm=%d\n", !!app_settings.no_confirm );  //MOD
+            fprintf( file, "no_confirm=%d\n", !!app_settings.no_confirm );
 
         fputs( "\n[Window]\n", file );
         fprintf( file, "width=%d\n", app_settings.width );
@@ -1157,6 +1136,7 @@ _save_error:
         err_msg = g_strdup_printf( _("Error saving file") );
     return err_msg;
 }
+
 
 void free_settings() {
 /*
@@ -1673,13 +1653,7 @@ void xset_free_all() {
             g_free( set->line );
         if ( set->context )
             g_free( set->context );
-        if ( set->plugin )
-        {
-            if ( set->plug_dir )
-                g_free( set->plug_dir );
-            if ( set->plug_name )
-                g_free( set->plug_name );
-        }
+
         g_slice_free( XSet, set );
     }
     g_list_free( xsets );
@@ -1727,13 +1701,7 @@ void xset_free( XSet* set ) {
         g_free( set->line );
     if ( set->context )
         g_free( set->context );
-    if ( set->plugin )
-    {
-        if ( set->plug_dir )
-            g_free( set->plug_dir );
-        if ( set->plug_name )
-            g_free( set->plug_name );
-    }
+
     xsets = g_list_remove( xsets, set );
     g_slice_free( XSet, set );
     set_last = NULL;
@@ -1767,7 +1735,6 @@ XSet* xset_new( const char* name ) {
     set->context = NULL;
     set->tool = XSET_TOOL_NOT;
     set->lock = TRUE;
-    set->plugin = FALSE;
 
     // custom ( !lock )
     set->prev = NULL;
@@ -2050,8 +2017,6 @@ XSet* xset_find_bookmark( const char* cwd, XSet** found_parent_set ) {
 */
 
 static void xset_write_set( FILE* file, XSet* set ) {
-    if ( set->plugin )
-        return;
     if ( set->s )
         fprintf( file, "%s-s=%s\n", set->name, set->s );
     if ( set->x )
@@ -2140,8 +2105,7 @@ void xset_write( FILE* file ) {
 
     for ( l = g_list_last( xsets ); l; l = l->prev )
     {
-        // hack to not save default handlers - this allows default handlers
-        // to be updated more easily
+        // hack to not save default handlers - this allows default handlers to be updated more easily
         if ( (gboolean)((XSet*)l->data)->disable &&  (char)((XSet*)l->data)->name[0] == 'h' &&  g_str_has_prefix( (char*)((XSet*)l->data)->name, "hand" ) )
             continue;
         xset_write_set( file, (XSet*)l->data );
@@ -2503,21 +2467,7 @@ gboolean xset_opener( DesktopWindow* desktop, PtkFileBrowser* file_browser, char
         if ( !((XSet*)l->data)->lock && ((XSet*)l->data)->opener == job &&  !((XSet*)l->data)->tool &&
                     ((XSet*)l->data)->menu_style != XSET_MENU_SUBMENU &&  ((XSet*)l->data)->menu_style != XSET_MENU_SEP )
         {
-            if ( ((XSet*)l->data)->desc &&  !strcmp( ((XSet*)l->data)->desc, "@plugin@mirror@" ) )
-            {
-                // is a plugin mirror
-                mset = (XSet*)l->data;
-                set = xset_is( mset->shared_key );
-                if ( !set )
-                    continue;
-            }
-            else if ( ((XSet*)l->data)->plugin && ((XSet*)l->data)->shared_key )
-            {
-                // plugin with mirror - ignore to use mirror's context only
-                continue;
-            }
-            else
-                set = mset = (XSet*)l->data;
+            set = mset = (XSet*)l->data;
 
             if ( !context )
             {
@@ -3196,19 +3146,13 @@ GtkWidget* xset_add_menuitem( DesktopWindow* desktop, PtkFileBrowser* file_brows
 
     // plugin?
     mset = xset_get_plugin_mirror( set );
-    if ( set->plugin && set->shared_key )
-    {
-        icon_name = mset->icon;
-        context = mset->context;
-    }
+
     if ( !icon_name )
         icon_name = set->icon;
     if ( !icon_name )
     {
-        if ( set->plugin )
-            icon_file = g_build_filename( set->plug_dir, set->plug_name, "icon", NULL );
-        else
-            icon_file = g_build_filename( settings_config_dir, "scripts", set->name, "icon", NULL );
+        icon_file = g_build_filename( settings_config_dir, "scripts", set->name, "icon", NULL );
+
         if ( !g_file_test( icon_file, G_FILE_TEST_EXISTS ) )
         {
             g_free( icon_file );
@@ -3370,13 +3314,13 @@ _next_item:
     return item;
 }
 
+
 char* xset_custom_get_script( XSet* set, gboolean create ) {
     char* path;
     char* old_path;
     char* cscript;
 
-    if ( ( strncmp( set->name, "cstm_", 5 ) && strncmp( set->name, "cust", 4 ) && strncmp( set->name, "hand", 4 ) )
-                       || ( create && set->plugin ) )
+    if (  ( strncmp( set->name, "cstm_", 5 ) && strncmp( set->name, "cust", 4 ) && strncmp( set->name, "hand", 4 ) )  )
         return NULL;
 
     if ( create )
@@ -3390,27 +3334,13 @@ char* xset_custom_get_script( XSet* set, gboolean create ) {
         g_free( path );
     }
 
-    if ( set->plugin )
-    {
-        path = g_build_filename( set->plug_dir, set->plug_name, "exec.sh", NULL );
-    } else {
-        path = g_build_filename( settings_config_dir, "scripts", set->name, "exec.sh", NULL );
-    }
+    path = g_build_filename( settings_config_dir, "scripts", set->name, "exec.sh", NULL );
 
     if ( !g_file_test( path, G_FILE_TEST_EXISTS ) )
     {
-        // backwards compatible < 0.7.0           //   howdy  nixme
-        if ( set->plugin )
-        {
-            cscript = g_strdup_printf( "%s.sh", set->plug_name );
-            old_path = g_build_filename( set->plug_dir, "files", cscript, NULL );
-            g_free( cscript );
-            g_free( path );
-            return old_path;
-        } else {
-            cscript = g_strdup_printf( "%s.sh", set->name );
-            old_path = g_build_filename( settings_config_dir, "scripts", cscript, NULL );
-        }
+        cscript = g_strdup_printf( "%s.sh", set->name );
+        old_path = g_build_filename( settings_config_dir, "scripts", cscript, NULL );
+
         g_free( cscript );
         if ( g_file_test( old_path, G_FILE_TEST_EXISTS ) )
         {
@@ -3437,13 +3367,18 @@ char* xset_custom_get_script( XSet* set, gboolean create ) {
         {
             FILE* file;
             int i;
-             //          howdy bub    bustass   loooooong line
+             //          howdy bub      loooooong line     270chars
             char* script_default_head = g_strdup_printf(
-             "#!%s\n$fm_import    # import file manager variables (scroll down for info)\n#\n# Enter your commands here:    ( then save this file )\n", BASHPATH );
-            const char* script_default_tail = "exit $?\n# Example variables available for use: (imported by $fm_import)\n# These variables represent the state of the file manager when command is run.\n# These variables can also be used in command lines and in the Path Bar.\n\n# \"${fm_files[@]}\"          selected files              ( same as %F )\n# \"$fm_file\"                first selected file         ( same as %f )\n# \"${fm_files[2]}\"          third selected file\n\n# \"${fm_filenames[@]}\"      selected filenames          ( same as %N )\n# \"$fm_filename\"            first selected filename     ( same as %n )\n\n# \"$fm_pwd\"                 current directory           ( same as %d )\n# \"${fm_pwd_tab[4]}\"        current directory of tab 4\n# $fm_panel                 current panel number (1-4)\n# $fm_tab                   current tab number\n\n# \"${fm_panel3_files[@]}\"   selected files in panel 3\n# \"${fm_pwd_panel[3]}\"      current directory in panel 3\n# \"${fm_pwd_panel3_tab[2]}\" current directory in panel 3 tab 2\n# ${fm_tab_panel[3]}        current tab number in panel 3\n\n# \"${fm_desktop_files[@]}\"  selected files on desktop (when run from desktop)\n# \"$fm_desktop_pwd\"         desktop directory (eg '/home/user/Desktop')\n\n# \"$fm_device\"              selected device (eg /dev/sr0)  ( same as %v )\n# \"$fm_device_udi\"          device ID\n# \"$fm_device_mount_point\"  device mount point if mounted (eg /media/dvd) (%m)\n# \"$fm_device_label\"        device volume label            ( same as %l )\n# \"$fm_device_fstype\"       device fs_type (eg vfat)\n# \"$fm_device_size\"         device volume size in bytes\n# \"$fm_device_display_name\" device display name\n# \"$fm_device_icon\"         icon currently shown for this device\n# $fm_device_is_mounted     device is mounted (0=no or 1=yes)\n# $fm_device_is_optical     device is an optical drive (0 or 1)\n# $fm_device_is_table       a partition table (usually a whole device)\n# $fm_device_is_floppy      device is a floppy drive (0 or 1)\n# $fm_device_is_removable   device appears to be removable (0 or 1)\n# $fm_device_is_audiocd     optical device contains an audio CD (0 or 1)\n# $fm_device_is_dvd         optical device contains a DVD (0 or 1)\n# $fm_device_is_blank       device contains blank media (0 or 1)\n# $fm_device_is_mountable   device APPEARS to be mountable (0 or 1)\n# $fm_device_nopolicy       policy_noauto set (no automount) (0 or 1)\n\n# \"$fm_panel3_device\"       panel 3 selected device (eg /dev/sdd1)\n# \"$fm_panel3_device_udi\"   panel 3 device ID\n# ...                       (all these are the same as above for each panel)\n\n# \"fm_bookmark\"             selected bookmark directory     ( same as %b )\n# \"fm_panel3_bookmark\"      panel 3 selected bookmark directory\n\n# \"fm_task_type\"            currently SELECTED task type (eg 'run','copy')\n# \"fm_task_name\"            selected task name (custom menu item name)\n# \"fm_task_pwd\"             selected task working directory ( same as %t )\n# \"fm_task_pid\"             selected task pid               ( same as %p )\n# \"fm_task_command\"         selected task command\n# \"fm_task_id\"              selected task id\n# \"fm_task_window\"          selected task window id\n\n# \"$fm_command\"             current command\n# \"$fm_value\"               menu item value             ( same as %a )\n# \"$fm_user\"                original user who ran this command\n# \"$fm_my_task\"             current task's id  (see 'zzzfm -s help')\n# \"$fm_my_window\"           current task's window id\n# \"$fm_cmd_name\"            menu name of current command\n# \"$fm_cmd_dir\"             command files directory (for read only)\n# \"$fm_cmd_data\"            command data directory (must create)\n#                                 To create:   mkdir -p \"$fm_cmd_data\"\n# \"$fm_plugin_dir\"          top plugin directory\n# tmp=\"$(fm_new_tmp)\"       makes new temp directory (destroy when done)\n#                                 To destroy:  rm -rf \"$tmp\"\n# fm_edit \"FILE\"            open FILE in user's configured editor\n\n# $fm_import                command to import above variables (this\n#                           variable is exxported so you can use it in any\n#                           script run from this script)\n\n\n# Script Example 1:\n\n#   # show MD5 sums of selected files\n#   md5sum \"${fm_files[@]}\"\n\n\n# Script Example 2:\n\n#   # Show a confirmation dialog using zzzFM Dialog:\n#   # file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#dialog\n#   # Use QUOTED eval to read variables output by zzzFM Dialog:\n#   eval \"`zzzfm -g --label \"Are you sure?\" --button yes --button no`\"\n#   if [[ \"$dialog_pressed\" == \"button1\" ]]; then\n#       echo \"User pressed Yes - take some action\"\n#   else\n#       echo \"User did NOT press Yes - abort\"\n#   fi\n\n\n# Script Example 3:\n\n#   # Build list of filenames in panel 4:\n#   i=0\n#   for f in \"${fm_panel4_files[@]}\"; do\n#       panel4_names[$i]=\"$(basename \"$f\")\"\n#       (( i++ ))\n#   done\n#   echo \"${panel4_names[@]}\"\n\n\n# Script Example 4:\n\n#   # Copy selected files to panel 2\n#      # make sure panel 2 is visible ?\n#      # and files are selected ?\n#      # and current panel isn't 2 ?\n#   if [ \"${fm_pwd_panel[2]}\" != \"\" ] \\\n#               && [ \"${fm_files[0]}\" != \"\" ] \\\n#               && [ \"$fm_panel\" != 2 ]; then\n#       cp \"${fm_files[@]}\" \"${fm_pwd_panel[2]}\"\n#   else\n#       echo \"Can't copy to panel 2\"\n#       exit 1    # shows error if 'Popup Error' enabled\n#   fi\n\n\n# Script Example 5:\n\n#   # Keep current time in task manager list Item column\n#   # See file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#sockets\n#   while (( 1 )); do\n#       sleep 0.7\n#       zzzfm -s set-task $fm_my_task item \"$(date)\"\n#   done\n\n\n# Bash Scripting Guide:  http://www.tldp.org/LDP/abs/html/index.html\n\n# NOTE: Additional variables or examples may be available in future versions.\n#       To see the latest list, create a new command script or see:\n#       file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#exvar\n\n";
+               "#!%s\n\n### import zzzfm variables\n### To see a list of all available variables, refer to\n###    " \
+               "file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#exvar\n$fm_import\n###\n###\n### Enter your commands here, below:     " \
+               "( then save this file )\n", BASHPATH );
+            const char* script_default_tail = "exit $?\n\n";
             //
-            //   howdy     review the above, in-app.   xcheck the reference to "plugin"
-            //
+            //   howdy     The inherited line, above, was several thousand characters long!
+            //             It served to prepopulate the dialogbox textarea element with the full var+description list which is
+            //             presented in the UserManual.  I may, instead, make the reference list available in-app
+            //             via a button which pops an additional non-modal window...
+            //             ...but, in the interim, user can click "Help" and read from THE (one) canonical reference (the UserManual)
             file = fopen( path, "w" );
 
             if ( file )
@@ -3471,16 +3406,11 @@ char* xset_custom_get_help( GtkWidget* parent, XSet* set ) {
     if ( !set || ( set && strncmp( set->name, "cstm_", 5 ) ) )
         return NULL;
 
-    if ( set->plugin )
-        dir = g_build_filename( set->plug_dir, set->plug_name, NULL );
-    else
+    dir = g_build_filename( settings_config_dir, "scripts", set->name, NULL );
+    if ( !g_file_test( dir, G_FILE_TEST_EXISTS ) )
     {
-        dir = g_build_filename( settings_config_dir, "scripts", set->name, NULL );
-        if ( !g_file_test( dir, G_FILE_TEST_EXISTS ) )
-        {
-            g_mkdir_with_parents( dir, 0700 );
-            chmod( dir, 0700 );
-        }
+        g_mkdir_with_parents( dir, 0700 );
+        chmod( dir, 0700 );
     }
 
     char* names[] = { "README", "readme", "README.TXT", "README.txt", "readme.txt", "README.MKD", "README.mkd", "readme.mkd" };
@@ -3495,14 +3425,8 @@ char* xset_custom_get_help( GtkWidget* parent, XSet* set ) {
     }
 
     if ( !path )
-    {
-        if ( set->plugin )
-        {
-            xset_msg_dialog( parent, 0, _("Help Not Available"), NULL, 0, _("This item does not have an associated README file."), NULL, NULL );
-            g_free( dir );
-            return NULL;
-        }                                       //    howdy bub   fantastic !
-        else if ( xset_msg_dialog( parent, GTK_MESSAGE_QUESTION, _( "Create README" ), NULL, GTK_BUTTONS_YES_NO,
+    {                                      //    howdy bub   fantastic !
+        if ( xset_msg_dialog( parent, GTK_MESSAGE_QUESTION, _( "Create README" ), NULL, GTK_BUTTONS_YES_NO,
                               _( "No README file exists for this command.\n\n"
                               "Create a default README file for you to fill in?" ), NULL, NULL ) != GTK_RESPONSE_YES )
         {
@@ -3515,8 +3439,8 @@ char* xset_custom_get_help( GtkWidget* parent, XSet* set ) {
         FILE* file = fopen( path, "w" );
         if ( file )
         {
-            // write default readme           howdy bub         bustass line, 3000+ characters long
-            fputs( "README\n------\n\nFill this text file with detailed information regarding this command.  For\ncontext-sensitive help within zzzFM, this file must be named README,\nREADME.txt, or README.mkd.\n\nIf you plan to distribute this command as a plugin, the following information\nis recommended:\n\n\nCommand Name:\n\nRelease Version and Date:\n\nPlugin Homepage or Download Link:\n\nAuthor's Contact Information or Feedback Instructions:\n\nDependencies or Requirements:\n\nDescription:\n\nInstructions For Use:\n\nCopyright and License Information:\n\n    Copyright (C) YEAR AUTHOR <EMAIL>\n\n    This program is free software: you can redistribute it and/or modify\n    it under the terms of the GNU General Public License as published by\n    the Free Software Foundation, either version 3 of the License, or\n    (at your option) any later version.\n\n    This program is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License\n    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\n", file );
+            // write default readme           howdy bub         bustass line, 400+ characters long
+            fputs( "README\n------\n\nFill this text file with detailed information regarding this command.  To enable\ncontext-sensitive help within zzzFM for this custom command, this file must be named README,\nREADME.txt, or README.mkd.\n\nThe following information\nis recommended:\n\n\nCommand Name:\n\nDependencies or Requirements:\n\nDescription:\n\nInstructions For Use:\n\n", file );
             fclose( file );
         }
         chmod( path, S_IRUSR | S_IWUSR );
@@ -3623,36 +3547,15 @@ void xset_custom_copy_files( XSet* src, XSet* dest ) {
     if ( cscript )
         g_free( cscript );
 
-    if ( src->plugin )
-        path_src = g_build_filename( src->plug_dir, src->plug_name, NULL );
-    else
-        path_src = g_build_filename( settings_config_dir, "scripts", src->name, NULL );
+    path_src = g_build_filename( settings_config_dir, "scripts", src->name, NULL );
 //printf("    path_src=%s\n", path_src );
 
     if ( !g_file_test( path_src, G_FILE_TEST_EXISTS ) )
     {
 //printf("    path_src !EXISTS\n");
-        if ( !src->plugin )
-        {
-            command = NULL;
-        } else {
-            // plugin backwards compat ?
-            cscript = xset_custom_get_script( src, FALSE );
-            if ( cscript && g_file_test( cscript, G_FILE_TEST_EXISTS ) )
-            {
-                path_dest = g_build_filename( settings_config_dir, "scripts", dest->name, NULL );
-                g_mkdir_with_parents( path_dest, 0700 );
-                chmod( path_dest, 0700 );
-                g_free( path_dest );
-                path_dest = g_build_filename( settings_config_dir, "scripts", dest->name, "exec.sh", NULL );
-                command = g_strdup_printf( "cp %s %s", cscript, path_dest );
-                g_free( cscript );
-            } else {
-                if ( cscript )
-                    g_free( cscript );
-                command = NULL;
-            }
-        }
+
+        command = NULL;
+
     } else {
 //printf("    path_src EXISTS\n");
         path_dest = g_build_filename( settings_config_dir, "scripts", NULL );
@@ -3724,10 +3627,7 @@ void xset_custom_copy_files( XSet* src, XSet* dest ) {
 
 XSet* xset_custom_copy( XSet* set, gboolean copy_next, gboolean delete_set ) {
 //printf("\nxset_custom_copy( %s, %s, %s)\n", set->name, copy_next ? "TRUE" : "FALSE", delete_set ? "TRUE" : "FALSE" );
-    XSet* mset = set;
-    // if a plugin with a mirror, get the mirror
-    if ( set->plugin && set->shared_key )
-        mset = xset_get_plugin_mirror( set );
+    XSet* mset = set;   // howdy flea
 
     XSet* newset = xset_custom_new();
     newset->menu_label = g_strdup( set->menu_label );
@@ -3750,10 +3650,7 @@ XSet* xset_custom_copy( XSet* set, gboolean copy_next, gboolean delete_set ) {
     newset->keep_terminal = mset->keep_terminal;
     newset->scroll_lock = mset->scroll_lock;
 
-    if ( !mset->icon && set->plugin )
-        newset->icon = g_strdup( set->icon );
-    else
-        newset->icon = g_strdup( mset->icon );
+    newset->icon = g_strdup( mset->icon );
 
     xset_custom_copy_files( set, newset );
     newset->tool = set->tool;
@@ -3784,920 +3681,11 @@ XSet* xset_custom_copy( XSet* set, gboolean copy_next, gboolean delete_set ) {
 }
 
 
-void clean_plugin_mirrors() {   // remove plugin mirrors for non-existent plugins
-    GList* l;
-    XSet* set;
-    XSet* set_key;
-    gboolean redo = TRUE;
-
-    while ( redo )
-    {
-        redo = FALSE;
-        for ( l = xsets; l; l = l->next )
-        {
-            if ( ((XSet*)l->data)->desc &&  !strcmp( ((XSet*)l->data)->desc, "@plugin@mirror@" ) )
-            {
-                set = (XSet*)l->data;
-                if ( !set->shared_key ||  ( set->shared_key && !xset_is( set->shared_key ) ) )
-                {
-                    xset_free( set );
-                    redo = TRUE;
-                    break;
-                }
-            }
-        }
-    }
-
-    // remove "mydat" pluggin-data for non-existent xsets
-    const char* name;
-    char* command;
-    char* stdout;
-    char* stderr;
-    GDir* dir;
-    char* path = g_build_filename( settings_config_dir, "mydat", NULL );
-_redo:
-    dir = g_dir_open( path, 0, NULL );
-    if ( dir )
-    {
-        while ( name = g_dir_read_name( dir ) )
-        {
-            if ( strlen( name ) == 13 && g_str_has_prefix( name, "cstm_" )   && !xset_is( name ) )
-            {
-                g_dir_close( dir );
-                command = g_strdup_printf( "rm -rf %s/%s", path, name );
-                stderr = stdout = NULL;
-                printf( "COMMAND=%s\n", command );
-                g_spawn_command_line_sync( command, NULL, NULL, NULL, NULL );
-                g_free( command );
-                if ( stderr )
-                    g_free( stderr );
-                if ( stdout )
-                    g_free( stdout );
-                goto _redo;
-            }
-        }
-        g_dir_close( dir );
-    }
-    g_free( path );
-}
-
-void xset_set_plugin_mirror( XSet* pset ) {
-    XSet* set;
-    GList* l;
-
-    for ( l = xsets; l; l = l->next )
-    {
-        if ( ((XSet*)l->data)->desc &&  !strcmp( ((XSet*)l->data)->desc, "@plugin@mirror@" ) )
-        {
-            set = (XSet*)l->data;
-            if ( set->parent && set->child )
-            {
-                if ( !strcmp( set->child, pset->plug_name ) &&  !strcmp( set->parent, pset->plug_dir ) )
-                {
-                    if ( set->shared_key )
-                        g_free( set->shared_key );
-                    set->shared_key = g_strdup( pset->name );
-                    if ( pset->shared_key )
-                        g_free( pset->shared_key );
-                    pset->shared_key = g_strdup( set->name );
-                    return;
-                }
-            }
-        }
-
-    }
-}
-
 XSet* xset_get_plugin_mirror( XSet* set ) {
-    // plugin mirrors are custom xsets that save the user's key, icon
-    // and run prefs for the plugin, if any
-    if ( !set->plugin )
-        return set;
-    if ( set->shared_key )
-        return xset_get( set->shared_key );
-
-    XSet* newset = xset_custom_new();
-    newset->desc = g_strdup( "@plugin@mirror@" );
-    newset->parent = g_strdup( set->plug_dir );
-    newset->child = g_strdup( set->plug_name );
-    newset->shared_key = g_strdup( set->name );  // this will not be saved
-    newset->task = set->task;
-    newset->task_pop = set->task_pop;
-    newset->task_err = set->task_err;
-    newset->task_out = set->task_out;
-    newset->in_terminal = set->in_terminal;
-    newset->keep_terminal = set->keep_terminal;
-    newset->scroll_lock = set->scroll_lock;
-    newset->context = g_strdup( set->context );
-    newset->opener = set->opener;
-    newset->b = set->b;
-    newset->s = g_strdup( set->s );
-    set->shared_key = g_strdup( newset->name );
-    return newset;
-}
-
-gint compare_plugin_sets( XSet* a, XSet* b ) {
-    return g_utf8_collate( a->menu_label, b->menu_label );
-}
-
-GList* xset_get_plugins( gboolean included ) {   // return list of plugin sets (included or not ) sorted by menu_label
-    GList* l;
-    GList* plugins = NULL;
-    XSet* set;
-
-    for ( l = xsets; l; l = l->next )
-    {
-        if ( ((XSet*)l->data)->plugin && ((XSet*)l->data)->plugin_top &&  ((XSet*)l->data)->plug_dir )
-        {
-            set = (XSet*)l->data;
-            if ( strstr( set->plug_dir, "/included/" ) )
-            {
-                if ( included )
-                    plugins = g_list_prepend( plugins, l->data );
-            }
-            else if ( !included )
-                plugins = g_list_prepend( plugins, l->data );
-        }
-    }
-    plugins = g_list_sort( plugins, (GCompareFunc)compare_plugin_sets );
-    return plugins;
+    return set;    //  howdy flea shite
 }
 
 
-XSet* xset_get_by_plug_name( const char* plug_dir, const char* plug_name ) {
-    GList* l;
-    if ( !plug_name )
-        return NULL;
-
-    for ( l = xsets; l; l = l->next )
-    {
-        if ( ((XSet*)l->data)->plugin
-                && !strcmp( plug_name, ((XSet*)l->data)->plug_name )
-                && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
-            return l->data;
-    }
-
-    // add new
-    XSet* set = xset_new( xset_custom_new_name() );
-    set->plug_dir = g_strdup( plug_dir );
-    set->plug_name = g_strdup( plug_name );
-    set->plugin = TRUE;
-    set->lock = FALSE;
-    xsets = g_list_append( xsets, set );
-    return set;
-}
-
-void xset_parse_plugin( const char* plug_dir, char* line, int use ) {
-    char* sep = strchr( line, '=' );
-    char* name;
-    char* value;
-    XSet* set;
-    XSet* set2;
-    const char* prefix;
-    const char* handler_prefix[] =
-    {
-        "hand_arc_",
-        "hand_fs_",
-        "hand_net_",
-        "hand_f_"
-    };
-
-    if ( !sep )
-        return ;
-    name = line;
-    value = sep + 1;
-    *sep = '\0';
-    sep = strchr( name, '-' );
-    if ( !sep )
-        return ;
-    char* var = sep + 1;
-    *sep = '\0';
-
-    if ( use < PLUGIN_USE_BOOKMARKS )
-    {
-        // handler
-        prefix = handler_prefix[use];
-    }
-    else
-        prefix = "cstm_";
-
-    if ( g_str_has_prefix( name, prefix ) )
-    {
-        set = xset_get_by_plug_name( plug_dir, name );
-        xset_set_set( set, var, value );
-
-        if ( use >= PLUGIN_USE_BOOKMARKS )
-        {
-            // map plug names to new set names (does not apply to handlers)
-            if ( set->prev && !strcmp( var, "prev" ) )
-            {
-                if ( !strncmp( set->prev, "cstm_", 5 ) )
-                {
-                    set2 = xset_get_by_plug_name( plug_dir, set->prev );
-                    g_free( set->prev );
-                    set->prev = g_strdup( set2->name );
-                } else {
-                    g_free( set->prev );
-                    set->prev = NULL;
-                }
-            }
-            else if ( set->next && !strcmp( var, "next" ) )
-            {
-                if ( !strncmp( set->next, "cstm_", 5 ) )
-                {
-                    set2 = xset_get_by_plug_name( plug_dir, set->next );
-                    g_free( set->next );
-                    set->next = g_strdup( set2->name );
-                } else {
-                    g_free( set->next );
-                    set->next = NULL;
-                }
-            }
-            else if ( set->parent && !strcmp( var, "parent" ) )
-            {
-                if ( !strncmp( set->parent, "cstm_", 5 ) )
-                {
-                    set2 = xset_get_by_plug_name( plug_dir, set->parent );
-                    g_free( set->parent );
-                    set->parent = g_strdup( set2->name );
-                } else {
-                    g_free( set->parent );
-                    set->parent = NULL;
-                }
-            }
-            else if ( set->child && !strcmp( var, "child" ) )
-            {
-                if ( !strncmp( set->child, "cstm_", 5 ) )
-                {
-                    set2 = xset_get_by_plug_name( plug_dir, set->child );
-                    g_free( set->child );
-                    set->child = g_strdup( set2->name );
-                } else {
-                    g_free( set->child );
-                    set->child = NULL;
-                }
-            }
-        }
-    }
-}
-
-
-XSet* xset_import_plugin( const char* plug_dir, int* use ) {
-    char line[ 2048 ];
-    char* section_name;
-    gboolean func;
-    GList* l;
-    XSet* set;
-
-    if ( use )
-        *use = PLUGIN_USE_NORMAL;
-
-    // clear all existing plugin sets with this plug_dir  ( keep the mirrors to retain user prefs )
-    gboolean redo = TRUE;
-    while ( redo )
-    {
-        redo = FALSE;
-        for ( l = xsets; l; l = l->next )
-        {
-            if ( ((XSet*)l->data)->plugin  && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
-            {
-                xset_free( (XSet*)l->data );
-                redo = TRUE;  // search list from start again due to changed list
-                break;
-            }
-        }
-    }
-
-    // read plugin file into xsets
-    gboolean plugin_good = FALSE;
-    char* plugin = g_build_filename( plug_dir, "plugin", NULL );
-    FILE* file = fopen( plugin, "r" );
-    if ( !file )
-    {
-        g_warning( "Error reading plugin file %s", plugin );
-        return NULL;
-    }
-
-    while ( fgets( line, sizeof( line ), file ) )
-    {
-        strtok( line, "\r\n" );
-        if ( ! line[ 0 ] )
-            continue;
-        if ( line[ 0 ] == '[' )
-        {
-            section_name = strtok( line, "]" );
-            if ( 0 == strcmp( line + 1, "Plugin" ) )
-                func = TRUE;
-            else
-                func = FALSE;
-            continue;
-        }
-        if ( func )
-        {
-            if ( use && *use == PLUGIN_USE_NORMAL )
-            {
-                if ( g_str_has_prefix( line, "main_book-child=" ) )
-                {
-                    // This plugin is an export of all bookmarks
-                    *use = PLUGIN_USE_BOOKMARKS;
-                }
-                else if ( g_str_has_prefix( line, "hand_" ) )
-                {
-                    if ( g_str_has_prefix( line, "hand_fs_" ) )
-                        *use = PLUGIN_USE_HAND_FS;
-                    else if ( g_str_has_prefix( line, "hand_arc_" ) )
-                        *use = PLUGIN_USE_HAND_ARC;
-                    else if ( g_str_has_prefix( line, "hand_net_" ) )
-                        *use = PLUGIN_USE_HAND_NET;
-                    else if ( g_str_has_prefix( line, "hand_f_" ) )
-                        *use = PLUGIN_USE_HAND_FILE;
-                }
-            }
-            xset_parse_plugin( plug_dir, line, use ? *use : PLUGIN_USE_NORMAL );
-            if ( !plugin_good )
-                plugin_good = TRUE;
-        }
-    }
-    fclose( file );
-
-    // clean plugin sets, set type
-    gboolean top = TRUE;
-    XSet* rset = NULL;
-    for ( l = xsets; l; l = l->next )
-    {
-        if ( ((XSet*)l->data)->plugin  && !strcmp( plug_dir, ((XSet*)l->data)->plug_dir ) )
-        {
-            set = (XSet*)l->data;
-            set->key = set->keymod = set->tool = set->opener = 0;
-            xset_set_plugin_mirror( set );
-            if ( set->plugin_top = top )
-            {
-                top = FALSE;
-                rset = set;
-            }
-        }
-    }
-    return plugin_good ? rset : NULL;
-}
-
-typedef struct _PluginData
-{
-    FMMainWindow* main_window;
-    GtkWidget* handler_dlg;
-    char* plug_dir;
-    XSet* set;
-    int job;
-}PluginData;
-
-void on_install_plugin_cb( VFSFileTask* task, PluginData* plugin_data ) {
-    XSet* set;
-    char* msg;
-//printf("on_install_plugin_cb\n");
-    if ( plugin_data->job == PLUGIN_JOB_REMOVE ) // uninstall
-    {
-        if ( !g_file_test( plugin_data->plug_dir, G_FILE_TEST_EXISTS ) )
-        {
-            xset_custom_delete( plugin_data->set, FALSE );
-            clean_plugin_mirrors();
-        }
-    } else {
-        char* plugin = g_build_filename( plugin_data->plug_dir, "plugin", NULL );
-        if ( g_file_test( plugin, G_FILE_TEST_EXISTS ) )
-        {
-            int use = PLUGIN_USE_NORMAL;
-            set = xset_import_plugin( plugin_data->plug_dir, &use );
-            if ( !set )
-            {
-                msg = g_strdup_printf( "The imported plugin folder does not contain a valid plugin.\n\n(%s/)", plugin_data->plug_dir );
-                xset_msg_dialog( GTK_WIDGET( plugin_data->main_window ), GTK_MESSAGE_ERROR, "Invalid Plugin", NULL, 0, msg, NULL, NULL );
-                g_free( msg );
-            }
-            else if ( use == PLUGIN_USE_BOOKMARKS )
-            {
-                // bookmarks
-                if ( plugin_data->job != PLUGIN_JOB_COPY || !plugin_data->set )
-                {
-                    // This dialog should never be seen - failsafe
-                    GDK_THREADS_ENTER(); // due to dialog run causes low level thread lock
-                    //                                                         v--------  howdy bub     recheck to confirm that this is, in fact, never reached
-                    xset_msg_dialog( GTK_WIDGET( plugin_data->main_window ), GTK_MESSAGE_ERROR, "Bookmarks",
-                                        NULL, 0, "This plugin file contains exxported bookmarks which cannot be installed or imported to the design clipboard.\n\nYou can import these directly into a menu (select New|Import from the Design Menu).", NULL, NULL );
-                    GDK_THREADS_LEAVE();
-                } else {
-                    // copy all bookmarks into menu
-                    // paste after insert_set (plugin_data->set)
-                    XSet* newset = xset_custom_copy( set, TRUE, TRUE );
-                    // get last bookmark and toolbar if needed
-                    set = newset;
-                    do
-                    {
-                        if ( plugin_data->set->tool )
-                            set->tool = XSET_TOOL_CUSTOM;
-                        else
-                            set->tool = XSET_TOOL_NOT;
-                        if ( !set->next )
-                            break;
-                    }
-                    while ( set = xset_get( set->next ) );
-                    // set now points to last bookmark
-                    newset->prev = g_strdup( plugin_data->set->name );
-                    set->next = plugin_data->set->next;  //steal
-                    if ( plugin_data->set->next )
-                    {
-                        XSet* set_next = xset_get( plugin_data->set->next );
-                        g_free( set_next->prev );
-                        set_next->prev = g_strdup( set->name ); // last bookmark
-                    }
-                    plugin_data->set->next = g_strdup( newset->name );
-                    // find parent
-                    set = newset;
-                    while ( set->prev )
-                        set = xset_get( set->prev );
-                    if ( set->parent )
-                        main_window_bookmark_changed( set->parent );
-                }
-            }
-            else if ( use < PLUGIN_USE_BOOKMARKS )
-            {
-                // handler
-                set->plugin_top = FALSE;  // prevent being added to Plugins menu
-                if ( plugin_data->job == PLUGIN_JOB_INSTALL )
-                {
-                    // This dialog should never be seen - failsafe
-                    GDK_THREADS_ENTER(); // due to dialog run causes low level thread lock
-                    xset_msg_dialog( plugin_data->main_window ?  GTK_WIDGET( plugin_data->main_window ) : NULL, GTK_MESSAGE_ERROR, "Handler Plugin",
-                                NULL, 0, "This file contains a handler plugin which cannot be installed as a plugin.\n\nYou can import handlers from a handler configuration window, or use Plugins|Import.", NULL, NULL );
-                    GDK_THREADS_LEAVE();
-                }
-                else
-                    ptk_handler_import( use, plugin_data->handler_dlg, set );
-            }
-            else if ( plugin_data->job == PLUGIN_JOB_COPY )
-            {
-                // copy
-                set->plugin_top = FALSE;  // don't show tmp plugin in Plugins menu
-                if ( plugin_data->set )
-                {
-                    // paste after insert_set (plugin_data->set)
-                    XSet* newset = xset_custom_copy( set, FALSE, TRUE );
-                    newset->prev = g_strdup( plugin_data->set->name );
-                    newset->next = plugin_data->set->next;  //steal
-                    if ( plugin_data->set->next )
-                    {
-                        XSet* set_next = xset_get( plugin_data->set->next );
-                        g_free( set_next->prev );
-                        set_next->prev = g_strdup( newset->name );
-                    }
-                    plugin_data->set->next = g_strdup( newset->name );
-                    if ( plugin_data->set->tool )
-                        newset->tool = XSET_TOOL_CUSTOM;
-                    else
-                        newset->tool = XSET_TOOL_NOT;
-                    main_window_bookmark_changed( newset->name );
-                } else {
-                    // place on design clipboard
-                    set_clipboard = set;
-                    clipboard_is_cut = FALSE;
-                    if ( xset_get_b( "plug_cverb" ) || plugin_data->handler_dlg )
-                    {
-                        char* label = clean_label( set->menu_label, FALSE, FALSE );
-                        if ( geteuid() == 0 )
-                            msg = g_strdup_printf( "The '%s' plugin has been copied to the design clipboard.  Use View|Design Mode to paste it into a menu.\n\nBecause it has not been installed, this plugin will not appear in the Plugins menu.", label );
-                        else
-                            msg = g_strdup_printf( "The '%s' plugin has been copied to the design clipboard.  Use View|Design Mode to paste it into a menu.\n\nBecause it has not been installed, this plugin will not appear in the Plugins menu, and its contents are not protected by root (once pasted it will be saved with normal ownership).\n\nIf this plugin contains su commands or will be run as root, installing it to and running it only from the Plugins menu is recommended to improve your system security.", label );
-                        g_free( label );
-                        GDK_THREADS_ENTER(); // due to dialog run causes low level thread lock
-                        xset_msg_dialog( GTK_WIDGET( plugin_data->main_window ), 0, "Copy Plugin", NULL, 0, msg, NULL, NULL );
-                        GDK_THREADS_LEAVE();
-                        g_free( msg );
-                    }
-                }
-            }
-            clean_plugin_mirrors();
-        }
-        g_free( plugin );
-    }
-    g_free( plugin_data->plug_dir );
-    g_slice_free( PluginData, plugin_data );
-}
-
-
-void xset_remove_plugin( GtkWidget* parent, PtkFileBrowser* file_browser, XSet* set ) {
-    char* msg;
-
-    if ( !file_browser || !set || !set->plugin_top || !set->plug_dir )
-        return;
-
-    if ( strstr( set->plug_dir, "/included/" ) )
-        return;   // failsafe - don't allow removal of included
-
-    if ( !app_settings.no_confirm )
-    {
-        char* label = clean_label( set->menu_label, FALSE, FALSE );
-        msg = g_strdup_printf( "Uninstall the '%s' plugin?\n\n( %s )", label, set->plug_dir );
-        g_free( label );
-        if ( xset_msg_dialog( parent, GTK_MESSAGE_WARNING, "Uninstall Plugin", NULL, GTK_BUTTONS_YES_NO, msg, NULL, NULL ) != GTK_RESPONSE_YES )
-        {
-            g_free( msg );
-            return;
-        }
-        g_free( msg );
-    }
-    PtkFileTask* task = ptk_file_exec_new( "Uninstall Plugin", NULL, parent, file_browser->task_view );
-
-    char* plug_dir_q = bash_quote( set->plug_dir );
-
-    task->task->exec_command = g_strdup_printf( "rm -rf %s", plug_dir_q );
-    g_free( plug_dir_q );
-    task->task->exec_sync = TRUE;
-    task->task->exec_popup = FALSE;
-    task->task->exec_show_output = FALSE;
-    task->task->exec_show_error = TRUE;
-    task->task->exec_export = FALSE;
-    task->task->exec_as_user = g_strdup( "root" );
-
-    PluginData* plugin_data = g_slice_new0( PluginData );
-    plugin_data->main_window = NULL;
-    plugin_data->plug_dir = g_strdup( set->plug_dir );
-    plugin_data->set = set;
-    plugin_data->job = PLUGIN_JOB_REMOVE;
-    task->complete_notify = (GFunc)on_install_plugin_cb;
-    task->user_data = plugin_data;
-
-    ptk_file_task_run( task );
-}
-
-
-
-void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg, const char* path, const char* plug_dir, int type, int job, XSet* insert_set ) {
-
-    // howdy bub!
-    return;
-
-
-    char* wget;
-    char* file_path;
-    char* file_path_q;
-    char* own;
-    char* rem = g_strdup( "" );
-    char* compression = "z";
-
-    FMMainWindow* main_window = (FMMainWindow*)main_win;
-    // task
-    PtkFileTask* task = ptk_file_exec_new( "Install Plugin", NULL, main_win ? GTK_WIDGET( main_window ) : NULL, main_win ? main_window->task_view : NULL );
-
-    char* plug_dir_q = bash_quote( plug_dir );
-
-    if ( type == 0 )
-    {
-        // file
-        wget = g_strdup( "" );
-        if ( g_str_has_suffix( path, ".tar.xz" ) )
-            //TODO: OmegaPhil reports -J is never required for any compression
-            compression = "J";
-        file_path_q = bash_quote( path );
-    } else {
-        // url
-        if ( g_str_has_suffix( path, ".tar.xz" ) )
-        {
-            file_path = g_build_filename( plug_dir, "plugin-tmp.tar.xz", NULL );
-            compression = "J";
-        }
-        else
-            file_path = g_build_filename( plug_dir, "plugin-tmp.tar.gz", NULL );
-        file_path_q = bash_quote( file_path );
-        g_free( file_path );
-        char* url_q = bash_quote( path );
-        wget = "";   //   hoedy bub!   g_strdup_printf( "&& wget --tries=1 --connect-timeout=30 -O %s %s ", file_path_q, url_q );
-        g_free( url_q );
-        g_free( rem );
-        rem = g_strdup_printf( "; rm -f %s", file_path_q );
-    }
-
-    if ( job == PLUGIN_JOB_INSTALL )
-    {
-        // install
-        own = g_strdup_printf( "chown -R root:root %s && chmod -R go+rX-w %s", plug_dir_q, plug_dir_q );
-        task->task->exec_as_user = g_strdup( "root" );
-    } else {
-        // copy to clipboard or import to menu
-        own = g_strdup_printf( "chmod -R go+rX-w %s", plug_dir_q );
-    }
-
-    char* book = "";
-    if ( insert_set && !strcmp( insert_set->name, "main_book" ) )
-    {
-        // import bookmarks to end
-        XSet* set = xset_get( "main_book" );
-        set = xset_is( set->child );
-        while ( set && set->next )
-            set = xset_is( set->next );
-        if ( set )
-            insert_set = set;
-        else
-            insert_set = NULL;   // failsafe
-    }
-    if ( job == PLUGIN_JOB_INSTALL || !insert_set )
-    {
-        // prevent install of exxported bookmarks or handler as plugin or design clipboard
-        if ( job == PLUGIN_JOB_INSTALL )
-            book = " || [ -e main_book ] || [ -d hand_* ]";
-        else
-            book = " || [ -e main_book ]";
-    }
-
-    task->task->exec_command = g_strdup_printf( "rm -rf %s ; mkdir -p %s && cd %s %s&& tar --exclude='/*' --keep-old-files -x%sf %s ; err=$?; if [ $err -ne 0 ] || [ ! -e plugin ]%s; then rm -rf %s ; echo 'Error installing plugin (invalid plugin file?)'; exit 1 ; fi ; %s %s",
-                                plug_dir_q, plug_dir_q, plug_dir_q, wget, compression, file_path_q, book, plug_dir_q, own, rem );
-    g_free( plug_dir_q );
-    g_free( file_path_q );
-    g_free( own );
-    g_free( rem );
-    task->task->exec_sync = TRUE;
-    task->task->exec_popup = FALSE;
-    task->task->exec_show_output = FALSE;
-    task->task->exec_show_error = TRUE;
-    task->task->exec_export = FALSE;
-
-    PluginData* plugin_data = g_slice_new0( PluginData );
-    plugin_data->main_window = main_window;
-    plugin_data->handler_dlg = handler_dlg;
-    plugin_data->plug_dir = g_strdup( plug_dir );
-    plugin_data->job = job;
-    plugin_data->set = insert_set;
-    task->complete_notify = (GFunc)on_install_plugin_cb;
-    task->user_data = plugin_data;
-
-    ptk_file_task_run( task );
-}
-
-
-
-
-gboolean xset_custom_export_files( XSet* set, char* plug_dir ) {
-
-    // howdy bub!
-    return FALSE;
-
-
-    char* cscript;
-    char* path_src;
-    char* path_dest;
-    char* command;
-    char* stdout = NULL;
-    char* stderr = NULL;
-
-    // do this for backwards compat - will copy old script
-    cscript = xset_custom_get_script( set, FALSE );
-    if ( cscript )
-        g_free( cscript );
-
-    if ( set->plugin )
-    {
-        path_src = g_build_filename( set->plug_dir, set->plug_name, NULL );
-        path_dest = g_build_filename( plug_dir, set->plug_name, NULL );
-    } else {
-        path_src = g_build_filename( settings_config_dir, "scripts", set->name, NULL );
-        path_dest = g_build_filename( plug_dir, set->name, NULL );
-    }
-
-    if ( !( g_file_test( path_src, G_FILE_TEST_EXISTS ) &&  dir_has_files( path_src ) ) )
-    {
-        if ( !strcmp( set->name, "main_book" ) )
-        {
-            // exporting all bookmarks - create empty main_book dir
-            g_mkdir_with_parents( path_dest, 0755 );
-            if ( !g_file_test( path_dest, G_FILE_TEST_EXISTS ) )
-            {
-                g_free( path_src );
-                g_free( path_dest );
-                return FALSE;
-            }
-        }
-        // skip empty or missing dirs
-        g_free( path_src );
-        g_free( path_dest );
-        return TRUE;
-        /*
-        g_mkdir_with_parents( path_dest, 0755 );
-        if ( !g_file_test( path_dest, G_FILE_TEST_EXISTS ) )
-        {
-            g_free( path_src );
-            g_free( path_dest );
-            return FALSE;
-        }
-        chmod( path_dest, 0755 );
-        if ( !set->plugin )
-        {
-            g_free( path_src );
-            g_free( path_dest );
-            return TRUE;
-        }
-        // plugin backwards compat ?
-        cscript = xset_custom_get_script( set, FALSE );
-        if ( cscript && g_file_test( cscript, G_FILE_TEST_EXISTS ) )
-        {
-            command = g_strdup_printf( "cp -a %s %s/", cscript, path_dest );
-            g_free( cscript );
-        } else {
-            if ( cscript )
-                g_free( cscript );
-            g_free( path_src );
-            g_free( path_dest );
-            return TRUE;
-        }
-        */
-    } else {
-        command = g_strdup_printf( "cp -a %s %s", path_src, path_dest );
-    }
-    g_free( path_src );
-    g_free( path_dest );
-    printf( "COMMAND=%s\n", command );
-    gboolean ret = g_spawn_command_line_sync( command, NULL, NULL, NULL, NULL );
-    g_free( command );
-    if ( stderr )
-        g_free( stderr );
-    if ( stdout )
-        g_free( stdout );
-
-    return ret;
-}
-
-
-gboolean xset_custom_export_write( FILE* file, XSet* set, char* plug_dir ) {   // recursively write set, submenu sets, and next sets
-
-    // howdy bub!
-    return FALSE;
-
-
-    xset_write_set( file, set );
-    if ( !xset_custom_export_files( set, plug_dir ) )
-        return FALSE;
-    if ( set->menu_style == XSET_MENU_SUBMENU && set->child )
-    {
-        if ( !xset_custom_export_write( file, xset_get( set->child ), plug_dir ) )
-            return FALSE;
-    }
-    if ( set->next )
-    {
-        if ( !xset_custom_export_write( file, xset_get( set->next ), plug_dir ) )
-            return FALSE;
-    }
-    return TRUE;
-}
-
-
-
-void xset_custom_export( GtkWidget* parent, PtkFileBrowser* file_browser, XSet* set ) {
-
-    // howdy bub!
-    return;
-
-
-    char* deffolder;
-    char* deffile;
-    char* s1;
-    char* s2;
-
-    // get new plugin filename
-    XSet* save = xset_get( "plug_ifile" );
-    if ( save->s )  //&& g_file_test( save->s, G_FILE_TEST_IS_DIR )
-        deffolder = save->s;
-    else
-    {
-        if ( !( deffolder = xset_get_s( "go_set_default" ) ) )
-            deffolder = "/";
-    }
-    if ( !set->plugin )
-    {
-        s1 = clean_label( set->menu_label, TRUE, FALSE );
-        s2 = plain_ascii_name( s1 );
-        if ( s2[0] == '\0' )
-        {
-            g_free( s2 );
-            s2 = g_strdup( "Plugin" );
-        }
-        if ( !strcmp( set->name, "main_book" ) )
-            deffile = g_strdup_printf( "%s.zzzfm-bookmarks.tar.gz", s2 );
-        else if ( g_str_has_prefix( set->name, "hand_arc_" ) )
-            deffile = g_strdup_printf( "%s.zzzfm-archive-handler.tar.gz", s2 );
-        else if ( g_str_has_prefix( set->name, "hand_fs_" ) )
-            deffile = g_strdup_printf( "%s.zzzfm-device-handler.tar.gz", s2 );
-        else if ( g_str_has_prefix( set->name, "hand_net_" ) )
-            deffile = g_strdup_printf( "%s.zzzfm-protocol-handler.tar.gz", s2 );
-        else if ( g_str_has_prefix( set->name, "hand_f_" ) )
-            deffile = g_strdup_printf( "%s.zzzfm-file-handler.tar.gz", s2 );
-        else
-            deffile = g_strdup_printf( "%s.zzzfm-plugin.tar.gz", s2 );
-        g_free( s1 );
-        g_free( s2 );
-    } else {
-        s1 = g_path_get_basename( set->plug_dir );
-        deffile = g_strdup_printf( "%s.zzzfm-plugin.tar.gz", s1 );
-        g_free( s1 );
-    }
-    char* path = xset_file_dialog( parent, GTK_FILE_CHOOSER_ACTION_SAVE, "Save As Plugin File", deffolder, deffile );
-    g_free( deffile );
-    if ( !path )
-        return;
-    if ( save->s )
-        g_free( save->s );
-    save->s = g_path_get_dirname( path );
-
-    // get or create tmp plugin dir
-    char* plug_dir = NULL;
-    char* hex8;
-    if ( !set->plugin )
-    {
-        s1 = (char*)xset_get_user_tmp_dir();
-        if ( !s1 )
-            goto _export_error;
-        while ( !plug_dir || g_file_test( plug_dir, G_FILE_TEST_EXISTS ) )
-        {
-            hex8 = randhex8();
-            if ( plug_dir )
-                g_free( plug_dir );
-            plug_dir = g_build_filename( s1, hex8, NULL );
-            g_free( hex8 );
-        }
-        g_mkdir_with_parents( plug_dir, 0700 );
-        chmod( plug_dir, 0700 );
-
-        // Create plugin file
-        s1 = g_build_filename( plug_dir, "plugin", NULL );
-        FILE* file = fopen( s1, "w" );
-        g_free( s1 );
-        if ( !file )
-            goto _rmtmp_error;
-        int result = fputs( "# zzzFM Plugin File\n\n# THIS FILE IS NOT DESIGNED TO BE EDITED\n\n", file );
-        if ( result < 0 )
-        {
-            fclose( file );
-            goto _rmtmp_error;
-        }
-        fputs( "[Plugin]\n", file );
-        xset_write_set( file, xset_get( "config_version" ) );
-
-        char* s_prev = set->prev;
-        char* s_next = set->next;
-        char* s_parent = set->parent;
-        set->prev = set->next = set->parent = NULL;
-        xset_write_set( file, set );
-        set->prev = s_prev;
-        set->next = s_next;
-        set->parent = s_parent;
-
-        if ( !xset_custom_export_files( set, plug_dir ) )
-            goto _rmtmp_error;
-        if ( set->menu_style == XSET_MENU_SUBMENU && set->child )
-        {
-            if ( !xset_custom_export_write( file, xset_get( set->child ), plug_dir ) )
-                goto _rmtmp_error;
-        }
-        result = fputs( "\n", file );
-        fclose( file );
-        if ( result < 0 )
-            goto _rmtmp_error;
-    }
-    else
-        plug_dir = g_strdup( set->plug_dir );
-
-    // tar and delete tmp files
-    // task                           //        v--------  howdy bub      recheck to ensure this is not exposed via menu during DesignView
-    PtkFileTask* task = ptk_file_exec_new( "Export Plugin", plug_dir, parent, file_browser ? file_browser->task_view : NULL );
-    char* plug_dir_q = bash_quote( plug_dir );
-    char* path_q = bash_quote( path );
-    if ( !set->plugin )
-        task->task->exec_command = g_strdup_printf( "tar --numeric-owner -czf %s * ; err=$? ; rm -rf %s ; if [ $err -ne 0 ]; then rm -f %s; fi; exit $err", path_q, plug_dir_q, path_q );
-    else
-        task->task->exec_command = g_strdup_printf( "tar --numeric-owner -czf %s * ; err=$? ; if [ $err -ne 0 ]; then rm -f %s; fi; exit $err", path_q, path_q );
-    g_free( plug_dir_q );
-    g_free( path_q );
-    task->task->exec_sync = TRUE;
-    task->task->exec_popup = FALSE;
-    task->task->exec_show_output = FALSE;
-    task->task->exec_show_error = TRUE;
-    task->task->exec_export = FALSE;
-    task->task->exec_browser = file_browser;
-    ptk_file_task_run( task );
-
-    g_free( path );
-    g_free( plug_dir );
-    return;
-
-_rmtmp_error:
-    if ( !set->plugin )
-    {
-        s2 = bash_quote( plug_dir );
-        s1 = g_strdup_printf( "rm -rf %s", s2 );
-        g_spawn_command_line_sync( s1, NULL, NULL, NULL, NULL );
-        g_free( s1 );
-        g_free( s2 );
-    }
-_export_error:
-    g_free( plug_dir );
-    g_free( path );
-    xset_msg_dialog( parent, GTK_MESSAGE_ERROR, "Export Error", NULL, 0, _("Unable to create temporary files"), NULL, NULL );
-}
 
 static void open_spec( PtkFileBrowser* file_browser, const char* url, gboolean in_new_tab ) {
     char* tilde_url = NULL;
@@ -4823,10 +3811,9 @@ void xset_custom_activate( GtkWidget* item, XSet* set ) {
     }
 
     // name
-    if ( !set->plugin &&  !( !set->lock &&  xset_get_int_set( set, "x" ) > XSET_CMD_SCRIPT /*app or bookmark*/) )
+    if ( !( !set->lock &&  xset_get_int_set( set, "x" ) > XSET_CMD_SCRIPT /*app or bookmark*/) )
     {
-        if ( !( set->menu_label && set->menu_label[0] )
-                || ( set->menu_label && !strcmp( set->menu_label, _("New _Command") ) ) )
+        if ( !( set->menu_label && set->menu_label[0] ) || ( set->menu_label && !strcmp( set->menu_label, _("New _Command") ) ) )
         {
             if ( !xset_text_dialog( parent, _("Change Item Name"), NULL, FALSE, _(enter_menu_name_new),
                                             NULL, set->menu_label, &set->menu_label, NULL, FALSE, "#designmode-designmenu-new" ) )
@@ -5002,8 +3989,6 @@ void xset_custom_activate( GtkWidget* item, XSet* set ) {
     if ( set->y && set->y[0] != '\0' )
         task->task->exec_as_user = g_strdup( set->y );
 
-    if ( set->plugin && set->shared_key && mset->icon )
-        task->task->exec_icon = g_strdup( mset->icon );
     if ( !task->task->exec_icon && set->icon )
         task->task->exec_icon = g_strdup( set->icon );
 
@@ -5015,7 +4000,7 @@ void xset_custom_activate( GtkWidget* item, XSet* set ) {
     task->task->exec_show_output = ( mset->task_out == XSET_B_TRUE );
     task->task->exec_show_error = ( mset->task_err == XSET_B_TRUE );
     task->task->exec_scroll_lock = ( mset->scroll_lock == XSET_B_TRUE );
-    task->task->exec_checksum = set->plugin;
+    task->task->exec_checksum = FALSE;   // howdy
     task->task->exec_export = TRUE;
 //task->task->exec_keep_tmp = TRUE;
 
@@ -5126,77 +4111,6 @@ printf("    set->next = %s\n", set->next );
     }
     return NULL;
 }
-
-
-#if 0
-void xset_custom_insert_before( XSet* target, XSet* set ) {
-    XSet* target_prev;
-    XSet* target_next;
-    XSet* target_parent;
-
-    if ( !set )
-    {
-        g_warning( "xset_custom_insert_before set == NULL" );
-        return;
-    }
-    if ( !target )
-    {
-        g_warning( "xset_custom_insert_before target_set == NULL" );
-        return;
-    }
-
-    if ( target->prev )
-    {
-        target_prev = xset_get( target->prev );
-        g_free( set->prev );
-        g_free( set->next );
-        set->prev = target->prev;       // steal string
-        set->next = target_prev->next;  // steal string or NULL
-        // replace stolen strings
-        target->prev = g_strdup( set->name );
-        target_prev->next = g_strdup( set->name );
-
-        if ( set->parent )
-        {
-            g_free( set->parent );
-            set->parent = NULL;
-        }
-    }
-    else if ( target->parent )
-    {
-        // target is first item in submenu
-        target_parent = xset_get( target->parent );
-        g_free( set->parent );
-        set->parent = target->parent;       // steal string
-        target->parent = NULL;
-        target->prev = g_strdup( set->name );
-        g_free( set->next );
-        set->next = target_parent->child;   // steal string
-        target_parent->child = g_strdup( set->name );
-
-        if ( !set->next )
-            set->next = g_strdup( target->name );  // failsafe
-        if ( set->prev )
-        {
-            g_free( set->prev );
-            set->prev = NULL;
-        }
-    } else {
-        g_warning( "xset_custom_insert_before target has no prev or parent" );
-        return;
-    }
-
-    if ( target->tool )
-    {
-        if ( set->tool < XSET_TOOL_CUSTOM )
-            set->tool = XSET_TOOL_CUSTOM;
-    } else {
-        if ( set->tool > XSET_TOOL_CUSTOM )
-            g_warning( "xset_custom_insert_before builtin tool inserted after non-tool" );
-        set->tool = XSET_TOOL_NOT;
-    }
-}
-#endif
 
 
 void xset_custom_insert_after( XSet* target, XSet* set ) {   // inserts single set 'set', no next
@@ -5420,12 +4334,28 @@ void xset_edit( GtkWidget* parent, const char* path, gboolean force_root, gboole
 }
 
 
-void xset_open_url( GtkWidget* parent, const char* url ) {   // howdy bub       revisit this
+
+//     howdy   This fn had  3 callers (including the callback within the now absent AboutDialog)
+//              I have nixed the  call from main-window.c::main_window_socket_command()
+//              and  the sole remaining caller is   settings.c::xset_show_help()
+void xset_open_url( GtkWidget* parent, const char* url ) {
     const char* browser;
     char* command = NULL;
 
     if ( !url )
-        url = homepage;
+        return;
+
+
+    const char *whodat;
+    uid_t uid = getuid();
+    struct passwd *pw = getpwuid(uid);
+    if (pw) {
+        whodat = pw->pw_name;
+    } else {
+        return;  // yah
+    }
+printf("sudo -u %s, %s\n", whodat, url);
+
 
     browser = xset_get_s( "main_help_browser" );
     if ( browser )
@@ -5443,8 +4373,8 @@ void xset_open_url( GtkWidget* parent, const char* url ) {   // howdy bub       
             int ii = 0;
             char* program;
             if ( g_str_has_prefix( url, "file://" )  || g_str_has_prefix( url, "/" ) )
-                ii = 3;  // xdg,gnome,exo-open use editor for html files so skip at start
-            char* programs[] = { "xdg-open", "exo-open", "firefox", "firefox-esr", "midori", "chrome" };
+                ii = 3;  // xdg,gnome,exo-open use editor for html files, so skip at start
+            char* programs[] = { "xdg-open", "exo-open", "firefox-esr", "firefox", "badwolf", "midori", "chromium" };   // howdy
             int i;
             for(  i = ii; i < G_N_ELEMENTS(programs); ++i)
             {
@@ -5569,18 +4499,17 @@ void xset_show_help( GtkWidget* parent, XSet* set, const char* anchor ) {
     if ( parent )
         dlgparent = parent;
     else if ( set )
-        dlgparent = set->browser ? GTK_WIDGET( set->browser ) :
-                                   GTK_WIDGET( set->desktop );
+        dlgparent = set->browser ? GTK_WIDGET( set->browser ) :  GTK_WIDGET( set->desktop );
 
     if ( !set || ( set && set->lock ) )
     {
         manual = xset_get_manual_url();
         if ( !manual )
         {
-            if ( xset_msg_dialog( dlgparent, GTK_MESSAGE_QUESTION, _("User's Manual Not Found"), NULL,
-                                                GTK_BUTTONS_YES_NO,
-                                                _("Read the user's manual online?\n\nThe local copy of the zzzFM user's manual was not found.  Click Yes to read it online, or click No and then set the correct location in Help|Options|Manual Location."), NULL, NULL ) != GTK_RESPONSE_YES )
-                return;
+            if ( xset_msg_dialog( dlgparent, GTK_MESSAGE_QUESTION, _("User's Manual Not Found"), NULL, GTK_BUTTONS_OK,
+                   _("The local copy of the zzzFM user's manual was not found. Please set the correct location in Help|Options|Manual Location."),
+                   NULL, NULL ) != GTK_RESPONSE_YES )
+                return;                             //  yah, YES is not presented as an option
             manual = g_strdup( user_manual_url );
             xset_set( "main_help_url", "s", manual );
         }
@@ -5589,8 +4518,7 @@ void xset_show_help( GtkWidget* parent, XSet* set, const char* anchor ) {
     if ( set )
     {
         if ( set->lock )
-        {
-            // built-in command
+        {            // built-in command
             if ( set->line )
             {
                 url = g_strdup_printf( "%s%s", manual, set->line );
@@ -5600,8 +4528,7 @@ void xset_show_help( GtkWidget* parent, XSet* set, const char* anchor ) {
                 g_free( manual );
                 return;
             }
-        } else {
-            // custom command or plugin
+        } else {       // custom command
             url = xset_custom_get_help( dlgparent, set );
             if ( url )
                 xset_edit( dlgparent, url, FALSE, TRUE );
@@ -5753,17 +4680,7 @@ gboolean on_set_key_keypress( GtkWidget *widget, GdkEventKey *event, GtkWidget* 
                                     && set2->keymod == keymod && set2 != keyset )
         {
             char* name;
-            if ( set2->desc && !strcmp( set2->desc, "@plugin@mirror@" )
-                                                        && set2->shared_key )
-            {
-                // set2 is plugin mirror
-                XSet* rset = xset_get( set2->shared_key );
-                if ( rset->menu_label )
-                    name = clean_label( rset->menu_label, FALSE, FALSE );
-                else
-                    name = g_strdup( "( no name )" );
-            }
-            else if ( set2->menu_label )
+            if ( set2->menu_label )
                 name = clean_label( set2->menu_label, FALSE, FALSE );
             else
                 name = g_strdup( "( no name )" );
@@ -5876,9 +4793,7 @@ void xset_set_key( GtkWidget* parent, XSet* set ) {
             newkey = -1;  // unset
             newkeymod = 0;
         }
-        // plugin? set shared_key to mirror if not
-        if ( set->plugin && !set->shared_key )
-            xset_get_plugin_mirror( set );
+
         // set new key
         if ( set->shared_key )
             keyset = xset_get( set->shared_key );
@@ -5923,20 +4838,6 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
     case XSET_JOB_KEY:
         xset_set_key( parent, set );
         break;
-    case XSET_JOB_ICON:
-        mset = xset_get_plugin_mirror( set );
-        char* old_icon = g_strdup( mset->icon );
-        // Note: xset_text_dialog uses the title passed to know this is an
-        // icon chooser, so it adds a Choose button.  If you change the title, change xset_text_dialog.
-        xset_text_dialog( parent, _("Set Icon"), NULL, FALSE, _(icon_desc), NULL, mset->icon, &mset->icon,
-                                            NULL, FALSE, "#designmode-designmenu-icon" );
-        if ( set->lock && set->keep_terminal == XSET_B_UNSET &&  g_strcmp0( old_icon, mset->icon ) )
-        {
-            // built-in icon has been changed from default, save it
-            set->keep_terminal = XSET_B_TRUE;
-        }
-        g_free( old_icon );
-        break;
     case XSET_JOB_LABEL:
         /*  unused - note that this does not accommodate in_terminal indicator
         if ( g_str_has_prefix( set->name, "open_all_type_" ) )
@@ -5951,7 +4852,7 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
         if ( cmd_type == XSET_CMD_SCRIPT )
         {
             // script
-            cscript = xset_custom_get_script( set, !set->plugin );
+            cscript = xset_custom_get_script( set, TRUE );
             if ( !cscript )
                 break;
             xset_edit( parent, cscript, FALSE, TRUE );
@@ -5962,7 +4863,7 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
         if ( cmd_type == XSET_CMD_SCRIPT )
         {
             // script
-            cscript = xset_custom_get_script( set, !set->plugin );
+            cscript = xset_custom_get_script( set, TRUE );
             if ( !cscript )
                 break;
             xset_edit( parent, cscript, TRUE, FALSE );
@@ -6024,8 +4925,7 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
         g_free( folder );
         break;
     case XSET_JOB_USER:
-        if ( !set->plugin )
-            xset_text_dialog( parent, _("Run As User"), NULL, FALSE, _("Run this command as username:\n\n( Leave blank for current user )"), NULL, set->y, &set->y, NULL, FALSE, "#designmode-command-user" );
+        xset_text_dialog( parent, _("Run As User"), NULL, FALSE, _("Run this command as username:\n\n( Leave blank for current user )"), NULL, set->y, &set->y, NULL, FALSE, "#designmode-command-user" );
         break;
     case XSET_JOB_BOOKMARK:
     case XSET_JOB_APP:
@@ -6155,80 +5055,11 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
         break;
     case XSET_JOB_ADD_TOOL:
         job = GPOINTER_TO_INT( g_object_get_data( G_OBJECT( item ), "tool_type" ) );
-        if ( job < XSET_TOOL_DEVICES || job >= XSET_TOOL_INVALID
-                                                            || !set->tool )
+        if ( job < XSET_TOOL_DEVICES || job >= XSET_TOOL_INVALID   || !set->tool )
             break;
         newset = xset_new_builtin_toolitem( job );
         if ( newset )
             xset_custom_insert_after( set, newset );
-        break;
-    case XSET_JOB_IMPORT_FILE:
-    case XSET_JOB_IMPORT_URL:
-// howdy
-/*
-        if ( job == XSET_JOB_IMPORT_FILE )
-        {
-            // get file path
-            XSet* save = xset_get( "plug_ifile" );
-            if ( save->s )  //&& g_file_test( save->s, G_FILE_TEST_IS_DIR )
-                folder = save->s;
-            else
-            {
-                if ( !( folder = xset_get_s( "go_set_default" ) ) )
-                    folder = "/";
-            }
-            file = xset_file_dialog( GTK_WIDGET( parent ), GTK_FILE_CHOOSER_ACTION_OPEN, "Choose Plugin File", folder, NULL );
-            if ( !file )
-                break;
-            if ( save->s )
-                g_free( save->s );
-            save->s = g_path_get_dirname( file );
-        } else {
-            // Get URL
-            file = NULL;
-            if ( !xset_text_dialog( GTK_WIDGET( parent ), "Enter Plugin URL", NULL, FALSE, "Enter zzzFM Plugin URL:\n\n(wget will be used to download the plugin file)", NULL, NULL, &file, NULL, FALSE, "#designmode-designmenu-import" ) || !file || file[0] == '\0' )
-                break;
-        }
-        // Make Plugin Dir
-        const char* user_tmp = xset_get_user_tmp_dir();
-        if ( !user_tmp )
-        {
-            xset_msg_dialog( GTK_WIDGET( parent ), GTK_MESSAGE_ERROR, _("Error Creating Temp Directory"), NULL, 0, _("Unable to create temporary directory"), NULL, NULL );
-            g_free( file );
-            break;
-        }
-        char* hex8;
-        folder = NULL;
-        while ( !folder || ( folder && g_file_test( folder, G_FILE_TEST_EXISTS ) ) )
-        {
-            hex8 = randhex8();
-            if ( folder )
-                g_free( folder );
-            folder = g_build_filename( user_tmp, hex8, NULL );
-            g_free( hex8 );
-        }
-        install_plugin_file( set->browser ? set->browser->main_window : NULL, NULL, file, folder, job == XSET_JOB_IMPORT_FILE ? 0 : 1, PLUGIN_JOB_COPY, set );
-        g_free( file );
-        g_free( folder );
-*/
-        break;
-    case XSET_JOB_IMPORT_GTK:
-        // both GTK2 and GTK3 now use new location?
-// howdy bub
-/*
-        file = g_build_filename( g_get_user_config_dir(), "gtk-3.0", "bookmarks", NULL );
-        if ( !( file && g_file_test( file, G_FILE_TEST_EXISTS ) ) )
-            file = g_build_filename( g_get_home_dir(), ".gtk-bookmarks", NULL );
-        msg = g_strdup_printf( "GTK bookmarks (%s) will be imported into the current or selected submenu.  Note that importing large numbers of bookmarks (eg more than 500) may impact performance.", file );
-        if ( xset_msg_dialog( parent, GTK_MESSAGE_QUESTION,  "Import GTK Bookmarks", NULL, GTK_BUTTONS_OK_CANCEL, msg, NULL, NULL ) != GTK_RESPONSE_OK )
-        {
-            g_free( msg );
-            break;
-        }
-        g_free( msg );
-        ptk_bookmark_view_import_gtk( file, set );
-        g_free( file );
-*/
         break;
     case XSET_JOB_CUT:
         set_clipboard = set;
@@ -6286,11 +5117,6 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
         break;
     case XSET_JOB_REMOVE:
     case XSET_JOB_REMOVE_BOOK:
-        if ( set->plugin )
-        {
-            xset_remove_plugin( parent, set->browser, set );
-            break;
-        }
         if ( set->menu_label && set->menu_label[0] )
             name = clean_label( set->menu_label, FALSE, FALSE );
         else
@@ -6371,11 +5197,6 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
         g_free( name );
         g_free( prog );
         break;
-    case XSET_JOB_EXPORT:
-// howdy
-//      if ( ( !set->lock || !g_strcmp0( set->name, "main_book" ) ) &&  set->tool <= XSET_TOOL_CUSTOM )
-//          xset_custom_export( parent, set->browser, set );
-        break;
     case XSET_JOB_NORMAL:
         set->menu_style = XSET_MENU_NORMAL;
         break;
@@ -6427,21 +5248,13 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
     case XSET_JOB_BROWSE_FILES:
         if ( set->tool > XSET_TOOL_CUSTOM )
             break;
-        if ( set->plugin )
-        {
-            folder = g_build_filename( set->plug_dir, "files", NULL );
-            if ( !g_file_test( folder, G_FILE_TEST_EXISTS ) )
-            {
-                g_free( folder );
-                folder = g_build_filename( set->plug_dir, set->plug_name, NULL );
-            }
-        } else {
-            cscript = xset_custom_get_script( set, FALSE );  //backwards compat copy
-            if ( cscript )
-                g_free( cscript );
-            folder = g_build_filename( settings_config_dir, "scripts", set->name, NULL );
-        }
-        if ( !g_file_test( folder, G_FILE_TEST_EXISTS ) && !set->plugin )
+
+        cscript = xset_custom_get_script( set, FALSE );  //backwards compat copy
+        if ( cscript )
+            g_free( cscript );
+        folder = g_build_filename( settings_config_dir, "scripts", set->name, NULL );
+
+        if ( !g_file_test( folder, G_FILE_TEST_EXISTS ) )
         {
             g_mkdir_with_parents( folder, 0700 );
             chmod( folder, 0700 );
@@ -6469,13 +5282,9 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
     case XSET_JOB_BROWSE_DATA:
         if ( set->tool > XSET_TOOL_CUSTOM )
             break;
-        if ( set->plugin )
-        {
-            mset = xset_get_plugin_mirror( set );
-            folder = g_build_filename( settings_config_dir, "mydat", mset->name, NULL );
-        }
-        else
-            folder = g_build_filename( settings_config_dir, "mydat", set->name, NULL );
+
+        folder = g_build_filename( settings_config_dir, "mydat", set->name, NULL );
+
         if ( !g_file_test( folder, G_FILE_TEST_EXISTS ) )
         {
             g_mkdir_with_parents( folder, 0700 );
@@ -6499,28 +5308,6 @@ void xset_design_job( GtkWidget* item, XSet* set ) {
             g_free( prog );
             g_free( command );
             g_free( folder );
-        }
-        break;
-    case XSET_JOB_BROWSE_PLUGIN:
-        if ( set->plugin && set->plug_dir )
-        {
-            if ( set->browser )
-            {
-                ptk_file_browser_emit_open( set->browser, set->plug_dir, PTK_OPEN_DIR );
-            }
-            else if ( set->desktop )  // should never happen in current version
-            {
-                prog = g_find_program_in_path( g_get_prgname() );
-                if ( !prog )
-                    prog = g_strdup( g_get_prgname() );
-                if ( !prog )
-                    prog = g_strdup( "zzzfm" );
-
-                command = g_strdup_printf( "%s %s", prog, set->plug_dir );
-                g_spawn_command_line_sync( command, NULL, NULL, NULL, NULL );
-                g_free( prog );
-                g_free( command );
-            }
         }
         break;
     case XSET_JOB_TERM:
@@ -6611,14 +5398,6 @@ gboolean xset_job_is_valid( XSet* set, int job ) {
     if ( !set )
         return FALSE;
 
-    if ( set->plugin )
-    {
-        if ( !set->plug_dir )
-            return FALSE;
-        if ( !set->plugin_top || strstr( set->plug_dir, "/included/" ) )
-            no_remove = TRUE;
-    }
-
     // control open_all item
     if ( g_str_has_prefix( set->name, "open_all_type_" ) )
         open_all = TRUE;
@@ -6626,25 +5405,16 @@ gboolean xset_job_is_valid( XSet* set, int job ) {
     switch ( job ) {
     case XSET_JOB_KEY:
         return set->menu_style < XSET_MENU_SUBMENU;
-    case XSET_JOB_ICON:
-        return ( ( set->menu_style == XSET_MENU_NORMAL
-                                        || set->menu_style == XSET_MENU_STRING
-                                        || set->menu_style == XSET_MENU_FONTDLG
-                                        || set->menu_style == XSET_MENU_COLORDLG
-                                        || set->menu_style == XSET_MENU_SUBMENU
-                                        || set->tool ) && !open_all );
     case XSET_JOB_EDIT:
         return !set->lock && set->menu_style < XSET_MENU_SUBMENU;
     case XSET_JOB_COMMAND:
-        return !set->plugin;
+        return TRUE;
     case XSET_JOB_CUT:
-        return ( !set->lock && !set->plugin );
+        return ( !set->lock );
     case XSET_JOB_COPY:
          return !set->lock;
     case XSET_JOB_PASTE:
         if ( !set_clipboard )
-            no_paste = TRUE;
-        else if ( set->plugin )
             no_paste = TRUE;
         else if ( set == set_clipboard && clipboard_is_cut )
             // don't allow cut paste to self
@@ -6690,9 +5460,6 @@ gboolean xset_design_menu_keypress( GtkWidget* widget, GdkEventKey* event, XSet*
             case XSET_JOB_KEY:
                 help = "#designmode-designmenu-key";
                 break;
-            case XSET_JOB_ICON:
-                help = "#designmode-designmenu-icon";
-                break;
             case XSET_JOB_LABEL:
                 help = "#designmode-designmenu-name";
                 break;
@@ -6729,11 +5496,6 @@ gboolean xset_design_menu_keypress( GtkWidget* widget, GdkEventKey* event, XSet*
             case XSET_JOB_SEP:
                 help = "#designmode-designmenu-separator";
                 break;
-            case XSET_JOB_IMPORT_FILE:
-            case XSET_JOB_IMPORT_URL:
-// howdy
-//              help = "#designmode-designmenu-import";
-                break;
             case XSET_JOB_CUT:
                 help = "#designmode-designmenu-cut";
                 break;
@@ -6745,10 +5507,6 @@ gboolean xset_design_menu_keypress( GtkWidget* widget, GdkEventKey* event, XSet*
                 break;
             case XSET_JOB_REMOVE:
                 help = "#designmode-designmenu-remove";
-                break;
-            case XSET_JOB_EXPORT:
-// howdy
-//              help = "#designmode-designmenu-export";
                 break;
             case XSET_JOB_BOOKMARK:
                 help = "#designmode-designmenu-bookmark";
@@ -6800,9 +5558,6 @@ gboolean xset_design_menu_keypress( GtkWidget* widget, GdkEventKey* event, XSet*
                 break;
             case XSET_JOB_BROWSE_DATA:
                 help = "#designmode-command-browse-data";
-                break;
-            case XSET_JOB_BROWSE_PLUGIN:
-                help = "#designmode-command-browse-plugin";
                 break;
             case XSET_JOB_TERM:
                 help = "#designmode-command-terminal";
@@ -6868,8 +5623,6 @@ gboolean xset_design_menu_keypress( GtkWidget* widget, GdkEventKey* event, XSet*
         }
         else if ( event->keyval == GDK_KEY_k )
             job = XSET_JOB_KEY;
-        else if ( event->keyval == GDK_KEY_i )
-            job = XSET_JOB_ICON;
     }
     if ( job != -1 )
     {
@@ -6949,25 +5702,9 @@ GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert,
     gboolean is_bookmark = !!book_insert;
     gboolean show_keys = !is_bookmark && !set->tool;
 
-    if ( set->plugin && set->shared_key )
-        mset = xset_get_plugin_mirror( set );
-    else
-        mset = set;
-
-    if ( set->plugin )
-    {
-        if ( set->plug_dir )
-        {
-            if ( !set->plugin_top || strstr( set->plug_dir, "/included/" ) )
-                no_remove = TRUE;
-        }
-        else
-            no_remove = TRUE;
-    }
+    mset = set;   // howdy flea
 
     if ( !set_clipboard )
-        no_paste = TRUE;
-    else if ( insert_set->plugin )
         no_paste = TRUE;
     else if ( insert_set == set_clipboard && clipboard_is_cut )
         // don't allow cut paste to self
@@ -6985,12 +5722,6 @@ GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert,
 
     GtkWidget* design_menu = gtk_menu_new();
     GtkAccelGroup* accel_group = gtk_accel_group_new();
-
-    // Cut
-    newitem = xset_design_additem( design_menu, _("Cu_t"),   GTK_STOCK_CUT, XSET_JOB_CUT, set );
-    gtk_widget_set_sensitive( newitem, !set->lock && !set->plugin );
-    if ( show_keys )
-        gtk_widget_add_accelerator( newitem, "activate", accel_group, GDK_KEY_x, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 
     // Copy
     newitem = xset_design_additem( design_menu, _("_Copy"), GTK_STOCK_COPY, XSET_JOB_COPY, set );
@@ -7010,18 +5741,21 @@ GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert,
     if ( show_keys )
         gtk_widget_add_accelerator( newitem, "activate", accel_group, GDK_KEY_Delete, 0, GTK_ACCEL_VISIBLE);
 
-    // Export     //   howdy    bookmarks contextMenu
-//  newitem = xset_design_additem( design_menu, "E_xport", GTK_STOCK_SAVE, XSET_JOB_EXPORT, set );
-//  gtk_widget_set_sensitive( newitem, ( !set->lock  && set->menu_style < XSET_MENU_SEP  && set->tool <= XSET_TOOL_CUSTOM )
-//                                  || !g_strcmp0( set->name, "main_book" ) );
+    // Cut
+    newitem = xset_design_additem( design_menu, _("Cu_t"),   GTK_STOCK_CUT, XSET_JOB_CUT, set );
+    gtk_widget_set_sensitive( newitem, !set->lock );
+    if ( show_keys )
+        //gtk_widget_add_accelerator( newitem, "activate", accel_group, GDK_KEY_x, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+        //    howdy    too easily fat-fingered when intending to use       Ctrl+c
 
-    //// New submenu
+
+     //// New submenu
     newitem = gtk_image_menu_item_new_with_mnemonic( _("_New") );
     submenu = gtk_menu_new();
     gtk_menu_item_set_submenu( GTK_MENU_ITEM( newitem ), submenu );
     gtk_image_menu_item_set_image( GTK_IMAGE_MENU_ITEM( newitem ), gtk_image_new_from_stock( GTK_STOCK_ADD, GTK_ICON_SIZE_MENU ) );
     gtk_container_add ( GTK_CONTAINER ( design_menu ), newitem );
-    gtk_widget_set_sensitive( newitem, !set->plugin );
+    gtk_widget_set_sensitive( newitem, TRUE );
     g_object_set_data( G_OBJECT( newitem ), "job", GINT_TO_POINTER( XSET_JOB_HELP_NEW ) );
     g_signal_connect( submenu, "key_press_event", G_CALLBACK( xset_design_menu_keypress ), set );
 
@@ -7041,26 +5775,6 @@ GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert,
 
     // New > Separator
     newitem = xset_design_additem( submenu, _("S_eparator"), NULL, XSET_JOB_SEP, insert_set );
-
-// howdy
-/*
-    // New > Import >
-    newitem = gtk_image_menu_item_new_with_mnemonic( "_Import" );
-    submenu2 = gtk_menu_new();
-    gtk_menu_item_set_submenu( GTK_MENU_ITEM( newitem ), submenu2 );
-    //gtk_image_menu_item_set_image( GTK_IMAGE_MENU_ITEM( newitem ), gtk_image_new_from_stock( GTK_STOCK_ADD, GTK_ICON_SIZE_MENU ) );
-    gtk_container_add ( GTK_CONTAINER ( submenu ), newitem );
-    gtk_widget_set_sensitive( newitem, !insert_set->plugin );
-    g_object_set_data( G_OBJECT( newitem ), "job", GINT_TO_POINTER( XSET_JOB_IMPORT_FILE ) );
-    g_signal_connect( submenu2, "key_press_event", G_CALLBACK( xset_design_menu_keypress ), insert_set );
-
-        newitem = xset_design_additem( submenu2, "_File", NULL, XSET_JOB_IMPORT_FILE, insert_set );
-        newitem = xset_design_additem( submenu2, "_URL", NULL, XSET_JOB_IMPORT_URL, insert_set );
-// howdy
-//      if ( is_bookmark )
-//          newitem = xset_design_additem( submenu2, "_GTK Bookmarks", NULL, XSET_JOB_IMPORT_GTK, set );
-*/
-
 
 
     if ( insert_set->tool )
@@ -7264,7 +5978,6 @@ gboolean xset_design_cb( GtkWidget* item, GdkEventButton* event, XSet* set ) {
         else if ( keymod == GDK_SHIFT_MASK )
         {
             // shift
-            job = XSET_JOB_ICON;
         }
         else if ( keymod == ( GDK_CONTROL_MASK | GDK_SHIFT_MASK ) )
         {
@@ -7360,8 +6073,6 @@ gboolean xset_menu_keypress( GtkWidget* widget, GdkEventKey* event, gpointer use
         }
         else if ( event->keyval == GDK_KEY_k )
             job = XSET_JOB_KEY;
-        else if ( event->keyval == GDK_KEY_i )
-            job = XSET_JOB_ICON;
     }
     if ( job != -1 )
     {
@@ -7410,27 +6121,10 @@ void xset_menu_cb( GtkWidget* item, XSet* set ) {
     }
 */
 
-    parent = set->browser ? GTK_WIDGET( set->browser ) :
-                            GTK_WIDGET( set->desktop );
+    parent = set->browser ? GTK_WIDGET( set->browser ) :  GTK_WIDGET( set->desktop );
 
-    if ( set->plugin )
-    {
-        // set is plugin
-        mset = xset_get_plugin_mirror( set );
-        rset = set;
-    }
-    else if ( !set->lock && set->desc && !strcmp( set->desc, "@plugin@mirror@" )
-                                                            && set->shared_key )
-    {
-        // set is plugin mirror
-        mset = set;
-        rset = xset_get( set->shared_key );
-        rset->browser = set->browser;
-        rset->desktop = set->desktop;
-    } else {
-        mset = set;
-        rset = set;
-    }
+    mset = set;
+    rset = set;
 
     if ( !rset->menu_style )
     {
@@ -7795,70 +6489,17 @@ static gboolean on_input_keypress ( GtkWidget *widget, GdkEventKey *event, GtkWi
 }
 
 static void on_icon_buffer_changed( GtkTextBuffer* buf, GtkWidget* button ) {
+    // howdy
+    return;
+
     GtkTextIter iter, siter;
     gtk_text_buffer_get_start_iter( buf, &siter );
     gtk_text_buffer_get_end_iter( buf, &iter );
     char* icon = gtk_text_buffer_get_text( buf, &siter, &iter, FALSE );
-    gtk_button_set_image( GTK_BUTTON( button ), xset_get_image( icon && icon[0] ? icon :
-                        GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON ) );
+    gtk_button_set_image( GTK_BUTTON( button ), xset_get_image( icon && icon[0] ? icon :  GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON ) );
     g_free( icon );
 }
 
-char* xset_icon_chooser_dialog( GtkWindow* parent, const char* def_icon ) {
-    GtkTextIter iter, siter;
-    GtkAllocation allocation;
-    int width, height;
-    char* icon = NULL;
-
-    // set busy cursor
-    GdkCursor* cursor = gdk_cursor_new_for_display( gtk_widget_get_display( GTK_WIDGET( parent ) ), GDK_WATCH );
-    if ( cursor )
-    {
-        gdk_window_set_cursor( gtk_widget_get_window( GTK_WIDGET( parent ) ), cursor );
-        gdk_cursor_unref( cursor );
-        while( gtk_events_pending() )
-            gtk_main_iteration();
-    }
-
-    // btn_icon_choose clicked - preparing the exo icon chooser dialog
-    GtkWidget* icon_chooser = exo_icon_chooser_dialog_new ( _("Choose Icon"), GTK_WINDOW( parent ),
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL );
-    // Set icon chooser dialog size
-    width = xset_get_int( "main_icon", "x" );
-    height = xset_get_int( "main_icon", "y" );
-    if ( width && height )
-        gtk_window_set_default_size( GTK_WINDOW( icon_chooser ), width, height );
-
-    // Load current icon
-    if ( def_icon && def_icon[0] )
-        exo_icon_chooser_dialog_set_icon( EXO_ICON_CHOOSER_DIALOG( icon_chooser ), def_icon );
-
-    // Prompting user to pick icon
-    int response_icon_chooser = gtk_dialog_run( GTK_DIALOG( icon_chooser ) );
-    if ( response_icon_chooser == GTK_RESPONSE_ACCEPT)
-    {
-        /* Fetching selected icon */
-        icon = exo_icon_chooser_dialog_get_icon( EXO_ICON_CHOOSER_DIALOG( icon_chooser ) );
-    }
-
-    // Save icon chooser dialog size
-    gtk_widget_get_allocation( GTK_WIDGET( icon_chooser ), &allocation );
-    if ( allocation.width && allocation.height )
-    {
-        char* str = g_strdup_printf( "%d", allocation.width );
-        xset_set( "main_icon", "x", str );
-        g_free( str );
-        str = g_strdup_printf( "%d", allocation.height );
-        xset_set( "main_icon", "y", str );
-        g_free( str );
-    }
-    gtk_widget_destroy( icon_chooser );
-
-    // remove busy cursor
-    gdk_window_set_cursor( gtk_widget_get_window( GTK_WIDGET( parent ) ), NULL );
-
-    return icon;
-}
 
 gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* image, gboolean large, const char* msg1, const char* msg2,
                             const char* defstring, char** answer, const char* defreset, gboolean edit_care, const char* help ) {
@@ -7881,7 +6522,7 @@ gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* imag
         if ( width && height )
             gtk_window_set_default_size( GTK_WINDOW( dlg ), width, height );
         else
-            gtk_window_set_default_size( GTK_WINDOW( dlg ), 600, 400 );
+            gtk_window_set_default_size( GTK_WINDOW( dlg ), 600, 400 );  // howdy bub    revisit this
             //gtk_widget_set_size_request( GTK_WIDGET( dlg ), 600, 400 );
     } else {
         width = xset_get_int( "text_dlg", "x" );
@@ -7914,7 +6555,6 @@ gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* imag
     GtkWidget* btn_edit;
     GtkWidget* btn_help = NULL;
     GtkWidget* btn_default = NULL;
-    GtkWidget* btn_icon_choose = NULL;
     if ( help )
     {
         btn_help = gtk_button_new_with_mnemonic( _("_Help") );
@@ -7932,21 +6572,6 @@ gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* imag
         gtk_text_view_set_editable( input, FALSE );
     }
 
-    // Special hack to add an icon chooser button when this dialog is called to set icons
-    //   - see xset_menu_cb() and set init "main_icon"  and xset_design_job
-    if ( !g_strcmp0( title, _("Set Icon") ) ||  !g_strcmp0( title, _("Set Window Icon") ) )
-    {
-        btn_icon_choose = gtk_button_new_with_mnemonic( _("C_hoose") );
-        gtk_dialog_add_action_widget( GTK_DIALOG( dlg ), btn_icon_choose, GTK_RESPONSE_ACCEPT );
-        gtk_button_set_image( GTK_BUTTON( btn_icon_choose ), xset_get_image( defstring && defstring[0] ? defstring :
-                                        GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON ) );
-        gtk_button_set_focus_on_click( GTK_BUTTON( btn_icon_choose ), FALSE );
-        g_signal_connect( G_OBJECT( buf ), "changed", G_CALLBACK( on_icon_buffer_changed ), btn_icon_choose );
-#if GTK_CHECK_VERSION (3, 6, 0)
-        // keep this
-        gtk_button_set_always_show_image( GTK_BUTTON( btn_icon_choose ), TRUE );
-#endif
-    }
 
     if ( defreset )
     {
@@ -8020,15 +6645,6 @@ gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* imag
             gtk_text_buffer_get_start_iter( buf, &siter );
             gtk_text_buffer_get_end_iter( buf, &iter );
             icon = gtk_text_buffer_get_text( buf, &siter, &iter, FALSE );
-
-            // show icon chooser
-            char* new_icon = xset_icon_chooser_dialog( GTK_WINDOW( dlg ), icon );
-            g_free( icon );
-            if ( new_icon )
-            {
-                gtk_text_buffer_set_text( buf, new_icon, -1 );
-                g_free( new_icon );
-            }
         }
         else if ( response == GTK_RESPONSE_NO )
         {
@@ -8052,8 +6668,7 @@ gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* imag
                 }
             }
         }
-        else if ( response == GTK_RESPONSE_CANCEL
-                                    || response == GTK_RESPONSE_DELETE_EVENT )
+        else if ( response == GTK_RESPONSE_CANCEL  || response == GTK_RESPONSE_DELETE_EVENT )
             break;
     }
     gtk_widget_get_allocation( GTK_WIDGET( dlg ), &allocation );
@@ -8185,8 +6800,7 @@ char* xset_file_dialog( GtkWidget* parent, GtkFileChooserAction action, const ch
     }
     if ( deffile )
     {
-        if ( action == GTK_FILE_CHOOSER_ACTION_SAVE
-                    || action == GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER )
+        if ( action == GTK_FILE_CHOOSER_ACTION_SAVE  || action == GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER )
             gtk_file_chooser_set_current_name( GTK_FILE_CHOOSER(dlg), deffile );
         else
         {
@@ -8235,6 +6849,7 @@ char* xset_file_dialog( GtkWidget* parent, GtkFileChooserAction action, const ch
     return NULL;
 }
 
+
 char* xset_color_dialog( GtkWidget* parent, char* title, char* defcolor ) {
     GdkColor color;
     char* scolor = NULL;
@@ -8278,6 +6893,7 @@ char* xset_color_dialog( GtkWidget* parent, char* title, char* defcolor ) {
     gtk_widget_destroy( dlg );
     return scolor;
 }
+
 
 void xset_builtin_tool_activate( char tool_type, XSet* set, GdkEventButton* event ) {
     XSet* set2;
@@ -8371,6 +6987,7 @@ void xset_builtin_tool_activate( char tool_type, XSet* set, GdkEventButton* even
         g_warning( "xset_builtin_tool_activate invalid tool_type" );
     }
 }
+
 
 const char* xset_get_builtin_toolitem_label( char tool_type ) {
     if ( tool_type < XSET_TOOL_DEVICES || tool_type >= XSET_TOOL_INVALID )
@@ -8494,7 +7111,6 @@ gboolean on_tool_icon_button_press( GtkWidget *widget, GdkEventButton* event, XS
         else if ( keymod == GDK_SHIFT_MASK )
         {
             // shift
-            job = XSET_JOB_ICON;
         }
         else if ( keymod == ( GDK_CONTROL_MASK | GDK_SHIFT_MASK ) )
         {
@@ -8521,6 +7137,7 @@ gboolean on_tool_icon_button_press( GtkWidget *widget, GdkEventButton* event, XS
     }
     return TRUE;
 }
+
 
 gboolean on_tool_menu_button_press( GtkWidget *widget, GdkEventButton* event, XSet* set ) {
     //printf("on_tool_menu_button_press  %s   button = %d\n", set->menu_label, event->button );
@@ -8575,6 +7192,8 @@ static void set_gtk3_widget_padding( GtkWidget* widget, int left_right, int top_
     g_free( str );
 }
 #endif
+
+
 
 GtkWidget* xset_add_toolitem( GtkWidget* parent, PtkFileBrowser* file_browser, GtkWidget* toolbar, int icon_size, XSet* set, gboolean show_tooltips ) {
     GtkWidget* image = NULL;
@@ -8983,6 +7602,7 @@ _next_toolitem:
     return item;
 }
 
+
 void xset_fill_toolbar( GtkWidget* parent, PtkFileBrowser* file_browser, GtkWidget* toolbar, XSet* set_parent, gboolean show_tooltips ) {
     const char default_tools[] =
     {
@@ -9052,6 +7672,7 @@ void xset_fill_toolbar( GtkWidget* parent, PtkFileBrowser* file_browser, GtkWidg
 
     gtk_widget_show_all( toolbar );
 }
+
 
 void open_in_prog( const char* path ) {
     char* prog = g_find_program_in_path( g_get_prgname() );
@@ -9948,8 +8569,9 @@ void xset_defaults() {
     set = xset_set( "main_root_terminal", "lbl", _("_Root Terminal") );
     xset_set_set( set, "icn", "gtk-dialog-warning" );
 
-    // was previously used for 'Save Session' < 0.9.4 as XSET_MENU_NORMAL
-    set = xset_set( "main_save_session", "lbl", _("Open _URL") );
+    // was previously used for 'Save Session' < 0.9.4 as XSET_MENU_NORMAL    // howdy bub          misleading varname and label, eh
+//  set = xset_set( "main_save_session", "lbl", _("Open _URL") );
+    set = xset_set( "main_open_network_location", "lbl", _("Open _URL") );
     set->menu_style = XSET_MENU_STRING;
     xset_set_set( set, "icn", "gtk-network" );
     xset_set_set( set, "title", _("Open URL") );
@@ -10191,66 +8813,6 @@ void xset_defaults() {
     set = xset_set( "view_thumb", "lbl", _("_Thumbnails (global)") );  // in View|Panel View|Style
     set->menu_style = XSET_MENU_CHECK;
 
-    //// Plugins
-//  set = xset_set( "plug_install", "lbl", _("_Install") );
-//  set->menu_style = XSET_MENU_SUBMENU;
-
-/*
-// howdy bub
-    xset_set_set( set, "desc", "plug_ifile plug_iurl" );
-    xset_set_set( set, "icn", "gtk-add" );
-    set->line = g_strdup( "#plugins-install" );
-*/
-
-//      set = xset_set( "plug_ifile", "lbl", _("_File") );
-//      xset_set_set( set, "icn", "gtk-file" );
-//      set->line = g_strdup( "#plugins-install" );
-
-/*
-//   howdy bub
-        set = xset_set( "plug_iurl", "lbl", _("_URL") );
-        xset_set_set( set, "icn", "gtk-network" );
-        set->line = g_strdup( "#plugins-install" );
-*/
-
-//  set = xset_get( "sep_p1" );
-//  set->menu_style = XSET_MENU_SEP;
-
-// howdy
-//  set = xset_set( "plug_copy", "lbl", "_Import" );
-//  set->menu_style = XSET_MENU_SUBMENU;
-
-/*
-// howdy bub
-    xset_set_set( set, "desc", "plug_cfile plug_curl sep_p1 plug_cverb" );
-    xset_set_set( set, "icn", "gtk-copy" );
-    set->line = g_strdup( "#plugins-import" );
-*/
-
-// howdy
-//      set = xset_set( "plug_cfile", "lbl", _("_File") );
-//      xset_set_set( set, "icn", "gtk-file" );
-//      set->line = g_strdup( "#plugins-import" );
-
-/*
-// howdy bub
-        set = xset_set( "plug_curl", "lbl", _("_URL") );
-        xset_set_set( set, "icn", "gtk-network" );
-        set->line = g_strdup( "#plugins-import" );
-*/
-
-//      set = xset_set( "plug_cverb", "lbl", _("_Verbose") );
-//      set->menu_style = XSET_MENU_CHECK;
-//      set->b = XSET_B_TRUE;
-//      set->line = g_strdup( "#plugins-import" );
-//
-//  set = xset_set( "plug_browse", "lbl", _("_Browse") );
-//
-//  set = xset_set( "plug_inc", "lbl", _("In_cluded") );
-//  set->menu_style = XSET_MENU_SUBMENU;
-//  xset_set_set( set, "icn", "gtk-media-play" );
-
-
     //// Help
     set = xset_get( "sep_h1" );
     set->menu_style = XSET_MENU_SEP;
@@ -10266,15 +8828,6 @@ void xset_defaults() {
 
     set = xset_set( "main_faq", "lbl", _("_FAQ") );
     xset_set_set( set, "icn", "gtk-help" );
-/*
-    set = xset_set( "main_homepage", "lbl", _("_Homepage") );
-    xset_set_set( set, "icn", "zzzfm" );
-
-*/
-
-// howdy
-//  set = xset_set( "main_getplug", "lbl", "_Get Plugins" );
-//  xset_set_set( set, "icn", "zzzfm" );
 
     set = xset_set( "main_help_opt", "lbl", _("_Options") );
     set->menu_style = XSET_MENU_SUBMENU;
@@ -10565,7 +9118,7 @@ void xset_defaults() {
         set = xset_set( "desk_sort_type", "lbl", _("By _Type") );
         set->menu_style = XSET_MENU_RADIO;
 
-        set = xset_set( "desk_sort_date", "lbl", _("By _Date") );
+        set = xset_set( "desk_sort_date", "lbl", _("By _Date Modified") );    //    howdy  juggling the ordering here may also require tweak @Line11329
         set->menu_style = XSET_MENU_RADIO;
 
         set = xset_set( "desk_sort_size", "lbl", _("By _Size") );
@@ -10879,7 +9432,7 @@ void xset_defaults() {
         set->menu_style = XSET_MENU_RADIO;
         set = xset_set( "sortby_type", "lbl", _("_Type") );
         set->menu_style = XSET_MENU_RADIO;
-        set = xset_set( "sortby_perm", "lbl", _("_Permission") );
+        set = xset_set( "sortby_perm", "lbl", _("_Permission") );    //   howdy   ^---v  the display and behavior here are correct
         set->menu_style = XSET_MENU_RADIO;
         set = xset_set( "sortby_owner", "lbl", _("_Owner") );
         set->menu_style = XSET_MENU_RADIO;
@@ -10892,7 +9445,7 @@ void xset_defaults() {
 
         set = xset_set( "sortx_natural", "lbl", _("Nat_ural") );
         set->menu_style = XSET_MENU_CHECK;
-        set = xset_set( "sortx_case", "lbl", _("_Case Sensitive") );
+        set = xset_set( "sortx_case", "lbl", _("Case Sensitive") );    // give mnemonic to Created
         set->menu_style = XSET_MENU_CHECK;
         set = xset_set( "sortx_folders", "lbl", _("Folders Fi_rst") );
         set->menu_style = XSET_MENU_RADIO;
@@ -10917,14 +9470,9 @@ void xset_defaults() {
     xset_set_set( set, "icn", "gtk-preferences" );
     set->line = g_strdup( "#handlers-pro" );
     xset_set_set( set, "shared_key", "dev_net_cnf" );
-    // set->s was custom protocol handler in sfm<=0.9.3 - retained
 
     set = xset_set( "path_help", "lbl", _("Path Bar _Help") );
     xset_set_set( set, "icn", "gtk-help" );
-
-    // EDIT
-    set = xset_set( "edit_cut", "lbl", _("Cu_t") );   //  howdy    reeeeeally want to move this away from the COPY button
-    xset_set_set( set, "icn", "gtk-cut" );
 
     set = xset_set( "edit_copy", "lbl", _("_Copy") );
     xset_set_set( set, "icn", "gtk-copy" );
@@ -10936,8 +9484,16 @@ void xset_defaults() {
     xset_set_set( set, "icn", "gtk-edit" );
     set->line = g_strdup( "#gui-rename" );
 
+    set = xset_get( "sep_e4" );   //   howdy    late additions, for padding
+    set->menu_style = XSET_MENU_SEP;
+    set = xset_get( "sep_e5" );
+    set->menu_style = XSET_MENU_SEP;
+
     set = xset_set( "edit_delete", "lbl", _("_Delete") );    // howdy    peekaboo
     xset_set_set( set, "icn", "gtk-delete" );
+
+    set = xset_set( "edit_cut", "lbl", _("Cut") );   //  howdy bub      reeeeeally want to move this away from the COPY button      WAS  Cu_t (I nixed the accelerator key)
+    xset_set_set( set, "icn", "gtk-cut" );
 
     set = xset_get( "sep_e1" );
     set->menu_style = XSET_MENU_SEP;
@@ -11075,10 +9631,10 @@ void xset_defaults() {
     xset_set_set( set, "desc", "" );
     xset_set_set( set, "icn", "gtk-properties" );
 
-    set = xset_set( "prop_info", "lbl", _("_Info") );
+    set = xset_set( "prop_info", "lbl", _("Info") );
     xset_set_set( set, "icn", "gtk-dialog-info" );
 
-    set = xset_set( "prop_perm", "lbl", _("_Permissions") );
+    set = xset_set( "prop_perm", "lbl", _("Permissions") );
     xset_set_set( set, "icn", "GTK_STOCK_DIALOG_AUTHENTICATION" );
 
     set = xset_set( "prop_quick", "lbl", _("_Quick") );
@@ -11390,7 +9946,7 @@ void xset_default_keys() {
     XSet* set;
     GList* l;
 
-    // read all currently set or unset keys
+    // read all currently set or unset keys         howdy bub     the documentation doesn't divulge these keybinds
     keysets = NULL;
     for ( l = xsets; l; l = l->next )
     {

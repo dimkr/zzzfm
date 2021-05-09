@@ -838,7 +838,7 @@ static void set_element_value( CustomElement* el, const char* name, char* value 
 /*
         if ( el_name->widgets->next )
         {
-            gtk_statusbar_push( GTK_STATUSBAR( el_name->widgets->next->data ), 0, *                                                           value );
+            gtk_statusbar_push( GTK_STATUSBAR( el_name->widgets->next->data ), 0, *value );
         }
         break;
 */
@@ -2357,9 +2357,7 @@ static void update_element( CustomElement* el, GtkWidget* box, GSList** radio, i
             compact = TRUE;
         else if ( !strcmp( (char*)args->data, "--expand" ) )
             expand = TRUE;
-        else if ( ( el->type == CDLG_INPUT || el->type == CDLG_INPUT_LARGE )
-                                    && !strcmp( (char*)args->data, "--select" )
-                                    && args->next )
+        else if ( ( el->type == CDLG_INPUT || el->type == CDLG_INPUT_LARGE ) && !strcmp( (char*)args->data, "--select" )   && args->next )
         {
             args = args->next;
             sep = strchr( (char*)args->data, ':' );
@@ -2375,14 +2373,11 @@ static void update_element( CustomElement* el, GtkWidget* box, GSList** radio, i
                 sep[0] = ':';
             }
         }
-        else if ( el->type == CDLG_VIEWER
-                                    && !strcmp( (char*)args->data, "--scroll" ) )
+        else if ( el->type == CDLG_VIEWER  && !strcmp( (char*)args->data, "--scroll" ) )
             viewer_scroll = TRUE;
-        else if ( el->type == CDLG_LABEL
-                                    && !strcmp( (char*)args->data, "--wrap" ) )
+        else if ( el->type == CDLG_LABEL   && !strcmp( (char*)args->data, "--wrap" ) )
             wrap = TRUE;
-        else if ( el->type == CDLG_LABEL
-                                    && !strcmp( (char*)args->data, "--nowrap" ) )
+        else if ( el->type == CDLG_LABEL   && !strcmp( (char*)args->data, "--nowrap" ) )
             nowrap = TRUE;
         else if ( el->type == CDLG_CHOOSER )
         {
@@ -2686,13 +2681,11 @@ static void update_element( CustomElement* el, GtkWidget* box, GSList** radio, i
             if ( radio ) *radio = NULL;
             g_signal_connect( G_OBJECT( w ), "grab-focus", G_CALLBACK( on_widget_grab_focus ), el );
         }
-        if ( args && ((char*)args->data)[0] != '\0' && el->type == CDLG_VIEWER
-                                                    && el->widgets->next )
+        if ( args && ((char*)args->data)[0] != '\0' && el->type == CDLG_VIEWER   && el->widgets->next )
         {
             // viewer
             buf = gtk_text_view_get_buffer( GTK_TEXT_VIEW( el->widgets->next->data ) );
-            if ( selstart && stat64( (char*)args->data, &statbuf ) != -1
-                                             && S_ISFIFO( statbuf.st_mode ) )
+            if ( selstart && stat64( (char*)args->data, &statbuf ) != -1   && S_ISFIFO( statbuf.st_mode ) )
             {
                 // watch pipe
                 GIOChannel* channel = g_io_channel_new_file( (char*)args->data, "r+", NULL );

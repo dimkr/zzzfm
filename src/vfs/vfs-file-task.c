@@ -389,8 +389,7 @@ static gboolean  vfs_file_task_do_copy( VFSFileTask* task, const char* src_file,
                         break;
                     sub_src_file = g_build_filename( src_file, file_name, NULL );
                     sub_dest_file = g_build_filename( dest_file, file_name, NULL );
-                    if ( !vfs_file_task_do_copy( task, sub_src_file, sub_dest_file )
-                                                        && !copy_fail )
+                    if ( !vfs_file_task_do_copy( task, sub_src_file, sub_dest_file )  && !copy_fail )
                         copy_fail = TRUE;
                     g_free(sub_dest_file );
                     g_free(sub_src_file );
@@ -749,7 +748,7 @@ static void  vfs_file_task_move( char* src_file, VFSFileTask* task )
         else
         {
             /* g_print("on the same dev: %s\n", src_file); */
-            if ( vfs_file_task_do_move( task, src_file, dest_file ) == EXDEV )  //MOD
+            if ( vfs_file_task_do_move( task, src_file, dest_file ) == EXDEV )
             {
                 //MOD Invalid cross-device link (st_dev not always accurate test)  so now redo move as copy
                 vfs_file_task_do_copy( task, src_file, dest_file );
@@ -845,8 +844,8 @@ static void  vfs_file_task_link( char* src_file, VFSFileTask* task )
     gchar* old_dest_file;
     gchar* dest_file;
     gchar* file_name;
-    gboolean dest_exists;  //MOD
-    char* new_dest_file = NULL;  //MOD
+    gboolean dest_exists;
+    char* new_dest_file = NULL;
 
     if ( should_abort( task ) )
         return ;
@@ -867,7 +866,7 @@ static void  vfs_file_task_link( char* src_file, VFSFileTask* task )
     if ( stat64( src_file, &src_stat ) == -1 )
     {
         //MOD allow link to broken symlink
-        if ( errno != 2 || ! g_file_test( src_file, G_FILE_TEST_IS_SYMLINK ) )  //MOD
+        if ( errno != 2 || ! g_file_test( src_file, G_FILE_TEST_IS_SYMLINK ) )
         {
             vfs_file_task_error( task, errno, _("Accessing"), src_file );
             if ( should_abort( task ) )
@@ -1468,7 +1467,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
         {
             if ( task->exec_script )
                 g_free( task->exec_script );
-            hex8 = randhex8();
+            hex8 = randhex8();                           //  howdy    randhex8
             hexname = g_strdup_printf( "%s-tmp.sh", hex8 );
             task->exec_script = g_build_filename( tmp, hexname, NULL );
             g_free( hexname );
@@ -1525,7 +1524,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
             }
         }
 
-        // build - export vars
+        // build - export vars    howdy bub flea
         if ( task->exec_export )
             result = fprintf( file, "export fm_import='source %s'\n", task->exec_script );
         else
@@ -1536,12 +1535,10 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
 
         // build - trap rm
         /* These terminals provide no option to start a new instance, child
-         * exit occurs immediately so can't delete tmp files.  So keep files
-         * and let trap delete on exit.
+         * exit occurs immediately so can't delete tmp files.  So keep files and let trap delete on exit.
 
          * These terminals will not work properly with Run As Task.
-         * ! WHEN CHANGING THIS LIST, also see similar checks in pref-dialog.c
-         * and ptk-location-view.c.
+         * ! WHEN CHANGING THIS LIST, also see similar checks in pref-dialog.c and ptk-location-view.c.
 
          * Note for konsole:  if you create a link to it and execute the
          * link, it will start a new instance (might also work for lxterminal?)
@@ -1551,7 +1548,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
         */
         if ( !task->exec_keep_tmp && terminal &&
                                 ( strstr( terminal, "lxterminal" ) ||
-                                  strstr( terminal, "urxvtc" ) ||    // sure no option avail?
+                                  strstr( terminal, "urxvtc" ) ||       // sure no option avail?
                                   strstr( terminal, "konsole" ) ||
                                   strstr( terminal, "gnome-terminal" ) ) )
                                   /* when changing this list adjust also
@@ -1562,8 +1559,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
             if ( result < 0 ) goto _exit_with_error;
             task->exec_keep_tmp = TRUE;
         }
-        else if ( !task->exec_keep_tmp && geteuid() != 0 && task->exec_as_user
-                                        && !strcmp( task->exec_as_user, "root" ) )
+        else if ( !task->exec_keep_tmp && geteuid() != 0 && task->exec_as_user  && !strcmp( task->exec_as_user, "root" ) )
         {
             // run as root command, clean up
             result = fprintf( file, "trap \"rm -f %s; exit\" EXIT SIGINT SIGTERM SIGQUIT SIGHUP\n\n", task->exec_script );
@@ -1643,8 +1639,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
         }
         else if ( strstr( terminal, "lilyterm" ) )
             argv[a++] = g_strdup_printf( "--separate" );
-        else if ( strstr( terminal, "xfce4-terminal" )
-                                || g_str_has_suffix( terminal, "/terminal" ) )
+        else if ( strstr( terminal, "xfce4-terminal" )  || g_str_has_suffix( terminal, "/terminal" ) )
             argv[a++] = g_strdup_printf( "--disable-server" );
 
         // add option to execute command in terminal
@@ -1706,8 +1701,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
             argv[a++] = g_strdup( "-c" );
             single_arg = TRUE;
         }
-        else if ( !strcmp( use_su, "/usr/bin/gnomesu" )
-                                        || !strcmp( use_su, "/usr/bin/xdg-su" ) )
+        else if ( !strcmp( use_su, "/usr/bin/gnomesu" )  || !strcmp( use_su, "/usr/bin/xdg-su" ) )
         {
             // gnomesu
             argv[a++] = g_strdup( "-c" );
@@ -1741,7 +1735,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
         if ( single_arg )
         {
             argv[a++] = g_strdup_printf( "%s %s%s %s %s", BASHPATH, auth,
-                                !g_strcmp0( task->exec_as_user, "root" ) ?  " root" : "", task->exec_script, sum_script );
+                           !g_strcmp0( task->exec_as_user, "root" ) ?  " root" : "", task->exec_script, sum_script );
             g_free( auth );
         } else {
             argv[a++] = g_strdup( BASHPATH );
@@ -1831,9 +1825,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
         // catch termination to waitpid and delete tmp if needed
         // task can be destroyed while this watch is still active
         g_child_watch_add( pid, (GChildWatchFunc)cb_exec_child_cleanup,
-                             !task->exec_keep_tmp && !task->exec_direct &&
-                             task->exec_script ?
-                                g_strdup( task->exec_script ) : NULL );
+                    !task->exec_keep_tmp && !task->exec_direct &&  task->exec_script ?  g_strdup( task->exec_script ) : NULL );
         call_state_callback( task, VFS_FILE_TASK_FINISH );
         return;
     }
@@ -1854,8 +1846,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
     // Add watches to channels
     // These are run in the main loop thread so use G_PRIORITY_LOW to not
     // interfere with g_idle_add in vfs-dir/vfs-async-task etc
-    // "Use this for very low priority background tasks. It is not used within
-    // GLib or GTK+."
+    // "Use this for very low priority background tasks. It is not used within GLib or GTK+"
     g_io_add_watch_full( task->exec_channel_out, G_PRIORITY_LOW, G_IO_IN | G_IO_HUP | G_IO_NVAL | G_IO_ERR, //want ERR?
                         (GIOFunc)cb_exec_out_watch, task, NULL );
     g_io_add_watch_full( task->exec_channel_err, G_PRIORITY_LOW, G_IO_IN | G_IO_HUP | G_IO_NVAL | G_IO_ERR, //want ERR?
@@ -2027,9 +2018,9 @@ static gpointer vfs_file_task_thread ( VFSFileTask* task )
             // make queue exception for smaller tasks
             off64_t exlimit;
             if ( task->type == VFS_FILE_TASK_MOVE ||  task->type == VFS_FILE_TASK_COPY )
-                exlimit = 10485760;     // 10M
+                exlimit = 104857600;     // 100M
             else if ( task->type == VFS_FILE_TASK_DELETE )
-                exlimit = 5368709120;   // 5G
+                exlimit = 10737418240;   // 10G
             else
                 exlimit = 0;            // always exception for other types
             if ( !exlimit || task->total_size < exlimit )
@@ -2204,8 +2195,7 @@ void vfs_file_task_abort ( VFSFileTask* task )
 {
     task->abort = TRUE;
     /* Called from another thread */
-    if ( task->thread && g_thread_self() != task->thread
-                                            && task->type != VFS_FILE_TASK_EXEC )
+    if ( task->thread && g_thread_self() != task->thread  && task->type != VFS_FILE_TASK_EXEC )
     {
         g_thread_join( task->thread );
         task->thread = NULL;
@@ -2352,4 +2342,3 @@ void vfs_file_task_error( VFSFileTask* task, int errnox, const char* action, con
     g_free( msg );
     call_state_callback( task, VFS_FILE_TASK_ERROR );
 }
-

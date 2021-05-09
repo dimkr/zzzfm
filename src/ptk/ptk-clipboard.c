@@ -16,16 +16,13 @@
 #include "ptk-file-task.h"
 #include "ptk-file-misc.h"  // for get_real_link_target()
 #include "vfs-file-task.h"
-#include "ptk-utils.h"  //MOD
+#include "ptk-utils.h"
 
 static GdkDragAction clipboard_action = GDK_ACTION_DEFAULT;
 static GList* clipboard_file_list = NULL;
 
-static void clipboard_get_data ( GtkClipboard *clipboard,
-                                 GtkSelectionData *selection_data,
-                                 guint info,
-                                 gpointer user_data )
-{
+
+static void clipboard_get_data ( GtkClipboard *clipboard, GtkSelectionData *selection_data, guint info, gpointer user_data ) {
     GdkAtom uri_list_target = gdk_atom_intern( "text/uri-list", FALSE );
     GdkAtom gnome_target = gdk_atom_intern( "x-special/gnome-copied-files", FALSE );
     GList* l;
@@ -66,17 +63,13 @@ static void clipboard_get_data ( GtkClipboard *clipboard,
             g_string_append( list, "\r\n" );
     }
 
-    gtk_selection_data_set ( selection_data,
-                             gtk_selection_data_get_target ( selection_data ),
-                             8,
-                             ( guchar* ) list->str, list->len + 1 );
+    gtk_selection_data_set ( selection_data, gtk_selection_data_get_target ( selection_data ), 8, ( guchar* ) list->str, list->len + 1 );
     /* g_debug( "clipboard data:\n%s\n\n", list->str ); */
     g_string_free( list, TRUE );
 }
 
-static void clipboard_clean_data ( GtkClipboard *clipboard,
-                                   gpointer user_data )
-{
+
+static void clipboard_clean_data ( GtkClipboard *clipboard, gpointer user_data ) {
     /* g_debug( "clean clipboard!\n" ); */
     if ( clipboard_file_list )
     {
@@ -87,9 +80,8 @@ static void clipboard_clean_data ( GtkClipboard *clipboard,
     clipboard_action = GDK_ACTION_DEFAULT;
 }
 
-void ptk_clipboard_copy_as_text( const char* working_dir,
-                                      GList* files )  //MOD added
-{   // aka copy path
+
+void ptk_clipboard_copy_as_text( const char* working_dir, GList* files ) {   // aka copy_path
     GtkClipboard* clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GtkClipboard* clip_primary = gtk_clipboard_get( GDK_SELECTION_PRIMARY );
     GList *l;
@@ -103,8 +95,7 @@ void ptk_clipboard_copy_as_text( const char* working_dir,
     for ( l = files; l; l = l->next )
     {
         file = ( VFSFileInfo* ) l->data;
-        file_path = g_build_filename( working_dir,
-                                      vfs_file_info_get_name( file ), NULL );
+        file_path = g_build_filename( working_dir, vfs_file_info_get_name( file ), NULL );
         quoted = bash_quote( file_path );
         str = file_text;
         file_text = g_strdup_printf( "%s %s", str, quoted );
@@ -117,9 +108,8 @@ void ptk_clipboard_copy_as_text( const char* working_dir,
     g_free( file_text );
 }
 
-void ptk_clipboard_copy_name( const char* working_dir,
-                                      GList* files )  //MOD added
-{
+
+void ptk_clipboard_copy_name( const char* working_dir, GList* files ) {
     GtkClipboard* clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GtkClipboard* clip_primary = gtk_clipboard_get( GDK_SELECTION_PRIMARY );
     GList *l;
@@ -136,11 +126,9 @@ void ptk_clipboard_copy_name( const char* working_dir,
         if ( fcount == 0 )
             file_text = g_strdup_printf( "%s", vfs_file_info_get_name( file ) );
         else if ( fcount == 1 )
-            file_text = g_strdup_printf( "%s\n%s\n", file_text,
-                                         vfs_file_info_get_name( file ) );
+            file_text = g_strdup_printf( "%s\n%s\n", file_text, vfs_file_info_get_name( file ) );
         else
-            file_text = g_strdup_printf( "%s%s\n", file_text,
-                                         vfs_file_info_get_name( file ) );
+            file_text = g_strdup_printf( "%s%s\n", file_text, vfs_file_info_get_name( file ) );
         fcount++;
         g_free( str );
     }
@@ -149,18 +137,16 @@ void ptk_clipboard_copy_name( const char* working_dir,
     g_free( file_text );
 }
 
-void ptk_clipboard_copy_text( const char* text )  //MOD added
-{
+
+void ptk_clipboard_copy_text( const char* text ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GtkClipboard* clip_primary = gtk_clipboard_get( GDK_SELECTION_PRIMARY );
     gtk_clipboard_set_text( clip, text, -1 );
     gtk_clipboard_set_text( clip_primary, text, -1 );
 }
 
-void ptk_clipboard_cut_or_copy_files( const char* working_dir,
-                                      GList* files,
-                                      gboolean copy )
-{
+
+void ptk_clipboard_cut_or_copy_files( const char* working_dir, GList* files, gboolean copy ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GtkTargetList* target_list = gtk_target_list_new( NULL, 0 );
     GList* target;
@@ -196,15 +182,11 @@ void ptk_clipboard_cut_or_copy_files( const char* working_dir,
     for ( l = g_list_last( files ); l; l = l->prev )  //sfm was reverse order
     {
         file = ( VFSFileInfo* ) l->data;
-        file_path = g_build_filename( working_dir,
-                                      vfs_file_info_get_name( file ), NULL );
+        file_path = g_build_filename( working_dir, vfs_file_info_get_name( file ), NULL );
         file_list = g_list_prepend( file_list, file_path );
     }
 
-    gtk_clipboard_set_with_data ( clip, targets, n_targets,
-                                  clipboard_get_data,
-                                  clipboard_clean_data,
-                                  NULL );
+    gtk_clipboard_set_with_data ( clip, targets, n_targets, clipboard_get_data, clipboard_clean_data, NULL );
 
     g_free( targets );
 
@@ -212,8 +194,8 @@ void ptk_clipboard_cut_or_copy_files( const char* working_dir,
     clipboard_action = copy ? GDK_ACTION_COPY : GDK_ACTION_MOVE;
 }
 
-void ptk_clipboard_copy_file_list( char** path, gboolean copy )
-{
+
+void ptk_clipboard_copy_file_list( char** path, gboolean copy ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GtkTargetList* target_list = gtk_target_list_new( NULL, 0 );
     GList* target;
@@ -254,20 +236,15 @@ void ptk_clipboard_copy_file_list( char** path, gboolean copy )
         file_path++;
     }
 
-    gtk_clipboard_set_with_data ( clip, targets, n_targets,
-                                  clipboard_get_data,
-                                  clipboard_clean_data,
-                                  NULL );
+    gtk_clipboard_set_with_data ( clip, targets, n_targets, clipboard_get_data, clipboard_clean_data, NULL );
     g_free( targets );
 
     clipboard_file_list = file_list;
     clipboard_action = copy ? GDK_ACTION_COPY : GDK_ACTION_MOVE;
 }
 
-void ptk_clipboard_paste_files( GtkWindow* parent_win,
-                                const char* dest_dir, GtkTreeView* task_view,
-                                GFunc callback, GtkWindow* callback_win )
-{
+
+void ptk_clipboard_paste_files( GtkWindow* parent_win, const char* dest_dir, GtkTreeView* task_view, GFunc callback, GtkWindow* callback_win ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GdkAtom gnome_target;
     GdkAtom uri_list_target;
@@ -284,8 +261,7 @@ void ptk_clipboard_paste_files( GtkWindow* parent_win,
     sel_data = gtk_clipboard_wait_for_contents( clip, gnome_target );
     if ( sel_data )
     {
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return;
@@ -307,8 +283,7 @@ void ptk_clipboard_paste_files( GtkWindow* parent_win,
         sel_data = gtk_clipboard_wait_for_contents( clip, uri_list_target );
         if ( !sel_data )
             return;
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return;
@@ -335,7 +310,7 @@ void ptk_clipboard_paste_files( GtkWindow* parent_win,
         }
         g_strfreev( uri_list );
 
-        //sfm
+
         if ( files )
             files = g_list_reverse( files );
 
@@ -345,25 +320,17 @@ void ptk_clipboard_paste_files( GtkWindow* parent_win,
         * otherwise, paste the file in current directory.
         */
 
-        task = ptk_file_task_new( action,
-                                  files,
-                                  dest_dir,
-                                  parent_win ? GTK_WINDOW( parent_win ) : NULL,
-                                  GTK_WIDGET( task_view ) );
+        task = ptk_file_task_new( action, files, dest_dir, parent_win ? GTK_WINDOW( parent_win ) : NULL, GTK_WIDGET( task_view ) );
         if ( callback && callback_win )
-            ptk_file_task_set_complete_notify( task, callback,
-                                               (gpointer)callback_win );
+            ptk_file_task_set_complete_notify( task, callback, (gpointer)callback_win );
         ptk_file_task_run( task );
     }
     gtk_selection_data_free( sel_data );
 }
 
 
-void ptk_clipboard_paste_links( GtkWindow* parent_win,
-                                const char* dest_dir,
-                                GtkTreeView* task_view,
-                                GFunc callback, GtkWindow* callback_win )
-{
+
+void ptk_clipboard_paste_links( GtkWindow* parent_win, const char* dest_dir, GtkTreeView* task_view, GFunc callback, GtkWindow* callback_win ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GdkAtom gnome_target;
     GdkAtom uri_list_target;
@@ -380,8 +347,7 @@ void ptk_clipboard_paste_links( GtkWindow* parent_win,
     sel_data = gtk_clipboard_wait_for_contents( clip, gnome_target );
     if ( sel_data )
     {
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return;
@@ -399,8 +365,7 @@ void ptk_clipboard_paste_links( GtkWindow* parent_win,
         sel_data = gtk_clipboard_wait_for_contents( clip, uri_list_target );
         if ( !sel_data )
             return;
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return;
@@ -420,28 +385,20 @@ void ptk_clipboard_paste_links( GtkWindow* parent_win,
         }
         g_strfreev( uri_list );
 
-        //sfm
+
         if ( files )
             files = g_list_reverse( files );
 
-        task = ptk_file_task_new( action,
-                                  files,
-                                  dest_dir,
-                                  parent_win ? GTK_WINDOW( parent_win ) : NULL,
-                                  task_view ? GTK_WIDGET( task_view ) : NULL );
+        task = ptk_file_task_new( action, files, dest_dir, parent_win ? GTK_WINDOW( parent_win ) : NULL, task_view ? GTK_WIDGET( task_view ) : NULL );
         if ( callback && callback_win )
-            ptk_file_task_set_complete_notify( task, callback,
-                                               (gpointer)callback_win );
+            ptk_file_task_set_complete_notify( task, callback, (gpointer)callback_win );
         ptk_file_task_run( task );
     }
     gtk_selection_data_free( sel_data );
 }
 
-void ptk_clipboard_paste_targets( GtkWindow* parent_win,
-                                  const char* dest_dir,
-                                  GtkTreeView* task_view,
-                                  GFunc callback, GtkWindow* callback_win )
-{
+
+void ptk_clipboard_paste_targets( GtkWindow* parent_win, const char* dest_dir, GtkTreeView* task_view, GFunc callback, GtkWindow* callback_win ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GdkAtom gnome_target;
     GdkAtom uri_list_target;
@@ -461,8 +418,7 @@ void ptk_clipboard_paste_targets( GtkWindow* parent_win,
     sel_data = gtk_clipboard_wait_for_contents( clip, gnome_target );
     if ( sel_data )
     {
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return;
@@ -480,8 +436,7 @@ void ptk_clipboard_paste_targets( GtkWindow* parent_win,
         sel_data = gtk_clipboard_wait_for_contents( clip, uri_list_target );
         if ( !sel_data )
             return;
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return;
@@ -522,18 +477,13 @@ void ptk_clipboard_paste_targets( GtkWindow* parent_win,
         }
         g_strfreev( uri_list );
 
-        //sfm
+
         if ( files )
             files = g_list_reverse( files );
 
-        task = ptk_file_task_new( action,
-                                  files,
-                                  dest_dir,
-                                  parent_win ? GTK_WINDOW( parent_win ) : NULL,
-                                  GTK_WIDGET( task_view ) );
+        task = ptk_file_task_new( action, files, dest_dir, parent_win ? GTK_WINDOW( parent_win ) : NULL, GTK_WIDGET( task_view ) );
         if ( callback && callback_win )
-            ptk_file_task_set_complete_notify( task, callback,
-                                               (gpointer)callback_win );
+            ptk_file_task_set_complete_notify( task, callback, (gpointer)callback_win );
         ptk_file_task_run( task );
 
         if ( missing_targets > 0 )
@@ -547,9 +497,8 @@ void ptk_clipboard_paste_targets( GtkWindow* parent_win,
     gtk_selection_data_free( sel_data );
 }
 
-GList* ptk_clipboard_get_file_paths( const char* cwd, gboolean* is_cut,
-                                                    gint* missing_targets )
-{
+
+GList* ptk_clipboard_get_file_paths( const char* cwd, gboolean* is_cut, gint* missing_targets ) {
     GtkClipboard * clip = gtk_clipboard_get( GDK_SELECTION_CLIPBOARD );
     GdkAtom gnome_target;
     GdkAtom uri_list_target;
@@ -567,16 +516,14 @@ GList* ptk_clipboard_get_file_paths( const char* cwd, gboolean* is_cut,
     sel_data = gtk_clipboard_wait_for_contents( clip, gnome_target );
     if ( sel_data )
     {
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return NULL;
         }
 
         uri_list_str = ( char* ) gtk_selection_data_get_data( sel_data );
-        *is_cut = ( 0 == strncmp( ( char* ) gtk_selection_data_get_data( sel_data ),
-                                                                    "cut", 3 ) );
+        *is_cut = ( 0 == strncmp( ( char* ) gtk_selection_data_get_data( sel_data ), "cut", 3 ) );
 
         if ( uri_list_str )
         {
@@ -588,8 +535,7 @@ GList* ptk_clipboard_get_file_paths( const char* cwd, gboolean* is_cut,
         sel_data = gtk_clipboard_wait_for_contents( clip, uri_list_target );
         if ( ! sel_data )
             return NULL;
-        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||
-                                gtk_selection_data_get_format( sel_data ) != 8 )
+        if ( gtk_selection_data_get_length( sel_data ) <= 0 ||  gtk_selection_data_get_format( sel_data ) != 8 )
         {
             gtk_selection_data_free( sel_data );
             return NULL;

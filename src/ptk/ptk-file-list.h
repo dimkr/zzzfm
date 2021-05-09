@@ -69,10 +69,10 @@ struct _PtkFileList
 
     int sort_col;
     GtkSortType sort_order;
-    gboolean sort_natural;  //sfm
-    gboolean sort_case;  //sfm
-    gboolean sort_hidden_first;  //sfm
-    char sort_dir;  //sfm
+    gboolean sort_natural;
+    gboolean sort_case;
+    gboolean sort_hidden_first;
+    char sort_dir;
     /* Random integer to check whether an iter belongs to our model */
     gint stamp;
 };
@@ -106,7 +106,7 @@ void ptk_file_list_file_changed( VFSDir* dir, VFSFileInfo* file,
 
 void ptk_file_list_show_thumbnails( PtkFileList* list, gboolean is_big,
                                     int max_file_size );
-void ptk_file_list_sort ( PtkFileList* list );   //sfm 
+void ptk_file_list_sort ( PtkFileList* list );
 
 G_END_DECLS
 

@@ -4,7 +4,7 @@
     <property name="border_width">6</property>
     <property name="title" translatable="yes">File Properties</property>
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
-    <property name="default_width">360</property>
+    <property name="default_width">380</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="gravity">GDK_GRAVITY_CENTER</property>
     <signal handler="on_filePropertiesDlg_response" name="response"/>
@@ -31,16 +31,15 @@
                     <property name="n_columns">2</property>
                     <property name="column_spacing">12</property>
                     <property name="row_spacing">6</property>
-                    
-                    
+
+
                     <child>
                       <object class="GtkLabel" id="label_filename">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;File _Name:&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;File Name:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">file_name</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">0</property>
@@ -63,15 +62,14 @@
                       </packing>
                     </child>
 
-                    
+
                     <child>
                       <object class="GtkLabel" id="label20">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;_Location:&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Location:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">location</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">1</property>
@@ -100,10 +98,9 @@
                       <object class="GtkLabel" id="label_target">
                         <property name="visible">False</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Link _Target:&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Link Target:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">target</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">2</property>
@@ -135,7 +132,7 @@
                         <property name="yalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Type:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">3</property>
@@ -164,7 +161,7 @@
                       </packing>
                     </child>
 
-                    
+
                     <child>
                       <object class="GtkLabel" id="open_with_label">
                         <property name="visible">True</property>
@@ -202,7 +199,7 @@
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Total Size:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">5</property>
@@ -227,15 +224,15 @@
                         <property name="y_options"/>
                       </packing>
                     </child>
-                    
-                    
+
+
                     <child>
                       <object class="GtkLabel" id="label21">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Size On Disk:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">6</property>
@@ -261,14 +258,14 @@
                       </packing>
                     </child>
 
-                    
+
                     <child>
                       <object class="GtkLabel" id="label_count">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Count:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">7</property>
@@ -295,14 +292,22 @@
                     </child>
 
 
+
+
+
+
+
+
+
+
+
                     <child>
                       <object class="GtkLabel" id="label7">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;_Modified:&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Modified:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">mtime</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">8</property>
@@ -326,15 +331,14 @@
                       </packing>
                     </child>
 
-                    
+
                     <child>
                       <object class="GtkLabel" id="label13">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;_Accessed:&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Accessed:&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">atime</property>
+                        <property name="use_underline">False</property>
                       </object>
                       <packing>
                         <property name="top_attach">9</property>
@@ -358,8 +362,8 @@
                       </packing>
                     </child>
 
-                    
-                    
+
+
                   </object>
                 </child>
               </object>
@@ -368,7 +372,7 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">_Info</property>
-                <property name="use_underline">True</property>
+                <property name="use_underline">False</property>
               </object>
               <packing>
                 <property name="tab_fill">False</property>
@@ -767,7 +771,7 @@
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">_Permissions</property>
-                <property name="use_underline">True</property>
+                <property name="use_underline">False</property>
               </object>
               <packing>
                 <property name="position">1</property>

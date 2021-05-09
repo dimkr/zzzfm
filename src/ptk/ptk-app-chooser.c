@@ -40,8 +40,8 @@ extern gboolean is_my_lock;
 static void load_all_apps_in_dir( const char* dir_path, GtkListStore* list, VFSAsyncTask* task );
 static gpointer load_all_known_apps_thread( VFSAsyncTask* task );
 
-static void init_list_view( GtkTreeView* view )
-{
+
+static void init_list_view( GtkTreeView* view ) {
     GtkTreeViewColumn * col = gtk_tree_view_column_new();
     GtkCellRenderer* renderer;
 
@@ -59,8 +59,8 @@ static void init_list_view( GtkTreeView* view )
     gtk_tree_view_set_tooltip_column( view, COL_FULL_PATH );
 }
 
-static gint sort_by_name( GtkTreeModel *model,  GtkTreeIter *a,  GtkTreeIter *b,  gpointer user_data )
-{
+
+static gint sort_by_name( GtkTreeModel *model,  GtkTreeIter *a,  GtkTreeIter *b,  gpointer user_data ) {
     char * name_a, *name_b;
     gint ret = 0;
     gtk_tree_model_get( model, a, COL_APP_NAME, &name_a, -1 );
@@ -77,8 +77,8 @@ static gint sort_by_name( GtkTreeModel *model,  GtkTreeIter *a,  GtkTreeIter *b,
     return ret;
 }
 
-static void add_list_item( GtkListStore* list, VFSAppDesktop* desktop )
-{
+
+static void add_list_item( GtkListStore* list, VFSAppDesktop* desktop ) {
     GtkTreeIter it;
     GdkPixbuf* icon = NULL;
     char* file;
@@ -106,32 +106,25 @@ static void add_list_item( GtkListStore* list, VFSAppDesktop* desktop )
     }
 
     // tooltip
-    char* tooltip = g_markup_printf_escaped( "%s\nName=%s\nExec=%s%s",
-                                     desktop->full_path,
-                                     vfs_app_desktop_get_disp_name( desktop ),
-                                     desktop->exec,
-                                     desktop->terminal ? "\nTerminal=true" : "" );
+    char* tooltip = g_markup_printf_escaped( "%s\nName=%s\nExec=%s%s", desktop->full_path, vfs_app_desktop_get_disp_name( desktop ),
+                                     desktop->exec, desktop->terminal ? "\nTerminal=true" : "" );
 
     icon = vfs_app_desktop_get_icon( desktop, 20, TRUE );
     gtk_list_store_append( list, &it );
     gtk_list_store_set( list, &it, COL_APP_ICON, icon,
                         COL_APP_NAME, vfs_app_desktop_get_disp_name( desktop ),
                         COL_DESKTOP_FILE, vfs_app_desktop_get_name( desktop ),
-                        COL_FULL_PATH, tooltip,
-                        -1 );
+                        COL_FULL_PATH, tooltip, -1 );
     g_free( tooltip );
     if ( icon )
         g_object_unref( icon );
 }
 
-static GtkTreeModel* create_model_from_mime_type( VFSMimeType* mime_type )
-{
+
+static GtkTreeModel* create_model_from_mime_type( VFSMimeType* mime_type ) {
     char** apps, **app;
     const char *type;
-    GtkListStore* list = gtk_list_store_new( N_COLS, GDK_TYPE_PIXBUF,
-                                                     G_TYPE_STRING,
-                                                     G_TYPE_STRING,
-                                                     G_TYPE_STRING );
+    GtkListStore* list = gtk_list_store_new( N_COLS, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
     if ( mime_type )
     {
         apps = vfs_mime_type_get_actions( mime_type );
@@ -156,18 +149,14 @@ static GtkTreeModel* create_model_from_mime_type( VFSMimeType* mime_type )
     return (GtkTreeModel*) list;
 }
 
-gboolean on_cmdline_keypress( GtkWidget *widget,  GdkEventKey *event,  GtkNotebook* notebook )
-{
-    gtk_widget_set_sensitive( GTK_WIDGET( notebook ), gtk_entry_get_text_length(
-                                            (GtkEntry*)widget ) == 0 );
+
+gboolean on_cmdline_keypress( GtkWidget *widget,  GdkEventKey *event,  GtkNotebook* notebook ) {
+    gtk_widget_set_sensitive( GTK_WIDGET( notebook ), gtk_entry_get_text_length( (GtkEntry*)widget ) == 0 );
     return FALSE;
 }
 
-void on_view_row_activated ( GtkTreeView *tree_view,
-                             GtkTreePath *path,
-                             GtkTreeViewColumn* col,
-                             GtkWidget* dlg )
-{
+
+void on_view_row_activated ( GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn* col, GtkWidget* dlg ) {
     GtkBuilder* builder = (GtkBuilder*)g_object_get_data(G_OBJECT(dlg), "builder");
     GtkWidget* ok = (GtkWidget*)gtk_builder_get_object( builder, "okbutton");
     gtk_button_clicked( GTK_BUTTON( ok ) );
@@ -196,7 +185,7 @@ GtkWidget* app_chooser_dialog_new( GtkWindow* parent, VFSMimeType* mime_type,
 
     g_object_set_data_full( G_OBJECT(dlg), "builder", builder, (GDestroyNotify)g_object_unref );
 
-    xset_set_window_icon( GTK_WINDOW( dlg ) );
+    xset_set_window_icon( GTK_WINDOW( dlg ) );    // howdy
 
     gtk_dialog_set_alternative_button_order( GTK_DIALOG(dlg), GTK_RESPONSE_OK, GTK_RESPONSE_CANCEL, -1 );
     ptk_dialog_fit_small_screen( GTK_DIALOG(dlg) );
@@ -206,7 +195,7 @@ GtkWidget* app_chooser_dialog_new( GtkWindow* parent, VFSMimeType* mime_type,
     if ( width && height )
         gtk_window_set_default_size( GTK_WINDOW( dlg ), width, height );
     else
-        gtk_window_set_default_size( GTK_WINDOW( dlg ), 600, 600 );
+        gtk_window_set_default_size( GTK_WINDOW( dlg ), 400, 600 );
 
     mime_desc = g_strdup_printf( " %s\n ( %s )",  vfs_mime_type_get_description( mime_type ),  mime_type->type );
     if ( mime_desc )
@@ -214,11 +203,10 @@ GtkWidget* app_chooser_dialog_new( GtkWindow* parent, VFSMimeType* mime_type,
         gtk_label_set_text( GTK_LABEL( file_type ), mime_desc );
         g_free( mime_desc );
     }
-    /* Don't set default handler for directories and files with unknown type */
+    //  Do not set default handler for directories and files with unknown type      //   howdy
     if ( !show_default ||
        /*  0 == strcmp( vfs_mime_type_get_type( mime_type ), XDG_MIME_TYPE_UNKNOWN ) || */
-         ( 0 == strcmp( vfs_mime_type_get_type( mime_type ), XDG_MIME_TYPE_DIRECTORY ) &&
-           !dir_default ) )
+         ( 0 == strcmp( vfs_mime_type_get_type( mime_type ), XDG_MIME_TYPE_DIRECTORY ) &&   !dir_default ) )
     {
         gtk_widget_hide( (GtkWidget*)gtk_builder_get_object( builder,  "set_default" ) );
     }
@@ -228,8 +216,7 @@ GtkWidget* app_chooser_dialog_new( GtkWindow* parent, VFSMimeType* mime_type,
         gtk_label_set_text( GTK_LABEL( gtk_builder_get_object( builder,  "label_command" ) ),  _("Please choose an application:") );
     }
 
-    view = GTK_TREE_VIEW( (GtkWidget*)gtk_builder_get_object(
-                                            builder, "recommended_apps" ) );
+    view = GTK_TREE_VIEW( (GtkWidget*)gtk_builder_get_object( builder, "recommended_apps" ) );    // howdy wtf? recommended by whom?
     notebook = GTK_NOTEBOOK( (GtkWidget*)gtk_builder_get_object( builder,  "notebook" ) );
     entry = GTK_ENTRY( (GtkWidget*)gtk_builder_get_object( builder,  "cmdline" ) );
 
@@ -239,17 +226,10 @@ GtkWidget* app_chooser_dialog_new( GtkWindow* parent, VFSMimeType* mime_type,
     init_list_view( view );
     gtk_widget_grab_focus( GTK_WIDGET( view ) );
 
-    g_signal_connect( entry, "key_release_event",
-                                    G_CALLBACK(on_cmdline_keypress), notebook );
-    g_signal_connect( (GtkWidget*)gtk_builder_get_object( builder, "notebook"),
-                                    "switch_page",
-                                    G_CALLBACK(on_notebook_switch_page), dlg );
-    g_signal_connect( (GtkWidget*)gtk_builder_get_object( builder, "browse_btn"),
-                                    "clicked",
-                                    G_CALLBACK(on_browse_btn_clicked), dlg );
-    g_signal_connect ( G_OBJECT( view ), "row_activated",
-                                    G_CALLBACK ( on_view_row_activated ),
-                                    dlg );
+    g_signal_connect( entry, "key_release_event", G_CALLBACK(on_cmdline_keypress), notebook );
+    g_signal_connect( (GtkWidget*)gtk_builder_get_object( builder, "notebook"), "switch_page", G_CALLBACK(on_notebook_switch_page), dlg );
+    g_signal_connect( (GtkWidget*)gtk_builder_get_object( builder, "browse_btn"), "clicked", G_CALLBACK(on_browse_btn_clicked), dlg );
+    g_signal_connect ( G_OBJECT( view ), "row_activated", G_CALLBACK ( on_view_row_activated ), dlg );
 
     gtk_window_set_transient_for( GTK_WINDOW( dlg ), parent );
 
@@ -262,8 +242,8 @@ GtkWidget* app_chooser_dialog_new( GtkWindow* parent, VFSMimeType* mime_type,
     return dlg;
 }
 
-static void on_load_all_apps_finish( VFSAsyncTask* task, gboolean is_cancelled, GtkWidget* dlg )
-{
+
+static void on_load_all_apps_finish( VFSAsyncTask* task, gboolean is_cancelled, GtkWidget* dlg ) {
     GtkTreeModel* model;
     GtkTreeView* view;
 
@@ -285,8 +265,8 @@ static void on_load_all_apps_finish( VFSAsyncTask* task, gboolean is_cancelled, 
     gdk_window_set_cursor( gtk_widget_get_window ( dlg ), NULL );
 }
 
-void  on_notebook_switch_page ( GtkNotebook *notebook,  GtkWidget *page,  guint page_num, gpointer user_data )
-{
+
+void  on_notebook_switch_page ( GtkNotebook *notebook,  GtkWidget *page,  guint page_num, gpointer user_data ) {
     GtkWidget * dlg = ( GtkWidget* ) user_data;
     GtkTreeView* view;
 
@@ -318,14 +298,14 @@ void  on_notebook_switch_page ( GtkNotebook *notebook,  GtkWidget *page,  guint 
     }
 }
 
+
 /*
 * Return selected application in a ``newly allocated'' string.
 * Returned string is the file name of the *.desktop file or a command line.
 * These two can be separated by check if the returned string is ended
 * with ".desktop" postfix.
 */
-gchar* app_chooser_dialog_get_selected_app( GtkWidget* dlg )
-{
+gchar* app_chooser_dialog_get_selected_app( GtkWidget* dlg ) {
     gchar * app = NULL;
     GtkBuilder* builder = (GtkBuilder*)g_object_get_data(G_OBJECT(dlg), "builder");
     GtkEntry* entry = GTK_ENTRY( (GtkWidget*)gtk_builder_get_object( builder, "cmdline" ) );
@@ -358,18 +338,31 @@ gchar* app_chooser_dialog_get_selected_app( GtkWidget* dlg )
     return app;
 }
 
+
 /*
-* Check if the user set the selected app default handler.
+* Check if the user set the selected app as the default handler.
 */
-gboolean app_chooser_dialog_get_set_default( GtkWidget* dlg )
-{
+gboolean app_chooser_dialog_get_set_default( GtkWidget* dlg ) {
     GtkBuilder* builder = (GtkBuilder*)g_object_get_data(G_OBJECT(dlg), "builder");
     GtkWidget * check = (GtkWidget*)gtk_builder_get_object( builder, "set_default" );
     return gtk_toggle_button_get_active ( GTK_TOGGLE_BUTTON( check ) );
 }
 
-void  on_browse_btn_clicked ( GtkButton *button,  gpointer user_data )
-{
+
+// howdy bub     future use ~~ when accessed from root window, will display a control (ticked by default) to drop privileges for the spawned process
+//gboolean
+void app_chooser_dialog_get_safe_drop( GtkWidget* dlg ) {
+    GtkBuilder* builder = (GtkBuilder*)g_object_get_data(G_OBJECT(dlg), "builder");
+    GtkWidget * check = (GtkWidget*)gtk_builder_get_object( builder, "set_extra_drp" );
+    if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON( check)) )
+    {
+        printf( " chooser: safe_drop requested\n" );
+    }
+    //return gtk_toggle_button_get_active ( GTK_TOGGLE_BUTTON( check ) );
+}
+
+
+void  on_browse_btn_clicked ( GtkButton *button,  gpointer user_data ) {
     char * filename;
     char* app_name;
     GtkEntry* entry;
@@ -377,19 +370,13 @@ void  on_browse_btn_clicked ( GtkButton *button,  gpointer user_data )
     const char* app_path = "/usr/share/applications";
 
     GtkWidget* parent = GTK_WIDGET(user_data );
-    GtkWidget* dlg = gtk_file_chooser_dialog_new( NULL, GTK_WINDOW( parent ),
-                                                  GTK_FILE_CHOOSER_ACTION_OPEN,
-                                                  GTK_STOCK_CANCEL,
-                                                  GTK_RESPONSE_CANCEL,
-                                                  GTK_STOCK_OPEN,
-                                                  GTK_RESPONSE_OK,
-                                                  NULL );
+    GtkWidget* dlg = gtk_file_chooser_dialog_new( NULL, GTK_WINDOW( parent ), GTK_FILE_CHOOSER_ACTION_OPEN,
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL );
     GtkBuilder* builder = (GtkBuilder*)g_object_get_data(G_OBJECT(parent), "builder");
 
     xset_set_window_icon( GTK_WINDOW( dlg ) );
 
-    gtk_file_chooser_set_current_folder ( GTK_FILE_CHOOSER ( dlg ),
-                                          "/usr/bin" );
+    gtk_file_chooser_set_current_folder ( GTK_FILE_CHOOSER ( dlg ), "/usr/bin" );
     if ( gtk_dialog_run( GTK_DIALOG( dlg ) ) == GTK_RESPONSE_OK )
     {
         filename = gtk_file_chooser_get_filename ( GTK_FILE_CHOOSER ( dlg ) );
@@ -416,8 +403,8 @@ void  on_browse_btn_clicked ( GtkButton *button,  gpointer user_data )
     gtk_widget_destroy( dlg );
 }
 
-static void on_dlg_response( GtkDialog* dlg, int id, gpointer user_data )
-{
+
+static void on_dlg_response( GtkDialog* dlg, int id, gpointer user_data ) {
     VFSAsyncTask* task;
     GtkAllocation allocation;
 
@@ -457,12 +444,11 @@ static void on_dlg_response( GtkDialog* dlg, int id, gpointer user_data )
     }
 }
 
-void ptk_app_chooser_has_handler_warn( GtkWidget* parent, VFSMimeType* mime_type )
-{
+
+void ptk_app_chooser_has_handler_warn( GtkWidget* parent, VFSMimeType* mime_type ) {
     // is file handler set for this type?
     char* msg;
-    GSList* handlers_slist = ptk_handler_file_has_handlers(
-                        HANDLER_MODE_FILE, HANDLER_MOUNT,  NULL, mime_type, FALSE, FALSE, TRUE );
+    GSList* handlers_slist = ptk_handler_file_has_handlers( HANDLER_MODE_FILE, HANDLER_MOUNT,  NULL, mime_type, FALSE, FALSE, TRUE );
     if ( handlers_slist )
     {
         msg = g_strdup_printf( _("Note:  MIME type '%s' is currently set to open with the '%s' file handler, rather than with your associated MIME application.\n\nYou may also need to disable this handler in Open|File Handlers for this type to be opened with your associated application by default."),
@@ -474,8 +460,7 @@ void ptk_app_chooser_has_handler_warn( GtkWidget* parent, VFSMimeType* mime_type
     else if ( !xset_get_b( "arc_def_open" ) )
     {
         // is archive handler set for this type?
-        handlers_slist = ptk_handler_file_has_handlers(
-                            HANDLER_MODE_ARC, HANDLER_EXTRACT,  NULL, mime_type, FALSE, FALSE, TRUE );
+        handlers_slist = ptk_handler_file_has_handlers( HANDLER_MODE_ARC, HANDLER_EXTRACT,  NULL, mime_type, FALSE, FALSE, TRUE );
         if ( handlers_slist )
         {
             msg = g_strdup_printf( _("Note:  MIME type '%s' is currently set to open with the '%s' archive handler, rather than with your associated MIME application.\n\nYou may also need to disable this handler in Open|Archive Defaults|Archive Handlers, OR select global option Open|Archive Defaults|Open With App, for this type to be opened with your associated application by default."),
@@ -486,6 +471,7 @@ void ptk_app_chooser_has_handler_warn( GtkWidget* parent, VFSMimeType* mime_type
         }
     }
 }
+
 
 gchar* ptk_choose_app_for_mime_type( GtkWindow* parent,
                                      VFSMimeType* mime_type,
@@ -504,10 +490,7 @@ gchar* ptk_choose_app_for_mime_type( GtkWindow* parent,
     gchar* app = NULL;
     gchar* custom = NULL;
 
-    dlg = app_chooser_dialog_new( parent, mime_type, focus_all_apps,
-                                                     show_command,
-                                                     show_default,
-                                                     dir_default );
+    dlg = app_chooser_dialog_new( parent, mime_type, focus_all_apps, show_command, show_default, dir_default );
 
     g_signal_connect( dlg, "response",  G_CALLBACK(on_dlg_response), NULL );
 
@@ -516,6 +499,8 @@ gchar* ptk_choose_app_for_mime_type( GtkWindow* parent,
         app = app_chooser_dialog_get_selected_app( dlg );
         if ( app )
         {
+            app_chooser_dialog_get_safe_drop( dlg );    //  howdy test
+
             /* The selected app is set to default action */
             /* TODO: full-featured mime editor??? */
             if ( app_chooser_dialog_get_set_default( dlg ) )
@@ -537,8 +522,8 @@ gchar* ptk_choose_app_for_mime_type( GtkWindow* parent,
     return app;
 }
 
-void load_all_apps_in_dir( const char* dir_path, GtkListStore* list, VFSAsyncTask* task )
-{
+
+void load_all_apps_in_dir( const char* dir_path, GtkListStore* list, VFSAsyncTask* task ) {
 
     GDir* dir = g_dir_open( dir_path, 0, NULL );
     if( dir )
@@ -588,8 +573,8 @@ void load_all_apps_in_dir( const char* dir_path, GtkListStore* list, VFSAsyncTas
     }
 }
 
-gpointer load_all_known_apps_thread( VFSAsyncTask* task )
-{
+
+gpointer load_all_known_apps_thread( VFSAsyncTask* task ) {
     gchar* dir, **dirs;
     GtkListStore* list;
     gboolean cancel = FALSE;
@@ -614,4 +599,3 @@ gpointer load_all_known_apps_thread( VFSAsyncTask* task )
     vfs_async_task_unlock( task );
     return NULL;
 }
-

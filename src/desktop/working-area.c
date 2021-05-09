@@ -1,5 +1,5 @@
 /*
- * Guifications - The end all, be all, toaster popup plugin
+ *  - The end all, be all,  popup
  * Copyright (C) 2003-2004 Gary Kramlich
  *
  * This program is free software; you can redistribute it and/or
@@ -16,11 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-/*
-  2005.07.22 Modified by Hong Jen Yee (PCMan)
-  This piece of code detecting working area is got from Guifications, a plug-in for Gaim.
-*/
 
 # include <gdk/gdk.h>
 # include <gdk/gdkx.h>

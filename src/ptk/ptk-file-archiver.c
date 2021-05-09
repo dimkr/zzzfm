@@ -193,16 +193,11 @@ static void on_format_changed( GtkComboBox* combo, gpointer user_data )
     // Loading command
     if ( handler_xset )
     {
-        GtkTextView* view = (GtkTextView*)g_object_get_data( G_OBJECT( dlg ),
-                                                                    "view" );
-        char* err_msg = ptk_handler_load_script( HANDLER_MODE_ARC,
-                        HANDLER_COMPRESS, handler_xset,
-                        GTK_TEXT_VIEW( view ), NULL );
+        GtkTextView* view = (GtkTextView*)g_object_get_data( G_OBJECT( dlg ), "view" );
+        char* err_msg = ptk_handler_load_script( HANDLER_MODE_ARC, HANDLER_COMPRESS, handler_xset, GTK_TEXT_VIEW( view ), NULL );
         if ( err_msg )
         {
-            xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_ERROR,
-                                _("Error Loading Handler"), NULL, 0,
-                                err_msg, NULL, NULL );
+            xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_ERROR, _("Error Loading Handler"), NULL, 0, err_msg, NULL, NULL );
             g_free( err_msg );
         }
     }
@@ -242,8 +237,7 @@ static char* generate_bash_error_function( gboolean run_in_terminal,  char* pare
         finished_with_errors, error_pause );
 }
 
-char* replace_archive_subs( const char* line, const char* n, const char* N,
-                            const char* o, const char* x, const char* g )
+char* replace_archive_subs( const char* line, const char* n, const char* N, const char* o, const char* x, const char* g )
 {
     char* s;
     char* old_s;
@@ -315,56 +309,29 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
     GtkWidget* combo, *dlg, *hbox;
     GtkFileFilter* filter;
 
-    char *cmd_to_run = NULL, *desc = NULL, *dest_file = NULL,
-        *ext = NULL, *s1 = NULL, *str = NULL, *udest_file = NULL,
+    char *cmd_to_run = NULL, *desc = NULL, *dest_file = NULL, *ext = NULL, *s1 = NULL, *str = NULL, *udest_file = NULL,
         *udest_quote = NULL, *final_command = NULL;
     int i, n, format, res;
     struct stat64 statbuf;
 
     /* Generating dialog - extra NULL on the NULL-terminated list to
      * placate an irrelevant compilation warning. See notes in
-     * ptk-handler.c:ptk_handler_show_config about GTK failure to
-     * identify top-level widget */
-    GtkWidget *top_level = file_browser ? gtk_widget_get_toplevel(
-                                GTK_WIDGET( file_browser->main_window ) ) :
-                                NULL;
-    dlg = gtk_file_chooser_dialog_new( _("Create Archive"),
-                            top_level ? GTK_WINDOW( top_level ) : NULL,
-                                       GTK_FILE_CHOOSER_ACTION_SAVE, NULL,
-                                       NULL );
+     * ptk-handler.c:ptk_handler_show_config about GTK failure to identify top-level widget */
+    GtkWidget *top_level = file_browser ? gtk_widget_get_toplevel( GTK_WIDGET( file_browser->main_window ) ) :  NULL;
+    dlg = gtk_file_chooser_dialog_new( _("Create Archive"), top_level ? GTK_WINDOW( top_level ) : NULL, GTK_FILE_CHOOSER_ACTION_SAVE, NULL, NULL );
 
     /* Adding standard buttons and saving references in the dialog
      * 'Configure' button has custom text but a stock image */
-    GtkButton* btn_configure = GTK_BUTTON( gtk_dialog_add_button(
-                                                GTK_DIALOG( dlg ),
-                                                _("Conf_igure"),
-                                                GTK_RESPONSE_NONE ) );
-    GtkWidget* btn_configure_image = xset_get_image( "GTK_STOCK_PREFERENCES",
-                                                GTK_ICON_SIZE_BUTTON );
-    gtk_button_set_image( GTK_BUTTON( btn_configure ),
-                          GTK_WIDGET ( btn_configure_image ) );
-    g_object_set_data( G_OBJECT( dlg ), "btn_configure",
-                       GTK_BUTTON( btn_configure ) );
-    g_object_set_data( G_OBJECT( dlg ), "btn_cancel",
-                        gtk_dialog_add_button( GTK_DIALOG( dlg ),
-                                                GTK_STOCK_CANCEL,
-                                                GTK_RESPONSE_CANCEL ) );
-    g_object_set_data( G_OBJECT( dlg ), "btn_ok",
-                        gtk_dialog_add_button( GTK_DIALOG( dlg ),
-                                                GTK_STOCK_OK,
-                                                GTK_RESPONSE_OK ) );
+    GtkButton* btn_configure = GTK_BUTTON( gtk_dialog_add_button( GTK_DIALOG( dlg ), _("Conf_igure"), GTK_RESPONSE_NONE ) );
+    GtkWidget* btn_configure_image = xset_get_image( "GTK_STOCK_PREFERENCES", GTK_ICON_SIZE_BUTTON );
+    gtk_button_set_image( GTK_BUTTON( btn_configure ), GTK_WIDGET ( btn_configure_image ) );
+    g_object_set_data( G_OBJECT( dlg ), "btn_configure", GTK_BUTTON( btn_configure ) );
+    g_object_set_data( G_OBJECT( dlg ), "btn_cancel", gtk_dialog_add_button( GTK_DIALOG( dlg ), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL ) );
+    g_object_set_data( G_OBJECT( dlg ), "btn_ok", gtk_dialog_add_button( GTK_DIALOG( dlg ), GTK_STOCK_OK, GTK_RESPONSE_OK ) );
 
     /* Adding the help button but preventing it from taking the focus on
      * click */
-    gtk_button_set_focus_on_click(
-                                    GTK_BUTTON(
-                                        gtk_dialog_add_button(
-                                            GTK_DIALOG( dlg ),
-                                            GTK_STOCK_HELP,
-                                            GTK_RESPONSE_HELP
-                                        )
-                                    ),
-                                    FALSE );
+    gtk_button_set_focus_on_click( GTK_BUTTON( gtk_dialog_add_button( GTK_DIALOG( dlg ), GTK_STOCK_HELP, GTK_RESPONSE_HELP ) ), FALSE );
 
     filter = gtk_file_filter_new();
 
@@ -447,10 +414,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
 
             // Adding to model
             extensions = g_strconcat( handler_xset->menu_label, " (",  handler_xset->x, ")", NULL );
-            gtk_list_store_set( GTK_LIST_STORE( list ), &iter,
-                                COL_XSET_NAME, archive_handlers[i],
-                                COL_HANDLER_EXTENSIONS, extensions,
-                                -1 );
+            gtk_list_store_set( GTK_LIST_STORE( list ), &iter, COL_XSET_NAME, archive_handlers[i], COL_HANDLER_EXTENSIONS, extensions, -1 );
             g_free( extensions );
 
             // Is last used handler?
@@ -478,20 +442,15 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
     gtk_box_pack_end( GTK_BOX( hbox_top ), combo, FALSE, FALSE, 2 );
 
     GtkWidget *lbl_archive_format = gtk_label_new( NULL );
-    gtk_label_set_markup_with_mnemonic( GTK_LABEL( lbl_archive_format ),
-                                         _("_Archive Format:") );
-    gtk_box_pack_end( GTK_BOX( hbox_top ), lbl_archive_format, FALSE, FALSE,
-                      2 );
+    gtk_label_set_markup_with_mnemonic( GTK_LABEL( lbl_archive_format ), _("_Archive Format:") );
+    gtk_box_pack_end( GTK_BOX( hbox_top ), lbl_archive_format, FALSE, FALSE, 2 );
     gtk_widget_show_all( hbox_top );
 
     GtkTextView* view = (GtkTextView*)gtk_text_view_new();
     gtk_text_view_set_wrap_mode( GTK_TEXT_VIEW( view ), GTK_WRAP_WORD_CHAR );
     GtkWidget* view_scroll = gtk_scrolled_window_new( NULL, NULL );
-    gtk_scrolled_window_set_policy ( GTK_SCROLLED_WINDOW ( view_scroll ),
-                                     GTK_POLICY_AUTOMATIC,
-                                     GTK_POLICY_AUTOMATIC );
-    gtk_container_add( GTK_CONTAINER( view_scroll ),
-                                      GTK_WIDGET ( view ) );
+    gtk_scrolled_window_set_policy ( GTK_SCROLLED_WINDOW ( view_scroll ), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC );
+    gtk_container_add( GTK_CONTAINER( view_scroll ), GTK_WIDGET ( view ) );
     g_object_set_data( G_OBJECT( dlg ), "view", view );
 
     /* Loading command for handler, based off the format handler */
@@ -504,14 +463,10 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
                             -1 );
         if ( handler_xset = xset_is( xset_name ) )
         {
-            char* err_msg = ptk_handler_load_script( HANDLER_MODE_ARC,
-                            HANDLER_COMPRESS, handler_xset,
-                            GTK_TEXT_VIEW( view ), NULL );
+            char* err_msg = ptk_handler_load_script( HANDLER_MODE_ARC, HANDLER_COMPRESS, handler_xset, GTK_TEXT_VIEW( view ), NULL );
             if ( err_msg )
             {
-                xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_ERROR,
-                                    _("Error Loading Handler"), NULL, 0,
-                                    err_msg, NULL, NULL );
+                xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_ERROR,  _("Error Loading Handler"), NULL, 0, err_msg, NULL, NULL );
                 g_free( err_msg );
             }
 
@@ -537,8 +492,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
     GtkWidget *vbox = gtk_vbox_new( FALSE, 4 );
     gtk_box_pack_start( GTK_BOX( vbox ), GTK_WIDGET( hbox_top ), TRUE,  TRUE, 0 );
     gtk_box_pack_start( GTK_BOX( vbox ), GTK_WIDGET( hbox_bottom ),  TRUE, TRUE, 1 );
-    gtk_box_pack_start( GTK_BOX( gtk_dialog_get_content_area ( GTK_DIALOG( dlg )
-                                ) ),  vbox, FALSE, TRUE, 0 );
+    gtk_box_pack_start( GTK_BOX( gtk_dialog_get_content_area ( GTK_DIALOG( dlg )   ) ),  vbox, FALSE, TRUE, 0 );
 
     // Configuring dialog
     gtk_file_chooser_set_action( GTK_FILE_CHOOSER( dlg ),  GTK_FILE_CHOOSER_ACTION_SAVE );
@@ -549,11 +503,8 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
     {
         // Fetching first extension handler deals with
         ext = archive_handler_get_first_extension( handler_xset );
-        dest_file = g_strjoin( NULL,
-                        vfs_file_info_get_disp_name( (VFSFileInfo*)files->data ),
-                        ext, NULL );
-        gtk_file_chooser_set_current_name( GTK_FILE_CHOOSER( dlg ),
-                                           dest_file );
+        dest_file = g_strjoin( NULL, vfs_file_info_get_disp_name( (VFSFileInfo*)files->data ), ext, NULL );
+        gtk_file_chooser_set_current_name( GTK_FILE_CHOOSER( dlg ), dest_file );
         g_free( dest_file );
         dest_file = NULL;
         g_free( ext );
@@ -600,8 +551,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
             }
 
             // Fetching model data
-            gtk_tree_model_get( GTK_TREE_MODEL( list ), &iter,
-                                COL_XSET_NAME, &xset_name,
+            gtk_tree_model_get( GTK_TREE_MODEL( list ), &iter, COL_XSET_NAME, &xset_name,
                                 //COL_HANDLER_EXTENSIONS, &extensions,
                                 -1 );
 
@@ -623,8 +573,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
             // reject command that contains only whitespace and comments
             if ( ptk_handler_command_is_empty( command ) )
             {
-                xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_ERROR,
-                                    _("Create Archive"), NULL, 0,
+                xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_ERROR, _("Create Archive"), NULL, 0,
                                     _("The archive creation command is empty.  Please enter a command."),  NULL, NULL );
                 g_free( command );
                 continue;
@@ -632,8 +581,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
 
 #if 0   // I don't like this warning here - users may have custom ways of doing
             /* This is duplicating GUI validation code but it is just
-             * not worth spinning out a series of validation functions
-             * for this
+             * not worth spinning out a series of validation functions for this
              * Checking to see if the archive handler compression command
              * has been deleted or has invalid placeholders - not
              * required to only have one of the particular type */
@@ -649,13 +597,11 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
                 )
             )
             {
-                // It has/is - warning user
+                // It has/is - warning user      // howdy bub     when/where is this displayed?
 /* this looks like a very tall dialog - will fit on smaller (600) screens? */
-                xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_WARNING,
-                                _("Create Archive"), NULL, FALSE,
-                                _("The following variables "
-                                "should be in the archive creation"
-                                " command:\n\n"
+                xset_msg_dialog( GTK_WIDGET( dlg ), GTK_MESSAGE_WARNING, _("Create Archive"), NULL, FALSE,
+                                _("The following variables should be present"
+                                "within the archive creation command:\n\n"
                                 "One of the following:\n\n"
                                 "%%%%n: First selected file/directory to"
                                 " archive\n"
@@ -800,12 +746,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
                 while ( lstat64( udest_file, &statbuf ) == 0 )
                 {
                     g_free( udest_file );
-                    udest_file = g_strdup_printf( "%s/%s-%s%d%s",
-                                                   dest_dir,
-                                                   desc,
-                                                   _("copy"),
-                                                    ++n,
-                                                   ext );
+                    udest_file = g_strdup_printf( "%s/%s-%s%d%s",  dest_dir, desc,  _("copy"), ++n, ext );
                 }
                 g_free( dest_dir );
             }
@@ -827,8 +768,7 @@ void ptk_file_archiver_create( DesktopWindow *desktop,  PtkFileBrowser *file_bro
                 desc = bash_quote( desc );
 
             // Replace sub vars  %n %N %O (and erroneous %o treat as %O)
-            cmd_to_run = replace_archive_subs( command,
-                            i == 0 ? desc : "",  // first run only %n = desc
+            cmd_to_run = replace_archive_subs( command, i == 0 ? desc : "",  // first run only %n = desc
                             desc,  // Replace %N with nth file (NOT ALL FILES)
                             udest_quote, NULL, NULL );
             g_free( udest_quote );
@@ -959,11 +899,8 @@ static void on_create_subfolder_toggled( GtkToggleButton *togglebutton,  GtkWidg
     gtk_widget_set_sensitive( chk_write, enabled && geteuid() != 0 );
 }
 
-void ptk_file_archiver_extract( DesktopWindow *desktop,
-                                PtkFileBrowser *file_browser,
-                                GList *files, const char *cwd,
-                                const char *dest_dir, int job,
-                                gboolean archive_presence_checked )
+void ptk_file_archiver_extract( DesktopWindow *desktop, PtkFileBrowser *file_browser, GList *files, const char *cwd,
+                                const char *dest_dir, int job, gboolean archive_presence_checked )
 {   /* This function is also used to list the contents of archives */
     GtkWidget* dlg;
     GtkWidget* dlgparent = NULL;
@@ -976,8 +913,7 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
     const char *dest;
     GList* l;
     char *dest_quote = NULL, *full_path = NULL, *full_quote = NULL,
-        *perm = NULL, *cmd = NULL, *str = NULL, *final_command = NULL,
-        *s1 = NULL, *extension = NULL;
+        *perm = NULL, *cmd = NULL, *str = NULL, *final_command = NULL, *s1 = NULL, *extension = NULL;
     int i, n, j, res;
     struct stat64 statbuf;
     GSList *handlers_slist = NULL;
@@ -1036,53 +972,28 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
     {
         /* It hasn't - generating dialog to ask user. Only dealing with
          * user-writable contents if the user isn't root */
-        dlg = gtk_file_chooser_dialog_new( _("Extract To"),
-                                dlgparent ? GTK_WINDOW( dlgparent ) : NULL,
-                                           GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, NULL,
-                                           NULL );
+        dlg = gtk_file_chooser_dialog_new( _("Extract To"), dlgparent ? GTK_WINDOW( dlgparent ) : NULL, GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, NULL, NULL );
 
         /* Adding standard buttons and saving references in the dialog
          * 'Configure' button has custom text but a stock image */
-        GtkButton* btn_configure = GTK_BUTTON( gtk_dialog_add_button(
-                                                    GTK_DIALOG( dlg ),
-                                                    _("Conf_igure"),
-                                                    GTK_RESPONSE_NONE ) );
-        GtkWidget* btn_configure_image = xset_get_image( "GTK_STOCK_PREFERENCES",
-                                                    GTK_ICON_SIZE_BUTTON );
-        gtk_button_set_image( GTK_BUTTON( btn_configure ),
-                              GTK_WIDGET ( btn_configure_image ) );
-        g_object_set_data( G_OBJECT( dlg ), "btn_configure",
-                           GTK_BUTTON( btn_configure ) );
-        g_object_set_data( G_OBJECT( dlg ), "btn_cancel",
-                            gtk_dialog_add_button( GTK_DIALOG( dlg ),
-                                                    GTK_STOCK_CANCEL,
-                                                    GTK_RESPONSE_CANCEL ) );
-        g_object_set_data( G_OBJECT( dlg ), "btn_ok",
-                            gtk_dialog_add_button( GTK_DIALOG( dlg ),
-                                                    GTK_STOCK_OK,
-                                                    GTK_RESPONSE_OK ) );
+        GtkButton* btn_configure = GTK_BUTTON( gtk_dialog_add_button( GTK_DIALOG( dlg ), _("Conf_igure"), GTK_RESPONSE_NONE ) );
+        GtkWidget* btn_configure_image = xset_get_image( "GTK_STOCK_PREFERENCES", GTK_ICON_SIZE_BUTTON );
+        gtk_button_set_image( GTK_BUTTON( btn_configure ), GTK_WIDGET ( btn_configure_image ) );
+        g_object_set_data( G_OBJECT( dlg ), "btn_configure", GTK_BUTTON( btn_configure ) );
+        g_object_set_data( G_OBJECT( dlg ), "btn_cancel", gtk_dialog_add_button( GTK_DIALOG( dlg ), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL ) );
+        g_object_set_data( G_OBJECT( dlg ), "btn_ok", gtk_dialog_add_button( GTK_DIALOG( dlg ), GTK_STOCK_OK, GTK_RESPONSE_OK ) );
 
         /* Adding the help button but preventing it from taking the focus on
          * click */
-        gtk_button_set_focus_on_click(
-                                        GTK_BUTTON(
-                                            gtk_dialog_add_button(
-                                                GTK_DIALOG( dlg ),
-                                                GTK_STOCK_HELP,
-                                                GTK_RESPONSE_HELP
-                                            )
-                                        ),
-                                        FALSE );
+        gtk_button_set_focus_on_click( GTK_BUTTON( gtk_dialog_add_button( GTK_DIALOG( dlg ), GTK_STOCK_HELP, GTK_RESPONSE_HELP ) ), FALSE );
 
         GtkWidget* hbox = gtk_hbox_new( FALSE, 10 );
         GtkWidget* chk_parent = gtk_check_button_new_with_mnemonic( _("Cre_ate subfolder(s)") );
-        GtkWidget* chk_write = gtk_check_button_new_with_mnemonic( _("Make contents "
-                                                    "user-_writable") );
+        GtkWidget* chk_write = gtk_check_button_new_with_mnemonic( _("Make contents user-_writable") );
         gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( chk_parent ),  xset_get_b( "arc_dlg" ) );
         gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( chk_write ),  xset_get_int( "arc_dlg", "z" ) == 1 &&
                                 geteuid() != 0 );
-        gtk_widget_set_sensitive( chk_write, xset_get_b( "arc_dlg" ) &&
-                                             geteuid() != 0 );
+        gtk_widget_set_sensitive( chk_write, xset_get_b( "arc_dlg" ) &&  geteuid() != 0 );
         g_signal_connect( G_OBJECT( chk_parent ), "toggled",  G_CALLBACK ( on_create_subfolder_toggled ), chk_write );
         gtk_box_pack_start( GTK_BOX(hbox), chk_parent, FALSE, FALSE, 6 );
         gtk_box_pack_start( GTK_BOX(hbox), chk_write, FALSE, FALSE, 6 );
@@ -1175,9 +1086,7 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
 
     // Fetching available archive handlers and splitting
     char* archive_handlers_s = xset_get_s( "arc_conf2" );
-    gchar** archive_handlers = archive_handlers_s ?
-                               g_strsplit( archive_handlers_s, " ", -1 ) :
-                               NULL;
+    gchar** archive_handlers = archive_handlers_s ? g_strsplit( archive_handlers_s, " ", -1 ) : NULL;
     XSet* handler_xset = NULL;
 
     // Looping for all files to attempt to list/extract
@@ -1247,9 +1156,7 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
 
             /* Looping for all extensions registered with the current
              * archive handler (NULL-terminated list) */
-            gchar** pathnames = handler_xset->x ?
-                           g_strsplit( handler_xset->x, " ", -1 ) :
-                           NULL;
+            gchar** pathnames = handler_xset->x ?  g_strsplit( handler_xset->x, " ", -1 ) :  NULL;
             gchar *filename_no_ext;
             if ( pathnames )
             {
@@ -1328,9 +1235,7 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
                 while ( lstat64( parent_path, &statbuf ) == 0 )
                 {
                     g_free( parent_path );
-                    parent_path = g_strdup_printf( "%s-%s%d",
-                                                   parent_orig,
-                                                   _("copy"), ++n );
+                    parent_path = g_strdup_printf( "%s-%s%d", parent_orig, _("copy"), ++n );
                 }
                 g_free( parent_orig );
 
@@ -1339,8 +1244,7 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
                 g_free( mkparent );
                 mkparent = g_strdup_printf( ""
                     "mkdir -p %s || fm_handle_err\n"
-                    "cd %s || fm_handle_err\n",
-                    parent_quote, parent_quote );
+                    "cd %s || fm_handle_err\n", parent_quote, parent_quote );
 
                 /* Dealing with the need to make extracted files writable if
                  * desired (e.g. a tar of files originally archived from a CD
@@ -1371,21 +1275,15 @@ void ptk_file_archiver_extract( DesktopWindow *desktop,
                 /* Creating extraction target, taking into account whether
                  * a parent directory has been created or not - target is
                  * guaranteed not to exist so as to avoid overwriting */
-                extract_target = g_build_filename(
-                                    create_parent ? parent_path : dest,
-                                                filename_no_archive_ext,
-                                                NULL );
+                extract_target = g_build_filename( create_parent ? parent_path : dest, filename_no_archive_ext, NULL );
                 n = 1;
 
                 // Looping to find a path that doesnt exist
                 while ( lstat64( extract_target, &statbuf ) == 0 )
                 {
                     g_free( extract_target );
-                    str = g_strdup_printf( "%s-%s%d%s", filename_no_ext,
-                                           _("copy"), ++n, extension );
-                    extract_target = g_build_filename(
-                                    create_parent ? parent_path : dest,
-                                    str, NULL );
+                    str = g_strdup_printf( "%s-%s%d%s", filename_no_ext, _("copy"), ++n, extension );
+                    extract_target = g_build_filename( create_parent ? parent_path : dest, str, NULL );
                     g_free( str );
                 }
 

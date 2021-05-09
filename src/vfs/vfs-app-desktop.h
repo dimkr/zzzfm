@@ -62,7 +62,7 @@ gboolean vfs_app_desktop_open_files( GdkScreen* screen,
                                      VFSAppDesktop* app,
                                      GList* file_paths,
                                      GError** err );
-gboolean vfs_app_desktop_rename( char* desktop_file_path, char* new_name );   //sfm
+gboolean vfs_app_desktop_rename( char* desktop_file_path, char* new_name );
 
 G_END_DECLS
 

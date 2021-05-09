@@ -54,10 +54,10 @@ typedef struct
 
     //gboolean show_location_bar;
 
-    gboolean no_execute;    //MOD
-    gboolean no_confirm;    //MOD
-    gboolean sdebug;            //sfm
-    gboolean load_saved_tabs;   //sfm
+    gboolean no_execute;
+    gboolean no_confirm;
+    gboolean sdebug;
+    gboolean load_saved_tabs;
     char* date_format;  //MOD for speed dupe of xset
 
     //int open_bookmark_method; /* 1: current tab, 2: new tab, 3: new window */
@@ -182,7 +182,6 @@ enum {   // do not reorder - these values are saved in session files
 
 enum {
     XSET_JOB_KEY,
-    XSET_JOB_ICON,
     XSET_JOB_LABEL,
     XSET_JOB_EDIT,
     XSET_JOB_EDIT_ROOT,
@@ -203,9 +202,6 @@ enum {
     XSET_JOB_SUBMENU_BOOK,
     XSET_JOB_SEP,
     XSET_JOB_ADD_TOOL,
-    XSET_JOB_IMPORT_FILE,
-    XSET_JOB_IMPORT_URL,
-    XSET_JOB_IMPORT_GTK,
     XSET_JOB_CUT,
     XSET_JOB_COPY,
     XSET_JOB_PASTE,
@@ -221,10 +217,8 @@ enum {
     XSET_JOB_PROP_CMD,
     XSET_JOB_IGNORE_CONTEXT,
     XSET_JOB_SCROLL,
-    XSET_JOB_EXPORT,
     XSET_JOB_BROWSE_FILES,
     XSET_JOB_BROWSE_DATA,
-    XSET_JOB_BROWSE_PLUGIN,
     XSET_JOB_HELP,
     XSET_JOB_HELP_NEW,
     XSET_JOB_HELP_ADD,
@@ -234,20 +228,6 @@ enum {
     XSET_JOB_TOOLTIPS
 };
 
-enum {           //  howdy bub
-    PLUGIN_JOB_INSTALL,
-    PLUGIN_JOB_COPY,
-    PLUGIN_JOB_REMOVE
-};
-
-enum {
-    PLUGIN_USE_HAND_ARC,
-    PLUGIN_USE_HAND_FS,
-    PLUGIN_USE_HAND_NET,
-    PLUGIN_USE_HAND_FILE,
-    PLUGIN_USE_BOOKMARKS,
-    PLUGIN_USE_NORMAL
-};
 
 typedef struct
 {
@@ -296,13 +276,8 @@ typedef struct
     char scroll_lock;
     char opener;
 
-    // Plugin (not saved at all)(sic)
-    gboolean plugin;
-    gboolean plugin_top;
-    char* plug_name;
-    char* plug_dir;
-
 } XSet;
+
 
 typedef struct
 {
@@ -360,14 +335,9 @@ static const char* su_commands[] = // order and contents must match prefdlg.ui
 static const char* gsu_commands[] = // order and contents must match prefdlg.ui
 {
     "/usr/bin/gksu",
-    "/usr/bin/gksudo",
-    "/usr/bin/gnomesu",
     "/usr/bin/xdg-su",
     "/usr/bin/kdesu",   // may be translated to "$(kde4-config --path libexec)/kdesu"
     "/usr/bin/kdesudo",
-    "/usr/bin/ktsuss",
-    "/usr/bin/lxqt-sudo",
-    "/usr/bin/lxsu",
     "/usr/bin/su-to-root",
     "/bin/su",
     "/usr/bin/sudo"
@@ -385,8 +355,7 @@ typedef struct
 
 
 char* randhex8();
-char* replace_string( const char* orig, const char* str, const char* replace,
-                                                            gboolean quote );
+char* replace_string( const char* orig, const char* str, const char* replace, gboolean quote );
 char* replace_line_subs( const char* line );
 char* bash_quote( const char* str );
 void string_copy_free( char** s, const char* src );
@@ -419,10 +388,8 @@ XSet* xset_set_cb_panel( int panel, const char* name, void (*cb_func) (), gpoint
 gboolean xset_get_b_set( XSet* set );
 XSet* xset_get_panel_mode( int panel, const char* name, char mode );
 gboolean xset_get_b_panel_mode( int panel, const char* name, char mode );
-XSet* xset_set_panel_mode( int panel, const char* name, char mode,
-                                      const char* var, const char* value );
-XSet* xset_set_b_panel_mode( int panel, const char* name, char mode,
-                                                            gboolean bval );
+XSet* xset_set_panel_mode( int panel, const char* name, char mode, const char* var, const char* value );
+XSet* xset_set_b_panel_mode( int panel, const char* name, char mode, gboolean bval );
 
 XSetContext* xset_context_new();
 XSet* xset_get_plugin_mirror( XSet* set );
@@ -440,7 +407,7 @@ void xset_custom_activate( GtkWidget* item, XSet* set );
 XSet* xset_custom_remove( XSet* set );
 char* xset_custom_get_app_name_icon( XSet* set, GdkPixbuf** icon, int icon_size );
 GdkPixbuf* xset_custom_get_bookmark_icon( XSet* set, int icon_size );
-void xset_custom_export( GtkWidget* parent, PtkFileBrowser* file_browser,  XSet* set );
+
 GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert, guint button, guint32 time );
 void xset_add_menu( DesktopWindow* desktop, PtkFileBrowser* file_browser,
                     GtkWidget* menu, GtkAccelGroup *accel_group, char* elements );
@@ -459,32 +426,27 @@ gboolean xset_text_dialog( GtkWidget* parent, const char* title, GtkWidget* imag
                             gboolean large, const char* msg1, const char* msg2,
                             const char* defstring, char** answer, const char* defreset,
                             gboolean edit_care, const char* help );
+
 char* xset_file_dialog( GtkWidget* parent, GtkFileChooserAction action,
                         const char* title, const char* deffolder, const char* deffile );
-char* xset_font_dialog( GtkWidget* parent, const char* title,
-                                    const char* preview, const char* deffont );
+char* xset_font_dialog( GtkWidget* parent, const char* title, const char* preview, const char* deffont );
 void xset_edit( GtkWidget* parent, const char* path, gboolean force_root, gboolean no_root );
 void xset_open_url( GtkWidget* parent, const char* url );
 void xset_fill_toolbar( GtkWidget* parent, PtkFileBrowser* file_browser,
                         GtkWidget* toolbar, XSet* set_parent,  gboolean show_tooltips );
 int xset_msg_dialog( GtkWidget* parent, int action, const char* title, GtkWidget* image,
                     int buttons, const char* msg1, const char* msg2, const char* help );
-GtkTextView* multi_input_new( GtkScrolledWindow* scrolled, const char* text,   gboolean def_font );
+GtkTextView* multi_input_new( GtkScrolledWindow* scrolled, const char* text, gboolean def_font );
 void multi_input_select_region( GtkWidget* input, int start, int end );
 char* multi_input_get_text( GtkWidget* input );
 XSet* xset_custom_new();
 gboolean write_root_settings( FILE* file, const char* path );
-GList* xset_get_plugins( gboolean included );
-void install_plugin_file( gpointer main_win, GtkWidget* handler_dlg, const char* path, const char* plug_dir, int type,
-                          int job, XSet* insert_set );
-XSet* xset_import_plugin( const char* plug_dir, gboolean* is_bookmarks );
-void clean_plugin_mirrors();
+
 char* plain_ascii_name( const char* orig_name );
 char* clean_label( const char* menu_label, gboolean kill_special, gboolean convert_amp );
 void xset_show_help( GtkWidget* parent, XSet* set, const char* anchor );
 gboolean xset_opener( DesktopWindow* desktop, PtkFileBrowser* file_browser,  char job );
 const char* xset_get_builtin_toolitem_label( char tool_type );
-char* xset_icon_chooser_dialog( GtkWindow* parent, const char* def_icon );
 
 
 #endif

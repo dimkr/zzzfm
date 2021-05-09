@@ -3,7 +3,7 @@
 
 #include <gtk/gtk.h>
 #include "ptk-file-browser.h"
-#include "ptk-file-task.h"  //MOD
+#include "ptk-file-task.h"
 
 G_BEGIN_DECLS
 
@@ -29,16 +29,14 @@ typedef struct _FMMainWindow
     /* protected */
     GtkWidget *main_vbox;
     GtkWidget *menu_bar;
-    //MOD
+
     GtkWidget* file_menu_item;
     GtkWidget* view_menu_item;
     GtkWidget* dev_menu_item;
     GtkWidget* book_menu_item;
-    GtkWidget* plug_menu_item;
     GtkWidget* tool_menu_item;
     GtkWidget* help_menu_item;
     GtkWidget* dev_menu;
-    GtkWidget* plug_menu;
     GtkWidget* notebook;  //MOD changed use to current panel
     GtkWidget* panel[4];
     int panel_slide_x[4];
@@ -112,17 +110,11 @@ GtkWidget* fm_main_window_new();
 /* Utility functions */
 GtkWidget* fm_main_window_get_current_file_browser( FMMainWindow* mainWindow );
 
-void fm_main_window_add_new_tab( FMMainWindow* main_window,
-                                 const char* folder_path );
+void fm_main_window_add_new_tab( FMMainWindow* main_window, const char* folder_path );
 
+GtkWidget* fm_main_window_create_tab_label( FMMainWindow* main_window, PtkFileBrowser* file_browser );
 
-GtkWidget* fm_main_window_create_tab_label( FMMainWindow* main_window,
-                                            PtkFileBrowser* file_browser );
-
-void fm_main_window_update_tab_label( FMMainWindow* main_window,
-                                      PtkFileBrowser* file_browser,
-                                      const char * path );
-
+void fm_main_window_update_tab_label( FMMainWindow* main_window, PtkFileBrowser* file_browser, const char * path );
 
 void fm_main_window_preference( FMMainWindow* main_window );
 
@@ -131,8 +123,7 @@ FMMainWindow* fm_main_window_get_last_active();
 FMMainWindow* fm_main_window_get_on_current_desktop();
 
 /* get all windows
- * The returned GList is owned and used internally by FMMainWindow, and
- * should not be freed.
+ * The returned GList is owned and used internally by FMMainWindow, and should not be freed.
 */
 const GList* fm_main_window_get_all();
 
@@ -155,8 +146,7 @@ void main_update_fonts( GtkWidget* widget, PtkFileBrowser* file_browser );
 void on_reorder( GtkWidget* item, GtkWidget* parent );
 char* main_window_get_tab_cwd( PtkFileBrowser* file_browser, int tab_num );
 char* main_window_get_panel_cwd( PtkFileBrowser* file_browser, int panel_num );
-void main_window_get_counts( PtkFileBrowser* file_browser, int* panel_count,
-                                                int* tab_count, int* tab_num );
+void main_window_get_counts( PtkFileBrowser* file_browser, int* panel_count,  int* tab_count, int* tab_num );
 gboolean main_window_panel_is_visible( PtkFileBrowser* file_browser, int panel );
 void main_window_open_in_panel( PtkFileBrowser* file_browser, int panel_num, char* file_path );
 void main_window_autosave( PtkFileBrowser* file_browser );
@@ -168,8 +158,7 @@ void main_context_fill( PtkFileBrowser* file_browser, XSetContext* c );
 void set_panel_focus( FMMainWindow* main_window, PtkFileBrowser* file_browser );
 void focus_panel( GtkMenuItem* item, gpointer mw, int p );
 void main_window_open_path_in_current_tab( FMMainWindow* main_window, const char* path );
-void main_window_open_network( FMMainWindow* main_window, const char* path,
-                                                            gboolean new_tab );
+void main_window_open_network( FMMainWindow* main_window, const char* path, gboolean new_tab );
 char main_window_socket_command( char* argv[], char** reply );
 gboolean main_window_event( gpointer mw, XSet* preset, const char* event,
                             int panel, int tab, const char* focus,

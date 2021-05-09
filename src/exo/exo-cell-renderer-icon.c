@@ -137,8 +137,7 @@ struct _ExoCellRendererIconPrivate
 G_DEFINE_TYPE (ExoCellRendererIcon, exo_cell_renderer_icon, GTK_TYPE_CELL_RENDERER)
 
 
-static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
-{
+static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass) {
     GtkCellRendererClass *gtkcell_renderer_class;
     GObjectClass         *gobject_class;
 
@@ -210,8 +209,7 @@ static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
    * ExoCellRendererIcon:size:
    *
    * The size in pixel at which to render the icon. This is also the fixed
-   * size that the renderer will request no matter if the actual icons are
-   * smaller than this size.
+   * size that the renderer will request no matter if the actual icons are smaller than this size.
    *
    * This improves the performance of the layouting in the icon and tree
    * view, because during the layouting phase no icons will need to be
@@ -230,14 +228,12 @@ static void  exo_cell_renderer_icon_class_init (ExoCellRendererIconClass *klass)
 
 
 
-static void  exo_cell_renderer_icon_init (ExoCellRendererIcon *icon_undocked)
-{
+static void  exo_cell_renderer_icon_init (ExoCellRendererIcon *icon_undocked) {
 }
 
 
 
-static void  exo_cell_renderer_icon_finalize (GObject *object)
-{
+static void  exo_cell_renderer_icon_finalize (GObject *object) {
     const ExoCellRendererIconPrivate *priv = EXO_CELL_RENDERER_ICON_GET_PRIVATE (object);
 
     /* free the icon if not static */
@@ -252,9 +248,7 @@ static void  exo_cell_renderer_icon_finalize (GObject *object)
 }
 
 
-
-static void  exo_cell_renderer_icon_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
-{
+static void  exo_cell_renderer_icon_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec) {
     const ExoCellRendererIconPrivate *priv = EXO_CELL_RENDERER_ICON_GET_PRIVATE (object);
 
     switch (prop_id)
@@ -282,12 +276,7 @@ static void  exo_cell_renderer_icon_get_property (GObject *object, guint prop_id
 }
 
 
-
-static void  exo_cell_renderer_icon_set_property (GObject      *object,
-                                     guint         prop_id,
-                                     const GValue *value,
-                                     GParamSpec   *pspec)
-{
+static void  exo_cell_renderer_icon_set_property (GObject *object,  guint prop_id,  const GValue *value,  GParamSpec *pspec) {
     ExoCellRendererIconPrivate *priv = EXO_CELL_RENDERER_ICON_GET_PRIVATE (object);
     const gchar                *icon;
 
@@ -327,7 +316,7 @@ static void  exo_cell_renderer_icon_set_property (GObject      *object,
 
 
 
-static void  exo_cell_renderer_icon_get_size (GtkCellRenderer    *renderer, GtkWidget          *widget,
+static void  exo_cell_renderer_icon_get_size (GtkCellRenderer *renderer, GtkWidget *widget,
 
 //sfm-gtk3
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -381,7 +370,7 @@ static void  exo_cell_renderer_icon_get_size (GtkCellRenderer    *renderer, GtkW
 
 
 
-static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
+static void  exo_cell_renderer_icon_render (GtkCellRenderer *renderer,
 
 //sfm-gtk3
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -447,8 +436,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
     }
     else if (priv->icon != NULL || priv->gicon != NULL)
     {
-        /* Determine the best icon size (GtkIconTheme is somewhat messy scaling
-         * up small icons) */
+        /* Determine the best icon size (GtkIconTheme is somewhat messy scaling up small icons) */
         icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
 
         if (priv->icon != NULL)
@@ -465,8 +453,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
             }
             g_free (icon_sizes);
 
-            /* If we don't know any icon sizes at all, the icon is probably not
-             * present */
+            /* If we don't know any icon sizes at all, the icon is probably not present */
             if (G_UNLIKELY (icon_size < 0))
                 icon_size = priv->size;
 
@@ -511,8 +498,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
         {
             display_name = g_filename_display_name (priv->icon);
         }
-        else if (G_UNLIKELY (priv->gicon != NULL
-                             && g_object_class_find_property (G_OBJECT_GET_CLASS (priv->gicon), "name")))
+        else if (G_UNLIKELY (priv->gicon != NULL  && g_object_class_find_property (G_OBJECT_GET_CLASS (priv->gicon), "name")))
         {
             g_object_get (priv->gicon, "name", &display_name, NULL);
         }
@@ -532,8 +518,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
     icon_area.height = gdk_pixbuf_get_height (icon);
 
     /* Scale down the icon on-demand */
-    if (G_UNLIKELY (icon_area.width > cell_area->width ||
-                    icon_area.height > cell_area->height))
+    if (G_UNLIKELY (icon_area.width > cell_area->width ||  icon_area.height > cell_area->height))
     {
         /* Scale down to fit */
         temp = exo_gdk_pixbuf_scale_down (icon, TRUE, cell_area->width, cell_area->height);
@@ -549,20 +534,17 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
     icon_area.x = cell_area->x + (cell_area->width - icon_area.width) / 2;
     icon_area.y = cell_area->y + (cell_area->height - icon_area.height) / 2;
 
-    /* Check whether the icon is affected by the expose event - in GTK3's case,
-     * there is no passed expose_area */
+    /* Check whether the icon is affected by the expose event - in GTK3's case, there is no passed expose_area */
     if (!expose_area || gdk_rectangle_intersect (expose_area, &icon_area, &draw_area))
     {
         GtkStyle *style = gtk_widget_get_style (widget);
 
         /* Colorize the icon if we should follow the selection state */
-        if ((flags & (GTK_CELL_RENDERER_SELECTED | GTK_CELL_RENDERER_PRELIT)) != 0
-                && priv->follow_state)
+        if ((flags & (GTK_CELL_RENDERER_SELECTED | GTK_CELL_RENDERER_PRELIT)) != 0  && priv->follow_state)
         {
             if ((flags & GTK_CELL_RENDERER_SELECTED) != 0)
             {
-                state = gtk_widget_has_focus (widget) ? GTK_STATE_SELECTED :
-                                                        GTK_STATE_ACTIVE;
+                state = gtk_widget_has_focus (widget) ? GTK_STATE_SELECTED :  GTK_STATE_ACTIVE;
                 temp = exo_gdk_pixbuf_colorize (icon, &style->base[state]);
                 g_object_unref (G_OBJECT (icon));
                 icon = temp;
@@ -577,8 +559,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
         }
 
         /* Check if we should render an insensitive icon */
-        if (G_UNLIKELY (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE ||
-                        !gtk_cell_renderer_get_sensitive(renderer)))
+        if (G_UNLIKELY (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE ||  !gtk_cell_renderer_get_sensitive(renderer)))
         {
             /* Allocate an icon source */
             icon_source = gtk_icon_source_new ();
@@ -587,8 +568,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
             gtk_icon_source_set_size (icon_source, GTK_ICON_SIZE_SMALL_TOOLBAR);
 
             /* Render the insensitive icon */
-            temp = gtk_style_render_icon (style, icon_source, gtk_widget_get_direction (widget), GTK_STATE_INSENSITIVE, -1, widget,
-                                          "gtkcellrendererpixbuf");
+            temp = gtk_style_render_icon (style, icon_source, gtk_widget_get_direction (widget), GTK_STATE_INSENSITIVE, -1, widget, "gtkcellrendererpixbuf");
             g_object_unref (G_OBJECT (icon));
             icon = temp;
 
@@ -597,7 +577,6 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
         }
 
         /* Render the invalid parts of the icon */
-        //sfm-gtk3
 #if GTK_CHECK_VERSION (3, 0, 0)
         /* In GTK3, no expose_area is set so the intersecting draw_area is never
          * populated. icon_area is already the correct coords to output an icon
@@ -617,7 +596,6 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
 }
 
 
-
 /**
  * exo_cell_renderer_icon_new:
  *
@@ -630,9 +608,7 @@ static void  exo_cell_renderer_icon_render (GtkCellRenderer     *renderer,
  *
  * Returns: the newly allocated #ExoCellRendererIcon.
  **/
-GtkCellRenderer*
-exo_cell_renderer_icon_new (void)
-{
+GtkCellRenderer*  exo_cell_renderer_icon_new (void) {
     return g_object_new (EXO_TYPE_CELL_RENDERER_ICON, NULL);
 }
 

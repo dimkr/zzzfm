@@ -137,8 +137,8 @@ static const char menu_def[] =
 "</popup>"
 "</ui>";
 
-static gboolean open_file( char* dir, GList* files, PtkFileBrowser* file_browser )
-{
+
+static gboolean open_file( char* dir, GList* files, PtkFileBrowser* file_browser ) {
     if( files )
     {
 /*igtodo test passing file_browser here? */
@@ -157,15 +157,12 @@ static gboolean open_file( char* dir, GList* files, PtkFileBrowser* file_browser
                 if ( G_UNLIKELY( ! file ) )
                     continue;
 
-                full_path = g_build_filename( dir,
-                                              vfs_file_info_get_name( file ),
-                                              NULL );
+                full_path = g_build_filename( dir, vfs_file_info_get_name( file ), NULL );
                 if ( G_LIKELY( full_path ) )
                 {
                     if ( g_file_test( full_path, G_FILE_TEST_IS_DIR ) )
                     {
-                        ptk_file_browser_emit_open( file_browser,
-                                                            full_path, PTK_OPEN_NEW_TAB );
+                        ptk_file_browser_emit_open( file_browser, full_path, PTK_OPEN_NEW_TAB );
                     }
                     g_free( full_path );
                 }
@@ -177,13 +174,13 @@ static gboolean open_file( char* dir, GList* files, PtkFileBrowser* file_browser
     return FALSE;
 }
 
-static void open_dir( char* dir, GList* files, FMMainWindow* w )
-{
+
+static void open_dir( char* dir, GList* files, FMMainWindow* w ) {
     fm_main_window_add_new_tab( w, dir );
 }
 
-static void on_open_files( GtkAction* action, FindFile* data )
-{
+
+static void on_open_files( GtkAction* action, FindFile* data ) {
     GtkTreeModel* model;
     GtkTreeSelection* sel;
     GtkTreeIter it;
@@ -191,8 +188,8 @@ static void on_open_files( GtkAction* action, FindFile* data )
     GHashTable* hash;
     GtkWidget* w;
     VFSFileInfo* fi;
-    gboolean open_files_has_dir = FALSE;  //sfm
-    PtkFileBrowser* file_browser = NULL;  //sfm
+    gboolean open_files_has_dir = FALSE;
+    PtkFileBrowser* file_browser = NULL;
     gboolean open_files = TRUE;
 
     if ( action )
@@ -225,7 +222,7 @@ static void on_open_files( GtkAction* action, FindFile* data )
                 l = g_hash_table_lookup( hash, dir );
                 l = g_list_prepend( l, vfs_file_info_ref(fi) );
                 g_hash_table_insert( hash, dir, l );  //sfm caused segfault with destroy function
-                if ( vfs_file_info_is_dir( fi ) )  //sfm
+                if ( vfs_file_info_is_dir( fi ) )
                     open_files_has_dir = TRUE;
             } else {
                 if( g_hash_table_lookup( hash, dir ) )
@@ -245,7 +242,7 @@ static void on_open_files( GtkAction* action, FindFile* data )
             if( ! w )
             {
                 w = fm_main_window_new();
-                // now done in fm_main_window_new
+                // now performed in fm_main_window_new
                 //gtk_window_set_default_size( GTK_WINDOW( w ), app_settings.width, app_settings.height );
             }
             gtk_window_present( (GtkWindow*)w );
@@ -257,7 +254,7 @@ static void on_open_files( GtkAction* action, FindFile* data )
         if( ! w )
         {
             w = fm_main_window_new();
-            // now done in fm_main_window_new
+            // now performed in fm_main_window_new
             //gtk_window_set_default_size( GTK_WINDOW( w ), app_settings.width, app_settings.height );
         }
 
@@ -268,14 +265,15 @@ static void on_open_files( GtkAction* action, FindFile* data )
     g_hash_table_destroy( hash );
 }
 
+
 static GtkActionEntry menu_actions[] =
 {
     { "OpenAction", GTK_STOCK_OPEN, N_("_Open"), NULL, NULL, G_CALLBACK(on_open_files) },
     { "OpenFolderAction", GTK_STOCK_OPEN, N_("Open Containing _Folder"), NULL, NULL, G_CALLBACK(on_open_files) }
 };
 
-static int get_date_offset( GtkCalendar* calendar )
-{
+
+static int get_date_offset( GtkCalendar* calendar ) {
     /* FIXME: I think we need a better implementation for this */
     GDate* date;
     GDate* today;
@@ -295,8 +293,8 @@ static int get_date_offset( GtkCalendar* calendar )
     return ABS(offset);
 }
 
-static char** compose_command( FindFile* data )
-{
+
+static char** compose_command( FindFile* data ) {
     GArray* argv = g_array_sized_new( TRUE, TRUE, sizeof(char*), 10 );
     char *arg, *tmp;
     GtkTreeIter it;
@@ -516,8 +514,8 @@ static char** compose_command( FindFile* data )
     return (char**)g_array_free( argv, FALSE );
 }
 
-static void finish_search( FindFile* data )
-{
+
+static void finish_search( FindFile* data ) {
     if( data->pid )
     {
         int status;
@@ -536,8 +534,8 @@ static void finish_search( FindFile* data )
     gtk_widget_show( data->again_btn );
 }
 
-static void process_found_files( FindFile* data, GQueue* queue, const char* path )
-{
+
+static void process_found_files( FindFile* data, GQueue* queue, const char* path ) {
     char *name;
     gsize len, term;
     GtkTreeIter it;
@@ -584,14 +582,16 @@ static void process_found_files( FindFile* data, GQueue* queue, const char* path
                                     COL_SIZE, vfs_file_info_get_disp_size( ff->fi ),
                                     COL_MTIME, vfs_file_info_get_disp_mtime( ff->fi ),
                                     COL_INFO, ff->fi, -1 );
-        g_object_unref( icon );
+        if (icon )
+            g_object_unref( icon );
+
         GDK_THREADS_LEAVE();
         g_slice_free( FoundFile, ff );
     }
 }
 
-static gpointer search_thread( VFSAsyncTask* task, FindFile* data )
-{
+
+static gpointer search_thread( VFSAsyncTask* task, FindFile* data ) {
     ssize_t rlen;
     char buf[4096 ];
     GString* path = g_string_new_len( NULL, 256 );
@@ -641,13 +641,11 @@ static gpointer search_thread( VFSAsyncTask* task, FindFile* data )
     return NULL;
 }
 
-static void on_search_finish( VFSAsyncTask* task, gboolean cancelled, FindFile* data )
-{
+static void on_search_finish( VFSAsyncTask* task, gboolean cancelled, FindFile* data ) {
     finish_search( data );
 }
 
-static void on_start_search( GtkWidget* btn, FindFile* data )
-{
+static void on_start_search( GtkWidget* btn, FindFile* data ) {
     char** argv;
     GError* err = NULL;
     int stdo, stde;
@@ -678,10 +676,8 @@ static void on_start_search( GtkWidget* btn, FindFile* data )
     cmd_line = g_strjoinv( " ", argv );
     g_debug( "find command: %s", cmd_line );
     g_free( cmd_line );
-    if( g_spawn_async_with_pipes( g_get_home_dir(), argv, NULL,
-                                                  G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
-                                                  NULL, NULL, &data->pid,
-                                                  NULL, &data->stdo, NULL, &err ) )
+    if( g_spawn_async_with_pipes( g_get_home_dir(), argv, NULL, G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
+                                                    NULL, NULL, &data->pid,  NULL, &data->stdo, NULL, &err ) )
     {
         GdkCursor* busy_cursor;
         data->task = vfs_async_task_new( (VFSAsyncFunc)search_thread, data );
@@ -698,8 +694,8 @@ static void on_start_search( GtkWidget* btn, FindFile* data )
     g_strfreev( argv );
 }
 
-static void on_stop_search( GtkWidget* btn, FindFile* data )
-{
+
+static void on_stop_search( GtkWidget* btn, FindFile* data ) {
     if( data->task && ! vfs_async_task_is_finished( data->task ) )
     {
         // see note in vfs-async-task.c: vfs_async_task_real_cancel()
@@ -709,8 +705,7 @@ static void on_stop_search( GtkWidget* btn, FindFile* data )
     }
 }
 
-static void on_search_again( GtkWidget* btn, FindFile* data )
-{
+static void on_search_again( GtkWidget* btn, FindFile* data ) {
     GtkAllocation allocation;
 
     gtk_widget_get_allocation ( GTK_WIDGET( data->win ), &allocation );
@@ -736,11 +731,12 @@ static void on_search_again( GtkWidget* btn, FindFile* data )
     gtk_tree_view_set_model( (GtkTreeView*)data->result_view, NULL );
     gtk_list_store_clear( data->result_list );
     gtk_tree_view_set_model( (GtkTreeView*)data->result_view, GTK_TREE_MODEL( data->result_list ) );
-    g_object_unref( data->result_list );
+    if ( data->result_list )
+        g_object_unref( data->result_list );    // howdy
 }
 
-static void menu_pos( GtkMenu* menu, int* x, int* y, gboolean *push_in, GtkWidget* btn )
-{
+
+static void menu_pos( GtkMenu* menu, int* x, int* y, gboolean *push_in, GtkWidget* btn ) {
     GtkAllocation allocation;
 
     /* FIXME: I'm not sure if this work well in different WMs */
@@ -752,21 +748,15 @@ static void menu_pos( GtkMenu* menu, int* x, int* y, gboolean *push_in, GtkWidge
     *push_in = FALSE;
 }
 
-static void add_search_dir( FindFile* data, const char* path )
-{
+static void add_search_dir( FindFile* data, const char* path ) {
     GtkTreeIter it;
     gtk_list_store_append( data->places_list, &it );
     gtk_list_store_set( data->places_list, &it, 0, path, -1 );
 }
 
-static void on_add_search_browse(GtkWidget* menu, FindFile* data)
-{
-    GtkWidget* dlg = gtk_file_chooser_dialog_new(
-      _("Select a folder"), GTK_WINDOW( data->win ),
-      GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-      GTK_STOCK_OPEN, GTK_RESPONSE_OK,
-      NULL );
+static void on_add_search_browse(GtkWidget* menu, FindFile* data) {
+    GtkWidget* dlg = gtk_file_chooser_dialog_new( _("Select a folder"), GTK_WINDOW( data->win ),
+      GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_OK, NULL );
 
     gtk_dialog_set_alternative_button_order( GTK_DIALOG( dlg ), GTK_RESPONSE_OK, GTK_RESPONSE_CANCEL );
     if( gtk_dialog_run( GTK_DIALOG( dlg ) ) == GTK_RESPONSE_OK )
@@ -778,18 +768,16 @@ static void on_add_search_browse(GtkWidget* menu, FindFile* data)
     gtk_widget_destroy( dlg );
 }
 
-static void on_add_search_home(GtkWidget* menu, FindFile* data)
-{
+
+static void on_add_search_home(GtkWidget* menu, FindFile* data) {
     add_search_dir( data, g_get_home_dir() );
 }
 
-static void on_add_search_desktop(GtkWidget* menu, FindFile* data)
-{
+static void on_add_search_desktop(GtkWidget* menu, FindFile* data) {
     add_search_dir( data, vfs_get_desktop_dir() );
 }
 
-static void on_add_search_volumes(GtkWidget* menu, FindFile* data)
-{
+static void on_add_search_volumes(GtkWidget* menu, FindFile* data) {
     const char* path;
     const GList* vols = vfs_volume_get_all_volumes(), *l;
     for( l = vols; l; l = l->next )
@@ -804,8 +792,8 @@ static void on_add_search_volumes(GtkWidget* menu, FindFile* data)
     }
 }
 
-static void on_add_search_folder( GtkWidget* btn, FindFile* data )
-{
+
+static void on_add_search_folder( GtkWidget* btn, FindFile* data ) {
     GtkWidget* menu = gtk_menu_new();
     GtkWidget* item;
     GtkWidget* img;
@@ -842,44 +830,36 @@ static void on_add_search_folder( GtkWidget* btn, FindFile* data )
     gtk_menu_shell_append( GTK_MENU_SHELL( menu ), item );
     g_signal_connect( item, "activate", G_CALLBACK(on_add_search_volumes), data );
 
-    /* FIXME: Add all volumes */
-
-    /* FIXME: Add all bookmarks */
-
     gtk_widget_show_all( menu );
-    gtk_menu_popup( GTK_MENU( menu ), NULL, NULL, (GtkMenuPositionFunc)menu_pos,
-                                        btn, 0, gtk_get_current_event_time() );
+    gtk_menu_popup( GTK_MENU( menu ), NULL, NULL, (GtkMenuPositionFunc)menu_pos, btn, 0, gtk_get_current_event_time() );
 }
 
-static void on_remove_search_folder( GtkWidget* btn, FindFile* data )
-{
+
+static void on_remove_search_folder( GtkWidget* btn, FindFile* data ) {
     GtkTreeIter it;
     GtkTreeSelection* sel = gtk_tree_view_get_selection( GTK_TREE_VIEW( data->places_view ) );
     if( gtk_tree_selection_get_selected(sel, NULL, &it) )
         gtk_list_store_remove( data->places_list, &it );
 }
 
-static void on_date_limit_changed( GtkWidget* date_limit, FindFile* data )
-{
+static void on_date_limit_changed( GtkWidget* date_limit, FindFile* data ) {
     int sel = gtk_combo_box_get_active( (GtkComboBox*)date_limit );
     gboolean sensitive = ( sel == 5 );  /* date range */
     gtk_widget_set_sensitive( data->date1, sensitive );
     gtk_widget_set_sensitive( data->date2, sensitive );
 }
 
-static void free_data( FindFile* data )
-{
+static void free_data( FindFile* data ) {
     g_slice_free( FindFile, data );
 }
 
-static void init_search_result( FindFile* data )
-{
+
+static void init_search_result( FindFile* data ) {
     GtkTreeIter it;
     GtkTreeViewColumn* col;
     GtkCellRenderer* render;
 
-    gtk_tree_selection_set_mode( gtk_tree_view_get_selection((GtkTreeView*)data->result_view),
-                                                 GTK_SELECTION_MULTIPLE );
+    gtk_tree_selection_set_mode( gtk_tree_view_get_selection((GtkTreeView*)data->result_view), GTK_SELECTION_MULTIPLE );
     data->result_list = gtk_list_store_new( N_RES_COLS,
                                                             GDK_TYPE_PIXBUF, /* icon */
                                                             G_TYPE_STRING,  /* name */
@@ -890,7 +870,8 @@ static void init_search_result( FindFile* data )
                                                             G_TYPE_POINTER /* VFSFileInfo */ );
 
     gtk_tree_view_set_model( (GtkTreeView*)data->result_view, (GtkTreeModel*)data->result_list );
-    g_object_unref( data->result_list );
+    if ( data->result_list )
+        g_object_unref( data->result_list );    //   howdy     non-null? empty?
     col = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title( col, _("Name") );
     render = gtk_cell_renderer_pixbuf_new();
@@ -925,11 +906,12 @@ static void init_search_result( FindFile* data )
 
     col = gtk_tree_view_column_new_with_attributes( _("Last Modified"), gtk_cell_renderer_text_new(), "text", COL_MTIME, NULL );
     gtk_tree_view_column_set_resizable ( col, TRUE );
-    gtk_tree_view_append_column( (GtkTreeView*)data->result_view, col );
+    gtk_tree_view_append_column( (GtkTreeView*)data->result_view, col );  // howdy     should we attend to colwidth here?
+
 }
 
-static gboolean on_view_button_press( GtkTreeView* view, GdkEventButton* evt, FindFile* data )
-{
+
+static gboolean on_view_button_press( GtkTreeView* view, GdkEventButton* evt, FindFile* data ) {
     if( evt->type == GDK_BUTTON_PRESS )
     {
         if( evt->button == 3 ) /* right single click */
@@ -937,12 +919,10 @@ static gboolean on_view_button_press( GtkTreeView* view, GdkEventButton* evt, Fi
             //sfm if current item not selected, unselect all and select it
             GtkTreePath *tree_path;
             GtkTreeSelection* tree_sel;
-            gtk_tree_view_get_path_at_pos( GTK_TREE_VIEW( view ),
-                                           evt->x, evt->y, &tree_path, NULL, NULL, NULL );
+            gtk_tree_view_get_path_at_pos( GTK_TREE_VIEW( view ), evt->x, evt->y, &tree_path, NULL, NULL, NULL );
             tree_sel = gtk_tree_view_get_selection( GTK_TREE_VIEW( view ) );
 
-            if ( tree_path && tree_sel &&
-                        !gtk_tree_selection_path_is_selected( tree_sel, tree_path ) )
+            if ( tree_path && tree_sel && !gtk_tree_selection_path_is_selected( tree_sel, tree_path ) )
             {
                 gtk_tree_selection_unselect_all( tree_sel );
                 gtk_tree_selection_select_path( tree_sel, tree_path );
@@ -951,7 +931,7 @@ static gboolean on_view_button_press( GtkTreeView* view, GdkEventButton* evt, Fi
 
             GtkWidget* popup;
             GtkUIManager* menu_mgr;
-            GtkActionGroup* action_group = gtk_action_group_new ("PopupActions");
+            GtkActionGroup* action_group = gtk_action_group_new ("PopupActions");   //  howdy   What additional available actions would be desirable here?
             gtk_action_group_set_translation_domain( action_group, GETTEXT_PACKAGE );
             menu_mgr = gtk_ui_manager_new ();
 
@@ -981,28 +961,19 @@ static gboolean on_view_button_press( GtkTreeView* view, GdkEventButton* evt, Fi
     return FALSE;
 }
 
-void on_use_size_lower_toggled( GtkWidget* widget, FindFile* data )
-{
-    gtk_widget_set_sensitive( data->size_lower,
-                    gtk_toggle_button_get_active(
-                    GTK_TOGGLE_BUTTON( data->use_size_lower ) ) );
-    gtk_widget_set_sensitive( data->size_lower_unit,
-                    gtk_toggle_button_get_active(
-                    GTK_TOGGLE_BUTTON( data->use_size_lower ) ) );
+
+void on_use_size_lower_toggled( GtkWidget* widget, FindFile* data ) {
+    gtk_widget_set_sensitive( data->size_lower,      gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->use_size_lower ) ) );
+    gtk_widget_set_sensitive( data->size_lower_unit, gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->use_size_lower ) ) );
 }
 
-void on_use_size_upper_toggled( GtkWidget* widget, FindFile* data )
-{
-    gtk_widget_set_sensitive( data->size_upper,
-                    gtk_toggle_button_get_active(
-                    GTK_TOGGLE_BUTTON( data->use_size_upper ) ) );
-    gtk_widget_set_sensitive( data->size_upper_unit,
-                    gtk_toggle_button_get_active(
-                    GTK_TOGGLE_BUTTON( data->use_size_upper ) ) );
+void on_use_size_upper_toggled( GtkWidget* widget, FindFile* data ) {
+    gtk_widget_set_sensitive( data->size_upper,      gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->use_size_upper ) ) );
+    gtk_widget_set_sensitive( data->size_upper_unit, gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->use_size_upper ) ) );
 }
 
-void fm_find_files( const char** search_dirs )
-{
+
+void fm_find_files( const char** search_dirs ) {
     FindFile* data = g_slice_new0(FindFile);
     GtkTreeIter it;
     GtkTreeViewColumn* col;
@@ -1016,10 +987,11 @@ void fm_find_files( const char** search_dirs )
     data->win = (GtkWidget*)gtk_builder_get_object( builder, "win" );
     g_object_set_data_full( G_OBJECT( data->win ), "find-files", data, (GDestroyNotify)free_data );
 
+/*
+//   howdy     pointless.   iceWM is ignoring this request to set window titlebar icon... and whoTH has a 32px tall titlebar?
+
     GdkPixbuf* icon = NULL;
-    GtkIconTheme* theme = gtk_icon_theme_get_default();
-    if ( theme )
-        icon = gtk_icon_theme_load_icon( theme, "zzzfm-find", 48, 0, NULL );
+    icon = gdk_pixbuf_new_from_file_at_size( "/usr/share/pixmaps/zzzfm-find.png", 32 ,32, NULL );
     if ( icon )
     {
         gtk_window_set_icon( GTK_WINDOW( data->win ), icon );
@@ -1027,6 +999,7 @@ void fm_find_files( const char** search_dirs )
     }
     else
         gtk_window_set_icon_name( GTK_WINDOW( data->win ), GTK_STOCK_FIND );
+*/
 
     /* search criteria pane */
     data->search_criteria = (GtkWidget*)gtk_builder_get_object( builder, "search_criteria" );
@@ -1051,10 +1024,8 @@ void fm_find_files( const char** search_dirs )
     data->size_upper = (GtkWidget*)gtk_builder_get_object( builder, "size_upper" );
     data->size_lower_unit = (GtkWidget*)gtk_builder_get_object( builder, "size_lower_unit" );
     data->size_upper_unit = (GtkWidget*)gtk_builder_get_object( builder, "size_upper_unit" );
-    g_signal_connect( data->use_size_lower, "toggled",
-                            G_CALLBACK( on_use_size_lower_toggled ), data );
-    g_signal_connect( data->use_size_upper, "toggled",
-                            G_CALLBACK( on_use_size_upper_toggled ), data );
+    g_signal_connect( data->use_size_lower, "toggled", G_CALLBACK( on_use_size_lower_toggled ), data );
+    g_signal_connect( data->use_size_upper, "toggled", G_CALLBACK( on_use_size_upper_toggled ), data );
     on_use_size_lower_toggled( data->use_size_lower, data );
     on_use_size_upper_toggled( data->use_size_upper, data );
 
@@ -1088,7 +1059,8 @@ void fm_find_files( const char** search_dirs )
     }
 
     gtk_tree_view_set_model( (GtkTreeView*)data->places_view, (GtkTreeModel*)data->places_list );
-    g_object_unref( data->places_list );
+    if ( data->places_list )
+        g_object_unref( data->places_list );    // howdy
     col = gtk_tree_view_column_new_with_attributes(NULL, gtk_cell_renderer_text_new(), "text", 0, NULL );
     gtk_tree_view_append_column( (GtkTreeView*)data->places_view, col );
 
@@ -1102,8 +1074,7 @@ void fm_find_files( const char** search_dirs )
     if( app_settings.single_click )
     {
         exo_tree_view_set_single_click( EXO_TREE_VIEW( data->result_view ), TRUE );
-        exo_tree_view_set_single_click_timeout( EXO_TREE_VIEW( data->result_view ),
-                                                        SINGLE_CLICK_TIMEOUT );
+        exo_tree_view_set_single_click_timeout( EXO_TREE_VIEW( data->result_view ), SINGLE_CLICK_TIMEOUT );
     }
     gtk_widget_show( data->result_view );
     gtk_container_add( (GtkContainer*)gtk_builder_get_object(builder, "result_scroll"), data->result_view );
@@ -1137,11 +1108,13 @@ void fm_find_files( const char** search_dirs )
     pcmanfm_ref();
     g_signal_connect( data->win, "destroy", G_CALLBACK(pcmanfm_unref), NULL );
 
-    int width = xset_get_int( "main_search", "x" );
-    int height = xset_get_int( "main_search", "y" );
+    int width = xset_get_int( "main_search", "x" );   // howdy    this will not exist until/unless user has previously resized the window
+    int height = xset_get_int( "main_search", "y" );  //              (in which case the dimensions are stored to user's session file)
     if ( width && height )
         gtk_window_set_default_size( GTK_WINDOW( data->win ), width, height );
-
+    else
+        gtk_window_set_default_size( GTK_WINDOW( data->win ), 780, 580 );    // howdy     consider using smaller values (biiiig empty box may look silly)
+                                                                             //             hmmm, we have no other opportunity to spec size prior to init_search_result() ?
     gtk_widget_show( data->win );
 
 }

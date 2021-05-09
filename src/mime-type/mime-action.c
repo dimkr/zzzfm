@@ -286,7 +286,7 @@ char** mime_type_get_actions( const char* type ) {
     /* get all actions for this file type */
     data_dir_foreach( (DataDirFunc)get_actions, type, actions );
 
-    /* remove actions for this file type */ //sfm
+    /* remove actions for this file type */
     remove_actions( type, actions );
 
     /* ensure default app is in the list */
@@ -519,7 +519,7 @@ void mime_type_add_action( const char* type, const char* desktop_id, char** cust
         g_free( cust );
 }
 
-static char* _locate_desktop_file_recursive( const char* path, const char* desktop_id, gboolean first ) { 
+static char* _locate_desktop_file_recursive( const char* path, const char* desktop_id, gboolean first ) {
     // if first is true, just search for subdirs not desktop_id (already searched)
     const char* name;
     char* sub_path;

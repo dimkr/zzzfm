@@ -54,10 +54,10 @@
 #include "desktop.h"
 #include "cust-dialog.h"
 
-//gboolean startup_mode = TRUE;  //MOD
-//gboolean design_mode = TRUE;  //MOD
+//gboolean startup_mode = TRUE;
+//gboolean design_mode = TRUE;
 
-char* run_cmd = NULL;  //MOD
+char* run_cmd = NULL;
 
 typedef enum{
     CMD_OPEN = 1,
@@ -97,17 +97,17 @@ static gboolean no_desktop = FALSE;
 static gboolean old_show_desktop = FALSE;
 
 static gboolean new_tab = TRUE;
-static gboolean reuse_tab = FALSE;  //sfm
-static gboolean no_tabs = FALSE;     //sfm
+static gboolean reuse_tab = FALSE;
+static gboolean no_tabs = FALSE;
 static gboolean new_window = FALSE;
-static gboolean desktop_pref = FALSE;  //MOD
-static gboolean desktop = FALSE;  //MOD
-static gboolean profile = FALSE;  //MOD
-static gboolean custom_dialog = FALSE;  //sfm
-static gboolean socket_cmd = FALSE;     //sfm
-static gboolean version_opt = FALSE;     //sfm
-static gboolean sdebug = FALSE;         //sfm
-static gboolean socket_daemon_or_desktop = FALSE;  //sfm
+static gboolean desktop_pref = FALSE;
+static gboolean desktop = FALSE;
+static gboolean profile = FALSE;
+static gboolean custom_dialog = FALSE;
+static gboolean socket_cmd = FALSE;     //      howdy
+static gboolean version_opt = FALSE;
+static gboolean sdebug = FALSE;
+static gboolean socket_daemon_or_desktop = FALSE;
 
 static int show_pref = 0;
 static int panel = -1;
@@ -165,7 +165,7 @@ static void open_file( const char* path );
 
 static GList* get_file_info_list( char** files );
 static char* dup_to_absolute_file_path( char** file );
-void receive_socket_command( int client, GString* args );  //sfm
+void receive_socket_command( int client, GString* args );
 
 char* get_inode_tag() {
     struct stat stat_buf;
@@ -392,7 +392,7 @@ gboolean single_instance_check() {
         }
         else if( show_pref > 0 )
             cmd = CMD_PREF;
-        else if ( desktop_pref )  //MOD
+        else if ( desktop_pref )
         {
             cmd = CMD_PREF;
             show_pref = 3;
@@ -420,8 +420,7 @@ gboolean single_instance_check() {
                 {
                     char *real_path;
 
-                    if ( ( *file[0] != '/' && strstr( *file, ":/" ) )
-                                        || g_str_has_prefix( *file, "//" ) )
+                    if ( ( *file[0] != '/' && strstr( *file, ":/" ) )  ||  g_str_has_prefix( *file, "//" ) )
                         real_path = g_strdup( *file );
                     else
                     {
@@ -485,6 +484,7 @@ _exit:
     exit( ret );
 }
 
+
 void single_instance_finalize() {
     char lock_file[ 256 ];
 
@@ -496,8 +496,8 @@ void single_instance_finalize() {
     unlink( lock_file );
 }
 
-void receive_socket_command( int client, GString* args )  //sfm
-{
+
+void receive_socket_command( int client, GString* args ) {
     char** argv;
     char** arg;
     char cmd;
@@ -532,9 +532,8 @@ void receive_socket_command( int client, GString* args )  //sfm
     }
 */
 
-    // check inode tag - was socket command sent from the same filesystem?
-    // eg this helps deter use of socket commands sent from a chroot jail
-    // or from another user or system
+    // check inode tag - was socket command sent from the same filesystem?             // howdy bub
+    // eg this helps deter use of socket commands sent from a chroot jail or from another user or system
     char* inode_tag = get_inode_tag();
     if ( argv && strcmp( inode_tag, argv[0] ) )
     {
@@ -557,8 +556,8 @@ void receive_socket_command( int client, GString* args )  //sfm
     g_free( reply );
 }
 
-int send_socket_command( int argc, char* argv[], char** reply )   //sfm
-{
+
+int send_socket_command( int argc, char* argv[], char** reply ) {
     struct sockaddr_un addr;
     int addr_len;
     int ret;
@@ -765,8 +764,8 @@ void show_socket_help() {
     printf( "copy|move|link [--dir DIR] FILE|DIR... TARGET\n" );
     printf( "                                %s\n", _("Copy|Move|Link FILE(s) or DIR(s) to TARGET dir") );
     printf( "delete [--dir DIR] FILE|DIR...  %s\n", _("Recursively delete FILE(s) or DIR(s)" ) );
-    printf( "edit [--as-root] FILE           %s\n", _("Open FILE in user's or root's text editor") );
-    printf( "web URL                         %s\n", _("Open URL in user's web browser") );
+    printf( "edit [--as-root] FILE           %s\n", _("Open FILE in user's or root's text editor") );            //   howdy bub   why???
+  //printf( "web URL                         %s\n", _("Open URL in user's web browser") );    // howdy bub    why-oh-why use Filemanager to open?!?
     printf( "mount DEVICE|URL                %s\n", _("Mount DEVICE or URL") );
     printf( "unmount DEVICE|DIR              %s\n", _("Unmount DEVICE or mount point DIR") );
 
@@ -1082,12 +1081,10 @@ gboolean handle_parsed_commandline_args() {
     if( new_tab || reuse_tab )
     {
         main_window = fm_main_window_get_on_current_desktop();
-//printf("    fm_main_window_get_on_current_desktop = %p  %s %s\n", main_window,
-//                                                            new_tab ? "new_tab" : "",
-//                                                            reuse_tab ? "reuse_tab" : "" );
+//printf("    fm_main_window_get_on_current_desktop = %p  %s %s\n", main_window,  new_tab ? "new_tab" : "",   reuse_tab ? "reuse_tab" : "" );
     }
 
-    if ( desktop_pref )  //MOD
+    if ( desktop_pref )
     {
 #ifdef DESKTOP_INTEGRATION
         show_pref = 3;
@@ -1134,7 +1131,7 @@ gboolean handle_parsed_commandline_args() {
             //xset_autosave( TRUE, FALSE );
             char* err_msg = save_settings( fm_main_window_get_last_active() );
             if ( err_msg )
-                printf( _("zzzfm: Error: Unable to save session\n       %s\n"), err_msg );
+                printf( _("zzzfm: Error: Unable to save session\n       %s\n"), err_msg );   // howdy      no popup!
             if( desktop && app_settings.show_wallpaper )
             {
                 if( desktop_or_deamon_initialized )
@@ -1172,8 +1169,7 @@ gboolean handle_parsed_commandline_args() {
                 }
                 else if ( g_file_test( real_path, G_FILE_TEST_EXISTS ) )
                 {
-                    if ( stat64( real_path, &statbuf ) == 0 &&
-                                            S_ISBLK( statbuf.st_mode ) )
+                    if ( stat64( real_path, &statbuf ) == 0 &&  S_ISBLK( statbuf.st_mode ) )
                     {
                         // open block device eg /dev/sda1
                         if ( !main_window )
@@ -1189,8 +1185,7 @@ gboolean handle_parsed_commandline_args() {
                     else
                         open_file( real_path );
                 }
-                else if ( ( *file[0] != '/' && strstr( *file, ":/" ) )
-                                        || g_str_has_prefix( *file, "//" ) )
+                else if ( ( *file[0] != '/' && strstr( *file, ":/" ) )   || g_str_has_prefix( *file, "//" ) )
                 {
                     if ( main_window )
                         main_window_open_network( main_window, *file, TRUE );
@@ -1203,7 +1198,7 @@ gboolean handle_parsed_commandline_args() {
                     gtk_window_present( GTK_WINDOW( main_window ) );
                 } else {
                     char* err_msg = g_strdup_printf( "%s:\n\n%s", _( "File doesn't exist" ), real_path );
-                    ptk_show_error( NULL, _("Error"), err_msg );
+                    ptk_show_error( NULL, _("Error"), err_msg );     // howdy     why popup for this, but not for other errors?
                     g_free( err_msg );
                 }
                 g_free( real_path );
@@ -1280,7 +1275,7 @@ int main ( int argc, char *argv[] ) {
             {
 #ifdef USE_INOTIFY
                 ptk_show_error( NULL, _("Error"), _("Error: Unable to initialize inotify file change monitor.\n\nDo you have an inotify-capable kernel?") );
-#else
+#else                      //    howdy bub -------v     should nix this
                 ptk_show_error( NULL, _("Error"), _("Error: Unable to establish connection with FAM.\n\nDo you have \"FAM\" or \"Gamin\" installed and running?") );
 #endif
                 vfs_file_monitor_clean();
@@ -1309,8 +1304,7 @@ int main ( int argc, char *argv[] ) {
             bindtextdomain( GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR );
             textdomain( GETTEXT_PACKAGE );
 #endif
-            if ( argv[2] && ( !strcmp( argv[2], "help" ) ||
-                                                !strcmp( argv[2], "--help" ) ) )
+            if ( argv[2] && ( !strcmp( argv[2], "help" ) ||  !strcmp( argv[2], "--help" ) ) )
             {
                 show_socket_help();
                 return 0;

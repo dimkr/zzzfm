@@ -83,7 +83,7 @@ struct _FMPrefDlg
     GtkWidget* text_color;
     GtkWidget* shadow_color;
 
-    //MOD
+
     GtkWidget* confirm_delete;
     GtkWidget* click_exec;
     GtkWidget* su_command;
@@ -606,7 +606,7 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
             }
         }
 
-        //MOD
+
         app_settings.no_execute = !gtk_toggle_button_get_active( (GtkToggleButton*)data->click_exec );
         app_settings.no_confirm = !gtk_toggle_button_get_active( (GtkToggleButton*)data->confirm_delete );
 
@@ -948,7 +948,7 @@ gboolean fm_edit_preference( GtkWindow* parent, int page )
         }
         gtk_combo_box_set_active( GTK_COMBO_BOX( data->small_icon_size ), ismall_icon );
 
-        //sfm
+
         itool_icon = 0;
         for ( i = 0; i < G_N_ELEMENTS( tool_icon_sizes ); ++i )
         {

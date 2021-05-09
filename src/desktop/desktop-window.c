@@ -1408,7 +1408,7 @@ gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt ) {
             if( item )
             {
                 gdk_window_set_cursor( gtk_widget_get_window(w), self->hand_cursor );
-                /* FIXME: timeout should be customizable */
+                /* FIXME: timeout should be customizable      howdy  (vs fixed, @400ms)   */
                 if( !app_settings.desk_no_single_hover &&  0 == self->single_click_timeout_handler )
                     self->single_click_timeout_handler =  g_timeout_add( SINGLE_CLICK_TIMEOUT, (GSourceFunc)on_single_click_timeout, self );
             } else {
@@ -3178,7 +3178,7 @@ void on_file_changed( VFSDir* dir, VFSFileInfo* file, gpointer user_data ) {
 #ifdef HAVE_FFMPEG
          ( vfs_file_info_is_video( item->fi ) &&  time( NULL ) - *vfs_file_info_get_mtime( item->fi ) > 5 ) ||
 #endif
-             ( item->fi->size < app_settings.max_thumb_size  && vfs_file_info_is_image( item->fi ) ) ) )
+             ( item->fi->size < app_settings.max_thumb_size  && vfs_file_info_is_image( item->fi ) )      ) )
             vfs_thumbnail_loader_request( dir, item->fi, TRUE );
 
         if( gtk_widget_get_visible( w ) )
@@ -3479,7 +3479,7 @@ gboolean hit_test_text( DesktopWindow* self, int x, int y, DesktopItem** next_it
 }
 
 
-DesktopItem* hit_test_box( DesktopWindow* self, int x, int y )  //sfm
+DesktopItem* hit_test_box( DesktopWindow* self, int x, int y )
 {   // hit on box ?
     DesktopItem* item;
     GList* l;
@@ -3537,7 +3537,7 @@ void open_folders( GList* folders ) {
     {
         main_window = FM_MAIN_WINDOW(fm_main_window_new());
         //FM_MAIN_WINDOW( main_window ) ->splitter_pos = app_settings.splitter_pos;
-        /*  now done in fm_main_window_new
+        /*  now performed in fm_main_window_new
         gtk_window_set_default_size( GTK_WINDOW( main_window ), app_settings.width, app_settings.height );
         gtk_widget_show( GTK_WIDGET(main_window) );
         */
@@ -3589,7 +3589,7 @@ void desktop_window_open_desktop_dir( GtkMenuItem *menuitem, DesktopWindow* desk
     if ( !main_window )
     {
         main_window = FM_MAIN_WINDOW( fm_main_window_new() );
-        /*  now done in fm_main_window_new
+        /*  now performed in fm_main_window_new
         gtk_window_set_default_size( GTK_WINDOW( main_window ), app_settings.width, app_settings.height );
         gtk_widget_show( GTK_WIDGET(main_window) );
         */
@@ -3658,7 +3658,7 @@ int comp_item_by_size( DesktopItem* item1, DesktopItem* item2, DesktopWindow* wi
         return ret;
     ret =item1->fi->size - item2->fi->size;
 
-    if ( ret == 0 )  //sfm
+    if ( ret == 0 )
         ret = g_utf8_collate( item1->fi->disp_name, item2->fi->disp_name );
     else if( win->sort_type == GTK_SORT_DESCENDING )
         ret = -ret;
@@ -3671,12 +3671,13 @@ int comp_item_by_mtime( DesktopItem* item1, DesktopItem* item2, DesktopWindow* w
         return ret;
     ret =item1->fi->mtime - item2->fi->mtime;
 
-    if ( ret == 0 )  //sfm
+    if ( ret == 0 )
         ret = g_utf8_collate( item1->fi->disp_name, item2->fi->disp_name );
     else if( win->sort_type == GTK_SORT_DESCENDING )
         ret = -ret;
     return ret;
 }
+
 
 int comp_item_by_type( DesktopItem* item1, DesktopItem* item2, DesktopWindow* win  ) {
     int ret;
@@ -3684,7 +3685,7 @@ int comp_item_by_type( DesktopItem* item1, DesktopItem* item2, DesktopWindow* wi
         return ret;
     ret = g_strcmp0( item1->fi->mime_type->type, item2->fi->mime_type->type );
 
-    if ( ret == 0 )  //sfm
+    if ( ret == 0 )
         ret = g_utf8_collate( item1->fi->disp_name, item2->fi->disp_name );
     else if( win->sort_type == GTK_SORT_DESCENDING )
         ret = -ret;
@@ -4326,42 +4327,19 @@ gboolean desktop_write_exports( VFSFileTask* vtask, const char* value, FILE* fil
     if ( set )
     {
         // cmd_dir
-        if ( set->plugin )
-        {
-            path = g_build_filename( set->plug_dir, "files", NULL );
-            if ( !g_file_test( path, G_FILE_TEST_EXISTS ) )
-            {
-                g_free( path );
-                path = g_build_filename( set->plug_dir, set->plug_name, NULL );
-            }
-        } else {
-            path = g_build_filename( xset_get_config_dir(), "scripts", set->name, NULL );
-        }
+        path = g_build_filename( xset_get_config_dir(), "scripts", set->name, NULL );
+
         esc_path = bash_quote( path );
         fprintf( file, "fm_cmd_dir=%s\n", esc_path );
         g_free( esc_path );
         g_free( path );
 
         // cmd_data
-        if ( set->plugin )
-        {
-            XSet* mset = xset_get_plugin_mirror( set );
-            path = g_build_filename( xset_get_config_dir(), "mydat", mset->name, NULL );
-        }
-        else
-            path = g_build_filename( xset_get_config_dir(), "mydat", set->name, NULL );
+        path = g_build_filename( xset_get_config_dir(), "mydat", set->name, NULL );
         esc_path = bash_quote( path );
         fprintf( file, "fm_cmd_data=%s\n", esc_path );
         g_free( esc_path );
         g_free( path );
-
-        // plugin_dir
-        if ( set->plugin )
-        {
-            esc_path = bash_quote( set->plug_dir );
-            fprintf( file, "fm_plugin_dir=%s\n", esc_path );
-            g_free( esc_path );
-        }
 
         // cmd_name
         if ( set->menu_label )

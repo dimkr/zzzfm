@@ -64,8 +64,8 @@ static void thumbnail_request_free( ThumbnailRequest* req );
 static gboolean on_thumbnail_idle( VFSThumbnailLoader* loader );
 
 
-VFSThumbnailLoader* vfs_thumbnail_loader_new( VFSDir* dir )
-{
+
+VFSThumbnailLoader* vfs_thumbnail_loader_new( VFSDir* dir ) {
     VFSThumbnailLoader* loader = g_slice_new0( VFSThumbnailLoader );
     loader->idle_handler = 0;
     loader->dir = g_object_ref( dir );
@@ -76,8 +76,8 @@ VFSThumbnailLoader* vfs_thumbnail_loader_new( VFSDir* dir )
     return loader;
 }
 
-void vfs_thumbnail_loader_free( VFSThumbnailLoader* loader )
-{
+
+void vfs_thumbnail_loader_free( VFSThumbnailLoader* loader ) {
     if( loader->idle_handler )
     {
         g_source_remove( loader->idle_handler );
@@ -113,22 +113,21 @@ void vfs_thumbnail_loader_free( VFSThumbnailLoader* loader )
     g_object_unref( loader->dir );
 }
 
-#if 0  /* This is not used in the program. For debug only */
-void on_load_finish( VFSAsyncTask* task, gboolean is_cancelled, VFSThumbnailLoader* loader )
-{
+#if 0       /* This is not used in the program. For debug only */
+void on_load_finish( VFSAsyncTask* task, gboolean is_cancelled, VFSThumbnailLoader* loader ) {
     g_debug( "TASK FINISHED" );
 }
 #endif
 
-void thumbnail_request_free( ThumbnailRequest* req )
-{
+
+void thumbnail_request_free( ThumbnailRequest* req ) {
     vfs_file_info_unref( req->file );
     g_slice_free( ThumbnailRequest, req );
     /* g_debug( "FREE REQUEST!" ); */
 }
 
-gboolean on_thumbnail_idle( VFSThumbnailLoader* loader )
-{
+
+gboolean on_thumbnail_idle( VFSThumbnailLoader* loader ) {
     VFSFileInfo* file;
 
     /* g_debug( "ENTER ON_THUMBNAIL_IDLE" ); */
@@ -161,13 +160,11 @@ gboolean on_thumbnail_idle( VFSThumbnailLoader* loader )
 //#ifdef HAVE_FFMPEG
 /* Do nothing on ffmpeg thumbnailer library messages to silence them - note that
  * from v2.0.11, messages are silenced by default */
-void on_video_thumbnailer_log_message(ThumbnailerLogLevel lvl, const char* msg)
-{
-}
+void on_video_thumbnailer_log_message(ThumbnailerLogLevel lvl, const char* msg) {}
 #endif
 
-gpointer thumbnail_loader_thread( VFSAsyncTask* task, VFSThumbnailLoader* loader )
-{
+
+gpointer thumbnail_loader_thread( VFSAsyncTask* task, VFSThumbnailLoader* loader ) {
     ThumbnailRequest* req;
     int i;
     gboolean load_big, need_update;
@@ -250,8 +247,8 @@ gpointer thumbnail_loader_thread( VFSAsyncTask* task, VFSThumbnailLoader* loader
     return NULL;
 }
 
-void vfs_thumbnail_loader_request( VFSDir* dir, VFSFileInfo* file, gboolean is_big )
-{
+
+void vfs_thumbnail_loader_request( VFSDir* dir, VFSFileInfo* file, gboolean is_big ) {
     VFSThumbnailLoader* loader;
     ThumbnailRequest* req;
     gboolean new_task = FALSE;
@@ -298,8 +295,8 @@ void vfs_thumbnail_loader_request( VFSDir* dir, VFSFileInfo* file, gboolean is_b
         vfs_async_task_execute( loader->task );
 }
 
-void vfs_thumbnail_loader_cancel_all_requests( VFSDir* dir, gboolean is_big )
-{
+
+void vfs_thumbnail_loader_cancel_all_requests( VFSDir* dir, gboolean is_big ) {
     GList* l;
     VFSThumbnailLoader* loader;
     ThumbnailRequest* req;
@@ -344,8 +341,8 @@ void vfs_thumbnail_loader_cancel_all_requests( VFSDir* dir, gboolean is_big )
     }
 }
 
-static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, int size, time_t mtime )
-{
+
+static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, int size, time_t mtime ) {
 #if GLIB_CHECK_VERSION(2, 16, 0)
     GChecksum *cs;
 #else
@@ -364,7 +361,7 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
     if ( size > 256 )
         create_size = 512;
     else if ( size > 128 )
-        create_size = 256;
+        create_size = 256;   //   howdy bub         elsewhere 96px is the hardcoded max
     else
         create_size = 128;
 
@@ -409,7 +406,9 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
 #endif
     strcpy( ( file_name + 32 ), ".png" );
 
-    thumbnail_file = g_build_filename( g_get_home_dir(), ".thumbnails/normal", file_name, NULL );
+  //thumbnail_file = g_build_filename( g_get_home_dir(), ".thumbnails/normal", file_name, NULL );
+    thumbnail_file = g_build_filename( g_get_user_cache_dir(), "thumbnails",
+                                             create_size <= 128 ? "normal" :  "large", file_name, NULL );
 
     if( G_UNLIKELY( 0 == mtime ) )
     {
@@ -420,8 +419,7 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
     if ( file_is_video && time( NULL ) - mtime < 5 )
         /* if mod time of video being thumbnailed is less than 5 sec ago,
          * don't create a thumbnail (is copying?)
-         * FIXME: This means that a newly saved file may not show a thumbnail
-         * until refresh. */
+         * FIXME: This means that a newly saved file may not show a thumbnail until refresh. */
         return NULL;
 
     /* load existing thumbnail */
@@ -432,9 +430,7 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
         h = gdk_pixbuf_get_height( thumbnail );
     }
     if ( !thumbnail || ( w < size && h < size ) ||
-                !( thumb_mtime = gdk_pixbuf_get_option( thumbnail,
-                                                "tEXt::Thumb::MTime" ) ) ||
-                atol( thumb_mtime ) != mtime )
+                !( thumb_mtime = gdk_pixbuf_get_option( thumbnail, "tEXt::Thumb::MTime" ) ) ||  atol( thumb_mtime ) != mtime )
     {
         if( thumbnail )
             g_object_unref( thumbnail );
@@ -450,9 +446,7 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
                 thumbnail = gdk_pixbuf_apply_embedded_orientation( thumbnail );
                 g_object_unref( thumbnail_old );
                 sprintf( mtime_str, "%lu", mtime );
-                gdk_pixbuf_save( thumbnail, thumbnail_file, "png", NULL,
-                                 "tEXt::Thumb::URI", uri, "tEXt::Thumb::MTime",
-                                 mtime_str, NULL );
+                gdk_pixbuf_save( thumbnail, thumbnail_file, "png", NULL, "tEXt::Thumb::URI", uri, "tEXt::Thumb::MTime", mtime_str, NULL );
                 chmod( thumbnail_file, 0600 );  /* only the owner can read it. */
             }
         }
@@ -461,11 +455,9 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
         {
             video_thumbnailer* video_thumb = video_thumbnailer_create();
 
-
             /* Setting a callback to allow silencing of stdout/stderr messages
              * from the library. This is no longer required since v2.0.11, where
-             * silence is the default.  It can be used for debugging in 2.0.11
-             * and later. */
+             * silence is the default.  It can be used for debugging in 2.0.11 and later. */
             //video_thumbnailer_set_log_callback(on_video_thumbnailer_log_message);
 
             if ( video_thumb )
@@ -509,8 +501,8 @@ static GdkPixbuf* _vfs_thumbnail_load( const char* file_path, const char* uri, i
     return result;
 }
 
-GdkPixbuf* vfs_thumbnail_load_for_uri(  const char* uri, int size, time_t mtime )
-{
+
+GdkPixbuf* vfs_thumbnail_load_for_uri(  const char* uri, int size, time_t mtime ) {
     GdkPixbuf* ret;
     char* file = g_filename_from_uri( uri, NULL, NULL );
     ret = _vfs_thumbnail_load( file, uri, size, mtime );
@@ -518,8 +510,8 @@ GdkPixbuf* vfs_thumbnail_load_for_uri(  const char* uri, int size, time_t mtime 
     return ret;
 }
 
-GdkPixbuf* vfs_thumbnail_load_for_file( const char* file, int size, time_t mtime )
-{
+
+GdkPixbuf* vfs_thumbnail_load_for_file( const char* file, int size, time_t mtime ) {
     GdkPixbuf* ret;
     char* uri = g_filename_to_uri( file, NULL, NULL );
     ret = _vfs_thumbnail_load( file, uri, size, mtime );
@@ -527,11 +519,13 @@ GdkPixbuf* vfs_thumbnail_load_for_file( const char* file, int size, time_t mtime
     return ret;
 }
 
-/* Ensure the thumbnail dirs exist and have proper file permission. */
-void vfs_thumbnail_init()
-{
+
+//  Ensure the thumbnail dirs exist and have proper file permission.
+void vfs_thumbnail_init() {
     char* dir;
-    dir = g_build_filename( g_get_home_dir(), ".thumbnails/normal", NULL );
+  //dir = g_build_filename( g_get_home_dir(), ".thumbnails/normal", NULL );
+    dir = g_build_filename( g_get_user_cache_dir(), "thumbnails/normal", NULL );
+
 
     if( G_LIKELY( g_file_test( dir, G_FILE_TEST_IS_DIR ) ) )
         chmod( dir, 0700 );

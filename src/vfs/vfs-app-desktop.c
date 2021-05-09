@@ -57,29 +57,21 @@ VFSAppDesktop* vfs_app_desktop_new( const char* file_name ) {
 
     if( load )
     {
-        app->disp_name = g_key_file_get_locale_string ( file,
-                                                        desktop_entry_name,
-                                                        "Name", NULL, NULL);
-        app->comment = g_key_file_get_locale_string ( file, desktop_entry_name,
-                                                      "Comment", NULL, NULL);
-        app->exec = g_key_file_get_string ( file, desktop_entry_name,
-                                            "Exec", NULL);
-        app->icon_name = g_key_file_get_string ( file, desktop_entry_name,
-                                                 "Icon", NULL);
-        app->terminal = g_key_file_get_boolean( file, desktop_entry_name,
-                                                "Terminal", NULL );
-        app->hidden = g_key_file_get_boolean( file, desktop_entry_name,
-                                                "NoDisplay", NULL );
-        app->startup = g_key_file_get_boolean( file, desktop_entry_name,
-                                                "StartupNotify", NULL );
-        app->path = g_key_file_get_string ( file, desktop_entry_name,
-                                                 "Path", NULL);
+        app->disp_name = g_key_file_get_locale_string ( file, desktop_entry_name, "Name", NULL, NULL);
+        app->comment = g_key_file_get_locale_string ( file, desktop_entry_name, "Comment", NULL, NULL);
+        app->exec = g_key_file_get_string ( file, desktop_entry_name, "Exec", NULL);
+        app->icon_name = g_key_file_get_string ( file, desktop_entry_name, "Icon", NULL);
+        app->terminal = g_key_file_get_boolean( file, desktop_entry_name, "Terminal", NULL );
+        app->hidden = g_key_file_get_boolean( file, desktop_entry_name, "NoDisplay", NULL );
+        app->startup = g_key_file_get_boolean( file, desktop_entry_name, "StartupNotify", NULL );
+        app->path = g_key_file_get_string ( file, desktop_entry_name, "Path", NULL);
     }
 
     g_key_file_free( file );
 
     return app;
 }
+
 
 static void vfs_app_desktop_free( VFSAppDesktop* app ) {
     g_free( app->disp_name );
@@ -91,6 +83,7 @@ static void vfs_app_desktop_free( VFSAppDesktop* app ) {
 
     g_slice_free( VFSAppDesktop, app );
 }
+
 
 void vfs_app_desktop_ref( VFSAppDesktop* app ) {
     g_atomic_int_inc( &app->n_ref );
@@ -282,11 +275,13 @@ gboolean vfs_app_desktop_open_multiple_files( VFSAppDesktop* app ) {
     return FALSE;
 }
 
+
 gboolean vfs_app_desktop_open_in_terminal( VFSAppDesktop* app ) {
     return app->terminal;
 }
 
 
+//  nothing currently calls this fn
 gboolean vfs_app_desktop_is_hidden( VFSAppDesktop* app ) {
     return app->hidden;
 }
@@ -294,6 +289,7 @@ gboolean vfs_app_desktop_is_hidden( VFSAppDesktop* app ) {
 gboolean vfs_app_desktop_uses_startup_notify( VFSAppDesktop* app ) {
     return app->startup;
 }
+
 
 /*
 * Parse Exec command line of app desktop file, and translate
@@ -455,12 +451,8 @@ void exec_in_terminal( const char* app_name, const char* cwd, const char* cmd ) 
     ptk_file_task_run( task );
 }
 
-gboolean vfs_app_desktop_open_files( GdkScreen* screen,
-                                     const char* working_dir,
-                                     VFSAppDesktop* app,
-                                     GList* file_paths,
-                                     GError** err )
-{
+
+gboolean vfs_app_desktop_open_files( GdkScreen* screen, const char* working_dir, VFSAppDesktop* app, GList* file_paths, GError** err ) {
     char* exec = NULL;
     char* cmd;
     GList* l;
@@ -493,24 +485,14 @@ gboolean vfs_app_desktop_open_files( GdkScreen* screen,
             if ( cmd )
             {
                 if ( vfs_app_desktop_open_in_terminal( app ) )
-                    exec_in_terminal( sn_desc,
-                                      app->path && app->path[0] ? app->path :
-                                                                  working_dir,
-                                      cmd );
+                    exec_in_terminal( sn_desc, app->path && app->path[0] ? app->path : working_dir, cmd );
                 else
                 {
                     /* g_debug( "Execute %s\n", cmd ); */
                     if( g_shell_parse_argv( cmd, &argc, &argv, NULL ) )
                     {
-                        vfs_exec_on_screen( screen,
-                                        app->path && app->path[0] ?
-                                            app->path : working_dir,
-                                        argv, NULL,
-                                        sn_desc,
-                                        VFS_EXEC_DEFAULT_FLAGS,
-                                        vfs_app_desktop_uses_startup_notify(
-                                                                        app ),
-                                        err );
+                        vfs_exec_on_screen( screen, app->path && app->path[0] ? app->path : working_dir, argv, NULL,
+                                        sn_desc, VFS_EXEC_DEFAULT_FLAGS, vfs_app_desktop_uses_startup_notify( app ), err );
                         g_strfreev( argv );
                     }
                 }
@@ -535,25 +517,15 @@ gboolean vfs_app_desktop_open_files( GdkScreen* screen,
                 if ( cmd )
                 {
                     if ( vfs_app_desktop_open_in_terminal( app ) )
-                        exec_in_terminal( sn_desc,
-                                          app->path && app->path[0] ? app->path
-                                                                    : working_dir,
-                                          cmd );
+                        exec_in_terminal( sn_desc, app->path && app->path[0] ? app->path : working_dir, cmd );
                     else
                     {
                         /* g_debug( "Execute %s\n", cmd ); */
                         if( g_shell_parse_argv( cmd, &argc, &argv, NULL ) )
                         {
-                            vfs_exec_on_screen( screen,
-                                        app->path && app->path[0] ?
-                                            app->path : working_dir,
-                                        argv, NULL, sn_desc,
-                                        G_SPAWN_SEARCH_PATH|
-                                        G_SPAWN_STDOUT_TO_DEV_NULL|
-                                        G_SPAWN_STDERR_TO_DEV_NULL,
-                                        vfs_app_desktop_uses_startup_notify(
-                                                                        app ),
-                                        err );
+                            vfs_exec_on_screen( screen, app->path && app->path[0] ?  app->path : working_dir, argv, NULL, sn_desc,
+                                        G_SPAWN_SEARCH_PATH| G_SPAWN_STDOUT_TO_DEV_NULL| G_SPAWN_STDERR_TO_DEV_NULL,
+                                        vfs_app_desktop_uses_startup_notify( app ), err );
                             g_strfreev( argv );
                         }
                     }

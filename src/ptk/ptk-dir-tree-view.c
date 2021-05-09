@@ -22,7 +22,7 @@
 
 #include "ptk-dir-tree.h"
 #include "ptk-file-menu.h"
-#include "ptk-file-task.h"  //MOD
+#include "ptk-file-task.h"
 
 #include "vfs-file-info.h"
 #include "vfs-file-monitor.h"
@@ -519,7 +519,7 @@ static char* dir_tree_view_get_drop_dir( GtkWidget* view, int x, int y ) {
 }
 
 void on_dir_tree_view_drag_data_received ( GtkWidget *widget, GdkDragContext *drag_context,
-                                         gint x, gint y, GtkSelectionData *sel_data, guint info, guint time, gpointer user_data )  //MOD added
+                                         gint x, gint y, GtkSelectionData *sel_data, guint info, guint time, gpointer user_data )
 {
     gchar **list, **puri;
     GList* files = NULL;
@@ -643,7 +643,7 @@ void on_dir_tree_view_drag_data_received ( GtkWidget *widget, GdkDragContext *dr
 
 
 gboolean on_dir_tree_view_drag_drop ( GtkWidget *widget, GdkDragContext *drag_context,
-                                    gint x, gint y, guint time, PtkFileBrowser* file_browser )  //MOD added
+                                    gint x, gint y, guint time, PtkFileBrowser* file_browser )
 {
     GdkAtom target = gdk_atom_intern( "text/uri-list", FALSE );
 
@@ -655,7 +655,7 @@ gboolean on_dir_tree_view_drag_drop ( GtkWidget *widget, GdkDragContext *drag_co
 }
 
 gboolean on_dir_tree_view_drag_motion ( GtkWidget *widget, GdkDragContext *drag_context,
-                                      gint x, gint y, guint time, PtkFileBrowser* file_browser )  //MOD added
+                                      gint x, gint y, guint time, PtkFileBrowser* file_browser )
 {
     GdkDragAction suggested_action;
     GdkAtom target;

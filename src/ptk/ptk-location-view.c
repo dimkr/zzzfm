@@ -478,13 +478,13 @@ GtkWidget* ptk_location_view_new( PtkFileBrowser* file_browser ) {
     GtkTreeSelection* tree_sel = gtk_tree_view_get_selection( GTK_TREE_VIEW( view ) );
     gtk_tree_selection_set_mode( tree_sel, GTK_SELECTION_SINGLE );
 
-    /*gtk_tree_view_enable_model_drag_dest ( GTK_TREE_VIEW( view ), drag_targets, G_N_ELEMENTS( drag_targets ), GDK_ACTION_LINK ); */ //MOD
+    /*gtk_tree_view_enable_model_drag_dest ( GTK_TREE_VIEW( view ), drag_targets, G_N_ELEMENTS( drag_targets ), GDK_ACTION_LINK ); */
 
     gtk_tree_view_set_headers_visible( GTK_TREE_VIEW( view ), FALSE );
 
-    //g_signal_connect( view, "drag-motion", G_CALLBACK( on_drag_motion ), NULL );  //MOD
-    //g_signal_connect( view, "drag-drop", G_CALLBACK( on_drag_drop ), NULL );  //MOD
-    //g_signal_connect( view, "drag-data-received", G_CALLBACK( on_drag_data_received ), NULL );  //MOD
+    //g_signal_connect( view, "drag-motion", G_CALLBACK( on_drag_motion ), NULL );
+    //g_signal_connect( view, "drag-drop", G_CALLBACK( on_drag_drop ), NULL );
+    //g_signal_connect( view, "drag-data-received", G_CALLBACK( on_drag_data_received ), NULL );
 
     col = gtk_tree_view_column_new();
     renderer = gtk_cell_renderer_pixbuf_new();
@@ -492,16 +492,16 @@ GtkWidget* ptk_location_view_new( PtkFileBrowser* file_browser ) {
     gtk_tree_view_column_set_attributes( col, renderer, "pixbuf", COL_ICON, NULL );
 
     renderer = gtk_cell_renderer_text_new();
-    //g_signal_connect( renderer, "edited", G_CALLBACK(on_bookmark_edited), view );  //MOD
+    //g_signal_connect( renderer, "edited", G_CALLBACK(on_bookmark_edited), view );
     gtk_tree_view_column_pack_start( col, renderer, TRUE );
     gtk_tree_view_column_set_attributes( col, renderer, "text", COL_NAME, NULL );
     gtk_tree_view_column_set_min_width( col, 10 );
 
     if ( GTK_IS_TREE_SORTABLE( model ) )  // why is this needed to stop error on new tab?
-        gtk_tree_sortable_set_sort_column_id( GTK_TREE_SORTABLE( model ), COL_NAME, GTK_SORT_ASCENDING );  //MOD
-    //gtk_tree_view_column_set_sort_indicator( col, TRUE );  //MOD
-    //gtk_tree_view_column_set_sort_column_id( col, COL_NAME );   //MOD
-    //gtk_tree_view_column_set_sort_order( col, GTK_SORT_ASCENDING );  //MOD
+        gtk_tree_sortable_set_sort_column_id( GTK_TREE_SORTABLE( model ), COL_NAME, GTK_SORT_ASCENDING );
+    //gtk_tree_view_column_set_sort_indicator( col, TRUE );
+    //gtk_tree_view_column_set_sort_column_id( col, COL_NAME );
+    //gtk_tree_view_column_set_sort_order( col, GTK_SORT_ASCENDING );
 
     gtk_tree_view_append_column ( GTK_TREE_VIEW( view ), col );
     gtk_tree_view_column_set_sizing( col, GTK_TREE_VIEW_COLUMN_AUTOSIZE );
@@ -705,15 +705,20 @@ char* ptk_location_view_get_mount_point_dir( const char* name ) {
         }
     }
     if ( !parent )
+    {   //               howdy bub
+        //                when arriving here via   ptk_location_view_clean_mount_points()
+        //                we are required to return a valid new target path, even when the intended parent is now invalid ?
+        //           ? provide a preference, an option to  perform on_close_notebook_page() instead?
         return g_build_filename( g_get_user_cache_dir(), "zzzfm", name, NULL );
+    }
     char* path = g_build_filename( parent, name, NULL );
     g_free( parent );
     return path;
 }
 
+
 void ptk_location_view_clean_mount_points() {
-    /* This function was moved from vfs-volume-nohal.c because HAL
-     * build also requires it. */
+    /* This function was moved from vfs-volume-nohal.c because HAL build also required it. */
 
     GDir *dir;
     const gchar *name;
@@ -724,8 +729,11 @@ void ptk_location_view_clean_mount_points() {
     // clean cache and Auto-Mount|Mount Dirs  (eg for fuse mounts)
     for ( i = 0; i < 2; i++ )
     {
-        if ( i == 0 )
+        if ( i == 0 ) {
+            //    howdy     spec states   "If $XDG_CACHE_HOME is either not set or empty, a default equal to $HOME/.cache should be used."
+            //            i  find ---v  is perpetually empty for regular usr, an perpetually non-existent in antiX sudo/oot usage
             path = g_build_filename( g_get_user_cache_dir(), "zzzfm", NULL );
+        }
         else // i == 1
         {
             del_path = ptk_location_view_get_mount_point_dir( NULL );
@@ -763,6 +771,7 @@ void ptk_location_view_clean_mount_points() {
     }
 }
 
+
 char* ptk_location_view_create_mount_point( int mode, VFSVolume* vol, netmount_t* netmount, const char* path ) {
     char* mname = NULL;
     char* str;
@@ -774,8 +783,7 @@ char* ptk_location_view_create_mount_point( int mode, VFSVolume* vol, netmount_t
                             && g_utf8_validate( vol->label, -1, NULL )
                             && !strchr( vol->label, '/' ) )
             mname = g_strdup_printf( "%.20s", vol->label );
-        else if ( vol->udi && vol->udi[0] != '\0'
-                            && g_utf8_validate( vol->udi, -1, NULL ) )
+        else if ( vol->udi && vol->udi[0] != '\0'  && g_utf8_validate( vol->udi, -1, NULL ) )
         {
             str = g_path_get_basename( vol->udi );
             mname = g_strdup_printf( "%s-%.20s", bdev, str );
@@ -804,9 +812,7 @@ char* ptk_location_view_create_mount_point( int mode, VFSVolume* vol, netmount_t
                     parent_dir = g_strdup( str + 1 );
                     g_free( str );
                 }
-                if ( parent_dir[0] == '\0'
-                                    || !g_utf8_validate( parent_dir, -1, NULL )
-                                    || strlen( parent_dir ) > 30 )
+                if ( parent_dir[0] == '\0'  || !g_utf8_validate( parent_dir, -1, NULL )  || strlen( parent_dir ) > 30 )
                 {
                     g_free( parent_dir );
                     parent_dir = NULL;
@@ -878,8 +884,7 @@ void on_autoopen_net_cb( VFSFileTask* task, AutoOpen* ao ) {
     if ( !( ao && ao->device_file ) )
         return;
 
-    // try to find device of mounted url.  url in mtab may differ from
-    // user-entered url
+    // try to find device of mounted url.  url in mtab may differ from user-entered url
     VFSVolume* device_file_vol = NULL;
     VFSVolume* mount_point_vol = NULL;
     const GList* volumes = vfs_volume_get_all_volumes();
@@ -977,8 +982,7 @@ void ptk_location_view_mount_network( PtkFileBrowser* file_browser, const char* 
         {
             vol = (VFSVolume*)l->data;
             // test against mtab url and copy of user-entered url (udi)
-            if ( strstr( vol->device_file, netmount->url ) ||
-                                            strstr( vol->udi, netmount->url ) )
+            if ( strstr( vol->device_file, netmount->url ) ||  strstr( vol->udi, netmount->url ) )
             {
                 if ( vol->is_mounted && vol->mount_point &&  have_x_access( vol->mount_point ) )
                 {
@@ -1468,10 +1472,9 @@ static void on_umount( GtkMenuItem* item, VFSVolume* vol, GtkWidget* view2 ) {
         return;
     }
     char* task_name = g_strdup_printf( _("Unmount %s"), vol->device_file );
-    PtkFileTask* task = ptk_file_exec_new( task_name, NULL, view, file_browser ? file_browser->task_view :
-                                                          NULL );
+    PtkFileTask* task = ptk_file_exec_new( task_name, NULL, view, file_browser ? file_browser->task_view :  NULL );
     g_free( task_name );
-    if ( strstr( line, "udisks " ) )  // udisks v1
+    if ( strstr( line, "udisks " ) )    // udisks v1
         task->task->exec_type = VFS_EXEC_UDISKS;
     char* keep_term;
     if ( run_in_terminal )
@@ -1491,6 +1494,7 @@ static void on_umount( GtkMenuItem* item, VFSVolume* vol, GtkWidget* view2 ) {
     task->task->exec_icon = g_strdup( vfs_volume_get_icon( vol ) );
     ptk_file_task_run( task );
 }
+
 
 static void on_eject( GtkMenuItem* item, VFSVolume* vol, GtkWidget* view2 ) {
     PtkFileTask* task;
@@ -3752,8 +3756,7 @@ void ptk_bookmark_view_import_gtk( const char* path, XSet* book_set ) {
     {
         while ( fgets( line, sizeof( line ), file ) )
         {
-            /* Every line is an URI containing no space charactetrs
-               with its name appended (optional) */
+            /* Every line is an URI containing no space characters with its name appended (optional) */
             if ( sep = strchr( line, ' ' ) )
             {
                 sep[0] = '\0';
@@ -4164,8 +4167,7 @@ static void on_bookmark_device( GtkMenuItem* item, VFSVolume* vol ) {
     newset->x = g_strdup_printf( "%d", XSET_CMD_BOOKMARK );
     newset->prev = g_strdup( sel_set->name );
     newset->next = sel_set->next;   // steal string
-    newset->task = newset->task_err = newset->task_out =
-                                newset->keep_terminal = XSET_B_UNSET;
+    newset->task = newset->task_err = newset->task_out =  newset->keep_terminal = XSET_B_UNSET;
     if ( sel_set->next )
     {
         XSet* sel_set_next = xset_get( sel_set->next );
@@ -4213,8 +4215,7 @@ XSet* ptk_bookmark_view_get_first_bookmark( XSet* book_set ) {
         child_set->x = g_strdup_printf( "%d", XSET_CMD_BOOKMARK );
         child_set->parent = g_strdup_printf( "main_book" );
         book_set->child = g_strdup( child_set->name );
-        child_set->task = child_set->task_err = child_set->task_out =
-                                    child_set->keep_terminal = XSET_B_UNSET;
+        child_set->task = child_set->task_err = child_set->task_out =  child_set->keep_terminal = XSET_B_UNSET;
     }
     else
         child_set = xset_get( book_set->child );
@@ -4412,8 +4413,7 @@ void ptk_bookmark_view_add_bookmark( GtkMenuItem *menuitem, PtkFileBrowser* file
     newset->x = g_strdup_printf( "%d", XSET_CMD_BOOKMARK );
     newset->prev = g_strdup( sel_set->name );
     newset->next = sel_set->next;   // steal string
-    newset->task = newset->task_err = newset->task_out =
-                                newset->keep_terminal = XSET_B_UNSET;
+    newset->task = newset->task_err = newset->task_out =  newset->keep_terminal = XSET_B_UNSET;
     if ( sel_set->next )
     {
         XSet* sel_set_next = xset_get( sel_set->next );

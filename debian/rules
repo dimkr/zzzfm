@@ -12,7 +12,8 @@ LDFLAGS += -Wl,-z,defs -Wl,--as-needed
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 %:
-	dh $@
+	dh $@ --no-automatic-dbgsym --parallel
+
 
 override_dh_auto_configure: $(FLAVORS:%=doconfigure-%)
 

@@ -74,24 +74,22 @@ static char* mime_magic_buf = NULL;
 /* for MT safety, the buffer should be locked */
 G_LOCK_DEFINE_STATIC(mime_magic_buf);
 
-/* load all mime.cache files on the system,
- * including /usr/share/mime/mime.cache,
- * /usr/local/share/mime/mime.cache,
- * and $HOME/.local/share/mime/mime.cache. */
+//  load all mime.cache files on the system, including /usr/share/mime/mime.cache,
+//  /usr/local/share/mime/mime.cache,  and $HOME/.local/share/mime/mime.cache.
 static void mime_cache_load_all();
 
-/* free all mime.cache files on the system */
+// free all mime.cache files on the system
 static void mime_cache_free_all();
 
 static gboolean mime_type_is_data_plain_text( const char* data, int len );
 
+
 /*
  * Get mime-type of the specified file (quick, but less accurate):
- * Mime-type of the file is determined by cheking the filename only.
- * If statbuf != NULL, it will be used to determine if the file is a directory.
+ * Mime-type of the file is determined by cheking the filename only.             // howdy bub    ouch  (vulnerability-prone)
+ * If statbuf != NULL, it will be used to determine if the file is a directory.  //    ...but only called to lookup executable (shellscript) handlers
 */
-const char* mime_type_get_by_filename( const char* filename, struct stat64* statbuf )
-{
+const char* mime_type_get_by_filename( const char* filename, struct stat64* statbuf ) {
     const char* type = NULL, *suffix_pos = NULL, *prev_suffix_pos = (const char*)-1;
     int i;
     MimeCache* cache;
@@ -131,25 +129,22 @@ const char* mime_type_get_by_filename( const char* filename, struct stat64* stat
         }
     }
 
-
     return type && *type ? type : XDG_MIME_TYPE_UNKNOWN;
 }
 
 /*
  * Get mime-type info of the specified file (slow, but more accurate):
- * To determine the mime-type of the file, mime_type_get_by_filename() is
- * tried first.  If the mime-type couldn't be determined, the content of
- * the file will be checked, which is much more time-consuming.
+ * To determine the mime-type of the file, mime_type_get_by_filename() is tried first.
+ * If the mime-type couldn't be determined, the content of the file will be checked,
+ * which is much more time-consuming.
  * If statbuf is not NULL, it will be used to determine if the file is a directory,
  * or if the file is an executable file; otherwise, the function will call stat()
  * to gather this info itself. So if you already have stat info of the file,
  * pass it to the function to prevent checking the file stat again.
  * If you have basename of the file, pass it to the function can improve the
- * efifciency, too. Otherwise, the function will try to get the basename of
- * the specified file again.
+ * efifciency, too. Otherwise, the function will try to get the basename of the specified file again.
 */
-const char* mime_type_get_by_file( const char* filepath, struct stat64* statbuf, const char* basename )
-{
+const char* mime_type_get_by_file( const char* filepath, struct stat64* statbuf, const char* basename ) {
     const char* type;
     struct stat64 _statbuf;
 
@@ -184,9 +179,7 @@ const char* mime_type_get_by_file( const char* filepath, struct stat64* statbuf,
     }
 
     //sfm added check for reg or link due to hangs on fifo and chr dev
-    if ( G_LIKELY( statbuf->st_size > 0 &&
-                    ( S_ISREG( statbuf->st_mode ) ||
-                      S_ISLNK( statbuf->st_mode ) ) ) )
+    if ( G_LIKELY( statbuf->st_size > 0 &&  ( S_ISREG( statbuf->st_mode ) ||  S_ISLNK( statbuf->st_mode ) ) ) )
     {
         int fd = -1;
         char* data;
@@ -257,8 +250,9 @@ const char* mime_type_get_by_file( const char* filepath, struct stat64* statbuf,
     return type && *type ? type : XDG_MIME_TYPE_UNKNOWN;
 }
 
-static char* parse_xml_icon( const char* buf, size_t len, gboolean is_local )
-{   // Note: This function modifies contents of buf
+
+static char* parse_xml_icon( const char* buf, size_t len, gboolean is_local ) {
+    // Note: This function modifies contents of buf
     char* icon_tag = NULL;
     char* end_tag;
 
@@ -292,7 +286,7 @@ static char* parse_xml_icon( const char* buf, size_t len, gboolean is_local )
         return NULL;
     end_tag[0] = '\0';
     if ( strchr( end_tag, '\n' ) )
-        return NULL;    // linefeed in tag
+        return NULL;    // linefeed within tag
 
     // remove quotes
     if ( icon_tag[0] == '"' )
@@ -306,8 +300,8 @@ static char* parse_xml_icon( const char* buf, size_t len, gboolean is_local )
     return g_strdup( icon_tag );
 }
 
-static char* parse_xml_desc( const char* buf, size_t len, const char* locale )
-{
+
+static char* parse_xml_desc( const char* buf, size_t len, const char* locale ) {
     const char *buf_end = buf + len;
     const char *comment = NULL, *comment_end, *eng_comment;
     size_t eng_comment_len = 0, comment_len = 0;
@@ -345,11 +339,8 @@ static char* parse_xml_desc( const char* buf, size_t len, const char* locale )
     return g_strndup( eng_comment, eng_comment_len );
 }
 
-static char* _mime_type_get_desc_icon( const char* file_path,
-                                       const char* locale,
-                                       gboolean is_local,
-                                       char** icon_name )
-{
+
+static char* _mime_type_get_desc_icon( const char* file_path, const char* locale, gboolean is_local, char** icon_name ) {
     int fd;
     struct stat statbuf;   // skip stat64
     char *buffer, *_locale, *desc;
@@ -404,6 +395,7 @@ static char* _mime_type_get_desc_icon( const char* file_path,
     return desc;
 }
 
+
 /* Get human-readable description and icon name of the mime-type
  * If locale is NULL, current locale will be used.
  * The returned string should be freed when no longer used.
@@ -412,9 +404,7 @@ static char* _mime_type_get_desc_icon( const char* file_path,
  * Note: Spec is not followed for icon.  If icon tag is found in .local
  * xml file, it is used.  Otherwise vfs_mime_type_get_icon guesses the icon.
  * The Freedesktop spec /usr/share/mime/generic-icons is NOT parsed. */
-char* mime_type_get_desc_icon( const char* type, const char* locale,
-                                                 char** icon_name )
-{
+char* mime_type_get_desc_icon( const char* type, const char* locale, char** icon_name ) {
     char* desc;
     const gchar* const * dir;
     char file_path[ 256 ];
@@ -458,8 +448,7 @@ char* mime_type_get_desc_icon( const char* type, const char* locale,
 #endif
         if ( acc != -1 )
         {
-            desc = _mime_type_get_desc_icon( file_path, locale, FALSE,
-                                                                icon_name );
+            desc = _mime_type_get_desc_icon( file_path, locale, FALSE, icon_name );
             if ( G_LIKELY(desc) )
                 return desc;
         }
@@ -467,8 +456,8 @@ char* mime_type_get_desc_icon( const char* type, const char* locale,
     return NULL;
 }
 
-void mime_type_finalize()
-{
+
+void mime_type_finalize() {
 /*
     if( G_LIKELY( table ) )
     {
@@ -479,9 +468,10 @@ void mime_type_finalize()
     mime_cache_free_all();
 }
 
-#if 0
-void test_parents(const char* type)
-{
+
+#if 0    //   howdy bub             not ready for primetime, eh?
+
+void test_parents(const char* type) {
     int i;
     const char** parents = NULL;
     const char** p;
@@ -501,8 +491,8 @@ void test_parents(const char* type)
         g_debug( "no parent found" );
 }
 
-void test_alias( const char* type )
-{
+
+void test_alias( const char* type ) {
     int i;
     const char* alias = NULL;
     for( i = 0; i < n_caches; ++i )
@@ -516,18 +506,16 @@ void test_alias( const char* type )
 }
 #endif
 
-void mime_type_init()
-{
+
+void mime_type_init() {
     mime_cache_load_all();
 //    table = g_hash_table_new_full( g_str_hash, g_str_equal, g_free, (GDestroyNotify)mime_type_unref );
 }
 
-/* load all mime.cache files on the system,
- * including /usr/share/mime/mime.cache,
- * /usr/local/share/mime/mime.cache,
- * and $HOME/.local/share/mime/mime.cache. */
-void mime_cache_load_all()
-{
+
+//  load all mime.cache files on the system, including /usr/share/mime/mime.cache,
+//  /usr/local/share/mime/mime.cache,  and $HOME/.local/share/mime/mime.cache.
+void mime_cache_load_all() {
     const char* const * dirs;
     int i;
     const char filename[] = "/mime/mime.cache";
@@ -555,9 +543,9 @@ void mime_cache_load_all()
     return ;
 }
 
+
 /* free all mime.cache files on the system */
-void mime_cache_free_all()
-{
+void mime_cache_free_all() {
     mime_cache_foreach( (GFunc)mime_cache_free, NULL );
     g_slice_free1( n_caches * sizeof(MimeCache*), caches );
     n_caches = 0;
@@ -568,16 +556,16 @@ void mime_cache_free_all()
     mime_magic_buf = NULL;
 }
 
+
 /* Iterate through all mime caches */
-void mime_cache_foreach( GFunc func, gpointer user_data )
-{
+void mime_cache_foreach( GFunc func, gpointer user_data ) {
     int i;
     for( i = 0; i < n_caches; ++i )
         func( caches[i], user_data );
 }
 
-gboolean mime_cache_reload( MimeCache* cache )
-{
+
+gboolean mime_cache_reload( MimeCache* cache ) {
     int i;
     gboolean ret = mime_cache_load( cache, cache->file_path );
     /* recalculate max magic extent */
@@ -588,16 +576,13 @@ gboolean mime_cache_reload( MimeCache* cache )
     }
 
     G_LOCK( mime_magic_buf );
-
     mime_magic_buf = g_realloc( mime_magic_buf, mime_cache_max_extent );
-
     G_UNLOCK( mime_magic_buf );
-
     return ret;
 }
 
-gboolean mime_type_is_data_plain_text( const char* data, int len )
-{
+
+gboolean mime_type_is_data_plain_text( const char* data, int len ) {
     int i;
     if ( G_LIKELY( len >= 0 && data ) )
     {
@@ -611,8 +596,8 @@ gboolean mime_type_is_data_plain_text( const char* data, int len )
     return FALSE;
 }
 
-gboolean mime_type_is_text_file( const char *file_path, const char* mime_type )
-{
+
+gboolean mime_type_is_text_file( const char *file_path, const char* mime_type ) {
     int file;
     int rlen;
     gboolean ret = FALSE;
@@ -657,8 +642,8 @@ gboolean mime_type_is_text_file( const char *file_path, const char* mime_type )
     return ret;
 }
 
-gboolean mime_type_is_executable_file( const char *file_path, const char* mime_type )
-{
+
+gboolean mime_type_is_executable_file( const char *file_path, const char* mime_type ) {
     if ( !mime_type )
     {
         mime_type = mime_type_get_by_file( file_path, NULL, NULL );
@@ -671,7 +656,7 @@ gboolean mime_type_is_executable_file( const char *file_path, const char* mime_t
     */
     if ( mime_type != XDG_MIME_TYPE_UNKNOWN &&
             (mime_type_is_subclass( mime_type, XDG_MIME_TYPE_EXECUTABLE ) ||
-            mime_type_is_subclass( mime_type, "application/x-shellscript" ) ) )
+             mime_type_is_subclass( mime_type, "application/x-shellscript" ) ) )
     {
         if ( file_path )
         {
@@ -683,9 +668,9 @@ gboolean mime_type_is_executable_file( const char *file_path, const char* mime_t
     return FALSE;
 }
 
+
 /* Check if the specified mime_type is the subclass of the specified parent type */
-gboolean mime_type_is_subclass( const char* type, const char* parent )
-{
+gboolean mime_type_is_subclass( const char* type, const char* parent ) {
     int i;
     const char** parents = NULL;
     const char** p;
@@ -709,12 +694,12 @@ gboolean mime_type_is_subclass( const char* type, const char* parent )
     return FALSE;
 }
 
+
 /*
  * Get all parent type of this mime_type
  * The returned string array should be freed with g_strfreev().
  */
-char** mime_type_get_parents( const char* type )
-{
+char** mime_type_get_parents( const char* type ) {
     int i;
     const char** parents = NULL;
     const char** p;
@@ -735,12 +720,12 @@ char** mime_type_get_parents( const char* type )
     return (char**)g_array_free( ret, (0 == ret->len) );
 }
 
+
 /*
  * Get all alias types of this mime_type
  * The returned string array should be freed with g_strfreev().
  */
-char** mime_type_get_alias( const char* type )
-{
+char** mime_type_get_alias( const char* type ) {
     int i;
     const char** alias = NULL;
     const char** p;
@@ -761,11 +746,9 @@ char** mime_type_get_alias( const char* type )
     return (char**)g_array_free( ret, (0 == ret->len) );
 }
 
-/*
- * Get mime caches
- */
-MimeCache** mime_type_get_caches( int* n )
-{
+
+//  Get mime caches
+MimeCache** mime_type_get_caches( int* n ) {
     *n = n_caches;
     return caches;
 }

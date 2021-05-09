@@ -5,6 +5,8 @@ AC_CONFIG_SRCDIR([src/main.c])
 AM_INIT_AUTOMAKE([dist-bzip2] [subdir-objects])
 AM_MAINTAINER_MODE
 
+AM_SILENT_RULES([yes])
+
 AM_DISABLE_STATIC
 
 AC_ISC_POSIX

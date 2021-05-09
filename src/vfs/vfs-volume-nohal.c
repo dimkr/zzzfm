@@ -2379,14 +2379,12 @@ void vfs_volume_set_info( VFSVolume* volume ) {
         disp_fstype = g_strdup( volume->fs_type );// g_strdup_printf( "-%s", volume->fs_type );
     else
         disp_fstype = g_strdup( "" );
-    disp_devnum = g_strdup_printf( "%u:%u", (unsigned int)MAJOR( volume->devnum ),
-                                            (unsigned int)MINOR( volume->devnum ) );
+    disp_devnum = g_strdup_printf( "%u:%u", (unsigned int)MAJOR( volume->devnum ), (unsigned int)MINOR( volume->devnum ) );
 
     char* fmt = xset_get_s( "dev_dispname" );
     if ( !fmt )
         parameter = g_strdup_printf( "%s %s %s %s %s %s",
-                            disp_device, disp_size, disp_fstype, disp_label,
-                            disp_mount, disp_id );
+                            disp_device, disp_size, disp_fstype, disp_label, disp_mount, disp_id );
     else
     {
         value = replace_string( fmt, "%v", disp_device, FALSE );
@@ -2805,6 +2803,7 @@ _net_free:
 }
 
 
+//             howdy     sole caller for thiis fn is parse_mounts()
 VFSVolume* vfs_volume_read_by_mount( dev_t devnum, const char* mount_points ) {   // read a non-block device
     VFSVolume* volume;
     char* str;
@@ -2870,8 +2869,7 @@ VFSVolume* vfs_volume_read_by_mount( dev_t devnum, const char* mount_points ) { 
         g_usleep( 200000 );
         char* mtab_file = g_build_filename( g_get_home_dir(), ".mtab.fuseiso", NULL );
         char* new_name = NULL;
-        if ( path_is_mounted_mtab( mtab_file, point, &new_name, NULL )
-                                        && new_name && new_name[0] )
+        if ( path_is_mounted_mtab( mtab_file, point, &new_name, NULL )  && new_name && new_name[0] )
         {
             g_free( name );
             name = new_name;
@@ -3111,8 +3109,7 @@ VFSVolume* vfs_volume_read_by_device( char* device_file ) {
 }
 #endif
 
-char* vfs_volume_handler_cmd( int mode, int action, VFSVolume* vol,
-                              const char* options, netmount_t* netmount,
+char* vfs_volume_handler_cmd( int mode, int action, VFSVolume* vol, const char* options, netmount_t* netmount,
                               gboolean* run_in_terminal, char** mount_point )
 {
     char* str;
@@ -3590,9 +3587,7 @@ char* vfs_volume_device_unmount_cmd( VFSVolume* vol, gboolean* run_in_terminal )
         netmount_t *netmount = NULL;
         if ( split_network_url( vol->udi, &netmount ) == 1 )
         {
-            command = vfs_volume_handler_cmd( HANDLER_MODE_NET, HANDLER_UNMOUNT,
-                                          vol, NULL, netmount, run_in_terminal,
-                                          NULL );
+            command = vfs_volume_handler_cmd( HANDLER_MODE_NET, HANDLER_UNMOUNT,  vol, NULL, netmount, run_in_terminal, NULL );
             g_free( netmount->url );
             g_free( netmount->fstype );
             g_free( netmount->host );
@@ -3617,9 +3612,7 @@ char* vfs_volume_device_unmount_cmd( VFSVolume* vol, gboolean* run_in_terminal )
     }
     else if ( vol->device_type == DEVICE_TYPE_OTHER &&  mtab_fstype_is_handled_by_protocol( vol->fs_type ) )
     {
-        command = vfs_volume_handler_cmd( HANDLER_MODE_NET, HANDLER_UNMOUNT,
-                                          vol, NULL, NULL, run_in_terminal,
-                                          NULL );
+        command = vfs_volume_handler_cmd( HANDLER_MODE_NET, HANDLER_UNMOUNT, vol, NULL, NULL, run_in_terminal, NULL );
         //igtodo is this redundant?
         // replace mount point sub var
         if ( command && strstr( command, "%a" ) )
@@ -3636,9 +3629,7 @@ char* vfs_volume_device_unmount_cmd( VFSVolume* vol, gboolean* run_in_terminal )
     if ( !command )
     {
         // discovery
-        pointq = bash_quote( vol->device_type ==
-                                DEVICE_TYPE_BLOCK || !vol->is_mounted ?
-                                    vol->device_file : vol->mount_point );
+        pointq = bash_quote( vol->device_type ==   DEVICE_TYPE_BLOCK || !vol->is_mounted ?  vol->device_file : vol->mount_point );
         if ( s1 = g_find_program_in_path( "udevil" ) )
         {
             // udevil
@@ -3823,9 +3814,7 @@ void vfs_volume_autoexec( VFSVolume* vol ) {
     char* path;
 
     // Note: audiocd is is_mountable
-    if ( !vol->is_mountable || global_inhibit_auto ||
-                                        vol->device_type != DEVICE_TYPE_BLOCK ||
-                                        !vfs_volume_is_automount( vol ) )
+    if ( !vol->is_mountable || global_inhibit_auto ||  vol->device_type != DEVICE_TYPE_BLOCK ||  !vfs_volume_is_automount( vol ) )
         return;
 
     if ( vol->is_audiocd )
@@ -3900,9 +3889,7 @@ void vfs_volume_autounmount( VFSVolume* vol ) {
 
 
 void vfs_volume_automount( VFSVolume* vol ) {
-    if ( vol->is_mounted || vol->ever_mounted || vol->is_audiocd
-                                        || vol->should_autounmount
-                                        || !vfs_volume_is_automount( vol ) )
+    if ( vol->is_mounted || vol->ever_mounted || vol->is_audiocd  || vol->should_autounmount   || !vfs_volume_is_automount( vol ) )
         return;
 
     if ( vol->automount_time && time( NULL ) - vol->automount_time < 5 )
@@ -4008,8 +3995,7 @@ static void vfs_volume_device_added( VFSVolume* volume, gboolean automount ) {  
                     vfs_volume_exec( volume, xset_get_s( "dev_exec_insert" ) );
 
                 // media ejected ?
-                if ( was_mountable && !volume->is_mountable && volume->is_mounted &&
-                            ( volume->is_optical || volume->is_removable ) )
+                if ( was_mountable && !volume->is_mountable && volume->is_mounted &&  ( volume->is_optical || volume->is_removable ) )
                     unmount_if_mounted( volume );
             }
             // refresh tabs containing changed mount point
@@ -4044,8 +4030,7 @@ static gboolean vfs_volume_nonblock_removed( dev_t devnum ) {
 
     for ( l = volumes; l; l = l->next )
     {
-        if ( ((VFSVolume*)l->data)->device_type != DEVICE_TYPE_BLOCK &&
-                            ((VFSVolume*)l->data)->devnum == devnum )
+        if ( ((VFSVolume*)l->data)->device_type != DEVICE_TYPE_BLOCK &&   ((VFSVolume*)l->data)->devnum == devnum )
         {
             // remove volume
             volume = (VFSVolume*)l->data;
@@ -4112,8 +4097,7 @@ void unmount_if_mounted( VFSVolume* vol ) {
     if ( !g_file_test( mtab, G_FILE_TEST_EXISTS ) )
         mtab = mtab_path;
 
-    char* line = g_strdup_printf( "grep -qs '^%s ' %s 2>/dev/null || exit\n%s\n",
-                                                vol->device_file, mtab, str );
+    char* line = g_strdup_printf( "grep -qs '^%s ' %s 2>/dev/null || exit\n%s\n",   vol->device_file, mtab, str );
     g_free( str );
     g_free( mtab_path );
     printf( _("Unmount-If-Mounted: %s\n"), line );
@@ -4352,8 +4336,7 @@ static void call_callbacks( VFSVolume* vol, VFSVolumeState state ) {
 }
 
 
-void vfs_volume_add_callback( VFSVolumeCallback cb, gpointer user_data )
-{
+void vfs_volume_add_callback( VFSVolumeCallback cb, gpointer user_data ) {
     VFSVolumeCallbackData e;
     if ( !cb )
         return;

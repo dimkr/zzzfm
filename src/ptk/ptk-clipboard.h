@@ -1,7 +1,7 @@
 /*
 *  C Interface: ptk-clipboard
 *
-* Description: 
+* Description:
 *
 *
 * Author: Hong Jen Yee (PCMan) <pcman.tw (AT) gmail.com>, (C) 2006
@@ -23,10 +23,10 @@ void ptk_clipboard_cut_or_copy_files( const char* working_dir,
                                       gboolean copy );
 
 void ptk_clipboard_copy_as_text( const char* working_dir,
-                                      GList* files );  //MOD added
+                                      GList* files );
 
 void ptk_clipboard_copy_name( const char* working_dir,
-                                      GList* files );  //MOD added
+                                      GList* files );
 
 void ptk_clipboard_paste_files( GtkWindow* parent_win,
                                 const char* dest_dir, GtkTreeView* task_view,
@@ -42,12 +42,12 @@ void ptk_clipboard_paste_targets( GtkWindow* parent_win,
                                   GtkTreeView* task_view,
                                   GFunc callback, GtkWindow* callback_win );
 
-void ptk_clipboard_copy_text( const char* text );  //MOD added
+void ptk_clipboard_copy_text( const char* text );
 
-void ptk_clipboard_copy_file_list( char** path, gboolean copy ); //sfm
+void ptk_clipboard_copy_file_list( char** path, gboolean copy );
 
 GList* ptk_clipboard_get_file_paths( const char* cwd, gboolean* is_cut,
-                                                    gint* missing_targets ); //sfm
+                                                    gint* missing_targets );
 
 G_END_DECLS
 
