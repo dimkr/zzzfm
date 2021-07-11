@@ -90,25 +90,6 @@ AC_SUBST([GTK_LIBS])
 # disable deprecated warnings for now due to GTK2/GTK3 build compat
 CPPFLAGS="$CPPFLAGS -Wno-deprecated-declarations -Wformat -Wformat-security -Wreturn-type -Wunused-value"
 
-# start-notification is optional - will be used if installed and no --disable
-AC_ARG_ENABLE(
-    [startup-notification],
-    AS_HELP_STRING([--disable-startup-notification],
-                   [disable use of libstartup-notification (default: enable if installed)]),
-    use_sn=$enableval, use_sn="yes")
-if test x"$use_sn" = x"yes"; then
-    sn_modules_old="libstartup-notification-0.9"
-    sn_modules="libstartup-notification-1.0"
-    PKG_CHECK_MODULES(SN, [$sn_modules_old], use_sn="yes", [
-       PKG_CHECK_MODULES(SN, [$sn_modules], use_sn="yes", use_sn="no (not installed)")
-    ])
-    if test x"$use_sn" = x"yes"; then
-        AC_SUBST(SN_CFLAGS)
-        AC_SUBST(SN_LIBS)
-        AC_DEFINE([HAVE_SN], [1], [Use SN])
-    fi
-fi
-
 dnl linker optimizations
 AC_MSG_CHECKING([whether $LD accepts --as-needed])
 case `$LD --as-needed -v 2>&1 </dev/null` in
@@ -223,24 +204,6 @@ if test x"$largefile" = x"yes"; then
 fi
 
 AC_ARG_ENABLE(
-    [superuser-checks],
-    AS_HELP_STRING([--disable-superuser-checks],
-                   [disable checks running as super user (no current function) (default: enable)]),
-    superuser_checks=$enableval, superuser_checks="yes")
-if test x"$superuser_checks" = "xyes"; then
-  AC_DEFINE(SUPER_USER_CHECKS, 1, [Whether to check running as super user or not])
-fi
-
-AC_ARG_WITH(
-    [preferable-sudo],
-    AS_HELP_STRING([--with-preferable-sudo=PROG],
-                   [Specify custom graphical su program to run root commands (or see /etc/zzzfm/zzzfm.conf)]),
-                   [ preferable_sudo="$withval" ])
-if test ! -z "$preferable_sudo"; then
-  CPPFLAGS="$CPPFLAGS -DPREFERABLE_SUDO_PROG=\\\"$preferable_sudo\\\""
-fi
-
-AC_ARG_ENABLE(
     [desktop-integration],
     AS_HELP_STRING([--disable-desktop-integration],
                    [disable desktop manager integration (default: enable)]),
@@ -311,6 +274,8 @@ done
 echo
 echo zzzFM...................................... : Version $VERSION
 echo
+echo '  -=- compile-time configuration options, per configure.ac :'
+echo
 echo Prefix....................................... : $prefix
 echo Executable................................... : $prefix/bin/zzzfm
 echo Configuration Dir............................ : "$sysconfdir/zzzfm/"
@@ -330,21 +295,15 @@ else
 echo Linux file change monitor support............ : fam/gamin
 fi
 echo 64-bit Large file support.................... : $largefile
-#echo Show warnings if run as super user........... : $superuser_checks
-if test ! -z "$preferable_sudo"; then
-echo Additional graphical su program.............. : $preferable_sudo
-fi
+
 if test x"$with_gtk3" = x"yes"; then
 echo 'GTK+ Version................................. : GTK 3'
 else
 echo 'GTK+ Version................................. : GTK 2'
 fi
 echo Desktop manager integration.................. : $desktop_integration
-echo Startup notification......................... : $use_sn
 echo Video thumbnail support...................... : $video_thumbnails
 echo
-echo
-echo Please read README carefully if you are packaging zzzFM.
 echo
 
 if test ! -z "$bash_path"; then

@@ -4,9 +4,9 @@ FLAVORS = gtk2 gtk3
 
 CONFIGURE_FLAGS_gtk2 = --with-gtk2
 CONFIGURE_FLAGS_gtk3 = --with-gtk3
-#     skidoo     disabling vidthumbs and startupnotification
+
 #         --disable-pixmaps     is  now  MOOT
-CONFIGURE_COMMON_FLAGS +=  --disable-video-thumbnails --disable-startup-notification
+CONFIGURE_COMMON_FLAGS +=  --disable-video-thumbnails
 
 LDFLAGS += -Wl,-z,defs -Wl,--as-needed
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all

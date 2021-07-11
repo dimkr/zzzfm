@@ -6,95 +6,16 @@
 
 #include "vfs-execute.h"
 
-#ifdef HAVE_SN
-/* FIXME: Startup notification may cause problems */
-#define SN_API_NOT_YET_FROZEN
-#include <libsn/sn-launcher.h>
-#include <X11/Xatom.h>
-#include <gtk/gtk.h>
-#include <gdk/gdkx.h>
-#include <time.h>
-#endif
-
 #include <string.h>
 #include <stdlib.h>
 
 gboolean vfs_exec( const char* work_dir, char** argv, char** envp, const char* disp_name, GSpawnFlags flags, GError **err ) {
-    return vfs_exec_on_screen( gdk_screen_get_default(), work_dir, argv, envp, disp_name, flags, TRUE, err );
+    return vfs_exec_on_screen( gdk_screen_get_default(), work_dir, argv, envp, disp_name, flags, err );
 }
 
-#ifdef HAVE_SN
-static gboolean sn_timeout( gpointer user_data ) {
-    SnLauncherContext * ctx = ( SnLauncherContext* ) user_data;
-    gdk_threads_enter();
-    /* FIXME: startup notification, is this correct? */
-    sn_launcher_context_complete ( ctx );
-    sn_launcher_context_unref ( ctx );
-    gdk_threads_leave();
-    return FALSE;
-}
-
-/* This function is taken from the code of thunar, written by Benedikt Meurer <benny@xfce.org> */
-static gint tvsn_get_active_workspace_number ( GdkScreen *screen ) {
-    GdkWindow * root;
-    gulong bytes_after_ret = 0;
-    gulong nitems_ret = 0;
-    guint *prop_ret = NULL;
-    Atom _NET_CURRENT_DESKTOP;
-    Atom _WIN_WORKSPACE;
-    Atom type_ret = None;
-    gint format_ret;
-    gint ws_num = 0;
-
-    gdk_error_trap_push ();
-
-    root = gdk_screen_get_root_window ( screen );
-
-    /* determine the X atom values */
-    _NET_CURRENT_DESKTOP = XInternAtom ( GDK_WINDOW_XDISPLAY ( root ), "_NET_CURRENT_DESKTOP", False );
-    _WIN_WORKSPACE = XInternAtom ( GDK_WINDOW_XDISPLAY ( root ), "_WIN_WORKSPACE", False );
-
-    if ( XGetWindowProperty ( GDK_WINDOW_XDISPLAY ( root ), GDK_WINDOW_XID ( root ),
-                              _NET_CURRENT_DESKTOP, 0, 32, False, XA_CARDINAL,
-                              &type_ret, &format_ret, &nitems_ret, &bytes_after_ret, ( gpointer ) & prop_ret ) != Success )
-    {
-        if ( XGetWindowProperty ( GDK_WINDOW_XDISPLAY ( root ), GDK_WINDOW_XID ( root ),
-                                  _WIN_WORKSPACE, 0, 32, False, XA_CARDINAL, &type_ret, &format_ret, &nitems_ret, &bytes_after_ret,
-                                  ( gpointer ) & prop_ret ) != Success )
-        {
-            if ( G_UNLIKELY ( prop_ret != NULL ) )
-            {
-                XFree ( prop_ret );
-                prop_ret = NULL;
-            }
-        }
-    }
-
-    if ( G_LIKELY ( prop_ret != NULL ) )
-    {
-        if ( G_LIKELY ( type_ret != None && format_ret != 0 ) )
-            ws_num = *prop_ret;
-        XFree ( prop_ret );
-    }
-
-    gint err = gdk_error_trap_pop ();
-
-    return ws_num;
-}
-#endif
-
-gboolean vfs_exec_on_screen( GdkScreen* screen,
-                             const char* work_dir,
-                             char** argv, char** envp,
-                             const char* disp_name,
-                             GSpawnFlags flags,
-                             gboolean use_startup_notify,
-                             GError **err )
+gboolean vfs_exec_on_screen( GdkScreen* screen, const char* work_dir, char** argv, char** envp,
+                             const char* disp_name, GSpawnFlags flags, GError **err )
 {
-#ifdef HAVE_SN
-    SnLauncherContext * ctx = NULL;
-    SnDisplay* display;
-#endif
     gboolean ret;
     GSpawnChildSetupFunc setup_func = NULL;
     extern char **environ;
@@ -122,44 +43,7 @@ gboolean vfs_exec_on_screen( GdkScreen* screen,
         }
     }
 
-#ifdef HAVE_SN
-    if ( use_startup_notify )
-        display = sn_display_new ( GDK_SCREEN_XDISPLAY ( screen ),
-                               ( SnDisplayErrorTrapPush ) gdk_error_trap_push,
-                               ( SnDisplayErrorTrapPush ) gdk_error_trap_pop );
-    else
-        display = NULL;
-
-    if ( G_LIKELY ( display ) )
-    {
-        if ( !disp_name )
-            disp_name = argv[ 0 ];
-
-        ctx = sn_launcher_context_new( display, gdk_screen_get_number( screen ) );
-
-        sn_launcher_context_set_description( ctx, disp_name );
-        sn_launcher_context_set_name( ctx, g_get_prgname() );
-        sn_launcher_context_set_binary_name( ctx, argv[ 0 ] );
-
-        sn_launcher_context_set_workspace ( ctx, tvsn_get_active_workspace_number( screen ) );
-
-        /* FIXME: I don't think this is correct, other people seem to use CurrentTime here.
-                  However, using CurrentTime causes problems, so I so it like this.
-                  Maybe this is incorrect, but it works, so, who cares?
-        */
-        /* time( &cur_time ); */
-        sn_launcher_context_initiate( ctx, g_get_prgname(), argv[ 0 ], gtk_get_current_event_time() /*cur_time*/ );
-
-        setup_func = (GSpawnChildSetupFunc) sn_launcher_context_setup_child_process;
-        if( startup_id_index >= 0 )
-            g_free( new_env[i] );
-        else
-            startup_id_index = i++;
-        new_env[ startup_id_index ] = g_strconcat( "DESKTOP_STARTUP_ID=", sn_launcher_context_get_startup_id ( ctx ), NULL );
-    }
-#endif
-
-    /* This is taken from gdk_spawn_on_screen */
+    //  This is taken from gdk_spawn_on_screen
     display_name = gdk_screen_make_display_name ( screen );
     if ( display_index >= 0 )
         new_env[ display_index ] = g_strconcat( "DISPLAY=", display_name, NULL );
@@ -187,22 +71,5 @@ gboolean vfs_exec_on_screen( GdkScreen* screen,
 #endif
 
     g_strfreev( new_env );
-
-#ifdef HAVE_SN
-    if ( G_LIKELY ( ctx ) )
-    {
-        if ( G_LIKELY ( ret ) )
-            g_timeout_add ( 20 * 1000, sn_timeout, ctx );
-        else
-        {
-            sn_launcher_context_complete ( ctx );
-            sn_launcher_context_unref ( ctx );
-        }
-    }
-
-    if ( G_LIKELY ( display ) )
-        sn_display_unref ( display );
-#endif
-
     return ret;
 }

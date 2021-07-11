@@ -483,8 +483,7 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
         if ( itool_icon >= 0 && itool_icon <= GTK_ICON_SIZE_DIALOG )
             tool_icon = tool_icon_sizes[ itool_icon ];
 
-        if ( big_icon != app_settings.big_icon_size
-            || small_icon != app_settings.small_icon_size )
+        if ( big_icon != app_settings.big_icon_size  || small_icon != app_settings.small_icon_size )
         {
             vfs_mime_type_set_icon_size( big_icon, small_icon );
             vfs_file_info_set_thumbnail_size( big_icon, small_icon );
@@ -612,8 +611,7 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
 
         /*
         rubberband = gtk_toggle_button_get_active( (GtkToggleButton*)data->rubberband );
-        if ( !!rubberband != !!xset_get_b( "rubberband" ) )
-        {
+        if ( !!rubberband != !!xset_get_b( "rubberband" ) ) {
             xset_set_b( "rubberband", rubberband );
             main_window_rubberband_all();
         }
@@ -636,10 +634,8 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
             // get su from /etc/zzzfm/zzzfm.conf
             custom_su = g_find_program_in_path( settings_terminal_su );
         int idx = gtk_combo_box_get_active( GTK_COMBO_BOX( data->su_command ) );
-        if ( idx > -1 )
-        {
-            if ( custom_su )
-            {
+        if ( idx > -1 ) {
+            if ( custom_su ) {
                 if ( idx == 0 )
                     xset_set( "su_command", "s", custom_su );
                 else
@@ -651,51 +647,26 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
         }
 
         // graphical su command
-        char* custom_gsu = NULL;
-        if ( settings_graphical_su )
-            // get gsu from /etc/zzzfm/zzzfm.conf
-            custom_gsu = g_find_program_in_path( settings_graphical_su );
-#ifdef PREFERABLE_SUDO_PROG
-        if ( !custom_gsu )
-            // get build-time gsu
-            custom_gsu = g_find_program_in_path( PREFERABLE_SUDO_PROG );
-#endif
         idx = gtk_combo_box_get_active( GTK_COMBO_BOX( data->gsu_command ) );
-        if ( idx > -1 )
-        {
-            if ( custom_gsu )
-            {
-                if ( idx == 0 )
-                    xset_set( "gsu_command", "s", custom_gsu );
-                else
-                    xset_set( "gsu_command", "s", gsu_commands[idx - 1] );
-                g_free( custom_gsu );
-            }
-            else
-                xset_set( "gsu_command", "s", gsu_commands[idx] );
+        if ( idx > -1 ) {
+            xset_set( "gsu_command", "s", gsu_commands[idx] );
         }
 
-        //MOD editors
         xset_set( "editor", "s", gtk_entry_get_text( GTK_ENTRY( data->editor ) ) );
         xset_set_b( "editor", gtk_toggle_button_get_active( (GtkToggleButton*)data->editor_terminal ) );
         const char* root_editor = gtk_entry_get_text( GTK_ENTRY( data->root_editor ) );
         const char* old_root_editor = xset_get_s( "root_editor" );
-        if ( !old_root_editor )
-        {
-            if ( root_editor[0] != '\0' )
-            {
+        if ( !old_root_editor ) {
+            if ( root_editor[0] != '\0' ) {
                 xset_set( "root_editor", "s", root_editor );
                 root_set_change = TRUE;
             }
         }
-        else if ( strcmp( root_editor, old_root_editor ) )
-        {
+        else if ( strcmp( root_editor, old_root_editor ) ) {
             xset_set( "root_editor", "s", root_editor );
             root_set_change = TRUE;
         }
-        if ( !!gtk_toggle_button_get_active( (GtkToggleButton*)data->root_editor_terminal )
-                                    != !!xset_get_b( "root_editor" ) )
-        {
+        if ( !!gtk_toggle_button_get_active( (GtkToggleButton*)data->root_editor_terminal ) !=  !!xset_get_b( "root_editor" ) ) {
             xset_set_b( "root_editor", gtk_toggle_button_get_active( (GtkToggleButton*)data->root_editor_terminal ) );
             root_set_change = TRUE;
         }
@@ -1119,28 +1090,11 @@ gboolean fm_edit_preference( GtkWindow* parent, int page )
         g_free( custom_su );
 
         // graphical su
-        char* custom_gsu = NULL;
         char* use_gsu;
         data->gsu_command = (GtkWidget*)gtk_builder_get_object( builder, "gsu_command" );
         use_gsu = xset_get_s( "gsu_command" );
-        if ( settings_graphical_su )
-            // get gsu from /etc/zzzfm/zzzfm.conf
-            custom_gsu = g_find_program_in_path( settings_graphical_su );
-#ifdef PREFERABLE_SUDO_PROG
-        if ( !custom_gsu )
-            // get build-time gsu
-            custom_gsu = g_find_program_in_path( PREFERABLE_SUDO_PROG );
-#endif
-        if ( custom_gsu )
-        {
-            GtkListStore* gsu_list = GTK_LIST_STORE( gtk_combo_box_get_model( GTK_COMBO_BOX( data->gsu_command ) ) );
-            gtk_list_store_prepend( gsu_list, &it );
-            gtk_list_store_set( GTK_LIST_STORE( gsu_list ), &it, 0, custom_gsu, -1 );
-        }
 
         if ( !use_gsu )
-            idx = 0;
-        else if ( custom_gsu && !g_strcmp0( custom_gsu, use_gsu ) )
             idx = 0;
         else
         {
@@ -1151,13 +1105,10 @@ gboolean fm_edit_preference( GtkWindow* parent, int page )
             }
             if ( i == G_N_ELEMENTS( gsu_commands ) )
                 idx = 0;
-            else if ( custom_gsu )
-                idx = i + 1;
             else
                 idx = i;
         }
         gtk_combo_box_set_active( GTK_COMBO_BOX( data->gsu_command ), idx );
-        g_free( custom_gsu );
 
         // date format
         data->date_format = (GtkWidget*)gtk_builder_get_object( builder, "date_format" );

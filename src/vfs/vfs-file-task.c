@@ -1669,8 +1669,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
     {
         // su
         argv[a++] = g_strdup( use_su );
-        if ( strcmp( task->exec_as_user, "root" ) )
-        {
+        if ( strcmp( task->exec_as_user, "root" ) ) {
             if ( !strcmp( use_su, "/usr/bin/su-to-root" ) )
                 argv[a++] = g_strdup( "-p" );
             else if ( strcmp( use_su, "/bin/su" ) )
@@ -1678,38 +1677,17 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
             argv[a++] = g_strdup( task->exec_as_user );
         }
 
-        if ( !strcmp( use_su, "/usr/bin/gksu" ) || !strcmp( use_su, "/usr/bin/gksudo" ) )
-        {
-            // gksu*
-            argv[a++] = g_strdup( "-g" );
-            argv[a++] = g_strdup( "-D" );
-            argv[a++] = g_strdup( "zzzFM Command" );
+        if ( !strcmp( use_su, "/usr/bin/gksu" ) ) {
             single_arg = TRUE;
         }
-        else if ( strstr( use_su, "kdesu" ) )
-        {
-            // kdesu kdesudo
-            argv[a++] = g_strdup( "-d" );
-            argv[a++] = g_strdup( "-c" );
-            single_arg = TRUE;
-        }
-        else if ( !strcmp( use_su, "/bin/su" ) )
-        {
-            // /bin/su
+
+        else if ( !strcmp( use_su, "/bin/su" ) ) {
             argv[a++] = g_strdup( "-s" );
             argv[a++] = g_strdup( BASHPATH );  //shell spec
             argv[a++] = g_strdup( "-c" );
             single_arg = TRUE;
         }
-        else if ( !strcmp( use_su, "/usr/bin/gnomesu" )  || !strcmp( use_su, "/usr/bin/xdg-su" ) )
-        {
-            // gnomesu
-            argv[a++] = g_strdup( "-c" );
-            single_arg = TRUE;
-        }
-        else if ( !strcmp( use_su, "/usr/bin/su-to-root" ) )
-        {
-            // su-to-root
+        else if ( !strcmp( use_su, "/usr/bin/su-to-root" ) ) {
             if ( !terminal )
                 argv[a++] = g_strdup( "-X" );  // command is a X11 program
             argv[a++] = g_strdup( "-c" );
@@ -1717,23 +1695,19 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
         }
     }
 
-    if ( sum_script )
-    {
+    if ( sum_script ) {
         // zzzfm-auth exists?
         auth = g_find_program_in_path( "zzzfm-auth" );
-        if ( !auth )
-        {
+        if ( !auth ) {
             g_free( sum_script );
             sum_script = NULL;
             g_warning( _("zzzfm-auth not found in path - this reduces your security") );
         }
     }
 
-    if ( sum_script && auth )
-    {
+    if ( sum_script && auth ) {
         // zzzfm-auth
-        if ( single_arg )
-        {
+        if ( single_arg ) {
             argv[a++] = g_strdup_printf( "%s %s%s %s %s", BASHPATH, auth,
                            !g_strcmp0( task->exec_as_user, "root" ) ?  " root" : "", task->exec_script, sum_script );
             g_free( auth );
@@ -1749,7 +1723,7 @@ static void vfs_file_task_exec( char* src_file, VFSFileTask* task )
     }
     else if ( task->exec_direct )
     {
-        // add direct args - not currently used
+        // add direct args ~~ NOTE: exec_direct is not currently used
         if ( single_arg )
         {
             argv[a++] = g_strjoinv( " ", &task->exec_argv[0] );

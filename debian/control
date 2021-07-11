@@ -3,16 +3,15 @@ Section: utils
 Priority: optional
 Maintainer: skidoo <email@redact.ed>
 Build-Depends: debhelper-compat (= 11), libgtk2.0-dev (>= 2.24),
- libcairo2-dev, libpango1.0-dev, libx11-dev, intltool, pkg-config,
- libglib2.0-dev, libstartup-notification0-dev,
- libgdk-pixbuf2.0-dev, libudev-dev, libgtk-3-dev,
+        libcairo2-dev, libpango1.0-dev, libx11-dev, intltool, pkg-config,
+        libglib2.0-dev, libgdk-pixbuf2.0-dev, libudev-dev, libgtk-3-dev,
 Standards-Version: 4.5.0
 Homepage:https://gitlab.com/skidoo/zzzfm
 
 Package: zzzfm
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}, zzzfm-common (= ${source:Version}),
- desktop-file-utils, shared-mime-info, e2fsprogs
+         desktop-file-utils, shared-mime-info, e2fsprogs
 Recommends: udisks2
 Suggests: udevil, eject, lsof, gksu, sshfs, dbus, fuseiso, curlftpfs, jmtpfs, gphotofs, ifuse
 Replaces: zzzfm-gtk3
@@ -49,7 +48,7 @@ Description: Multi-panel tabbed file manager - common files
 Package: zzzfm-gtk3
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}, zzzfm-common (= ${source:Version}),
- desktop-file-utils, shared-mime-info, e2fsprogs
+         desktop-file-utils, shared-mime-info, e2fsprogs
 Recommends: udisks2
 Suggests: udevil, eject, lsof, gksu, sshfs, dbus, fuseiso, curlftpfs, jmtpfs, gphotofs, ifuse
 Replaces: zzzfm

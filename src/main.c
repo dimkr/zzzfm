@@ -131,7 +131,7 @@ static GOptionEntry opt_entries[] =
     { "daemon-mode", 'd', 0, G_OPTION_ARG_NONE, &daemon_mode, N_("Run as a daemon"), NULL },
     { "config-dir", 'c', 0, G_OPTION_ARG_STRING, &config_dir, N_("Use DIR as configuration directory"), "DIR" },
     { "find-files", 'f', 0, G_OPTION_ARG_NONE, &find_files, N_("Show File Search"), NULL },
-/*
+/*           // this outcommented bit was inherited from  s p a c e f m
     { "query-type", '\0', 0, G_OPTION_ARG_STRING, &query_type, N_("Query mime-type of the specified file."), NULL },
     { "query-default", '\0', 0, G_OPTION_ARG_STRING, &query_default, N_("Query default application of the specified mime-type."), NULL },
     { "set-default", '\0', 0, G_OPTION_ARG_STRING, &set_default, N_("Set default application of the specified mime-type."), NULL },
@@ -151,14 +151,13 @@ static GOptionEntry opt_entries[] =
     { NULL }
 };
 
+
 static gboolean single_instance_check();
 static void single_instance_finalize();
 static void get_socket_name( char* buf, int len );
 static gboolean on_socket_event( GIOChannel* ioc, GIOCondition cond, gpointer data );
 
 static void init_folder();
-static void check_icon_theme();
-
 static gboolean handle_parsed_commandline_args();
 
 static void open_file( const char* path );
@@ -537,7 +536,7 @@ void receive_socket_command( int client, GString* args ) {
     char* inode_tag = get_inode_tag();
     if ( argv && strcmp( inode_tag, argv[0] ) )
     {
-        reply = g_strdup( "zzzfm: invalid socket command user\n" );
+        reply = g_strdup( "zzzfm: invalid socket command user\n" );   //  howdy now     user, or USAGE?
         cmd = 1;
         g_warning( "invalid socket command user" );
     } else {
@@ -636,10 +635,14 @@ int send_socket_command( int argc, char* argv[], char** reply ) {
 }
 
 void show_socket_help() {
-    // TRANSLATOR:  These three lines should be limited to 80 chars each
-    printf( "%s\n", _("zzzFM socket commands permit external processes (such as command scripts)\nto read and set GUI property values and execute methods inside running zzzFM\nwindows.  To handle events see View|Events in the main menu bar.") );
+    // TRANSLATOR:  These four lines should be limited to 80 chars each
+    printf( "%s\n", _("zzzFM socket commands permit external processes") );
+    printf( "%s\n", _("(such as command scripts) to read and set GUI property values") );
+    printf( "%s\n", _("and execute methods inside running zzzFM\nwindows.") );
+    printf( "%s\n", _("To handle events, see View|Events in the main menu bar.") );
 
-    printf( "\n%s\n", _("Usage:") );
+    printf("%s\n", " ");
+    printf( "%s\n", _("Usage:") );
     printf( "    zzzfm --socket-cmd|-s METHOD [OPTIONS] [ARGUMENT...]\n" );
     printf( "%s\n", _("Example:") );
     printf( "    zzzfm -s set window_size 800x600\n" );
@@ -829,41 +832,7 @@ void show_socket_help() {
     printf( "\n%s\n    file:///usr/share/doc/zzzfm/zzzfm-manual-en.html#sockets\n", _("For full documentation and examples see the zzzFM User's Manual:") );
 }
 
-/*
-void check_icon_theme() {
-    GtkSettings * settings;
-    char* theme;
-    const char* title = N_( "GTK+ icon theme is not properly set" );
-    const char* error_msg =
-        N_( "<big><b>%s</b></big>\n\n"
-            "This usually means you don't have an XSETTINGS manager running.  "
-            "Desktop environment like GNOME or XFCE automatically execute their "
-            "XSETTING managers like gnome-settings-daemon or xfce-mcs-manager.\n\n"
-            "<b>If you don't use these desktop environments, "
-            "you have two choices:\n"
-            "1. run an XSETTINGS manager, or\n"
-            "2. simply specify an icon theme in ~/.gtkrc-2.0.</b>\n"
-            "For example to use the Tango icon theme add a line:\n"
-            "<i><b>gtk-icon-theme-name=\"Tango\"</b></i> in your ~/.gtkrc-2.0. (create it if no such file)\n\n"
-            "<b>NOTICE: The icon theme you choose should be compatible with GNOME, "
-            "or the file icons cannot be displayed correctly.</b>  "
-            "Due to the differences in icon naming of GNOME and KDE, KDE themes cannot be used.  "
-            "Currently there is no standard for this, but it will be solved by freedesktop.org in the future." );
-    settings = gtk_settings_get_default();
-    g_object_get( settings, "gtk-icon-theme-name", &theme, NULL );
 
-    // No icon theme available
-//  if ( !theme || !*theme || 0 == strcmp( theme, "hicolorNIXED" ) )
-//  {
-//      GtkWidget * dlg;
-//      dlg = gtk_message_dialog_new_with_markup( NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, _( error_msg ), _( title ) );
-//      gtk_window_set_title( GTK_WINDOW( dlg ), _( title ) );
-//      gtk_dialog_run( GTK_DIALOG( dlg ) );
-//      gtk_widget_destroy( dlg );
-//  }
-    g_free( theme );
-}
-*/
 #ifdef _DEBUG_THREAD
 
 G_LOCK_DEFINE(gdk_lock);
@@ -898,27 +867,8 @@ void init_folder() {
     vfs_mime_type_set_icon_size( app_settings.big_icon_size, app_settings.small_icon_size );
     vfs_file_info_set_thumbnail_size( app_settings.big_icon_size, app_settings.small_icon_size );
 
-    //check_icon_theme();  //sfm seems to run okay without gtk theme
     folder_initialized = TRUE;
 }
-
-
-/*
-       FIXME (sic): Currently, this cannot be supported without HAL        howdy
-
-static int handle_mount( char** argv ) {
-    gboolean success;
-    vfs_volume_init();
-    if( mount )
-        success = vfs_volume_mount_by_udi( mount, NULL );
-    else if( umount )
-        success = vfs_volume_umount_by_udi( umount, NULL );
-    else         // else if( eject )
-        success = vfs_volume_eject_by_udi( eject, NULL );
-    vfs_volume_finalize();
-    return success ? 0 : 1;
-}
-*/
 
 
 GList* get_file_info_list( char** file_paths ) {
@@ -965,7 +915,7 @@ char* dup_to_absolute_file_path(char** file) {
     char* file_path, *real_path, *cwd_path;
     const size_t cwd_size = PATH_MAX;
 
-    if( g_str_has_prefix( *file, "file:" ) ) /* It's a URI */
+    if( g_str_has_prefix( *file, "file:" ) ) // It is a URI
     {
         file_path = g_filename_from_uri( *file, NULL, NULL );
         g_free( *file );
@@ -975,8 +925,7 @@ char* dup_to_absolute_file_path(char** file) {
         file_path = *file;
 
     cwd_path = malloc( cwd_size );
-    if( cwd_path )
-    {
+    if( cwd_path ) {
         getcwd( cwd_path, cwd_size );
     }
 
@@ -1249,6 +1198,7 @@ void tmp_clean() {
     g_free( cmd );
 }
 
+
 int main ( int argc, char *argv[] ) {
     gboolean run = FALSE;
     GError* err = NULL;
@@ -1298,12 +1248,18 @@ int main ( int argc, char *argv[] ) {
         // socket_command?
         if ( !strcmp( argv[1], "-s" ) || !strcmp( argv[1], "--socket-cmd" ) )
         {
+
+//           v--------- howdy now      seems wrong (redundant with insert at Line 1204, above)
+//                                     and POTfile header lines are being displayed to the --help output
+//                                     ...but (tested) removing this ifdef block did not suppress the header lines
 #ifdef ENABLE_NLS
-            // initialize gettext since gtk_init is not run here
+            // initialize gettext because gtk_init is not run here
             setlocale( LC_ALL, "" );
             bindtextdomain( GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR );
             textdomain( GETTEXT_PACKAGE );
 #endif
+
+
             if ( argv[2] && ( !strcmp( argv[2], "help" ) ||  !strcmp( argv[2], "--help" ) ) )
             {
                 show_socket_help();
@@ -1368,9 +1324,6 @@ int main ( int argc, char *argv[] ) {
 #endif
 #ifdef DESKTOP_INTEGRATION
         printf( "DESKTOP " );
-#endif
-#ifdef HAVE_SN
-        printf( "SNOTIFY " );
 #endif
         printf( "\n" );
         return 0;
@@ -1460,7 +1413,7 @@ int main ( int argc, char *argv[] ) {
         fm_turn_off_desktop_icons();
 
 /*
-    if( no_desktop )    // desktop icons is temporarily supressed
+    if( no_desktop )    // desktop icons is temporarily suppressed   //   howdy (sic)
     {
         if( old_show_desktop )  // restore original settings
         {
@@ -1486,6 +1439,7 @@ int main ( int argc, char *argv[] ) {
 
     return 0;
 }
+
 
 void open_file( const char* path ) {
     GError * err;

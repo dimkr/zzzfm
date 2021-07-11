@@ -116,7 +116,6 @@ zzzfm_SOURCES = \
 
 zzzfm_CFLAGS = \
     @GTK_CFLAGS@ \
-    @SN_CFLAGS@ \
     @LIBUDEV_CFLAGS@ \
     @FFMPEG_CFLAGS@ \
     @G_CAST_CHECKS@ \
@@ -126,7 +125,6 @@ zzzfm_LDADD = \
     @GTK_LIBS@ \
     $(INTLLIBS) \
     @FAM_LIBS@ \
-    @SN_LIBS@ \
     @LIBUDEV_LIBS@ \
     @FFMPEG_LIBS@
 

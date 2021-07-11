@@ -335,17 +335,11 @@ static const char* su_commands[] = // order and contents must match prefdlg.ui
 static const char* gsu_commands[] = // order and contents must match prefdlg.ui
 {
     "/usr/bin/gksu",
-    "/usr/bin/xdg-su",
-    "/usr/bin/kdesu",   // may be translated to "$(kde4-config --path libexec)/kdesu"
-    "/usr/bin/kdesudo",
-    "/usr/bin/su-to-root",
     "/bin/su",
     "/usr/bin/sudo"
 };
 
- // These will be populated from the system-wide su and gsu settings read from /etc/zzzfm/zzzfm.conf
-extern char* settings_terminal_su;
-extern char* settings_graphical_su;
+extern char* settings_terminal_su;  // populated from the system-wide su setting read from /etc/zzzfm/zzzfm.conf
 
 typedef struct
 {

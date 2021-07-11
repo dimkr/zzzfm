@@ -88,7 +88,7 @@ const gboolean hide_close_tab_buttons_default = FALSE;
 const gboolean hide_side_pane_buttons_default = FALSE;
 //const gboolean hide_folder_content_border_default = FALSE;
 
-// MOD settings
+//  settings
 void xset_write( FILE* file );
 void xset_parse( char* line );
 void read_root_settings();
@@ -131,14 +131,7 @@ XSet* evt_device;
 // instance-wide command history
 GList* xset_cmd_history;
 
-// These will contain the su and gsu settings from /etc/zzzfm/zzzfm.conf
-char* settings_terminal_su;
-char* settings_graphical_su;
-////
-
-
-
-
+char* settings_terminal_su;  //  will contain the setting read from /etc/zzzfm/zzzfm.conf
 
 typedef void ( *SettingsParseFunc ) ( char* line );
 
@@ -230,6 +223,7 @@ static const char* builtin_tool_shared_key[] = {  // must match XSET_TOOL_ enum
     "panel1_list_large"
 };
 
+
 static void parse_general_settings( char* line ) {
     char * sep = strstr( line, "=" );
     char* name;
@@ -319,6 +313,7 @@ static void parse_general_settings( char* line ) {
 */
 }
 
+
 static void color_from_str( GdkColor* ret, const char* value ) {
     sscanf( value, "%hu,%hu,%hu", &ret->red, &ret->green, &ret->blue );
 }
@@ -326,6 +321,7 @@ static void color_from_str( GdkColor* ret, const char* value ) {
 static void save_color( FILE* file, const char* name, GdkColor* color ) {
     fprintf( file, "%s=%d,%d,%d\n", name, color->red, color->green, color->blue );
 }
+
 
 static void parse_window_state( char* line ) {
     char * sep = strstr( line, "=" );
@@ -357,6 +353,7 @@ static void parse_window_state( char* line ) {
         app_settings.maximized = atoi( value );
     }
 }
+
 
 static void parse_desktop_settings( char* line ) {
     char * sep = strstr( line, "=" );
@@ -409,6 +406,7 @@ static void parse_desktop_settings( char* line ) {
         app_settings.margin_pad = atoi( value );
 }
 
+
 static void parse_interface_settings( char* line ) {
     char * sep = strstr( line, "=" );
     char* name;
@@ -427,6 +425,7 @@ static void parse_interface_settings( char* line ) {
     //else if ( 0 == strcmp( name, "hide_folder_content_border" ) )
     //    app_settings.hide_folder_content_border = atoi( value );
 }
+
 
 static void parse_conf( const char* etc_path, char* line ) {
     char * sep = strstr( line, "=" );
@@ -456,7 +455,7 @@ static void parse_conf( const char* etc_path, char* line ) {
             svalue = NULL;
         }
     }
-    else if ( !strcmp( sname, "terminal_su" ) ||  !strcmp( sname, "graphical_su" ) )
+    else if ( !strcmp( sname, "terminal_su" ) )
     {
         if ( svalue[0] != '/' || !g_file_test( svalue, G_FILE_TEST_EXISTS ) )
             g_warning( "%s: %s '%s' %s", etc_path, sname, svalue, _("file not found") );
@@ -464,20 +463,16 @@ static void parse_conf( const char* etc_path, char* line ) {
         {
             settings_terminal_su = svalue;
             svalue = NULL;
-        } else {
-            settings_graphical_su = svalue;
-            svalue = NULL;
         }
     }
     g_free( svalue );
 }
 
+
 void load_conf() {
     // load zzzfm.conf
     char line[ 2048 ];
-
     settings_terminal_su = NULL;
-    settings_graphical_su = NULL;
 
     char* etc_path = g_build_filename( SYSCONFDIR, "zzzfm", "zzzfm.conf", NULL );
     FILE* file = fopen( etc_path, "r" );
@@ -494,6 +489,7 @@ void load_conf() {
         settings_tmp_dir = g_strdup( DEFAULT_TMP_DIR );
 }
 
+
 void swap_menu_label( const char* set_name, const char* old_name, const char* new_name ) {   // changes default menu label for older config files
     XSet* set;
 
@@ -508,6 +504,7 @@ void swap_menu_label( const char* set_name, const char* old_name, const char* ne
         }
     }
 }
+
 
 void move_attached_to_builtin( const char* removed_name, const char* move_to_name ) {
     /* For upgrades only: A built-in menu item (removed_name) has been removed,
@@ -579,6 +576,7 @@ void move_attached_to_builtin( const char* removed_name, const char* move_to_nam
     }
 }
 
+
 void load_settings( char* config_dir ) {
     FILE * file;
     gchar* path = NULL;
@@ -646,14 +644,14 @@ void load_settings( char* config_dir ) {
     app_settings.width = 780;
     app_settings.height = 580;
 
-    // MOD extra settings
+    //  extra settings
     xset_defaults();
 
     // set tmp dirs
     if ( !settings_tmp_dir )
         settings_tmp_dir = g_strdup( DEFAULT_TMP_DIR );
 
-    // shared tmp
+    // shared tmp         howdy now
     settings_shared_tmp_dir = g_build_filename( settings_tmp_dir, "zzzfm.tmp", NULL );
     if ( geteuid() == 0 )
     {
@@ -663,7 +661,7 @@ void load_settings( char* config_dir ) {
         chmod( settings_shared_tmp_dir, S_IRWXU | S_IRWXG | S_IRWXO | S_ISVTX );
     }
 
-    // copy /etc/xdg/zzzfm
+    // copy /etc/xdg/zzzfm      (howdy now     entire dir content, recursively)
     char* xdg_path = g_build_filename( SYSCONFDIR, "xdg", "zzzfm", NULL );
     if ( !g_file_test( settings_config_dir, G_FILE_TEST_EXISTS )  && g_file_test( xdg_path, G_FILE_TEST_IS_DIR ) )
     {
@@ -763,8 +761,7 @@ void load_settings( char* config_dir ) {
         fclose( file );
     }
 
-    if ( app_settings.encoding[ 0 ] )
-    {
+    if ( app_settings.encoding[ 0 ] ) {
         setenv( "G_FILENAME_ENCODING", app_settings.encoding, 1 );
     }
 
@@ -780,10 +777,10 @@ void load_settings( char* config_dir ) {
     if ( app_settings.margin_pad < 0 || app_settings.margin_pad > 999 )
         app_settings.margin_pad = margin_pad_default;
 
-    //MOD turn off fullscreen
+    // turn off fullscreen
     xset_set_b( "main_full", FALSE );
 
-    //MOD date_format
+    // date_format
     app_settings.date_format = g_strdup( xset_get_s( "date_format" ) );
     if ( !app_settings.date_format || app_settings.date_format[0] == '\0' )
     {
@@ -793,7 +790,7 @@ void load_settings( char* config_dir ) {
         xset_set( "date_format", "s", "%Y-%m-%d %H:%M" );
     }
 
-    //MOD su and gsu command discovery (sets default)
+    // su and gsu command discovery (sets default)
     char* set_su = get_valid_su();
     if ( set_su )
         g_free( set_su );
@@ -801,7 +798,7 @@ void load_settings( char* config_dir ) {
     if ( set_su )
         g_free( set_su );
 
-    //MOD terminal discovery
+    // terminal discovery
     int i;
     char* term;
     char* terminal = xset_get_s( "main_terminal" );
@@ -819,7 +816,7 @@ void load_settings( char* config_dir ) {
         }
     }
 
-    //MOD editor discovery
+    // editor discovery
     char* app_name = xset_get_s( "editor" );
     if ( !app_name || app_name[0] == '\0' )
     {
@@ -1272,8 +1269,8 @@ void xset_autosave_cancel() {
     }
 }
 
-char* get_valid_su()  // may return NULL
-{
+
+char* get_valid_su() {  // may return NULL
     int i;
     char* use_su = NULL;
     char* custom_su = NULL;
@@ -1281,39 +1278,31 @@ char* get_valid_su()  // may return NULL
     use_su = g_strdup( xset_get_s( "su_command" ) );
 
     if ( settings_terminal_su )
-        // get su from /etc/zzzfm/zzzfm.conf
-        custom_su = g_find_program_in_path( settings_terminal_su );
+        custom_su = g_find_program_in_path( settings_terminal_su );  // get su from /etc/zzzfm/zzzfm.conf
 
-    if ( custom_su && ( !use_su || use_su[0] == '\0' ) )
-    {
-        // no su set in Prefs, use custom
-        xset_set( "su_command", "s", custom_su );
+    if ( custom_su && ( !use_su || use_su[0] == '\0' ) ) {
+        xset_set( "su_command", "s", custom_su );   // no su set in Prefs, use custom
         g_free( use_su );
         use_su = g_strdup( custom_su );
     }
-    if ( use_su )
-    {
-        if ( !custom_su || g_strcmp0( custom_su, use_su ) )
-        {
+    if ( use_su ) {
+        if ( !custom_su || g_strcmp0( custom_su, use_su ) ) {
             // is Prefs use_su in list of valid su commands?
-            for ( i = 0; i < G_N_ELEMENTS( su_commands ); i++ )
-            {
+            for ( i = 0; i < G_N_ELEMENTS( su_commands ); i++ ) {
                 if ( !strcmp( su_commands[i], use_su ) )
                     break;
             }
-            if ( i == G_N_ELEMENTS( su_commands ) )
-            {
+
+            if ( i == G_N_ELEMENTS( su_commands ) ) {
                 // not in list - invalid
                 g_free( use_su );
                 use_su = NULL;
             }
         }
     }
-    if ( !use_su )
-    {
-        // discovery
-        for ( i = 0; i < G_N_ELEMENTS( su_commands ); i++ )
-        {
+
+    if ( !use_su ) {
+        for ( i = 0; i < G_N_ELEMENTS( su_commands ); i++ ) {
             if ( use_su = g_find_program_in_path( su_commands[i] ) )
                 break;
         }
@@ -1327,88 +1316,23 @@ char* get_valid_su()  // may return NULL
     return su_path;
 }
 
-char* get_valid_gsu()  // may return NULL
-{
+
+char* get_valid_gsu() {  // may return NULL
     int i;
     char* use_gsu = NULL;
-    char* custom_gsu = NULL;
 
-    // get gsu set in Prefs
+    // get gsu which has been selected via Prefs -> Advanced dialog. If unset, populate with first item in picklist
     use_gsu = g_strdup( xset_get_s( "gsu_command" ) );
-
-    if ( settings_graphical_su )
-        // get gsu from /etc/zzzfm/zzzfm.conf
-        custom_gsu = g_find_program_in_path( settings_graphical_su );
-#ifdef PREFERABLE_SUDO_PROG
-    if ( !custom_gsu )
-        // get build-time gsu
-        custom_gsu = g_find_program_in_path( PREFERABLE_SUDO_PROG );
-#endif
-    if ( custom_gsu && ( !use_gsu || use_gsu[0] == '\0' ) )
-    {
-        // no gsu set in Prefs, use custom
-        xset_set( "gsu_command", "s", custom_gsu );
-        g_free( use_gsu );
-        use_gsu = g_strdup( custom_gsu );
-    }
-    if ( use_gsu )
-    {
-        if ( !custom_gsu || g_strcmp0( custom_gsu, use_gsu ) )
-        {
-            // is Prefs use_gsu in list of valid gsu commands?
-            for ( i = 0; i < G_N_ELEMENTS( gsu_commands ); i++ )
-            {
-                if ( !strcmp( gsu_commands[i], use_gsu ) )
-                    break;
-            }
-            if ( i == G_N_ELEMENTS( gsu_commands ) )
-            {
-                // not in list - invalid
-                g_free( use_gsu );
-                use_gsu = NULL;
-            }
-        }
-    }
-    if ( !use_gsu )
-    {
-        // discovery
-        for ( i = 0; i < G_N_ELEMENTS( gsu_commands ); i++ )
-        {
-            // don't automatically select gksudo
-            if ( strcmp( gsu_commands[i], "/usr/bin/gksudo" ) )
-            {
-                if ( use_gsu = g_find_program_in_path( gsu_commands[i] ) )
-                    break;
-            }
-        }
-        if ( !use_gsu )
-            use_gsu = g_strdup( gsu_commands[0] );
+    if ( !use_gsu ) {
+        use_gsu = g_strdup( gsu_commands[0] );
         xset_set( "gsu_command", "s", use_gsu );
     }
 
     char* gsu_path = g_find_program_in_path( use_gsu );
-    if ( !gsu_path && !g_strcmp0( use_gsu, "/usr/bin/kdesu" ) )
-    {
-        // kdesu may be in libexec path
-        char* stdout;
-        if ( g_spawn_command_line_sync( "kde4-config --path libexec", &stdout, NULL, NULL, NULL )
-                                            && stdout && stdout[0] != '\0' )
-        {
-            if ( gsu_path = strchr( stdout, '\n' ) )
-               gsu_path[0] = '\0';
-            gsu_path = g_build_filename( stdout, "kdesu", NULL );
-            g_free( stdout );
-            if ( !g_file_test( gsu_path, G_FILE_TEST_EXISTS ) )
-            {
-                g_free( gsu_path );
-                gsu_path = NULL;
-            }
-        }
-    }
     g_free( use_gsu );
-    g_free( custom_gsu );
     return gsu_path;
 }
+
 
 char* randhex8() {
     char hex[9];
@@ -5609,7 +5533,7 @@ gboolean xset_design_menu_keypress( GtkWidget* widget, GdkEventKey* event, XSet*
         if ( event->keyval == GDK_KEY_c )
             job = XSET_JOB_COPY;
         else if ( event->keyval == GDK_KEY_x )
-            job = XSET_JOB_CUT;
+            job = XSET_JOB_CUT;                    // howdy now
         else if ( event->keyval == GDK_KEY_v )
             job = XSET_JOB_PASTE;
         else if ( event->keyval == GDK_KEY_e )
@@ -5720,7 +5644,7 @@ GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert,
     if ( g_str_has_prefix( set->name, "open_all_type_" ) )
         open_all = TRUE;
 
-    GtkWidget* design_menu = gtk_menu_new();
+    GtkWidget* design_menu = gtk_menu_new();  ///////////////     DESIGNmenu
     GtkAccelGroup* accel_group = gtk_accel_group_new();
 
     // Copy
@@ -5745,11 +5669,12 @@ GtkWidget* xset_design_show_menu( GtkWidget* menu, XSet* set, XSet* book_insert,
     newitem = xset_design_additem( design_menu, _("Cu_t"),   GTK_STOCK_CUT, XSET_JOB_CUT, set );
     gtk_widget_set_sensitive( newitem, !set->lock );
     if ( show_keys )
-        //gtk_widget_add_accelerator( newitem, "activate", accel_group, GDK_KEY_x, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-        //    howdy    too easily fat-fingered when intending to use       Ctrl+c
+        gtk_widget_add_accelerator( newitem, "activate", accel_group, GDK_KEY_x, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+/*
+        //    howdy now    consider:   Ctrl+x  is too easily fat-fingered when intending to use       Ctrl+c
+*/
 
-
-     //// New submenu
+    //// New submenu
     newitem = gtk_image_menu_item_new_with_mnemonic( _("_New") );
     submenu = gtk_menu_new();
     gtk_menu_item_set_submenu( GTK_MENU_ITEM( newitem ), submenu );

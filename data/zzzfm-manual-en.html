@@ -289,9 +289,7 @@ see: /usr/share/common-licenses/LGPL-3 &nbsp; &nbsp; /usr/share/zzzfm/COPYING-LG
          pause, queue, resume or stop any task <a href="#tasks-queue">*</a>
         <br><br>
         <b>‣</b> Includes extended overwrite, auto-rename, and error handling options <a href="#tasks-menu-popover">*</a>
-        <br><br>
-        <b>‣</b> Provides a common interface to multiple su and graphical su programs, terminals, and editors - you simply select which tools
-         you want to use, and zzzFM handles the details of running your commands as other users, in a terminal, etc.
+
     </blockquote>
     <br>
 
@@ -336,7 +334,7 @@ see: /usr/share/common-licenses/LGPL-3 &nbsp; &nbsp; /usr/share/zzzfm/COPYING-LG
     Conveniently mount network URLs (nfs:// ftp:// smb:// ssh://) and ISO files using the highly configurable
      udevil (debian package name "udevil").  Or, configure a custom protocol handler to mount networks using any external
       tools you choose, plus create custom protocols of your own. <a href="#gui-pathbar-proto">*</a>
-      NOTE:  Network share support in zzzFM is ad hoc by design.  This means there aren't many built-in functions pertaining to networks,
+      NOTE:  Network share support in zzzFM is ad hoc by design.  This means there few built-in functions pertaining to networks,
        and zzzFM does not make network connections itself.  Network discovery and other functions are handled via your custom commands.
     </blockquote>
 
@@ -2274,8 +2272,8 @@ Stop is used to stop the selected task.  If the task is internal (such as copyin
 
   Task Manager until its process terminates.  This means that if a process is hung and cannot be stopped with SIGKILL, selecting Stop may have no effect.
 
-<p>If the command was run as another user, such as root, selecting Stop will cause a prompt for the user's password (or root's password
- depending on your configured su program) to open.  This password is required to send the SIGTERM and SIGKILL signals to the process running as another user.
+<p>If the command was run AsRoot, selecting Stop will cause a prompt for your password (or root's password
+ depending on your configured su program) to open.  This password is required to send the SIGTERM and SIGKILL signals to the process running AsRoot.
   (You can see the exact commands being issued by running zzzFM from a terminal and observing its stdout output.)
 
 <p>Paused and queued tasks may also be stopped.
@@ -2296,8 +2294,8 @@ Ctrl+S in a terminal while a command is running; it will often cause the process
  a process will not halt on a SIGSTOP signal, but the Task Manager will still list it as being in a 'paused' state until you
   <a href="#tasks-menu-resume">Resume</a> the task.
 
-<p>If the command was run as another user, such as root, selecting Pause will cause a prompt for the user's password (or root's password
-depending on your configured su program) to open.  This password is required to send the SIGSTOP signal to the process running as another user.
+<p>If the command was run AsRoot, selecting Pause will cause a prompt for your password (or root's password
+depending on your configured su program) to open.  This password is required to send the SIGSTOP signal to the process running AsRoot.
  (You can see the exact commands being issued by running zzzFM from a terminal and observing its stdout output.)
 
 <p>If you <a href="#designmode-designmenu-icon">change the menu icon</a> for Pause, the new icon will also be used as the 'paused' icon in the task list.
@@ -2326,7 +2324,10 @@ from the queue and resumed, regardless of how it conflicts with other running ta
 
 <p>If the task is an exec task, the process, <i>and all its child processes</i>, are sent a SIGCONT signal.  This is similar to pressing Ctrl+Q in a terminal after a command has been halted with Ctrl+S.  If the original SIGSTOP halted the execution, SIGCONT should resume it.  If SIGSTOP did not halt execution, SIGCONT will generally have no effect, except that the Task Manager will now list the task as 'running'.
 
-<p>If the command was run as another user, such as root, selecting Resume will cause a prompt for the user's password (or root's password depending on your configured su program) to open.  This password is required to send the SIGCONT signal to the process running as another user.  (You can see the exact commands being issued by running zzzFM from a terminal and observing its stdout output.)
+<p>If the command was run AsRoot, selecting Resume will cause a prompt for your password
+ (or root's password depending on your configured su program) to open.
+  This password is required to send the SIGCONT signal to the process running AsRoot.
+   (You can see the exact commands being issued by running zzzFM from a terminal and observing its stdout output.)
 
 <p>You can also resume a task by clicking the Resume button in the task's <a href="#tasks-dlg">popup dialog</a>, left-clicking on the Status of a task in the Task Manager list, or by middle-clicking on a task in the list.  Tasks may also be resumed automatically by the Task Manager if they are queued.
 
@@ -3275,7 +3276,8 @@ Run As Task</a>, which is enabled by default for new commands, changes several a
 
 <p>zzzFM's output monitor is designed to display text output to be used for monitoring the output of commands as they run, or to display a final result.  However, the output monitor is not a terminal and does not permit you to enter input.  If your command requires interaction, you will need to use <a href="#designmode-command-terminal">Run In Terminal</a> instead.
 
-<p>To stop a task prematurely, raise the output monitor and click the Stop button, or right-click on the task in the Task Manager and select <a href="#tasks-menu-stop">Stop</a>.  When zzzFM stops a task, it sends the process and all its child processes a SIGTERM signal, followed several seconds later by SIGKILL signals.  If the process was run as another user, you will be prompted to enter the user's password (or root's password) again to stop the task.
+<p>To stop a task prematurely, raise the output monitor and click the Stop button, or right-click on the task in the Task Manager and select <a href="#tasks-menu-stop">Stop</a>.  When zzzFM stops a task, it sends the process and all its child processes a SIGTERM signal, followed several seconds later by SIGKILL signals.  If the process was run AsRoot,
+ you will be prompted to enter your password (or root's password) again to stop the task.
 
 <p>When the <a href="#designmode-command-terminal">Run In Terminal</a> option is checked, the Run As Task option will be unchecked automatically as a convenience.  Although not normally useful, it is possible to use these options together (just check Run As Task again after checking Run In Terminal).  When both are checked, the terminal window itself is run as a task, the output monitor will generally be empty, and errors may not be detected.  Mostly this is useful only for monitoring when the command has finished (when the terminal window closes, it will be removed from the Task Manager).  Note that some terminal emulators cannot be run as a task by zzzFM because the emulator does not start a new instance.
 
@@ -3353,8 +3355,9 @@ Enabled by default when using <a href="#designmode-command-terminal">Run In Term
 
 <p>With other programs or commands, it is not useful for the terminal to be held open after the command has finished.  For these commands, uncheck Keep Terminal Open.
 
-<p><a name="designmode-command-user"><b>Run As User</b></a><br>
-If a username is entered in the Run As User field, when the command is run, your configured terminal or graphical su program will be used to run the command as this username, instead of as the current zzzFM user.  Depending on the su program used, you will be prompted to enter either the user's password or root's password.
+<p><a name="designmode-command-user"><b>Run As Root</b></a><br>
+when the command is run, your configured terminal or graphical su program will be used to run the command with elevated privileges (AsRoot),
+instead of as the current zzzFM user.  Depending on the su program used, you will be prompted to enter either your password or root's password.
 
 <p>To run a command as root, "root" may be entered as the Run As User username.  However, <b>running commands as root in this way is generally NOT recommended</b>.  Because the command line or script is generally saved with normal user permissions, you are running a command which is not protected by root, as root.  This may compromise your system security at the root level.
 
@@ -7043,16 +7046,6 @@ This file is designed to be edited by the system administrator.  This file conta
 
     <li><b>terminal_su</b> specifies an additional custom terminal su program, or alternate location.
       This program will appear in the list in Preferences|Advanced|Terminal SU.  zzzFM knows how to run su, sudo, and su-to-root.
-<!--
-        If using another terminal su program, you may need to open an issue on the tracker so that zzzFM can be made to run your program
-         with the correct options.  No options may be included here.<br><br>
--->
-    <li><b>graphical_su</b> specifies an additional custom graphical su program, or alternate location.
-     This program will appear in the list in Preferences|Advanced|Graphical SU.  zzzFM knows how to run common graphical su programs such as gksu.
-<!--
-      If using another graphical su program, you may need to open an issue on the tracker so that zzzFM can be made to run your program
-       with the correct options.  No options may be included here.<br><br>
--->
 </ul>
 
 
@@ -7100,13 +7093,13 @@ A socket which zzzFM uses to <a href="#invocation-windows">open additional windo
 
 
 <p><a name="programfiles-tmp-shrtmp"/><a href="#programfiles-tmp-shrtmp"><b>zzzfm.tmp/</b></a><br>
-This directory, shared by all users, contains temporary files used for running a command as another user, including root.  Once a root command is run,
+This directory, shared by all users, contains temporary files used for running a command as root.  Once a root command is run,
  this directory will be owned by root.
 
 
 <p><a name="programfiles-tmp-pidtmp"/><a href="#programfiles-tmp-pidtmp"><b>zzzfm-USERNAME-RANDOM.tmp/</b></a><br>
 This directory contains temporary files used by USERNAME running zzzFM.  It is owned by the user and will be deleted on exit.  Other users can access
- this directory, but usually not the files within it, unless a command is being run as another user.
+ this directory, but usually not the files within it, unless a command is being run AsRoot.
 
 
 <p><a name="programfiles-tmp-exec"/><a href="#programfiles-tmp-exec"><b>zzzfm*.tmp/ID-tmp.sh</b></a><br>
@@ -7138,7 +7131,7 @@ A temporary bash script used to execute a command run in zzzFM, which will be de
 The zzzFM executable file.
 
 <p><a name="programfiles-usr-bin-zzzfm-auth"/><a href="file:///usr/bin/zzzfm-auth"><b>/usr/bin/zzzfm-auth</b></a><br>
-This script is used internally by zzzfm to authenticate temporary scripts run as another user (using /usr/bin/sha256sum).
+This script is used internally by zzzfm to authenticate temporary scripts run AsRoot (using /usr/bin/sha256sum).
  This file should not be modified or run directly.  Its purpose is to simplify the command line for su programs,
  which often handle special characters poorly and have inconsistent command line usage.  If zzzfm-auth or /usr/bin/sha256sum are missing,
   zzzFM will operate in a less secure mode. <!--    howdy   -->
@@ -7191,7 +7184,7 @@ and here it will save a "session" file containing your settings (preferences) al
   edit it... but the running program may overwrite your changes and/or may crash at next launch if your edits have introduced invalid settings/values.
 
 <br><br>
-<center><br><p>document Last Updated 2021-04-19 by skidoo, &nbsp;&nbsp;(for zzzFM version 1.0.7)</p>   <br></center>
+<center><br><p>document Last Updated 2021-05-31 by skidoo, &nbsp;&nbsp;(for zzzFM version 1.0.7)</p>   <br></center>
 <hr><hr><hr>
 </td></tr>
 
