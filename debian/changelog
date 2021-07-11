@@ -1,3 +1,13 @@
+zzzfm (1.0.7-5) unstable; urgency=medium
+
+  * changed incorrect label of panel1 bookmarks right-click "Cut" item --}"New"
+  * revised content of /etc/zzzfm.conf
+  * revised content of zzzfm-manual-en.html
+  * debian/control: adjusted the list of Recommends items
+  * po/zzzfm.pot: fuzzy "" blankmsg (?) was leaking into content displayed to --help output
+
+ -- skidoo <email@redact.ed>  Mon, 31 May 2021 12:02:02 +0200
+
 zzzfm (1.0.7-4) unstable; urgency=medium
 
   * increased mainwindow initial size request dimensions

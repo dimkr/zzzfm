@@ -492,7 +492,7 @@ gboolean vfs_app_desktop_open_files( GdkScreen* screen, const char* working_dir,
                     if( g_shell_parse_argv( cmd, &argc, &argv, NULL ) )
                     {
                         vfs_exec_on_screen( screen, app->path && app->path[0] ? app->path : working_dir, argv, NULL,
-                                        sn_desc, VFS_EXEC_DEFAULT_FLAGS, vfs_app_desktop_uses_startup_notify( app ), err );
+                                        sn_desc, VFS_EXEC_DEFAULT_FLAGS, err );
                         g_strfreev( argv );
                     }
                 }
@@ -524,8 +524,7 @@ gboolean vfs_app_desktop_open_files( GdkScreen* screen, const char* working_dir,
                         if( g_shell_parse_argv( cmd, &argc, &argv, NULL ) )
                         {
                             vfs_exec_on_screen( screen, app->path && app->path[0] ?  app->path : working_dir, argv, NULL, sn_desc,
-                                        G_SPAWN_SEARCH_PATH| G_SPAWN_STDOUT_TO_DEV_NULL| G_SPAWN_STDERR_TO_DEV_NULL,
-                                        vfs_app_desktop_uses_startup_notify( app ), err );
+                                        G_SPAWN_SEARCH_PATH| G_SPAWN_STDOUT_TO_DEV_NULL| G_SPAWN_STDERR_TO_DEV_NULL, err );
                             g_strfreev( argv );
                         }
                     }

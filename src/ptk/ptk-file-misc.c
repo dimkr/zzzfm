@@ -2485,8 +2485,8 @@ int ptk_rename_file( DesktopWindow* desktop, PtkFileBrowser* file_browser,
     gtk_widget_grab_focus( mset->last_widget );
 
     g_signal_connect( G_OBJECT( mset->options ), "focus", G_CALLBACK( on_button_focus ), mset );
-    g_signal_connect( G_OBJECT( mset->next ), "focus", G_CALLBACK( on_button_focus ), mset );
-    g_signal_connect( G_OBJECT( mset->cancel ), "focus", G_CALLBACK( on_button_focus ), mset );
+    g_signal_connect( G_OBJECT( mset->next ),    "focus", G_CALLBACK( on_button_focus ), mset );
+    g_signal_connect( G_OBJECT( mset->cancel ),  "focus", G_CALLBACK( on_button_focus ), mset );
 
     // not used to speed keypress processing
     //g_signal_connect( G_OBJECT( mset->dlg ), "key-press-event",  //                        G_CALLBACK( on_dlg_keypress ), mset );
@@ -3024,8 +3024,8 @@ gboolean  ptk_rename_file( GtkWindow* parent_win, const char* cwd, VFSFileInfo* 
 }
 */
 
-gboolean  ptk_create_new_file( GtkWindow* parent_win, const char* cwd, gboolean create_folder, VFSFileInfo** file )
-{
+
+gboolean  ptk_create_new_file( GtkWindow* parent_win, const char* cwd, gboolean create_folder, VFSFileInfo** file ) {
     gchar * full_path;
     gchar* ufile_name;
     gchar* file_name;
@@ -3033,7 +3033,7 @@ gboolean  ptk_create_new_file( GtkWindow* parent_win, const char* cwd, gboolean 
     int result;
     GtkWidget* dlg;
     gboolean ret = FALSE;
-        gboolean looponce = FALSE;
+    gboolean looponce = FALSE;
 
     if ( create_folder )
     {
@@ -3383,8 +3383,7 @@ void ptk_open_files_with_app( const char* cwd, GList* sel_files, const char* app
                 // No app specified - Use default app for each file
 
                 // Is a dir?  Open in browser
-                if ( G_LIKELY( file_browser ) &&
-                                g_file_test( full_path, G_FILE_TEST_IS_DIR ) )
+                if ( G_LIKELY( file_browser ) &&  g_file_test( full_path, G_FILE_TEST_IS_DIR ) )
                 {
                     if ( ! new_dir )
                         new_dir = full_path;
@@ -3403,13 +3402,11 @@ void ptk_open_files_with_app( const char* cwd, GList* sel_files, const char* app
                                     ( ! app_settings.no_execute || xforce ) )
                 {
                     char * argv[ 2 ] = { full_path, NULL };
-                    GdkScreen* screen = file_browser ? gtk_widget_get_screen( GTK_WIDGET(file_browser) ) :
-                                                 gdk_screen_get_default();
+                    GdkScreen* screen = file_browser ? gtk_widget_get_screen( GTK_WIDGET(file_browser) ) :  gdk_screen_get_default();
                     err = NULL;
-                    if ( ! vfs_exec_on_screen ( screen, cwd, argv, NULL, vfs_file_info_get_disp_name( file ), VFS_EXEC_DEFAULT_FLAGS, TRUE, &err ) )
+                    if ( ! vfs_exec_on_screen ( screen, cwd, argv, NULL, vfs_file_info_get_disp_name( file ), VFS_EXEC_DEFAULT_FLAGS, &err ) )
                     {
-                        toplevel = file_browser ? gtk_widget_get_toplevel( GTK_WIDGET( file_browser ) ) :
-                                                NULL;
+                        toplevel = file_browser ? gtk_widget_get_toplevel( GTK_WIDGET( file_browser ) ) :  NULL;
                         ptk_show_error( ( GtkWindow* ) toplevel, _("Error"), err->message );
                         g_error_free( err );
                     } else {
@@ -3450,8 +3447,7 @@ void ptk_open_files_with_app( const char* cwd, GList* sel_files, const char* app
                 /* was: if( g_str_has_suffix( vfs_file_info_get_name( file ), ".desktop" ) ) */
                 if ( !alloc_desktop )
                 {
-                    if ( file->flags & VFS_FILE_INFO_DESKTOP_ENTRY &&
-                                    ( ! app_settings.no_execute || xforce ) )
+                    if ( file->flags & VFS_FILE_INFO_DESKTOP_ENTRY &&  ( ! app_settings.no_execute || xforce ) )
                         alloc_desktop = full_path;
                     else
                         alloc_desktop = vfs_mime_type_get_default_action( mime_type );
@@ -3490,7 +3486,7 @@ void ptk_open_files_with_app( const char* cwd, GList* sel_files, const char* app
                 }
                 if ( !alloc_desktop )
                 {
-                    /* Let the user choose an application */
+                    //  Let the user choose an application
                     toplevel = file_browser ? gtk_widget_get_toplevel( GTK_WIDGET( file_browser ) ) : NULL;
                     alloc_desktop = ptk_choose_app_for_mime_type( ( GtkWindow* ) toplevel, mime_type, TRUE, TRUE, TRUE, !file_browser );
                 }
@@ -3611,8 +3607,7 @@ void ptk_file_misc_rootcmd( DesktopWindow* desktop, PtkFileBrowser* file_browser
     char* cmd;
     char* task_name;
 
-    GtkWidget* parent = file_browser ? GTK_WIDGET( file_browser ) :
-                                       GTK_WIDGET( desktop );
+    GtkWidget* parent = file_browser ? GTK_WIDGET( file_browser ) :  GTK_WIDGET( desktop );
     char* file_paths = g_strdup( "" );
     GList* sel;
     char* file_path;
