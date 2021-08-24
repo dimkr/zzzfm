@@ -1,3 +1,9 @@
+zzzfm (1.0.7-6~contribs1) unstable; urgency=medium
+
+  * Updated locales de, fr, fr_BE, pt, pt_BR and ru
+
+ -- nXecure <not@telling.you>  Tue, 24 Aug 2021 22:40:31 +0200
+
 zzzfm (1.0.7-5) unstable; urgency=medium
 
   * changed incorrect label of panel1 bookmarks right-click "Cut" item --}"New"
