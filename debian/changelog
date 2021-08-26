@@ -1,3 +1,10 @@
+zzzfm (1.0.7-6~contribs2) unstable; urgency=medium
+
+  * removed path and .png from icon in desktop files
+  * Removed MimeType from zzzfm-find.desktop
+
+ -- nXecure <not@telling.you>  Tue, 25 Aug 2021 22:40:31 +0200
+
 zzzfm (1.0.7-6~contribs1) unstable; urgency=medium
 
   * Updated locales de, fr, fr_BE, pt, pt_BR and ru
