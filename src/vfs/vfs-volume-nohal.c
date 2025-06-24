@@ -3537,7 +3537,12 @@ char* vfs_volume_device_mount_cmd( VFSVolume* vol, const char* options, gboolean
     if ( !command )
     {
         // discovery
-        if ( s1 = g_find_program_in_path( "udevil" ) )
+        if ( g_file_test( "/usr/local/lib/zzzfm/mount", G_FILE_TEST_IS_EXECUTABLE ) )
+        {
+            s1 = NULL;
+            command = g_strdup_printf( "/usr/local/lib/zzzfm/mount %s", vol->device_file );
+        }
+        else if ( s1 = g_find_program_in_path( "udevil" ) )
         {
             // udevil
             if ( options && options[0] != '\0' )
@@ -3630,7 +3635,12 @@ char* vfs_volume_device_unmount_cmd( VFSVolume* vol, gboolean* run_in_terminal )
     {
         // discovery
         pointq = bash_quote( vol->device_type ==   DEVICE_TYPE_BLOCK || !vol->is_mounted ?  vol->device_file : vol->mount_point );
-        if ( s1 = g_find_program_in_path( "udevil" ) )
+        if ( g_file_test( "/usr/local/lib/zzzfm/umount", G_FILE_TEST_IS_EXECUTABLE ) )
+        {
+            s1 = NULL;
+            command = g_strdup_printf( "/usr/local/lib/zzzfm/umount %s", pointq );
+        }
+        else if ( s1 = g_find_program_in_path( "udevil" ) )
         {
             // udevil
             command = g_strdup_printf( "%s umount %s", s1, pointq );
