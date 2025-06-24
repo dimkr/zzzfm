@@ -27,6 +27,7 @@
 #ifdef DESKTOP_INTEGRATION
 
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 //#include "fm-desktop.h"
 
 #include "vfs-file-info.h"
@@ -72,6 +73,12 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
     GdkDisplay * gdpy;
     gint i;
     int big = 0;
+
+    gdpy = gdk_display_get_default();
+#if GTK_CHECK_VERSION (3, 0, 0)
+    if( ! GDK_IS_X11_DISPLAY( gdpy ) )
+        return;
+#endif
 
     if( ! group )
         group = gtk_window_group_new();
