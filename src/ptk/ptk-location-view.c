@@ -2954,6 +2954,9 @@ gboolean volume_is_visible( VFSVolume* vol ) {
     if ( vol->device_type == DEVICE_TYPE_OTHER )
         return xset_get_b( "dev_show_file" );
 
+    if ( g_str_has_prefix( vol->device_file, "/dev/zram" ) )
+        return FALSE;
+
     // loop
     if ( g_str_has_prefix( vol->device_file, "/dev/loop" ) )
     {
@@ -2961,7 +2964,7 @@ gboolean volume_is_visible( VFSVolume* vol ) {
             return TRUE;
         if ( !vol->is_mountable && !vol->is_mounted )
             return FALSE;
-        // fall through
+        return xset_get_b( "dev_show_file" );
     }
 
     // ramfs CONFIG_BLK_DEV_RAM causes multiple entries of /dev/ram*

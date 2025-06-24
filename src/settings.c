@@ -55,7 +55,7 @@ const int big_icon_size_default = 48;
 const int max_icon_size = 96;         // howdy     WAS   512!    // // also change max listed in prefdlg.ui prefdlg2.ui
 const int small_icon_size_default = 22;    //   howdy       consider changing this to 16
 const int tool_icon_size_default = 0;      // zero indicates "defer to whatever is specified by the user's gtk theme"
-const gboolean single_click_default = FALSE;
+const gboolean single_click_default = TRUE;
 const gboolean no_single_hover_default = TRUE;   // howdy
 
 //const int open_bookmark_method_default = 1;
@@ -79,11 +79,11 @@ const gboolean desk_open_mime_default = FALSE;    // howdy    recheck the signif
 const int margin_top_default = 12;
 const int margin_left_default = 6;
 const int margin_right_default = 6;
-const int margin_bottom_default = 12;    // howdy  apparently this specifies nim values, which take precedence of er any gtk themes settinss
+const int margin_bottom_default = 6;    // howdy  apparently this specifies nim values, which take precedence of er any gtk themes settinss
 const int margin_pad_default = 6;
 
 /* Default values of interface settings */
-const gboolean always_show_tabs_default = TRUE;
+const gboolean always_show_tabs_default = FALSE;
 const gboolean hide_close_tab_buttons_default = FALSE;
 const gboolean hide_side_pane_buttons_default = FALSE;
 //const gboolean hide_folder_content_border_default = FALSE;
@@ -341,12 +341,12 @@ static void parse_window_state( char* line ) {
     if ( 0 == strcmp( name, "width" ) )
     {
         v = atoi( value );
-        app_settings.width = ( v > 0 ? v : 780 );
+        app_settings.width = ( v > 0 ? v : 640 );
     }
     if ( 0 == strcmp( name, "height" ) )
     {
         v = atoi( value );
-        app_settings.height = ( v > 0 ? v : 580 );
+        app_settings.height = ( v > 0 ? v : 301 );
     }
     if ( 0 == strcmp( name, "maximized" ) )
     {
@@ -604,6 +604,8 @@ void load_settings( char* config_dir ) {
     app_settings.desktop_sort_by = desktop_sort_by_default;
     app_settings.desktop_sort_type = desktop_sort_type_default;
     app_settings.show_wm_menu = show_wm_menu_default;
+    app_settings.single_click = single_click_default;
+    app_settings.no_single_hover = no_single_hover_default;
     app_settings.desk_single_click = desk_single_click_default;
     app_settings.desk_no_single_hover = desk_no_single_hover_default;
     app_settings.desk_open_mime = desk_open_mime_default;
@@ -641,8 +643,8 @@ void load_settings( char* config_dir ) {
 
     /* Window State */
     //app_settings.splitter_pos = 160;
-    app_settings.width = 780;
-    app_settings.height = 580;
+    app_settings.width = 640;
+    app_settings.height = 301;
 
     //  extra settings
     xset_defaults();
@@ -8083,7 +8085,6 @@ void xset_defaults() {
         set = xset_set( "dev_show_file", "lbl", _("Mounted _Other") );
         set->menu_style = XSET_MENU_CHECK;
         set->line = g_strdup( "#devices-settings-files" );
-        set->b = XSET_B_TRUE;
 
         set = xset_set( "dev_show_hide_volumes", "lbl", _("_Volumes...") );
         xset_set_set( set, "title", _("Show/Hide Volumes") );
@@ -8109,12 +8110,12 @@ void xset_defaults() {
     set->line = g_strdup( "#devices-settings-optical" );
 
         set = xset_set( "dev_automount_optical", "lbl", _("Mount _Optical") );
-        set->b = geteuid() == 0 ? XSET_B_FALSE : XSET_B_TRUE;
+        set->b = XSET_B_FALSE;
         set->menu_style = XSET_MENU_CHECK;
         set->line = g_strdup( "#devices-settings-optical" );
 
         set = xset_set( "dev_automount_removable", "lbl", _("_Mount Removable") );
-        set->b = geteuid() == 0 ? XSET_B_FALSE : XSET_B_TRUE;
+        set->b = XSET_B_FALSE;
         set->menu_style = XSET_MENU_CHECK;
         set->line = g_strdup( "#devices-settings-remove" );
 
@@ -8505,7 +8506,7 @@ void xset_defaults() {
 
     set = xset_set( "main_save_tabs", "lbl", _("Save Ta_bs") );
     set->menu_style = XSET_MENU_CHECK;
-    set->b = XSET_B_TRUE;
+    set->b = XSET_B_FALSE;
 
     set = xset_set( "main_exit", "lbl", _("E_xit") );
     xset_set_set( set, "icn", "gtk-quit" );
@@ -8557,7 +8558,6 @@ void xset_defaults() {
 
     set = xset_set( "main_pbar", "lbl", _("Panel _Bar") );
     set->menu_style = XSET_MENU_CHECK;
-    set->b = XSET_B_TRUE;
     set->line = g_strdup( "#gui-pan" );
 
     set = xset_set( "main_focus_panel", "lbl", _("F_ocus") );
@@ -9694,12 +9694,12 @@ void xset_defaults() {
 
         set = xset_set_panel( p, "list_detailed", "lbl", _("_Detailed") );
         set->menu_style = XSET_MENU_RADIO;
-        set->b = XSET_B_TRUE;
         if ( p != 1 )
             xset_set_set( set, "shared_key", "panel1_list_detailed" );
 
         set = xset_set_panel( p, "list_compact", "lbl", _("_Compact") );
         set->menu_style = XSET_MENU_RADIO;
+        set->b = XSET_B_TRUE;
         if ( p != 1 )
             xset_set_set( set, "shared_key", "panel1_list_compact" );
 

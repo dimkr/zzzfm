@@ -334,6 +334,7 @@ static const char* su_commands[] = // order and contents must match prefdlg.ui
 
 static const char* gsu_commands[] = // order and contents must match prefdlg.ui
 {
+    "/usr/local/bin/pkexec",
     "/usr/bin/gksu",
     "/bin/su",
     "/usr/bin/sudo"
