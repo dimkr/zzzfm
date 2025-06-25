@@ -75,7 +75,7 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
     int big = 0;
 
     gdpy = gdk_display_get_default();
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 0, 0) && !HAVE_LAYER_SHELL
     if( ! GDK_IS_X11_DISPLAY( gdpy ) )
         return;
 #endif

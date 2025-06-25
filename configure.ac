@@ -69,6 +69,14 @@ if test x"$with_gtk3" = x"yes"; then
     # user enabled - gtk3 required
     PKG_CHECK_MODULES(GTK, [$gtk3_modules])
     AC_DEFINE([HAVE_GTK3], [1], [Use GTK3])
+
+    AC_ARG_WITH([layer_shell], AS_HELP_STRING([--with-layer-shell], [Build with layer-shell support]), with_layer_shell=$withval, with_layer_shell="no")
+    if test x"$with_layer_shell" = x"yes"; then
+        PKG_CHECK_MODULES(GTK_LAYER_SHELL, ["gtk-layer-shell-0"])
+        AC_DEFINE([HAVE_LAYER_SHELL], [1], [Enable layer-shell support])
+        AC_SUBST([GTK_LAYER_SHELL_CFLAGS])
+        AC_SUBST([GTK_LAYER_SHELL_LIBS])
+    fi
 elif test x"$with_gtk2" = x"yes"; then
     # user enabled - gtk2 required
     PKG_CHECK_MODULES(GTK, [$gtk2_modules])
@@ -301,6 +309,12 @@ echo 'GTK+ Version................................. : GTK 3'
 else
 echo 'GTK+ Version................................. : GTK 2'
 fi
+if test x"$with_layer_shell" = x"yes"; then
+echo 'layer-shell support.......................... : enabled'
+else
+echo 'layer-shell support.......................... : disabled'
+fi
+
 echo Desktop manager integration.................. : $desktop_integration
 echo Video thumbnail support...................... : $video_thumbnails
 echo

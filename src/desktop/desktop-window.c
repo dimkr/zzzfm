@@ -48,6 +48,10 @@
 #include <cairo-xlib.h>
 #endif
 
+#if HAVE_LAYER_SHELL
+#include <gtk-layer-shell.h>
+#endif
+
 #include <string.h>
 
 /* for stat */
@@ -297,6 +301,13 @@ static void desktop_window_class_init(DesktopWindowClass *klass) {
 
     parent_class = (GtkWindowClass*)g_type_class_peek(GTK_TYPE_WINDOW);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+    if ( !GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
+    {
+        return;
+    }
+#endif
+
     /* ATOM_XROOTMAP_ID = XInternAtom( GDK_DISPLAY(),"_XROOTMAP_ID", False ); */
     ATOM_NET_WORKAREA = XInternAtom( gdk_x11_get_default_xdisplay(),"_NET_WORKAREA", False );
 
@@ -402,7 +413,10 @@ static void desktop_window_init(DesktopWindow *self) {
 
     root = gdk_screen_get_root_window( gtk_widget_get_screen( (GtkWidget*)self ) );
     gdk_window_set_events( root, gdk_window_get_events( root )  | GDK_PROPERTY_CHANGE_MASK );
-    gdk_window_add_filter( root, on_rootwin_event, self );
+    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default()) )
+    {
+        gdk_window_add_filter( root, on_rootwin_event, self );
+    }
 
     //g_signal_connect( G_OBJECT( self ), "task-notify",  G_CALLBACK( ptk_file_task_notify_handler ), NULL );
 }
@@ -433,7 +447,16 @@ void desktop_item_free( DesktopItem* item ) {
 
 void desktop_window_finalize(GObject *object) {
     DesktopWindow *self = (DesktopWindow*)object;
-    Display *xdisplay = GDK_DISPLAY_XDISPLAY( gtk_widget_get_display( (GtkWidget*)object) );
+    GdkDisplay *display = gtk_widget_get_display( (GtkWidget*)object);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+    if( ! GDK_IS_X11_DISPLAY( display ) )
+    {
+        goto nox;
+    }
+#endif
+
+    Display *xdisplay = GDK_DISPLAY_XDISPLAY( display );
 
     g_return_if_fail(object != NULL);
     g_return_if_fail(IS_DESKTOP_WINDOW(object));
@@ -441,6 +464,7 @@ void desktop_window_finalize(GObject *object) {
     gdk_window_remove_filter( gdk_screen_get_root_window( gtk_widget_get_screen( (GtkWidget*)object) ), on_rootwin_event, self );
 
 #if GTK_CHECK_VERSION (3, 0, 0)
+nox:
     if( self->background )
         XFreePixmap ( xdisplay, self->background );
 
@@ -592,6 +616,7 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
 #else
     GdkPixmap* pixmap = NULL;
 #endif
+    GdkDisplay *display;
     Display* xdisplay;
     Pixmap xpixmap = 0;
     Visual *xvisual;
@@ -601,7 +626,14 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
     unsigned int udummy, depth;
 
     /* set root map here */
-    xdisplay = GDK_DISPLAY_XDISPLAY( gtk_widget_get_display( (GtkWidget*)win) );
+    display = gtk_widget_get_display( (GtkWidget*)win);
+#if GTK_CHECK_VERSION (3, 0, 0)
+    if( !GDK_IS_X11_DISPLAY (display) )
+    {
+        return;
+    }
+#endif
+    xdisplay = GDK_DISPLAY_XDISPLAY( display );
     XGetGeometry (xdisplay, GDK_WINDOW_XID( gtk_widget_get_window( (GtkWidget*)win ) ),
                   &xroot, &dummy, &dummy, &dummy, &dummy, &udummy, &depth);
     if( win->transparent )
@@ -2447,6 +2479,23 @@ void on_realize( GtkWidget* w ) {
 
     GTK_WIDGET_CLASS(parent_class)->realize( w );
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+    if ( !GDK_IS_X11_SCREEN( gdk_screen_get_default () ))
+    {
+        gtk_window_set_decorated( GTK_WINDOW(w), FALSE );
+        gtk_window_set_keep_below( GTK_WINDOW(w), TRUE );
+        gtk_window_set_skip_pager_hint( GTK_WINDOW(w), TRUE );
+        gtk_window_set_skip_taskbar_hint( GTK_WINDOW(w), TRUE );
+        gtk_window_set_resizable( (GtkWindow*)w, FALSE );
+
+#if HAVE_LAYER_SHELL
+        gtk_layer_init_for_window ( GTK_WINDOW(w) );
+        gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BOTTOM );
+#endif
+        return;
+    }
+#endif
+
     const char *wmname = gdk_x11_screen_get_window_manager_name( gtk_widget_get_screen( w ) );
     if ( self->transparent && !g_strcmp0( wmname, "Compiz" ) )
     {
@@ -2505,7 +2554,14 @@ gboolean on_focus_out( GtkWidget* w, GdkEventFocus* evt ) {
 gboolean on_scroll( GtkWidget *w, GdkEventScroll *evt ) {
     if ( ((DesktopWindow*)w)->transparent )
     {
-        const char* wmname = gdk_x11_screen_get_window_manager_name( gtk_widget_get_screen( w ) );
+        GdkScreen *screen = gtk_widget_get_screen( w );
+#if GTK_CHECK_VERSION (3, 0, 0)
+        if( !GDK_IS_X11_SCREEN( screen ) )
+        {
+            return FALSE;
+        }
+#endif
+        const char* wmname = gdk_x11_screen_get_window_manager_name( screen );
         if ( !g_strcmp0( wmname, "Compiz" ) )
         {
             /* For Compiz transparent desktop, scroll events get passed back to
@@ -4044,6 +4100,11 @@ static GdkFilterReturn on_rootwin_event ( GdkXEvent *xevent, GdkEvent *event, gp
 
 /* This function is taken from xfdesktop */
 void forward_event_to_rootwin( GdkScreen *gscreen, GdkEvent *event ) {
+    if( !GDK_IS_X11_SCREEN( gscreen ) )
+    {
+        return;
+    }
+
     XButtonEvent xev, xev2;
     Display *dpy = GDK_DISPLAY_XDISPLAY( gdk_screen_get_display( gscreen ) );
 
