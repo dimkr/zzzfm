@@ -2516,7 +2516,7 @@ void on_realize( GtkWidget* w ) {
 
 #if HAVE_LAYER_SHELL
         gtk_layer_init_for_window ( GTK_WINDOW(w) );
-        gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BOTTOM );
+        gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BACKGROUND );
 #endif
         return;
     }
