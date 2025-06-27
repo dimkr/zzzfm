@@ -666,8 +666,8 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
                 surface = cairo_xlib_surface_create (xdisplay, pixmap, xvisual, src_w, src_h);
                 cr = cairo_create ( surface );
             } else {
-                cairo_region_t *region = gdk_window_get_visible_region( GDK_WINDOW( win ) );
-                context = gdk_window_begin_draw_frame( GDK_WINDOW( win ), region );
+                cairo_region_t *region = gdk_window_get_visible_region( gtk_widget_get_window( (GtkWidget*)win ) );
+                context = gdk_window_begin_draw_frame( gtk_widget_get_window( (GtkWidget*)win ), region );
                 cairo_region_destroy( region );
                 cr = gdk_drawing_context_get_cairo_context( context );
             }
@@ -689,8 +689,8 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
                 surface = cairo_xlib_surface_create (xdisplay, pixmap, xvisual, dest_w, dest_h);
                 cr = cairo_create ( surface );
             } else {
-                cairo_region_t *region = gdk_window_get_visible_region( GDK_WINDOW( win ) );
-                context = gdk_window_begin_draw_frame( GDK_WINDOW( win ), region );
+                cairo_region_t *region = gdk_window_get_visible_region( gtk_widget_get_window( (GtkWidget*)win ) );
+                context = gdk_window_begin_draw_frame( gtk_widget_get_window( (GtkWidget*)win ), region );
                 cairo_region_destroy( region );
                 cr = gdk_drawing_context_get_cairo_context( context );
             }
@@ -771,13 +771,19 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
 #endif
             }
         }
-        cairo_destroy ( cr );
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+        if( xdisplay )
+#endif
+            cairo_destroy ( cr );
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+       if( context )
+            gdk_window_end_draw_frame ( gtk_widget_get_window( (GtkWidget*)win ), context );
+#endif
     }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    if( context)
-        gdk_window_end_draw_frame ( GDK_WINDOW( win ), context );
-
     if( win->background )
         XFreePixmap ( xdisplay, win->background );
 
