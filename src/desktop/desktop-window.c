@@ -543,7 +543,8 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
         DesktopItem* item = (DesktopItem*)l->data;
         if( gdk_rectangle_intersect( &allocation, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
-        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
+        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->icon_rect.x, item->icon_rect.y, item->icon_rect.width, item->icon_rect.height } );
+        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->text_rect.x, item->text_rect.y, item->text_rect.width, item->text_rect.height } );
     }
 
     gtk_widget_input_shape_combine_region( w, u );
