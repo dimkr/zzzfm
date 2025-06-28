@@ -1016,16 +1016,8 @@ gboolean fm_edit_preference( GtkWindow* parent, int page )
         gtk_combo_box_set_active( (GtkComboBox*)data->wallpaper_mode, app_settings.wallpaper_mode );
 
         // checkboxes
-#if GTK_CHECK_VERSION (3, 0, 0)
-        if ( GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
-        {
-            gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( data->show_wm_menu ), app_settings.show_wm_menu );
-        } else {
-            gtk_widget_set_sensitive( data->show_wm_menu, FALSE );
-        }
-#else
         gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( data->show_wm_menu ), app_settings.show_wm_menu );
-#endif
+        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( data->show_wm_menu ), app_settings.show_wm_menu );
         gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( data->desk_single_click ), app_settings.desk_single_click );
         gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( data->desk_single_hover ), !app_settings.desk_no_single_hover );
         gtk_widget_set_sensitive( data->desk_single_hover, app_settings.desk_single_click );
