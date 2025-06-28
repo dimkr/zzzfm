@@ -2512,6 +2512,11 @@ void on_realize( GtkWidget* w ) {
 #if HAVE_LAYER_SHELL
         gtk_layer_init_for_window ( GTK_WINDOW(w) );
         gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BACKGROUND );
+        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_LEFT, TRUE );
+        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE );
+        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_TOP, TRUE );
+        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE );
+        gtk_layer_set_exclusive_zone( GTK_WINDOW(w), -1 );
 #endif
         return;
     }
