@@ -546,7 +546,7 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
         cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
     }
 
-    gtk_widget_input_shape_combine_region(GTK_WIDGET (self), u);
+    gtk_widget_input_shape_combine_region( GTK_WIDGET (self), u);
     cairo_region_destroy (u);
 #else
     for( l = self->items; l; l = l->next )
