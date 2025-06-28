@@ -547,7 +547,7 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
         cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->text_rect.x, item->text_rect.y, item->text_rect.width, item->text_rect.height } );
     }
 
-    if ( app_settings.show_wm_menu && !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
+    if( app_settings.show_wm_menu && !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
         gtk_widget_input_shape_combine_region( w, u );
 
     cairo_region_destroy( u );
