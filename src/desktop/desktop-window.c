@@ -2513,7 +2513,9 @@ void on_realize( GtkWidget* w ) {
     GTK_WIDGET_CLASS(parent_class)->realize( w );
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    if ( !GDK_IS_X11_SCREEN( gdk_screen_get_default () ))
+    GdkDisplay *gdpy = gdk_display_get_default ();
+
+    if ( !GDK_IS_X11_DISPLAY( gdpy ))
     {
         gtk_window_set_decorated( GTK_WINDOW(w), FALSE );
         gtk_window_set_keep_below( GTK_WINDOW(w), TRUE );
@@ -2525,6 +2527,7 @@ void on_realize( GtkWidget* w ) {
         gtk_layer_init_for_window( GTK_WINDOW(w) );
         gtk_layer_set_keyboard_mode( GTK_WINDOW(w), GTK_LAYER_SHELL_KEYBOARD_MODE_NONE );
         gtk_layer_set_namespace( GTK_WINDOW(w), "desktop" );
+        gtk_layer_set_monitor ( GTK_WINDOW(w), gdk_display_get_monitor( gdpy, 0 ) );
         gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BACKGROUND );
         gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_LEFT, TRUE );
         gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE );
