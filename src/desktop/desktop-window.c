@@ -626,8 +626,6 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
 
     /* set root map here */
 #if GTK_CHECK_VERSION (3, 0, 0)
-    GdkDrawingContext *context = NULL;
-
     GdkDisplay *display = gtk_widget_get_display( (GtkWidget*)win);;
     if( GDK_IS_X11_DISPLAY (display) )
     {
@@ -664,13 +662,10 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
             {
                 pixmap = XCreatePixmap(xdisplay, xroot, src_w, src_h, depth);
                 surface = cairo_xlib_surface_create (xdisplay, pixmap, xvisual, src_w, src_h);
-                cr = cairo_create ( surface );
             } else {
-                cairo_region_t *region = gdk_window_get_visible_region( gtk_widget_get_window( (GtkWidget*)win ) );
-                context = gdk_window_begin_draw_frame( gtk_widget_get_window( (GtkWidget*)win ), region );
-                cairo_region_destroy( region );
-                cr = gdk_drawing_context_get_cairo_context( context );
+                surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, src_w, src_h);
             }
+            cr = cairo_create (surface);
 #else
             pixmap = gdk_pixmap_new( gtk_widget_get_window( ((GtkWidget*)win) ), src_w, src_h, -1 );
             cr = gdk_cairo_create ( pixmap );
@@ -687,13 +682,10 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
             {
                 pixmap = XCreatePixmap(xdisplay, xroot, dest_w, dest_h, depth);
                 surface = cairo_xlib_surface_create (xdisplay, pixmap, xvisual, dest_w, dest_h);
-                cr = cairo_create ( surface );
             } else {
-                cairo_region_t *region = gdk_window_get_visible_region( gtk_widget_get_window( (GtkWidget*)win ) );
-                context = gdk_window_begin_draw_frame( gtk_widget_get_window( (GtkWidget*)win ), region );
-                cairo_region_destroy( region );
-                cr = gdk_drawing_context_get_cairo_context( context );
+                surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, dest_w, dest_h);
             }
+            cr = cairo_create (surface);
 #else
             pixmap = gdk_pixmap_new( gtk_widget_get_window( ((GtkWidget*)win) ), dest_w, dest_h, -1 );
             cr = gdk_cairo_create ( pixmap );
@@ -761,7 +753,7 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
                 cairo_move_to ( cr, src_x, src_y );
                 cairo_paint ( cr );
                 g_object_unref( scaled );
-            } else {
+            } else if( pixmap ){
 #if GTK_CHECK_VERSION (3, 0, 0)
                 XFreePixmap ( xdisplay, pixmap );
                 pixmap = 0;
@@ -776,11 +768,6 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
         if( xdisplay )
 #endif
             cairo_destroy ( cr );
-
-#if GTK_CHECK_VERSION (3, 0, 0)
-       if( context )
-            gdk_window_end_draw_frame ( gtk_widget_get_window( (GtkWidget*)win ), context );
-#endif
     }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -798,14 +785,16 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
     win->background = pixmap;
 
 
-    if( pixmap )
-    {
 #if GTK_CHECK_VERSION (3, 0, 0)
+    if( surface )
+    {
         pattern = cairo_pattern_create_for_surface( surface );
         cairo_pattern_set_extend( pattern, CAIRO_EXTEND_REPEAT );
         gdk_window_set_background_pattern( gtk_widget_get_window( ((GtkWidget*)win) ), pattern );
         cairo_pattern_destroy( pattern );
 #else
+    if( pixmap )
+    {
         gdk_window_set_back_pixmap( gtk_widget_get_window( ((GtkWidget*)win) ), pixmap, FALSE );
 #endif
     }

@@ -25,6 +25,8 @@
 #include "glib-utils.h"
 #include <glib/gi18n.h>
 
+#include <gdk/gdkx.h>
+
 #include "pref-dialog.h"
 #include "settings.h"
 #include "ptk-utils.h"
@@ -406,7 +408,11 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
             g_free( app_settings.wallpaper );
             app_settings.wallpaper = wallpaper;
             fm_desktop_update_wallpaper( !was_transparent != !is_transparent );
+#if GTK_CHECK_VERSION (3, 0, 0)
+            if ( is_transparent && !was_transparent &&  !xset_get_b( "desk_pref" ) && GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
+#else
             if ( is_transparent && !was_transparent &&  !xset_get_b( "desk_pref" ) )
+#endif
             {
                 xset_msg_dialog( GTK_WIDGET( dlg ), 0, _("Transparency Requirements"),
                         NULL, 0, _("General Note: For desktop transparency to "
