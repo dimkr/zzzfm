@@ -2526,8 +2526,24 @@ void on_realize( GtkWidget* w ) {
 #if HAVE_LAYER_SHELL
         gtk_layer_init_for_window( GTK_WINDOW(w) );
         gtk_layer_set_keyboard_mode( GTK_WINDOW(w), GTK_LAYER_SHELL_KEYBOARD_MODE_NONE );
+
         gtk_layer_set_namespace( GTK_WINDOW(w), "desktop" );
-        gtk_layer_set_monitor ( GTK_WINDOW(w), gdk_display_get_monitor( gdpy, 0 ) );
+        GdkMonitor *left = NULL;
+        int min_x = -1;
+        for (guint i = 0; i < gdk_display_get_n_monitors ( gdpy ); ++i) {
+            GdkMonitor *monitor = gdk_display_get_monitor( gdpy, i );
+            if ( !monitor )
+                continue;
+            GdkRectangle geom;
+            gdk_monitor_get_geometry ( monitor, &geom );
+            if ( min_x == -1 || geom.x < min_x ) {
+                min_x = geom.x;
+                left = monitor;
+            }
+        }
+        if ( left )
+            gtk_layer_set_monitor ( GTK_WINDOW(w), left );
+
         gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BACKGROUND );
         gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_LEFT, TRUE );
         gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE );
