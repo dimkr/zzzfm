@@ -535,17 +535,28 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
     if( self->rubber_bending )
         paint_rubber_banding_rect( self );
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+    cairo_region_t *u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){0, 0, 0, 0} );
+
     for( l = self->items; l; l = l->next )
     {
         DesktopItem* item = (DesktopItem*)l->data;
-#if GTK_CHECK_VERSION (3, 0, 0)
         if( gdk_rectangle_intersect( &allocation, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
+        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
+    }
+
+    gtk_widget_input_shape_combine_region(GTK_WIDGET (self), u);
+    cairo_region_destroy (u);
 #else
+    for( l = self->items; l; l = l->next )
+    {
+        DesktopItem* item = (DesktopItem*)l->data;
         if( gdk_rectangle_intersect( &evt->area, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
-#endif
     }
+#endif
+
     return TRUE;
 }
 
@@ -2510,7 +2521,9 @@ void on_realize( GtkWidget* w ) {
         gtk_window_set_resizable( (GtkWindow*)w, FALSE );
 
 #if HAVE_LAYER_SHELL
-        gtk_layer_init_for_window ( GTK_WINDOW(w) );
+        gtk_layer_init_for_window( GTK_WINDOW(w) );
+        gtk_layer_set_keyboard_mode( GTK_WINDOW(w), GTK_LAYER_SHELL_KEYBOARD_MODE_NONE );
+        gtk_layer_set_namespace( GTK_WINDOW(w), "wallpaper" );
         gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BACKGROUND );
         gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_LEFT, TRUE );
         gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE );
