@@ -413,7 +413,7 @@ static void desktop_window_init(DesktopWindow *self) {
 
     root = gdk_screen_get_root_window( gtk_widget_get_screen( (GtkWidget*)self ) );
     gdk_window_set_events( root, gdk_window_get_events( root )  | GDK_PROPERTY_CHANGE_MASK );
-    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default()) )
+    if( GDK_IS_X11_DISPLAY( gdk_display_get_default()) )
     {
         gdk_window_add_filter( root, on_rootwin_event, self );
     }
