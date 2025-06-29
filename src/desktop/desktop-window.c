@@ -302,14 +302,14 @@ static void desktop_window_class_init(DesktopWindowClass *klass) {
     parent_class = (GtkWindowClass*)g_type_class_peek(GTK_TYPE_WINDOW);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    if ( !GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
-    {
-        return;
-    }
+    if ( GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
+#else
+    if ( TRUE )
 #endif
-
-    /* ATOM_XROOTMAP_ID = XInternAtom( GDK_DISPLAY(),"_XROOTMAP_ID", False ); */
-    ATOM_NET_WORKAREA = XInternAtom( gdk_x11_get_default_xdisplay(),"_NET_WORKAREA", False );
+    {
+        /* ATOM_XROOTMAP_ID = XInternAtom( GDK_DISPLAY(),"_XROOTMAP_ID", False ); */
+        ATOM_NET_WORKAREA = XInternAtom( gdk_x11_get_default_xdisplay(),"_NET_WORKAREA", False );
+    }
 
     text_uri_list_atom = gdk_atom_intern_static_string( drag_targets[DRAG_TARGET_URI_LIST].target );
     desktop_icon_atom = gdk_atom_intern_static_string( drag_targets[DRAG_TARGET_DESKTOP_ICON].target );
