@@ -543,8 +543,7 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
         DesktopItem* item = (DesktopItem*)l->data;
         if( gdk_rectangle_intersect( &allocation, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
-        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->icon_rect.x, item->icon_rect.y, item->icon_rect.width, item->icon_rect.height } );
-        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->text_rect.x, item->text_rect.y, item->text_rect.width, item->text_rect.height } );
+        cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
     }
 
     if( app_settings.show_wm_menu && !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
@@ -1048,7 +1047,6 @@ static void colorize_pixbuf( GdkPixbuf* pix, GdkColor* clr, guint alpha ) {
 void paint_rubber_banding_rect( DesktopWindow* self ) {
     int x1, x2, y1, y2, w, h, pattern_w, pattern_h;
     GdkRectangle rect;
-    GdkColor *clr;
     guchar alpha;
     GdkPixbuf* pix;
     cairo_t *cr;
@@ -1062,7 +1060,6 @@ void paint_rubber_banding_rect( DesktopWindow* self ) {
 */
 
     cr = gdk_cairo_create ( gtk_widget_get_window( ((GtkWidget*)self) ) );
-    clr = gdk_color_copy (&gtk_widget_get_style( GTK_WIDGET (self) )->base[GTK_STATE_SELECTED]);
     alpha = 64;  /* FIXME: should be themable in the future */
 
     pix = NULL;
@@ -1086,7 +1083,7 @@ void paint_rubber_banding_rect( DesktopWindow* self ) {
 
     if( pix )
     {
-        colorize_pixbuf( pix, clr, alpha );
+        colorize_pixbuf( pix, &self->fg, alpha );
         if( self->bg_type == DW_BG_TILE ) /* this is currently unreachable */
         {
             /*GdkPixmap* pattern;*/
@@ -1112,20 +1109,19 @@ void paint_rubber_banding_rect( DesktopWindow* self ) {
     {
         GdkColor clr2 = self->bg;
         clr2.pixel = 0;
-        clr2.red = clr2.red * clr->red / 65535;
-        clr2.green = clr2.green * clr->green / 65535;
-        clr2.blue = clr2.blue * clr->blue / 65535;
+        clr2.red = clr2.red * self->fg.red / 65535;
+        clr2.green = clr2.green * self->fg.green / 65535;
+        clr2.blue = clr2.blue * self->fg.blue / 65535;
         gdk_cairo_set_source_color( cr, &clr2 );
         cairo_rectangle( cr, rect.x, rect.y, rect.width - 1, rect.height - 1 );
         cairo_fill( cr );
     }
 
     /* draw the border */
-    gdk_cairo_set_source_color( cr, clr );
+    gdk_cairo_set_source_color( cr, &self->fg );
     cairo_rectangle( cr, rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2 );
     cairo_stroke( cr );
 
-    gdk_color_free (clr);
     cairo_destroy( cr );
 }
 
@@ -3451,9 +3447,9 @@ void paint_item( DesktopWindow* self, DesktopItem* item, GdkRectangle* expose_ar
 
         if( gdk_rectangle_intersect( expose_area, &item->text_rect, &intersect ) )
         {
-            gdk_cairo_set_source_color( cr, &gtk_widget_get_style(widget)->bg[GTK_STATE_SELECTED] );
+            gdk_cairo_set_source_color( cr, &self->fg );
             cairo_rectangle( cr, intersect.x, intersect.y, intersect.width, intersect.height );
-            cairo_fill( cr );
+            cairo_stroke( cr );
         }
     } else {
         /* Do the drop shadow stuff...  This is a little bit dirty... */
