@@ -543,11 +543,11 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
         DesktopItem* item = (DesktopItem*)l->data;
         if( gdk_rectangle_intersect( &allocation, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
-        if( item->fi )
+        if( !app_settings.show_wm_menu || ( app_settings.show_wm_menu && item->fi ) )
             cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
     }
 
-    if( app_settings.show_wm_menu && !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
+    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
         gtk_widget_input_shape_combine_region( w, u );
 
     cairo_region_destroy( u );
