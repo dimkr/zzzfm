@@ -464,10 +464,10 @@ void desktop_window_finalize(GObject *object) {
     gdk_window_remove_filter( gdk_screen_get_root_window( gtk_widget_get_screen( (GtkWidget*)object) ), on_rootwin_event, self );
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-nox:
     if( self->background )
         XFreePixmap ( xdisplay, self->background );
 
+nox:
     if( self->surface )
         cairo_surface_destroy ( self->surface );
 #else
@@ -652,10 +652,10 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
     XGetGeometry (xdisplay, GDK_WINDOW_XID( gtk_widget_get_window( (GtkWidget*)win ) ),
                   &xroot, &dummy, &dummy, &dummy, &dummy, &udummy, &depth);
 #endif
-    if( win->transparent )
+    if( xdisplay && win->transparent )
     {
         xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_rgba_visual ( gtk_widget_get_screen ( (GtkWidget*)win) ) );
-    } else {
+    } else if( xdisplay ){
         xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual ( gtk_widget_get_screen ( (GtkWidget*)win) ) );
     }
 
@@ -2890,19 +2890,25 @@ start_layout:
             // right side reached - remove empties and redo layout (custom sort)
             gboolean list_changed = FALSE;
             // scan down below box_count and remove all empties
-            for ( ll = g_list_nth( self->items, self->box_count ); ll;
-                                                            ll = ll->next )
+            gboolean empty_removed = TRUE;
+            while ( empty_removed &&  g_list_length( self->items ) > self->box_count )
             {
-                if ( !((DesktopItem*)ll->data)->fi )
+                empty_removed = FALSE;
+                for ( ll = g_list_nth( self->items, self->box_count ); ll;  ll = ll->next )
                 {
-                    desktop_item_free( (DesktopItem*)ll->data );
-                    self->items = g_list_remove( self->items, ll->data );
-                    if ( !list_changed )
-                        list_changed = TRUE;
+                    if ( !((DesktopItem*)ll->data)->fi )
+                    {
+                        desktop_item_free( (DesktopItem*)ll->data );
+                        self->items = g_list_remove( self->items, ll->data );
+                        if ( !list_changed )
+                            list_changed = TRUE;
+                        empty_removed = TRUE;
+                        break;
+                    }
                 }
             }
             // scan up above box_count and remove empties until all items fit
-            gboolean empty_removed = TRUE;
+            empty_removed = TRUE;
             while ( empty_removed &&  g_list_length( self->items ) > self->box_count )
             {
                 empty_removed = FALSE;
