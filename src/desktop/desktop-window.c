@@ -416,6 +416,18 @@ static void desktop_window_init(DesktopWindow *self) {
     if( GDK_IS_X11_DISPLAY( gdk_display_get_default()) )
     {
         gdk_window_add_filter( root, on_rootwin_event, self );
+#if HAVE_LAYER_SHELL
+    } else {
+        gtk_layer_init_for_window( GTK_WINDOW( self ) );
+        gtk_layer_set_keyboard_mode( GTK_WINDOW( self ), GTK_LAYER_SHELL_KEYBOARD_MODE_NONE );
+        gtk_layer_set_namespace( GTK_WINDOW( self ), "desktop" );
+        gtk_layer_set_layer( GTK_WINDOW( self ), GTK_LAYER_SHELL_LAYER_BACKGROUND );
+        gtk_layer_set_anchor( GTK_WINDOW( self ), GTK_LAYER_SHELL_EDGE_LEFT, TRUE );
+        gtk_layer_set_anchor( GTK_WINDOW( self ), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE );
+        gtk_layer_set_anchor( GTK_WINDOW( self ), GTK_LAYER_SHELL_EDGE_TOP, TRUE );
+        gtk_layer_set_anchor( GTK_WINDOW( self ), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE );
+        gtk_layer_set_exclusive_zone( GTK_WINDOW( self ), -1 );
+#endif
     }
 
     //g_signal_connect( G_OBJECT( self ), "task-notify",  G_CALLBACK( ptk_file_task_notify_handler ), NULL );
@@ -492,6 +504,32 @@ nox:
         (* G_OBJECT_CLASS(parent_class)->finalize)(object);
 }
 
+
+static void set_monitor( GtkWidget* w ) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+    GdkDisplay *gdpy = gdk_display_get_default();
+
+    if ( GDK_IS_X11_DISPLAY( gdpy ))
+        return;
+
+    GdkMonitor *left = NULL;
+    int min_x = -1;
+    for (guint i = 0; i < gdk_display_get_n_monitors( gdpy ); ++i) {
+        GdkMonitor *monitor = gdk_display_get_monitor( gdpy, i );
+        if ( !monitor )
+            continue;
+        GdkRectangle geom;
+        gdk_monitor_get_geometry( monitor, &geom );
+        if ( min_x == -1 || geom.x < min_x ) {
+            min_x = geom.x;
+            left = monitor;
+        }
+    }
+    if ( left )
+        gtk_layer_set_monitor( GTK_WINDOW( w ), left );
+#endif
+}
+
 /*--------------- Signal handlers --------------*/
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -503,6 +541,9 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
     DesktopWindow* self = (DesktopWindow*)w;
     GList* l;
     GdkRectangle intersect;
+
+    set_monitor( w );
+
 #if GTK_CHECK_VERSION (3, 0, 0)
     GtkAllocation allocation;
     gtk_widget_get_allocation (w, &allocation);
@@ -655,7 +696,7 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
     if( xdisplay && win->transparent )
     {
         xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_rgba_visual ( gtk_widget_get_screen ( (GtkWidget*)win) ) );
-    } else if( xdisplay ){
+    } else if( xdisplay ) {
         xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual ( gtk_widget_get_screen ( (GtkWidget*)win) ) );
     }
 
@@ -2512,44 +2553,8 @@ void on_realize( GtkWidget* w ) {
     GTK_WIDGET_CLASS(parent_class)->realize( w );
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    GdkDisplay *gdpy = gdk_display_get_default ();
-
-    if ( !GDK_IS_X11_DISPLAY( gdpy ))
+    if ( !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
     {
-        gtk_window_set_decorated( GTK_WINDOW(w), FALSE );
-        gtk_window_set_keep_below( GTK_WINDOW(w), TRUE );
-        gtk_window_set_skip_pager_hint( GTK_WINDOW(w), TRUE );
-        gtk_window_set_skip_taskbar_hint( GTK_WINDOW(w), TRUE );
-        gtk_window_set_resizable( (GtkWindow*)w, FALSE );
-
-#if HAVE_LAYER_SHELL
-        gtk_layer_init_for_window( GTK_WINDOW(w) );
-        gtk_layer_set_keyboard_mode( GTK_WINDOW(w), GTK_LAYER_SHELL_KEYBOARD_MODE_NONE );
-
-        gtk_layer_set_namespace( GTK_WINDOW(w), "desktop" );
-        GdkMonitor *left = NULL;
-        int min_x = -1;
-        for (guint i = 0; i < gdk_display_get_n_monitors ( gdpy ); ++i) {
-            GdkMonitor *monitor = gdk_display_get_monitor( gdpy, i );
-            if ( !monitor )
-                continue;
-            GdkRectangle geom;
-            gdk_monitor_get_geometry ( monitor, &geom );
-            if ( min_x == -1 || geom.x < min_x ) {
-                min_x = geom.x;
-                left = monitor;
-            }
-        }
-        if ( left )
-            gtk_layer_set_monitor ( GTK_WINDOW(w), left );
-
-        gtk_layer_set_layer( GTK_WINDOW(w), GTK_LAYER_SHELL_LAYER_BACKGROUND );
-        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_LEFT, TRUE );
-        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE );
-        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_TOP, TRUE );
-        gtk_layer_set_anchor( GTK_WINDOW(w), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE );
-        gtk_layer_set_exclusive_zone( GTK_WINDOW(w), -1 );
-#endif
         return;
     }
 #endif
