@@ -180,6 +180,9 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
 
         // temp detect screen size change
 #if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+        if( GDK_IS_X11_DISPLAY( gdpy ) )
+            continue;
+
         g_signal_connect( gtk_widget_get_screen( GTK_WIDGET( desktops[ i ] ) ),
                             "size-changed", G_CALLBACK( on_size_changed ),
                             desktops[ i ] );
