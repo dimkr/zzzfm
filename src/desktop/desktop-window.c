@@ -628,6 +628,37 @@ void desktop_window_set_text_color( DesktopWindow* win, GdkColor* clr, GdkColor*
     }
 }
 
+#ifdef HAVE_LAYER_SHELL
+static void get_display_dimensions( GdkDisplay *gdpy, int *width, int *height )
+{
+    int min_x = -1, min_y = -1, max_x = -1, max_y = -1;
+
+    for (guint i = 0; i < gdk_display_get_n_monitors( gdpy ); ++i) {
+        GdkMonitor *monitor = gdk_display_get_monitor( gdpy, i );
+        if ( !monitor )
+            continue;
+
+        GdkRectangle geom;
+        gdk_monitor_get_geometry( monitor, &geom );
+
+        if ( min_x == -1 || geom.x < min_x )
+            min_x = geom.x;
+
+        if ( min_y == -1 || geom.y < min_y )
+            min_y = geom.y;
+
+        if ( max_x == -1 || geom.x + geom.width > max_x )
+            max_x = geom.x + geom.width;
+
+        if ( max_y == -1 || geom.y + geom.height > max_y )
+            max_y = geom.y + geom.height;
+    }
+
+    *width = max_x - min_x;
+    *height = max_y - min_y;
+}
+#endif
+
 /*
  *  Set background of the desktop window.
  *  src_pix is the source pixbuf in original size (no scaling)
@@ -677,8 +708,18 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
     {
         int src_w = gdk_pixbuf_get_width(src_pix);
         int src_h = gdk_pixbuf_get_height(src_pix);
-        int dest_w = gdk_screen_get_width( gtk_widget_get_screen((GtkWidget*)win) );
-        int dest_h = gdk_screen_get_height( gtk_widget_get_screen((GtkWidget*)win) );
+        int dest_w, dest_h;
+#ifdef HAVE_LAYER_SHELL
+        if( !GDK_IS_X11_DISPLAY (display) )
+        {
+            get_display_dimensions ( display, &dest_w, &dest_h );
+        } else {
+#else
+        if ( TRUE ) {
+#endif
+            dest_w = gdk_screen_get_width( gtk_widget_get_screen((GtkWidget*)win) );
+            dest_h = gdk_screen_get_height( gtk_widget_get_screen((GtkWidget*)win) );
+        }
         GdkPixbuf* scaled = NULL;
 
         if( type == DW_BG_TILE )
