@@ -48,7 +48,7 @@
 #include <cairo-xlib.h>
 #endif
 
-#if HAVE_LAYER_SHELL
+#ifdef HAVE_LAYER_SHELL
 #include <gtk-layer-shell.h>
 #endif
 
@@ -416,7 +416,7 @@ static void desktop_window_init(DesktopWindow *self) {
     if( GDK_IS_X11_DISPLAY( gdk_display_get_default()) )
     {
         gdk_window_add_filter( root, on_rootwin_event, self );
-#if HAVE_LAYER_SHELL
+#ifdef HAVE_LAYER_SHELL
     } else {
         gtk_layer_init_for_window( GTK_WINDOW( self ) );
         gtk_layer_set_keyboard_mode( GTK_WINDOW( self ), GTK_LAYER_SHELL_KEYBOARD_MODE_NONE );
@@ -504,32 +504,6 @@ nox:
         (* G_OBJECT_CLASS(parent_class)->finalize)(object);
 }
 
-
-static void set_monitor( GtkWidget* w ) {
-#if GTK_CHECK_VERSION (3, 0, 0)
-    GdkDisplay *gdpy = gdk_display_get_default();
-
-    if ( GDK_IS_X11_DISPLAY( gdpy ))
-        return;
-
-    GdkMonitor *left = NULL;
-    int min_x = -1;
-    for (guint i = 0; i < gdk_display_get_n_monitors( gdpy ); ++i) {
-        GdkMonitor *monitor = gdk_display_get_monitor( gdpy, i );
-        if ( !monitor )
-            continue;
-        GdkRectangle geom;
-        gdk_monitor_get_geometry( monitor, &geom );
-        if ( min_x == -1 || geom.x < min_x ) {
-            min_x = geom.x;
-            left = monitor;
-        }
-    }
-    if ( left )
-        gtk_layer_set_monitor( GTK_WINDOW( w ), left );
-#endif
-}
-
 /*--------------- Signal handlers --------------*/
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -541,9 +515,6 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
     DesktopWindow* self = (DesktopWindow*)w;
     GList* l;
     GdkRectangle intersect;
-
-    set_monitor( w );
-
 #if GTK_CHECK_VERSION (3, 0, 0)
     GtkAllocation allocation;
     gtk_widget_get_allocation (w, &allocation);
