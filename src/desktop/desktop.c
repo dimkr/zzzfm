@@ -63,17 +63,9 @@ static void on_icon_theme_changed( GtkIconTheme* theme, gpointer data ) {
         desktop_window_reload_icons( (DesktopWindow*)desktops[ i ] );
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0) && HAVE_LAYER_SHELL
-void on_size_changed( GdkScreen *screen, GtkWidget* w )
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+static void set_monitor( GdkDisplay *gdpy, GtkWidget* w )
 {
-    DWBgType type;
-    GdkPixbuf* pix;
-    int i;
-    GdkDisplay *gdpy = gdk_screen_get_display( screen );
-
-    if ( GDK_IS_X11_DISPLAY( gdpy ))
-        return;
-
     GdkMonitor *left = NULL;
     int min_x = -1;
     for (guint i = 0; i < gdk_display_get_n_monitors( gdpy ); ++i) {
@@ -89,6 +81,16 @@ void on_size_changed( GdkScreen *screen, GtkWidget* w )
     }
     if ( left )
         gtk_layer_set_monitor( GTK_WINDOW( w ), left );
+}
+
+
+static void on_size_changed( GdkScreen *screen, GtkWidget* w )
+{
+    DWBgType type;
+    GdkPixbuf* pix;
+    int i;
+
+    set_monitor ( gdk_screen_get_display( screen ), w );
 
     if( app_settings.show_wallpaper && app_settings.wallpaper )
     {
@@ -133,7 +135,7 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
     int big = 0;
 
     gdpy = gdk_display_get_default();
-#if GTK_CHECK_VERSION (3, 0, 0) && !HAVE_LAYER_SHELL
+#if GTK_CHECK_VERSION (3, 0, 0) && !defined(HAVE_LAYER_SHELL)
     if( ! GDK_IS_X11_DISPLAY( gdpy ) )
         return;
 #endif
@@ -152,6 +154,10 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
     for ( i = 0; i < n_screens; i++ )
     {
         desktops[ i ] = desktop_window_new(transparent);
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+        if( ! GDK_IS_X11_DISPLAY( gdpy ) )
+            set_monitor ( gdpy, desktops[ i ] );
+#endif
         //printf("added desktop window %p to screen %d on display %p (%s)\n",
         //                  desktops[ i ], i, gdpy, g_getenv( "DISPLAY" ) );
         ((DesktopWindow*)desktops[ i ])->screen_index = i;
@@ -173,7 +179,7 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
         gtk_window_group_add_window( GTK_WINDOW_GROUP(group), GTK_WINDOW( desktops[i] ) );
 
         // temp detect screen size change
-#if GTK_CHECK_VERSION (3, 0, 0) && HAVE_LAYER_SHELL
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
         g_signal_connect( gtk_widget_get_screen( GTK_WIDGET( desktops[ i ] ) ),
                             "size-changed", G_CALLBACK( on_size_changed ),
                             desktops[ i ] );
