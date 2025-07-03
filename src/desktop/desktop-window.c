@@ -721,6 +721,7 @@ void desktop_window_set_background( DesktopWindow* win, GdkPixbuf* src_pix, DWBg
             dest_h = gdk_screen_get_height( gtk_widget_get_screen((GtkWidget*)win) );
         }
         GdkPixbuf* scaled = NULL;
+
         if( type == DW_BG_TILE )
         {
 #if GTK_CHECK_VERSION (3, 0, 0)
