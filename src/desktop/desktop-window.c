@@ -1541,12 +1541,12 @@ gboolean on_mouse_move( GtkWidget* w, GdkEventMotion* evt ) {
         self->dragging = FALSE;
     }
 
-    if( self->dragging )
-    {
-    }
-    else if( self->rubber_bending )
+    if( self->rubber_bending )
     {
         update_rubberbanding( self, evt->x, evt->y, !!(evt->state & GDK_CONTROL_MASK) );
+    }
+    else if( self->dragging )
+    {
     } else {     // howdy     we will enforce a minimum, in case  gtk-dnd-drag-threshold is unset
                  //
                  //    xref     exo_icon_view_maybe_begin_drag()
