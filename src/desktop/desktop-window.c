@@ -504,6 +504,33 @@ nox:
         (* G_OBJECT_CLASS(parent_class)->finalize)(object);
 }
 
+
+static void desktop_window_update_input_region( GtkWidget* w )
+{
+#if GTK_CHECK_VERSION (3, 0, 0)
+    DesktopWindow* self = (DesktopWindow*)w;
+    cairo_region_t *u;
+    if ( app_settings.show_wm_menu )
+    {
+        u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){0, 0, 0, 0} );
+
+        for( GList* l = self->items; l; l = l->next )
+        {
+            DesktopItem* item = (DesktopItem*)l->data;
+            if( app_settings.show_wm_menu && item->fi )
+                cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
+        }
+    } else {
+        u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){self->wa.x + self->margin_left, self->wa.y + self->margin_top, self->wa.width - self->margin_left - self->margin_right, self->wa.height - self->margin_top - self->margin_bottom} );
+    }
+
+    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
+        gtk_widget_input_shape_combine_region( w, u );
+
+    cairo_region_destroy( u );
+#endif
+}
+
 /*--------------- Signal handlers --------------*/
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -547,30 +574,19 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
     if( self->rubber_bending )
         paint_rubber_banding_rect( self );
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-    cairo_region_t *u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){0, 0, 0, 0} );
-
     for( l = self->items; l; l = l->next )
     {
         DesktopItem* item = (DesktopItem*)l->data;
+#if GTK_CHECK_VERSION (3, 0, 0)
         if( gdk_rectangle_intersect( &allocation, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
-        if( !app_settings.show_wm_menu || ( app_settings.show_wm_menu && item->fi ) )
-            cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
-    }
-
-    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
-        gtk_widget_input_shape_combine_region( w, u );
-
-    cairo_region_destroy( u );
 #else
-    for( l = self->items; l; l = l->next )
-    {
-        DesktopItem* item = (DesktopItem*)l->data;
         if( gdk_rectangle_intersect( &evt->area, &item->box, &intersect ) )
             paint_item( self, item, &intersect );
-    }
 #endif
+    }
+
+    desktop_window_update_input_region( w );
 
     return TRUE;
 }
