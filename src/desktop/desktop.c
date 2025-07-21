@@ -63,6 +63,15 @@ static void on_icon_theme_changed( GtkIconTheme* theme, gpointer data ) {
         desktop_window_reload_icons( (DesktopWindow*)desktops[ i ] );
 }
 
+/*
+#include <glib-object.h>   // for g_signal_connect
+void on_size_changed( GdkScreen *screen, GtkWidget* w )
+{
+    printf( "screen size changed  %d, %d\n", gdk_screen_get_width( screen ),
+                                             gdk_screen_get_height( screen ) );
+}
+*/
+
 #if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
 static void set_monitor( GdkDisplay *gdpy, GtkWidget* w )
 {
@@ -82,52 +91,7 @@ static void set_monitor( GdkDisplay *gdpy, GtkWidget* w )
     if ( left )
         gtk_layer_set_monitor( GTK_WINDOW( w ), left );
 }
-
-
-static void on_size_changed( GdkScreen *screen, GtkWidget* w )
-{
-    DWBgType type;
-    GdkPixbuf* pix;
-    int i;
-
-    set_monitor ( gdk_screen_get_display( screen ), w );
-
-    if( app_settings.show_wallpaper && app_settings.wallpaper )
-    {
-        switch( app_settings.wallpaper_mode )
-        {
-        case WPM_FULL:
-            type = DW_BG_FULL;
-            break;
-        case WPM_ZOOM:
-            type = DW_BG_ZOOM;
-            break;
-        case WPM_CENTER:
-            type = DW_BG_CENTER;
-            break;
-        case WPM_TILE:
-            type = DW_BG_TILE;
-            break;
-        case WPM_TRANSPARENT:
-            type = DW_BG_TRANSPARENT;
-            break;
-        case WPM_STRETCH:
-        default:
-            type = DW_BG_STRETCH;
-        }
-        pix = gdk_pixbuf_new_from_file( app_settings.wallpaper, NULL );
-    } else {
-        type = DW_BG_COLOR;
-        pix = NULL;
-    }
-
-    desktop_window_set_background( DESKTOP_WINDOW( w ), pix, type );
-
-    if( pix )
-        g_object_unref( pix );
-}
 #endif
-
 
 void fm_turn_on_desktop_icons(gboolean transparent) {
     GdkDisplay * gdpy;
@@ -178,15 +142,12 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
 
         gtk_window_group_add_window( GTK_WINDOW_GROUP(group), GTK_WINDOW( desktops[i] ) );
 
+        /*   this doesn't work when size is changed via xrandr?
         // temp detect screen size change
-#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
-        if( GDK_IS_X11_DISPLAY( gdpy ) )
-            continue;
-
         g_signal_connect( gtk_widget_get_screen( GTK_WIDGET( desktops[ i ] ) ),
                             "size-changed", G_CALLBACK( on_size_changed ),
                             desktops[ i ] );
-#endif
+        */
     }
     fm_desktop_update_colors();
     fm_desktop_update_wallpaper( FALSE );

@@ -504,33 +504,6 @@ nox:
         (* G_OBJECT_CLASS(parent_class)->finalize)(object);
 }
 
-
-static void desktop_window_update_input_region( GtkWidget* w )
-{
-#if GTK_CHECK_VERSION (3, 0, 0)
-    DesktopWindow* self = (DesktopWindow*)w;
-    cairo_region_t *u;
-    if ( app_settings.show_wm_menu )
-    {
-        u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){0, 0, 0, 0} );
-
-        for( GList* l = self->items; l; l = l->next )
-        {
-            DesktopItem* item = (DesktopItem*)l->data;
-            if( app_settings.show_wm_menu && item->fi )
-                cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
-        }
-    } else {
-        u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){self->wa.x + self->margin_left, self->wa.y + self->margin_top, self->wa.width - self->margin_left - self->margin_right, self->wa.height - self->margin_top - self->margin_bottom} );
-    }
-
-    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
-        gtk_widget_input_shape_combine_region( w, u );
-
-    cairo_region_destroy( u );
-#endif
-}
-
 /*--------------- Signal handlers --------------*/
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -585,8 +558,6 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
             paint_item( self, item, &intersect );
 #endif
     }
-
-    desktop_window_update_input_region( w );
 
     return TRUE;
 }
@@ -2837,6 +2808,33 @@ void calc_item_size( DesktopWindow* self, DesktopItem* item ) {
 }
 
 
+static void desktop_window_update_input_region( GtkWidget* w )
+{
+#if GTK_CHECK_VERSION (3, 0, 0)
+    DesktopWindow* self = (DesktopWindow*)w;
+    cairo_region_t *u;
+    if ( app_settings.show_wm_menu )
+    {
+        u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){0, 0, 0, 0} );
+
+        for( GList* l = self->items; l; l = l->next )
+        {
+            DesktopItem* item = (DesktopItem*)l->data;
+            if( app_settings.show_wm_menu && item->fi )
+                cairo_region_union_rectangle( u, &(cairo_rectangle_int_t){item->box.x, item->box.y, item->box.width, item->box.height } );
+        }
+    } else {
+        u = cairo_region_create_rectangle( &(cairo_rectangle_int_t){self->wa.x + self->margin_left, self->wa.y + self->margin_top, self->wa.width - self->margin_left - self->margin_right, self->wa.height - self->margin_top - self->margin_bottom} );
+    }
+
+    if( !GDK_IS_X11_DISPLAY( gdk_display_get_default () ))
+        gtk_widget_input_shape_combine_region( w, u );
+
+    cairo_region_destroy( u );
+#endif
+}
+
+
 void layout_items( DesktopWindow* self ) {
     GList* l;
     GList* ll;
@@ -3021,6 +3019,7 @@ start_layout:
         custom_order_write( self );
     }
     //printf("    box_count = %d\n", self->box_count );
+    desktop_window_update_input_region( GTK_WIDGET(self) );
     gtk_widget_queue_draw( GTK_WIDGET(self) );
 }
 

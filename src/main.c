@@ -909,6 +909,13 @@ gboolean delayed_popup( GtkWidget* popup ) {
     return FALSE;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+static void on_size_changed( GdkScreen *screen, gpointer data ) {
+    fm_turn_off_desktop_icons();
+    fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 &&   app_settings.wallpaper_mode == WPM_TRANSPARENT );
+}
+#endif
+
 static void init_desktop_or_daemon() {
     init_folder();
 
@@ -917,8 +924,13 @@ static void init_desktop_or_daemon() {
     signal( SIGINT, (void*)gtk_main_quit );
     signal( SIGTERM, (void*)gtk_main_quit );
 
-    if ( desktop )
+    if ( desktop ) {
         fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 &&   app_settings.wallpaper_mode == WPM_TRANSPARENT );
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+        g_signal_connect( gdk_screen_get_default(), "size-changed", G_CALLBACK( on_size_changed ), NULL );
+#endif
+    }
+
     desktop_or_deamon_initialized = TRUE;
 }
 
