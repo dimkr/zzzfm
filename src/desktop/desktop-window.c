@@ -558,7 +558,6 @@ gboolean on_expose( GtkWidget* w, GdkEventExpose* evt )
             paint_item( self, item, &intersect );
 #endif
     }
-
     return TRUE;
 }
 
