@@ -176,6 +176,11 @@ void fm_turn_off_desktop_icons() {
     group = NULL;
 }
 
+void fm_restart_desktop_icons() {
+    fm_turn_off_desktop_icons();
+    fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 && app_settings.wallpaper_mode == WPM_TRANSPARENT );
+}
+
 void fm_desktop_update_thumbnails() {
     /* FIXME: thumbnail on desktop cannot be turned off. */
 }
@@ -262,6 +267,7 @@ void fm_desktop_set_single_click( gboolean single_click ) {
 /* dummy implementations */
 void fm_turn_on_desktop_icons( gboolean transparent ) { }
 void fm_turn_off_desktop_icons() { }
+void fm_restart_desktop_icons() { }
 void fm_desktop_update_thumbnails() { }
 void fm_desktop_update_wallpaper( gboolean transparency_changed ) { }
 void fm_desktop_update_colors() { }

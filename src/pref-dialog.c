@@ -431,8 +431,7 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
             app_settings.show_wm_menu = show_wm_menu;
             if ( ! GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
             {
-                fm_turn_off_desktop_icons();
-                fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 && app_settings.wallpaper_mode == WPM_TRANSPARENT );
+                fm_restart_desktop_icons();
             }
         }
 

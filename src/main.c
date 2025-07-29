@@ -911,8 +911,7 @@ gboolean delayed_popup( GtkWidget* popup ) {
 
 #if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
 static void on_monitors_changed( GdkScreen *screen, gpointer data ) {
-    fm_turn_off_desktop_icons();
-    fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 &&   app_settings.wallpaper_mode == WPM_TRANSPARENT );
+    fm_restart_desktop_icons();
 }
 #endif
 
