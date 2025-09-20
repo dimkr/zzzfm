@@ -25,6 +25,8 @@
 #include "glib-utils.h"
 #include <glib/gi18n.h>
 
+#include <gdk/gdkx.h>
+
 #include "pref-dialog.h"
 #include "settings.h"
 #include "ptk-utils.h"
@@ -208,6 +210,7 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
     gboolean show_wallpaper;
     gboolean single_click;
     gboolean single_hover;
+    gboolean show_wm_menu;
     //gboolean rubberband;
     gboolean root_bar;
     gboolean root_set_change = FALSE;
@@ -362,7 +365,7 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
         int desk_no_single_hover = !gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->desk_single_hover ) );
         if ( app_settings.desk_no_single_hover != desk_no_single_hover )
             app_settings.desk_no_single_hover = desk_no_single_hover;
-        app_settings.show_wm_menu = gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->show_wm_menu ) );
+        show_wm_menu = gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->show_wm_menu ) );
         app_settings.desk_open_mime = gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( data->desk_open_mime ) );
 
         // wallpaper
@@ -406,7 +409,11 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
             g_free( app_settings.wallpaper );
             app_settings.wallpaper = wallpaper;
             fm_desktop_update_wallpaper( !was_transparent != !is_transparent );
+#if GTK_CHECK_VERSION (3, 0, 0)
+            if ( is_transparent && !was_transparent &&  !xset_get_b( "desk_pref" ) && GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
+#else
             if ( is_transparent && !was_transparent &&  !xset_get_b( "desk_pref" ) )
+#endif
             {
                 xset_msg_dialog( GTK_WIDGET( dlg ), 0, _("Transparency Requirements"),
                         NULL, 0, _("General Note: For desktop transparency to "
@@ -416,6 +423,15 @@ static void on_response( GtkDialog* dlg, int response, FMPrefDlg* user_data )
                         "on the background.\n\n"
                         "This message will not repeat."), NULL, NULL );
                 xset_set_b( "desk_pref", TRUE );
+            }
+        }
+
+        if ( show_wm_menu != app_settings.show_wm_menu )
+        {
+            app_settings.show_wm_menu = show_wm_menu;
+            if ( ! GDK_IS_X11_DISPLAY( gdk_display_get_default ()) )
+            {
+                fm_restart_desktop_icons();
             }
         }
 

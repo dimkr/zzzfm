@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 
 void fm_turn_on_desktop_icons( gboolean transparent );
 void fm_turn_off_desktop_icons();
+void fm_restart_desktop_icons();
 void fm_desktop_update_thumbnails();
 void fm_desktop_update_wallpaper( gboolean transparency_changed );
 void fm_desktop_update_colors();

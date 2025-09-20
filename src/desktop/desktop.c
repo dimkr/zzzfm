@@ -30,6 +30,10 @@
 #include <gdk/gdkx.h>
 //#include "fm-desktop.h"
 
+#ifdef HAVE_LAYER_SHELL
+#include <gtk-layer-shell.h>
+#endif
+
 #include "vfs-file-info.h"
 #include "vfs-mime-type.h"
 //#include "vfs-app-desktop.h"
@@ -68,6 +72,26 @@ void on_size_changed( GdkScreen *screen, GtkWidget* w )
 }
 */
 
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+static void set_monitor( GdkDisplay *gdpy, GtkWidget* w )
+{
+    GdkMonitor *left = NULL;
+    int min_x = -1;
+    for (guint i = 0; i < gdk_display_get_n_monitors( gdpy ); ++i) {
+        GdkMonitor *monitor = gdk_display_get_monitor( gdpy, i );
+        if ( !monitor )
+            continue;
+        GdkRectangle geom;
+        gdk_monitor_get_geometry( monitor, &geom );
+        if ( min_x == -1 || geom.x < min_x ) {
+            min_x = geom.x;
+            left = monitor;
+        }
+    }
+    if ( left )
+        gtk_layer_set_monitor( GTK_WINDOW( w ), left );
+}
+#endif
 
 void fm_turn_on_desktop_icons(gboolean transparent) {
     GdkDisplay * gdpy;
@@ -75,7 +99,7 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
     int big = 0;
 
     gdpy = gdk_display_get_default();
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 0, 0) && !defined(HAVE_LAYER_SHELL)
     if( ! GDK_IS_X11_DISPLAY( gdpy ) )
         return;
 #endif
@@ -94,6 +118,10 @@ void fm_turn_on_desktop_icons(gboolean transparent) {
     for ( i = 0; i < n_screens; i++ )
     {
         desktops[ i ] = desktop_window_new(transparent);
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+        if( ! GDK_IS_X11_DISPLAY( gdpy ) )
+            set_monitor ( gdpy, desktops[ i ] );
+#endif
         //printf("added desktop window %p to screen %d on display %p (%s)\n",
         //                  desktops[ i ], i, gdpy, g_getenv( "DISPLAY" ) );
         ((DesktopWindow*)desktops[ i ])->screen_index = i;
@@ -146,6 +174,11 @@ void fm_turn_off_desktop_icons() {
 //        g_source_remove( busy_cursor );
     g_object_unref( group );
     group = NULL;
+}
+
+void fm_restart_desktop_icons() {
+    fm_turn_off_desktop_icons();
+    fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 && app_settings.wallpaper_mode == WPM_TRANSPARENT );
 }
 
 void fm_desktop_update_thumbnails() {
@@ -234,6 +267,7 @@ void fm_desktop_set_single_click( gboolean single_click ) {
 /* dummy implementations */
 void fm_turn_on_desktop_icons( gboolean transparent ) { }
 void fm_turn_off_desktop_icons() { }
+void fm_restart_desktop_icons() { }
 void fm_desktop_update_thumbnails() { }
 void fm_desktop_update_wallpaper( gboolean transparency_changed ) { }
 void fm_desktop_update_colors() { }
