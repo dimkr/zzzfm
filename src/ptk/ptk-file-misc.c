@@ -1222,7 +1222,7 @@ void on_opt_toggled( GtkMenuItem* item, MoveSet* mset )
 void on_toggled( GtkMenuItem* item, MoveSet* mset )
 {
     //int (*show) () = NULL;
-    void (*show) () = NULL;
+    void (*show) ( GtkWidget* ) = NULL;
     gboolean someone_is_visible = FALSE;
     gboolean opts_visible = FALSE;
 

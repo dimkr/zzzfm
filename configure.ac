@@ -97,6 +97,7 @@ AC_SUBST([GTK_LIBS])
 # Default make options
 # disable deprecated warnings for now due to GTK2/GTK3 build compat
 CPPFLAGS="$CPPFLAGS -Wno-deprecated-declarations -Wformat -Wformat-security -Wreturn-type -Wunused-value"
+CFLAGS="$CFLAGS -Wno-error=incompatible-pointer-types"
 
 dnl linker optimizations
 AC_MSG_CHECKING([whether $LD accepts --as-needed])

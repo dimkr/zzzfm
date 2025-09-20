@@ -5129,7 +5129,7 @@ GtkWidget* main_task_view_new( FMMainWindow* main_window ) {
 
 // ============== socket commands
 
-gboolean bool( const char* value ) {
+gboolean to_bool( const char* value ) {
     return ( !( value && value[0] ) || !strcmp( value, "1") ||
                  !strcmp( value, "true") || !strcmp( value, "True") || !strcmp( value, "TRUE") ||
                  !strcmp( value, "yes")  || !strcmp( value, "Yes")  || !strcmp( value, "YES") );
@@ -5299,14 +5299,14 @@ _missing_arg:
         }
         else if ( !strcmp( argv[i], "window_maximized" ) )
         {
-            if ( bool( argv[i+1] ) )
+            if ( to_bool( argv[i+1] ) )
                 gtk_window_maximize( GTK_WINDOW( main_window ) );
             else
                 gtk_window_unmaximize( GTK_WINDOW( main_window ) );
         }
         else if ( !strcmp( argv[i], "window_fullscreen" ) )
         {
-            xset_set_b( "main_full", bool( argv[i+1] ) );
+            xset_set_b( "main_full", to_bool( argv[i+1] ) );
             on_fullscreen_activate( NULL, main_window );
         }
         else if ( !strcmp( argv[i], "screen_size" ) )
@@ -5446,7 +5446,7 @@ _missing_arg:
                     *reply = g_strdup_printf( _("zzzfm: invalid property %s\n"), argv[i] );
                     return 2;
                 }
-                xset_set_b_panel( j, "show", bool( argv[i+1] ) );
+                xset_set_b_panel( j, "show", to_bool( argv[i+1] ) );
                 show_panels_all_windows( NULL, main_window );
                 return 0;
             }
@@ -5455,9 +5455,9 @@ _missing_arg:
             if ( !str )
                 goto _invalid_set;
             if ( use_mode )
-                xset_set_b_panel_mode( panel, str, main_window->panel_context[panel-1], bool( argv[i+1] ) );
+                xset_set_b_panel_mode( panel, str, main_window->panel_context[panel-1], to_bool( argv[i+1] ) );
             else
-                xset_set_b_panel( panel, str, bool( argv[i+1] ) );
+                xset_set_b_panel( panel, str, to_bool( argv[i+1] ) );
             update_views_all_windows( NULL, file_browser );
         }
         else if ( !strcmp( argv[i], "panel_hslider_top" ) ||  !strcmp( argv[i], "panel_hslider_bottom" ) ||  !strcmp( argv[i], "panel_vslider" ) )
@@ -5552,22 +5552,22 @@ _missing_arg:
         {
             if ( !strcmp( argv[i] + 5, "ascend" ) )
             {
-                ptk_file_browser_set_sort_type( file_browser, bool( argv[i+1] ) ?  GTK_SORT_ASCENDING : GTK_SORT_DESCENDING );
+                ptk_file_browser_set_sort_type( file_browser, to_bool( argv[i+1] ) ?  GTK_SORT_ASCENDING : GTK_SORT_DESCENDING );
                 return 0;
             }
             else if ( !strcmp( argv[i] + 5, "natural" ) )
             {
                 str = "sortx_natural";
-                xset_set_b( str, bool( argv[i+1] ) );
+                xset_set_b( str, to_bool( argv[i+1] ) );
             }
             else if ( !strcmp( argv[i] + 5, "case" ) )
             {
                 str = "sortx_case";
-                xset_set_b( str, bool( argv[i+1] ) );
+                xset_set_b( str, to_bool( argv[i+1] ) );
             }
             else if ( !strcmp( argv[i] + 5, "hidden_first" ) )
             {
-                str = bool( argv[i+1] ) ? "sortx_hidfirst" : "sortx_hidlast";
+                str = to_bool( argv[i+1] ) ? "sortx_hidfirst" : "sortx_hidlast";
                 xset_set_b( str, TRUE );
             }
             else if ( !strcmp( argv[i] + 5, "first" ) )
@@ -5590,11 +5590,11 @@ _missing_arg:
         }
         else if ( !strcmp( argv[i], "show_thumbnails" ) )
         {
-            if ( app_settings.show_thumbnail != bool( argv[i+1] ) )
+            if ( app_settings.show_thumbnail != to_bool( argv[i+1] ) )
                 main_window_toggle_thumbnails_all_windows();
         }
         else if ( !strcmp( argv[i], "large_icons" ) ) {
-            xset_set_b_panel_mode( panel, "list_large", main_window->panel_context[panel-1], bool( argv[i+1] ) );
+            xset_set_b_panel_mode( panel, "list_large", main_window->panel_context[panel-1], to_bool( argv[i+1] ) );
             update_views_all_windows( NULL, file_browser );
 
         }

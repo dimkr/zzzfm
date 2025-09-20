@@ -1834,9 +1834,9 @@ gboolean xset_get_bool( const char* name, const char* var ) {
 
 gboolean xset_get_bool_panel( int panel, const char* name, const char* var ) {
     char* fullname = g_strdup_printf( "panel%d_%s", panel, name );
-    gboolean bool = xset_get_bool( fullname, var );
+    gboolean b = xset_get_bool( fullname, var );
     g_free( fullname );
-    return bool;
+    return b;
 }
 
 int xset_get_int_set( XSet* set, const char* var ) {
@@ -6016,7 +6016,7 @@ gboolean xset_menu_keypress( GtkWidget* widget, GdkEventKey* event, gpointer use
 
 void xset_menu_cb( GtkWidget* item, XSet* set ) {
     GtkWidget* parent;
-    void (*cb_func) () = NULL;
+    void (*cb_func) ( GtkWidget*, gpointer ) = NULL;
     gpointer cb_data = NULL;
     char* title;
     XSet* mset;  // mirror set or set
