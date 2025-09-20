@@ -33,7 +33,11 @@ gboolean vfs_exec_on_screen( GdkScreen* screen, const char* work_dir, char** arg
     for ( i = 0; i < n_env; ++i )
     {
         /* g_debug( "old envp[%d] = \"%s\"" , i, envp[i]); */
+#if GTK_CHECK_VERSION (3, 0, 0)
+        if ( ( GDK_IS_X11_SCREEN ( screen ) && 0 == strncmp( envp[ i ], "DISPLAY=", 8 ) ) || ( ( ! GDK_IS_X11_SCREEN ( screen ) ) && ( 0 == strncmp( envp[ i ], "WAYLAND_DISPLAY=", 16 ) ) ) )
+#else
         if ( 0 == strncmp( envp[ i ], "DISPLAY=", 8 ) )
+#endif
             display_index = i;
         else
         {
@@ -45,7 +49,16 @@ gboolean vfs_exec_on_screen( GdkScreen* screen, const char* work_dir, char** arg
 
     //  This is taken from gdk_spawn_on_screen
     display_name = gdk_screen_make_display_name ( screen );
-    if ( display_index >= 0 )
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+    if ( ( ! GDK_IS_X11_SCREEN ( screen ) ) && display_index >= 0 )
+        new_env[ display_index ] = g_strconcat( "WAYLAND_DISPLAY=", display_name, NULL );
+    if ( ! GDK_IS_X11_SCREEN ( screen ) )
+        new_env[ i++ ] = g_strconcat( "WAYLAND_DISPLAY=", display_name, NULL );
+#else
+    if ( FALSE ) do {} while ( 0 );
+#endif
+    else if ( display_index >= 0 )
         new_env[ display_index ] = g_strconcat( "DISPLAY=", display_name, NULL );
     else
         new_env[ i++ ] = g_strconcat( "DISPLAY=", display_name, NULL );

@@ -311,12 +311,23 @@ gboolean on_socket_event( GIOChannel* ioc, GIOCondition cond, gpointer data ) {
 }
 
 void get_socket_name_nogdk( char* buf, int len ) {
-    char* dpy = g_strdup( g_getenv( "DISPLAY" ) );
-    if ( dpy && !strcmp( dpy, ":0.0" ) )
+    char* dpy;
+#if GTK_CHECK_VERSION(3, 0, 0)
+    const char* tmp = g_getenv( "WAYLAND_DISPLAY" );
+    if ( tmp )
+        dpy = g_strdup( tmp );
+    else
+#else
+    if ( TRUE )
+#endif
     {
-        // treat :0.0 as :0 to prevent multiple instances on screen 0
-        g_free( dpy );
-        dpy = g_strdup( ":0" );
+        dpy = g_strdup( g_getenv( "DISPLAY" ) );
+        if ( dpy && !strcmp( dpy, ":0.0" ) )
+        {
+            // treat :0.0 as :0 to prevent multiple instances on screen 0
+            g_free( dpy );
+            dpy = g_strdup( ":0" );
+        }
     }
     g_snprintf( buf, len, "%s/.zzzfm-socket%s-%s", xset_get_tmp_dir(), dpy, g_get_user_name() );
     g_free( dpy );
