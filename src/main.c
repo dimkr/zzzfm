@@ -85,6 +85,9 @@ typedef enum{
 
 static gboolean folder_initialized = FALSE;
 static gboolean desktop_or_deamon_initialized = FALSE;
+#if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
+static gulong monitors_changed_id = 0;
+#endif
 
 static int sock;
 GIOChannel* io_channel = NULL;
@@ -911,7 +914,12 @@ gboolean delayed_popup( GtkWidget* popup ) {
 
 #if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
 static void on_monitors_changed( GdkScreen *screen, gpointer data ) {
+    if ( monitors_changed_id > 0 ) {
+        g_signal_handler_disconnect( gdk_screen_get_default(), monitors_changed_id );
+        monitors_changed_id = 0;
+    }
     fm_restart_desktop_icons();
+    monitors_changed_id = g_signal_connect( gdk_screen_get_default(), "monitors-changed", G_CALLBACK( on_monitors_changed ), NULL );
 }
 #endif
 
@@ -926,7 +934,7 @@ static void init_desktop_or_daemon() {
     if ( desktop ) {
         fm_turn_on_desktop_icons( app_settings.show_wallpaper == 1 &&   app_settings.wallpaper_mode == WPM_TRANSPARENT );
 #if GTK_CHECK_VERSION (3, 0, 0) && defined(HAVE_LAYER_SHELL)
-        g_signal_connect( gdk_screen_get_default(), "monitors-changed", G_CALLBACK( on_monitors_changed ), NULL );
+        monitors_changed_id = g_signal_connect( gdk_screen_get_default(), "monitors-changed", G_CALLBACK( on_monitors_changed ), NULL );
 #endif
     }
 
